@@ -1,0 +1,12 @@
+db.sqlite3
+*/__pycache__/*
+*.pyc
+*/migrations/*
+*/migrations
+media/*
+.DS_Store
+*/.DS_Store
+venv/*
+static/video/
+antorus/settings.py
+.idea

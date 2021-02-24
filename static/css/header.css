@@ -1,0 +1,63 @@
+/* top_bar
+______________________________________________ */
+
+.top_bar {
+    border-bottom: 1px solid rgb(47, 47, 47);
+    border-top: 1px solid rgb(47, 47, 47);
+}
+
+.head {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.contact_support > a, .login > a {
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+.contact_support > a {
+    padding-right: 10px;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.login > a {
+    padding-left: 10px;
+}
+
+.contact_support > a:hover, .login > a:hover {
+    color: rgb(189, 189, 189);
+    transition: color 0.3s ease;
+}
+
+/* header
+______________________________________________ */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+}
+
+.header input {
+    background-color: rgb(31, 31, 31);
+    border-color: rgb(47, 47, 47);
+    border-width: 1px;
+    font-size: 16px;
+    height: 34px;
+    padding: 0 17px;
+}
+
+.logo {
+    transform: translateX(-25%);
+}
+
+.logo img {
+    max-width: 200px;
+}
