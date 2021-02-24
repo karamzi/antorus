@@ -21,6 +21,7 @@
 .intro_content > p, .intro_content > h2 {
     color: white;
     font-weight: bold;
+    user-select: none;
 }
 
 .intro_content > p {
