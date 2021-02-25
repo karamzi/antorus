@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{% static 'css/category.css' %}">
 {% endblock %}
 
-{% block title %}Название категории{% endblock %}
+{% block title %}{% if category %}{{ category }}{% else %}{{ sub_category }}{% endif %}{% endblock %}
 
 {% block content %}
     <section class="products_sections">
@@ -15,59 +15,33 @@
                 <div class="nav_bar">
                     <h3>CATEGORIES</h3>
                     <nav>
-                        <div style="margin-bottom: 0" class="nav_link active">
-                            <a href="#">RAIDS</a>
-                            <span>+</span>
-                        </div>
-                        <div class="accordion">
-                            <a href="#">CASTLE NATHRIA</a>
-                        </div>
-                        <div class="nav_link">
-                            <a href="#">Dungeons</a>
-                        </div>
-                        <div class="nav_link">
-                            <a href="#">SHADOWLANDS</a>
-                        </div>
-                        <div class="nav_link">
-                            <a href="#">PvP</a>
-                        </div>
-                        <div class="nav_link">
-                            <a href="#">Achievements</a>
-                        </div>
-                        <div class="nav_link">
-                            <a href="#">Mounts</a>
-                        </div>
-                        <div class="nav_link">
-                            <a href="#">Reputations</a>
-                        </div>
-                        <div class="nav_link">
-                            <a href="#">WOW CLASSIC</a>
-                        </div>
+                        {% for category in categories %}
+                            <div class="nav_link">
+                                <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                                {% if category.categories_subcategories.all %}
+                                    <span class="open"></span>
+                                {% endif %}
+                            </div>
+                            {% if category.categories_subcategories.all %}
+                                <div class="accordion">
+                                {% for subcategory in category.categories_subcategories.all %}
+                                    <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                     </nav>
                 </div>
                 <div class="products_block">
-                    <h2>RAIDS</h2>
+                    <h2>{% if category %}{{ category }}{% else %}{{ sub_category }}{% endif %}</h2>
                     <div class="products">
+                        {% for product in products %}
                         <div class="product">
-                            <img src="{% static 'img/test.png' %}" alt="">
-                            <a href="/product/test/" class="name">CASTLE NATHRIA HEROIC RUN (TRADERS ONLY EU)</a>
-                            <p class="price">$ 28.00</p>
+                            <img src="{{ product.image.url }}" alt="">
+                            <a href="{{ product.get_absolute_url }}" class="name">{{ product.name }}</a>
+                            <p class="price">$ {{ product.price_dollar }}</p>
                         </div>
-                        <div class="product">
-                            <img src="{% static 'img/test.png' %}" alt="">
-                            <a href="" class="name">CASTLE NATHRIA HEROIC RUN (TRADERS ONLY EU)</a>
-                            <p class="price">$ 28.00</p>
-                        </div>
-                        <div class="product">
-                            <img src="{% static 'img/test.png' %}" alt="">
-                            <a href="" class="name">CASTLE NATHRIA HEROIC RUN (TRADERS ONLY EU)</a>
-                            <p class="price">$ 28.00</p>
-                        </div>
-                        <div class="product">
-                            <img src="{% static 'img/test.png' %}" alt="">
-                            <a href="" class="name">CASTLE NATHRIA HEROIC RUN (TRADERS ONLY EU)</a>
-                            <p class="price">$ 28.00</p>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

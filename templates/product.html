@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{% static 'css/checkbox.css' %}">
 {% endblock %}
 
-{% block title %}Название продукта{% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
     <section class="product_section">
@@ -15,7 +15,7 @@
             <div class="product_content">
                 <div class="product_left">
                     <div class="product_img">
-                        <img src="{% static 'img/test.png' %}" alt="">
+                        <img src="{{ product.image.url }}" alt="">
                     </div>
                     <div class="required_options">
                         <p>Select options:</p>
@@ -91,37 +91,11 @@
                     </div>
                 </div>
                 <div class="product_right">
-                    <div class="product_name">CASTLE NATHRIA HEROIC RUN (TRADERS ONLY EU)</div>
+                    <div class="product_name">{{ product.name }}</div>
                     <p>DESCRIPTION</p>
-                    <div class="length">⏱️ Length: <span>2+ hours</span></div>
-                    <div class="requirements">⚠️ Character Requirements: <span>Level 60.</span></div>
-                    <div class="description">
-<span>Includes the following:</span>
-
-10/10 bosses killed in Heroic difficulty.
-213-220 ilvl gear loot for your character.
-
-<span>Loot Guarantees and Loot Options:</span>
-
-3 boosters same gear type as yours guarantees 3-4 Gear Items per run.
-5 boosters same gear type as yours guarantees 5-6 Gear Items per run.
-7 boosters same gear type as yours guarantees  7-8 Gear Items per run.
-
-<span>Additional Featurs:</span>
-
-We DO provide an option for you to play yourself. You may choose this feature for extra fee.
-We DO provide an option of Loot Trade for additional fee. Depending on this option we can guarantee the number of loot you will receive for one run.
-
-NOTE: If you have not selected the Loot Option, the Personal Loot will be applied for your service.
-
-Please, be kindly advised that the loot trade options are reflecting only 100% guaranteed amount of loot, you might get up to 15 gear items (if you are lucky enough).
-
-Please, be aware that some gear items are not available for trading due to principles of the looting system operation itself. The items that are not increasing your item level are also included into the guaranteed loot.
-
-Please, be aware that in case you chose self-play method, you have to hit the boss at least once, in order to being able to get loot.
-
-Feel free to contact our operators any time for any further information. We are always for your service!
-                    </div>
+                    <div class="length">⏱️ Length: <span>{{ product.length }}</span></div>
+                    <div class="requirements">⚠️ Character Requirements: <span>{{ product.char_req }}</span></div>
+                    <div class="description">{{ product.description }}</div>
                 </div>
             </div>
         </div>

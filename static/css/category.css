@@ -1,6 +1,10 @@
 /* products_section
 ========================= */
 
+.products_sections {
+    flex-grow: 1;
+}
+
 .products_content {
     display: flex;
     justify-content: space-between;
@@ -60,6 +64,39 @@
 .nav_link span {
     color: white;
     font-size: 25px;
+}
+
+.nav_link span {
+    position: relative;
+}
+
+.nav_link span:after {
+    position: absolute;
+    content: '';
+    height: 1px;
+    width: 15px;
+    left: -20px;
+    background-color: white;
+}
+
+.nav_link span:before {
+    position: absolute;
+    content: '';
+    height: 1px;
+    width: 15px;
+    left: -20px;
+    background-color: white;
+    transform: rotate(90deg);
+}
+
+.nav_link.open span:before {
+    position: absolute;
+    content: '';
+    height: 1px;
+    width: 15px;
+    left: -20px;
+    background-color: white;
+    transform: rotate(0deg);
 }
 
 .products_block {
