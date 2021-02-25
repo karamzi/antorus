@@ -17,65 +17,48 @@
                     <div class="product_img">
                         <img src="{{ product.image.url }}" alt="">
                     </div>
-                    <div class="required_options">
-                        <p>Select options:</p>
-                        <div class="option">
-                            <div class="checkbox">
-                                <input type="checkbox" id="cb1">
-                                <label for="cb1">
-                                    <div class="tick"></div>
-                                </label>
-                            </div>
-                            <div class="option_name">3/10 bosses</div>
-                            <div class="option_price old">€ 16.00</div>
-                            <div class="option_new_price">€ 14.00</div>
+                    {% if product.product_required_option.all %}
+                        <div class="required_options">
+                            <p>Select options:</p>
+                            {% for option in product.product_required_option.all %}
+                                <div class="option">
+                                    <div class="checkbox">
+                                        <input class="required" type="checkbox" id="cd{{ option.name }}{{ option.id }}">
+                                        <label for="cd{{ option.name }}{{ option.id }}">
+                                            <div class="tick"></div>
+                                        </label>
+                                    </div>
+                                    <div class="option_name">{{ option.name }}</div>
+                                    <div class="option_price {% if option.new_price_euro %}old{% endif %}">
+                                        € {{ option.price_euro }}</div>
+                                    {% if option.new_price_euro %}
+                                        <div class="option_new_price">€ {{ option.new_price_euro }}</div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
                         </div>
-                        <div class="option">
-                            <div class="checkbox">
-                                <input type="checkbox" id="cb2">
-                                <label for="cb2">
-                                    <div class="tick"></div>
-                                </label>
-                            </div>
-                            <div class="option_name">7/10 bosses</div>
-                            <div class="option_price">€ 25.00</div>
+                    {% endif %}
+                    {% if product.product_addition_option.all %}
+                        <div class="addition_options">
+                            <p>Select options:</p>
+                            {% for option in product.product_addition_option.all %}
+                                <div class="option">
+                                    <div class="checkbox">
+                                        <input class="addition" type="checkbox" id="cd{{ option.name }}{{ option.id }}">
+                                        <label for="cd{{ option.name }}{{ option.id }}">
+                                            <div class="tick"></div>
+                                        </label>
+                                    </div>
+                                    <div class="option_name">{{ option.name }}</div>
+                                    <div class="option_price {% if option.new_price_euro %}old{% endif %}">
+                                        € {{ option.price_euro }}</div>
+                                    {% if option.new_price_euro %}
+                                        <div class="option_new_price">€ {{ option.new_price_euro }}</div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
                         </div>
-                        <div class="option">
-                            <div class="checkbox">
-                                <input type="checkbox" id="cb3">
-                                <label for="cb3">
-                                    <div class="tick"></div>
-                                </label>
-                            </div>
-                            <div class="option_name">9/10 bosses</div>
-                            <div class="option_price old">€ 35.00</div>
-                            <div class="option_new_price">€ 30.00</div>
-                        </div>
-                        <div class="option">
-                            <div class="checkbox">
-                                <input type="checkbox" id="cb4">
-                                <label for="cb4">
-                                    <div class="tick"></div>
-                                </label>
-                            </div>
-                            <div class="option_name">10/10 bosses</div>
-                            <div class="option_price old">€ 74.00</div>
-                            <div class="option_new_price">€ 45.00</div>
-                        </div>
-                    </div>
-                    <div class="addition_options">
-                        <p>Select options:</p>
-                        <div class="option">
-                            <div class="checkbox">
-                                <input type="checkbox" id="cb5">
-                                <label for="cb5">
-                                    <div class="tick"></div>
-                                </label>
-                            </div>
-                            <div class="option_name">Acc Share</div>
-                            <div class="option_price">€ 16.00</div>
-                        </div>
-                    </div>
+                    {% endif %}
                     <div class="price">
                         <p>Choose options to continue</p>
                     </div>
