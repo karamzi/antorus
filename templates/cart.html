@@ -1,0 +1,97 @@
+{% extends 'basic/basic.html' %}
+{% load static %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock %}
+
+{% block title %}Cart - ANTORUS{% endblock %}
+
+{% block content %}
+    <section class="cart_section">
+        <div class="container">
+            <h2>SHOPPING CART</h2>
+            <div class="cart_content">
+                <div class="cart_left">
+                    <div class="cart_head">
+                        <div class="head_title">PRODUCT</div>
+                        <div class="head_price">PRICE</div>
+                        <div class="head_quantity">QUANTITY</div>
+                        <div class="head_total">TOTAL</div>
+                    </div>
+                    <div class="product">
+                        <div class="product_description">
+                            <img src="{% static 'img/test2.png' %}" alt="">
+                            <div class="description">
+                                <div class="product_name"><a href="">CASTLE NATHRIA HEROIC RUN (TRADERS ONLY EU)</a>
+                                </div>
+                                <div class="product_options">
+                                    <h4>Options</h4>
+                                    <p>Select options: 10/10 bosses</p>
+                                    <p>Select options: Self Play</p>
+                                    <div class="remove">Remove</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="price">$83.00</div>
+                        <div class="product_quantity">
+                            <div class="quantity">
+                                <div class="minus"></div>
+                                <div class="count">1</div>
+                                <div class="plus">+</div>
+                            </div>
+                        </div>
+                        <div class="total">$83.00</div>
+                    </div>
+                    <div class="product">
+                        <div class="product_description">
+                            <img src="{% static 'img/test2.png' %}" alt="">
+                            <div class="description">
+                                <div class="product_name"><a href="">CASTLE NATHRIA HEROIC RUN (TRADERS ONLY EU)</a>
+                                </div>
+                                <div class="product_options">
+                                    <h4>Options</h4>
+                                    <p>Select options: 10/10 bosses</p>
+                                    <p>Select options: Self Play</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="price">$83.00</div>
+                        <div class="product_quantity">
+                            <div class="quantity">
+                                <div class="minus"></div>
+                                <div class="count">1</div>
+                                <div class="plus">+</div>
+                            </div>
+                        </div>
+                        <div class="total">$83.00</div>
+                    </div>
+                    <div class="promo_code">
+                        <p>Enter your promotional code</p>
+                        <div class="input">
+                            <input type="text" placeholder="Coupon code">
+                            <div class="input_button">OK</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart_right">
+                    <h4>CART TOTALS</h4>
+                    <div class="subtotal">
+                        <p>Subtotal</p>
+                        <p>€ 66.00</p>
+                    </div>
+                    <div class="coupon">
+                        <p>Coupon: own2020</p>
+                        <p style="color: darkred">-€ 3.30 <span class="coupon_remove">Remove</span></p>
+                    </div>
+                    <div class="cart_total">
+                        <p>Total</p>
+                        <p>€ 62.70</p>
+                    </div>
+                    <a href="#" class="cart_button">Proceed to checkout</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

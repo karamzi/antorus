@@ -1,0 +1,44 @@
+/* footer_section
+========================= */
+
+footer {
+    margin-top: 50px;
+    background-color: #222222;
+}
+
+.footer_content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.footer_left {
+    width: 40%;
+}
+
+.footer_left p {
+    font-size: 14px;
+    color: white;
+    line-height: 25px;
+}
+
+.footer_right a {
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    color: white;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.footer_right a:last-child {
+    border-right: none;
+    padding-right: 0;
+}
+
+.footer_right a:hover {
+    color: rgb(189, 189, 189);
+    transition: color 0.3s ease;
+}

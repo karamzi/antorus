@@ -1,0 +1,76 @@
+{% extends 'basic/basic.html' %}
+{% load static %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/category.css' %}">
+{% endblock %}
+
+{% block title %}Название категории{% endblock %}
+
+{% block content %}
+    <section class="products_sections">
+        <div class="container">
+            <div class="products_content">
+                <div class="nav_bar">
+                    <h3>CATEGORIES</h3>
+                    <nav>
+                        <div style="margin-bottom: 0" class="nav_link active">
+                            <a href="#">RAIDS</a>
+                            <span>+</span>
+                        </div>
+                        <div class="accordion">
+                            <a href="#">CASTLE NATHRIA</a>
+                        </div>
+                        <div class="nav_link">
+                            <a href="#">Dungeons</a>
+                        </div>
+                        <div class="nav_link">
+                            <a href="#">SHADOWLANDS</a>
+                        </div>
+                        <div class="nav_link">
+                            <a href="#">PvP</a>
+                        </div>
+                        <div class="nav_link">
+                            <a href="#">Achievements</a>
+                        </div>
+                        <div class="nav_link">
+                            <a href="#">Mounts</a>
+                        </div>
+                        <div class="nav_link">
+                            <a href="#">Reputations</a>
+                        </div>
+                        <div class="nav_link">
+                            <a href="#">WOW CLASSIC</a>
+                        </div>
+                    </nav>
+                </div>
+                <div class="products_block">
+                    <h2>RAIDS</h2>
+                    <div class="products">
+                        <div class="product">
+                            <img src="{% static 'img/test.png' %}" alt="">
+                            <a href="/product/test/" class="name">CASTLE NATHRIA HEROIC RUN (TRADERS ONLY EU)</a>
+                            <p class="price">$ 28.00</p>
+                        </div>
+                        <div class="product">
+                            <img src="{% static 'img/test.png' %}" alt="">
+                            <a href="" class="name">CASTLE NATHRIA HEROIC RUN (TRADERS ONLY EU)</a>
+                            <p class="price">$ 28.00</p>
+                        </div>
+                        <div class="product">
+                            <img src="{% static 'img/test.png' %}" alt="">
+                            <a href="" class="name">CASTLE NATHRIA HEROIC RUN (TRADERS ONLY EU)</a>
+                            <p class="price">$ 28.00</p>
+                        </div>
+                        <div class="product">
+                            <img src="{% static 'img/test.png' %}" alt="">
+                            <a href="" class="name">CASTLE NATHRIA HEROIC RUN (TRADERS ONLY EU)</a>
+                            <p class="price">$ 28.00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

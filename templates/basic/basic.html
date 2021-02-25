@@ -1,10 +1,65 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    {% block style %}
+    {% endblock %}
+    <link rel="icon" href="{% static 'img/logo.png' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <title>{% block title %}Antorus.com - The best boosting in Azeroth! - ANTORUS{% endblock %}</title>
 </head>
 <body>
+<div class="top_bar">
+    <div class="container">
+        <div class="head">
+            <div class="contact_support">
+                <a href="#">Contact Support</a>
+            </div>
+            <div class="login">
+                <a href="#">Sign In Or Create An Account</a>
+            </div>
+        </div>
+    </div>
+</div>
+<header>
+    <div class="container">
+        <div class="header">
+            <div class="search_bar">
+                <input placeholder="Type here..." type="text">
+            </div>
+            <div class="logo">
+                <a href="{% url 'index' %}"><img src="{% static 'img/logo-2.png' %}" alt="logo"></a>
+            </div>
+            <div class="cart">
+                <a href="{% url 'cart' %}"><img src="{% static 'img/cart.png' %}" alt="cart"></a>
+            </div>
+        </div>
+    </div>
+</header>
 
+{% block content %}
+{% endblock %}
+
+<footer>
+    <div class="container">
+        <div class="footer_content">
+            <div class="footer_left">
+                <p>All included here mentioned brand names are registered and property of the respective companies.</p>
+            </div>
+            <div class="footer_right">
+                <a href="">FAQ</a>
+                <a href="">Terms of Service</a>
+                <a href="">Privacy policy</a>
+            </div>
+        </div>
+    </div>
+</footer>
+{% block scripts %}
+{% endblock %}
 </body>
 </html>
