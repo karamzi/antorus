@@ -32,8 +32,8 @@ class AdditionsOptionChildAdmin(admin.TabularInline):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         path = request.path
         digit = re.findall(r'\d+', path)
-        if db_field.name == 'required_option':
-            kwargs['queryset'] = models.RequiredOption.objects.filter(product_id=int(digit[0]))
+        if db_field.name == 'addition_option':
+            kwargs['queryset'] = models.AdditionOptions.objects.filter(product_id=int(digit[0]))
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 

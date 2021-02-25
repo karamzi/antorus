@@ -9,6 +9,7 @@ def get_img_path(instance, filename):
 
 
 class Categories(models.Model):
+    # TODO Валидация названия
     name = models.CharField(max_length=255, verbose_name='Название категории', unique=True)
     slug = models.SlugField(verbose_name='Слаг', blank=True)
 
@@ -33,6 +34,7 @@ class Categories(models.Model):
 class SubCategories(models.Model):
     category = models.ForeignKey(Categories, related_name='categories_subcategories', verbose_name='Категория',
                                  on_delete=models.PROTECT)
+    # TODO Валидация названия
     name = models.CharField(max_length=255, verbose_name='Название подкатегории', unique=True)
     slug = models.SlugField(verbose_name='Слаг')
 
@@ -59,14 +61,20 @@ class Products(models.Model):
                                  on_delete=models.PROTECT)
     subcategory = models.ForeignKey(SubCategories, related_name='products_subcategory', blank=True, null=True,
                                     verbose_name='Подкатегория', on_delete=models.PROTECT)
+    # TODO Валидация названия
     name = models.CharField(max_length=255, verbose_name='Название товара', unique=True)
     description = models.TextField(verbose_name='Описание')
     image = models.ImageField(verbose_name='Изображение', upload_to=get_img_path)
     slug = models.SlugField(verbose_name='Ссылка', blank=True, null=True)
     length = models.CharField(max_length=255, verbose_name='Длительность')
     char_req = models.CharField(max_length=255, verbose_name='Требования')
-    price_dollar = models.IntegerField(default=0, verbose_name='Цена в долларах')
-    price_euro = models.IntegerField(default=0, verbose_name='Цена в евро')
+    price_dollar = models.DecimalField(verbose_name='Цена в долларах', decimal_places=2, max_digits=5, blank=True,
+                                       null=True)
+    price_euro = models.DecimalField(verbose_name='Цена в евро', decimal_places=2, max_digits=5, blank=True, null=True)
+    quantity_required_options = models.IntegerField(verbose_name='max количество обязательных опций', blank=True,
+                                                    null=True)
+    quantity_addition_options = models.IntegerField(verbose_name='max количество доп опций', blank=True,
+                                                    null=True)
 
     def __str__(self):
         return self.name
@@ -90,13 +98,21 @@ class RequiredOption(models.Model):
     product = models.ForeignKey(Products, related_name='product_required_option', on_delete=models.PROTECT,
                                 verbose_name='Товар')
     name = models.CharField(max_length=255, verbose_name='Название опции')
-    price_dollar = models.IntegerField(default=0, verbose_name='Цена в долларах')
-    price_euro = models.IntegerField(default=0, verbose_name='Цена в евро')
-    new_price_dollar = models.IntegerField(verbose_name='Новая цена в долларах(со скидкой)', blank=True, null=True)
-    new_price_euro = models.IntegerField(verbose_name='Новая цена в евро(со скидкой)', blank=True, null=True)
+    price_dollar = models.DecimalField(default=0, verbose_name='Цена в долларах', decimal_places=2, max_digits=5)
+    price_euro = models.DecimalField(default=0, verbose_name='Цена в евро', decimal_places=2, max_digits=5)
+    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=2, max_digits=5,
+                                           blank=True, null=True)
+    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=2, max_digits=5,
+                                         blank=True, null=True)
 
     def __str__(self):
         return self.name
+
+    def get_option_price_euro(self):
+        if self.new_price_euro:
+            return self.new_price_euro
+        else:
+            return self.price_euro
 
     class Meta:
         verbose_name = 'Обязательная опция'
@@ -109,10 +125,12 @@ class RequiredOptionChild(models.Model):
     required_option = models.ForeignKey(RequiredOption, related_name='required_option_child', on_delete=models.PROTECT,
                                         verbose_name='Родительская')
     name = models.CharField(max_length=255, verbose_name='Название опции')
-    price_dollar = models.IntegerField(default=0, verbose_name='Цена в долларах')
-    price_euro = models.IntegerField(default=0, verbose_name='Цена в евро')
-    new_price_dollar = models.IntegerField(verbose_name='Новая цена в долларах(со скидкой)', blank=True, null=True)
-    new_price_euro = models.IntegerField(verbose_name='Новая цена в евро(со скидкой)', blank=True, null=True)
+    price_dollar = models.DecimalField(default=0, verbose_name='Цена в долларах', decimal_places=2, max_digits=5)
+    price_euro = models.DecimalField(default=0, verbose_name='Цена в евро', decimal_places=2, max_digits=5)
+    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=2, max_digits=5,
+                                           blank=True, null=True)
+    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=2, max_digits=5,
+                                         blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -126,13 +144,21 @@ class AdditionOptions(models.Model):
     product = models.ForeignKey(Products, related_name='product_addition_option', on_delete=models.PROTECT,
                                 verbose_name='Товар')
     name = models.CharField(max_length=255, verbose_name='Название опции')
-    price_dollar = models.IntegerField(default=0, verbose_name='Цена в долларах')
-    price_euro = models.IntegerField(default=0, verbose_name='Цена в евро')
-    new_price_dollar = models.IntegerField(verbose_name='Новая цена в долларах(со скидкой)', blank=True, null=True)
-    new_price_euro = models.IntegerField(verbose_name='Новая цена в евро(со скидкой)', blank=True, null=True)
+    price_dollar = models.DecimalField(default=0, decimal_places=2, max_digits=5, verbose_name='Цена в долларах')
+    price_euro = models.DecimalField(default=0, decimal_places=2, max_digits=5, verbose_name='Цена в евро')
+    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=2, max_digits=5,
+                                           blank=True, null=True)
+    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=2, max_digits=5,
+                                         blank=True, null=True)
 
     def __str__(self):
         return self.name
+
+    def get_option_price_euro(self):
+        if self.new_price_euro:
+            return self.new_price_euro
+        else:
+            return self.price_euro
 
     class Meta:
         verbose_name = 'Дополнительная опция'
@@ -145,10 +171,12 @@ class AdditionOptionsChild(models.Model):
     addition_option = models.ForeignKey(AdditionOptions, related_name='addition_option_child', on_delete=models.PROTECT,
                                         verbose_name='Родительская')
     name = models.CharField(max_length=255, verbose_name='Название опции')
-    price_dollar = models.IntegerField(default=0, verbose_name='Цена в долларах')
-    price_euro = models.IntegerField(default=0, verbose_name='Цена в евро')
-    new_price_dollar = models.IntegerField(verbose_name='Новая цена в долларах(со скидкой)', blank=True, null=True)
-    new_price_euro = models.IntegerField(verbose_name='Новая цена в евро(со скидкой)', blank=True, null=True)
+    price_dollar = models.DecimalField(default=0, decimal_places=2, max_digits=5, verbose_name='Цена в долларах')
+    price_euro = models.DecimalField(default=0, decimal_places=2, max_digits=5, verbose_name='Цена в евро')
+    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=2, max_digits=5,
+                                           blank=True, null=True)
+    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=2, max_digits=5,
+                                         blank=True, null=True)
 
     def __str__(self):
         return self.name

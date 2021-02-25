@@ -23,6 +23,7 @@ def product(request, slug):
 
 def category(request, slug):
     categories = Categories.objects.all()
+    # TODO Обработать ошибку
     category = Categories.objects.get(slug=slug)
     products = category.products_category.all()
     context = {
@@ -35,6 +36,7 @@ def category(request, slug):
 
 def subcategory(request, category, subcategory):
     categories = Categories.objects.all()
+    # TODO Обработать ошибку
     sub_category = SubCategories.objects.get(slug=subcategory)
     products = sub_category.products_subcategory.all()
     context = {

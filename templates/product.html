@@ -18,10 +18,13 @@
                         <img src="{{ product.image.url }}" alt="">
                     </div>
                     {% if product.product_required_option.all %}
-                        <div class="required_options">
+                        <div data-requirement-option-count="{{ product.quantity_required_options }}"
+                             class="required_options">
                             <p>Select options:</p>
                             {% for option in product.product_required_option.all %}
-                                <div class="option">
+                                <div class="option"
+                                     data-price="{{ option.get_option_price_euro }}"
+                                     data-name="{{ option.name }}">
                                     <div class="checkbox">
                                         <input class="required" type="checkbox" id="cd{{ option.name }}{{ option.id }}">
                                         <label for="cd{{ option.name }}{{ option.id }}">
@@ -39,10 +42,12 @@
                         </div>
                     {% endif %}
                     {% if product.product_addition_option.all %}
-                        <div class="addition_options">
+                        <div data-addition-option-count="{{ product.quantity_addition_options }}"
+                             class="addition_options">
                             <p>Select options:</p>
                             {% for option in product.product_addition_option.all %}
-                                <div class="option">
+                                <div class="option" data-price="{{ option.get_option_price_euro }}"
+                                     data-name="{{ option.name }}">
                                     <div class="checkbox">
                                         <input class="addition" type="checkbox" id="cd{{ option.name }}{{ option.id }}">
                                         <label for="cd{{ option.name }}{{ option.id }}">
@@ -83,4 +88,82 @@
             </div>
         </div>
     </section>
+    <script>
+        const requiredInputs = document.querySelectorAll('.required')
+        const additionInputs = document.querySelectorAll('.addition')
+        const options = document.querySelectorAll('.option_name')
+        let requiredChecked = []
+        let additionChecked = []
+        let quantityRequiredOptions = document.querySelector('.required_options')
+        let quantityAdditionOptions = document.querySelector('.addition_options')
+        const minus = document.querySelector('.minus')
+        minus.addEventListener('click', setPrice)
+        const plus = document.querySelector('.plus')
+        plus.addEventListener('click', setPrice)
+        const count = document.querySelector('.count')
+        let price = 0
+
+        if (quantityRequiredOptions) {
+            quantityRequiredOptions = quantityRequiredOptions.getAttribute('data-requirement-option-count')
+        }
+
+        if (quantityAdditionOptions) {
+            quantityAdditionOptions = quantityAdditionOptions.getAttribute('data-addition-option-count')
+        }
+
+        if (requiredInputs) {
+            checkInputs(requiredInputs, quantityRequiredOptions, requiredChecked)
+        }
+
+        if (additionChecked) {
+            checkInputs(additionInputs, quantityAdditionOptions, additionChecked)
+        }
+
+        function checkInputs(inputs, max, array) {
+            inputs.forEach(item => {
+                item.addEventListener('change', function () {
+                    if (this.checked && (array.length < max || !max)) {
+                        array.push(this)
+                    } else if (this.checked && array.length.toString() === max) {
+                        array.push(this)
+                        array.shift().checked = false
+                    } else {
+                        array.forEach((item, index, array) => {
+                            if (item === this) {
+                                array.splice(index, 1)
+                            }
+                        })
+                    }
+                    setPrice()
+                })
+            })
+        }
+
+        function setPrice() {
+            const priceHtml = document.querySelector('.price').querySelector('p')
+            price = 0
+            requiredChecked.forEach(item => {
+                price += +item.closest('.option').getAttribute('data-price').replace(',', '.')
+            })
+            additionChecked.forEach(item => {
+                price += +item.closest('.option').getAttribute('data-price').replace(',', '.')
+            })
+            if (this === plus) {
+                count.innerText = +count.innerHTML + 1
+            }
+            if (this === minus && +count.innerText > 1) {
+                count.innerText = +count.innerHTML - 1
+            }
+            let quantity = +count.innerText
+            price = price * quantity
+            priceHtml.innerText = '€ ' + price
+        }
+
+        options.forEach(item => {
+            item.addEventListener('click', function () {
+                const input = this.closest('.option').querySelector('input')
+                input.click()
+            })
+        })
+    </script>
 {% endblock %}
