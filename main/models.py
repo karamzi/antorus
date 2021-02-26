@@ -36,7 +36,7 @@ class SubCategories(models.Model):
                                  on_delete=models.PROTECT)
     # TODO Валидация названия
     name = models.CharField(max_length=255, verbose_name='Название подкатегории', unique=True)
-    slug = models.SlugField(verbose_name='Слаг')
+    slug = models.SlugField(verbose_name='Слаг', blank=True)
 
     def __str__(self):
         return self.name
