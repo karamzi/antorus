@@ -204,22 +204,3 @@ class AdditionOptions(models.Model):
         verbose_name = 'Дополнительная опция'
         verbose_name_plural = 'Дополнительные опции'
 
-# class AdditionOptionsChild(models.Model):
-#     product = models.ForeignKey(Products, related_name='product_addition_option_child', on_delete=models.PROTECT,
-#                                 verbose_name='Товар')
-#     addition_option = models.ForeignKey(AdditionOptions, related_name='addition_option_child', on_delete=models.PROTECT,
-#                                         verbose_name='Родительская')
-#     name = models.CharField(max_length=255, verbose_name='Название опции')
-#     price_dollar = models.DecimalField(default=0, decimal_places=2, max_digits=5, verbose_name='Цена в долларах')
-#     price_euro = models.DecimalField(default=0, decimal_places=2, max_digits=5, verbose_name='Цена в евро')
-#     new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=2, max_digits=5,
-#                                            blank=True, null=True)
-#     new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=2, max_digits=5,
-#                                          blank=True, null=True)
-#
-#     def __str__(self):
-#         return self.name
-#
-#     class Meta:
-#         verbose_name = 'Дополнительная опция(дочерняя)'
-#         verbose_name_plural = 'Дополнительные опции(дочерняя)'

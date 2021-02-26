@@ -23,11 +23,8 @@
                             <p>Select options:</p>
                             {% for option in product.product_required_option.all %}
                                 <div class="option"
-                                        {% if currency == 'us' %}
-                                     data-price="{{ option.get_option_price_dollar }}"
-                                        {% else %}
-                                     data-price="{{ option.get_option_price_euro }}"
-                                        {% endif %}
+                                     data-price-us="{{ option.get_option_price_dollar }}"
+                                     data-price-eu="{{ option.get_option_price_euro }}"
                                      data-name="{{ option.name }}"
                                      data-id="{{ option.pk }}">
                                     <div class="checkbox">
@@ -65,14 +62,11 @@
                             {% if option.required_option_child.all %}
                                 <div style="display: none"
                                      class="{% if product.child_required %}required_options{% else %}addition_options{% endif %} child_option">
-                                    <p>Select options:</p>
+                                    <p>Select options for {{ option.name }}</p>
                                     {% for child_option in option.required_option_child.all %}
                                         <div class="option"
-                                                {% if currency == 'us' %}
-                                             data-price="{{ child_option.get_option_price_dollar }}"
-                                                {% else %}
-                                             data-price="{{ child_option.get_option_price_euro }}"
-                                                {% endif %}
+                                             data-price-us="{{ child_option.get_option_price_dollar }}"
+                                             data-price-eu="{{ child_option.get_option_price_euro }}"
                                              data-name="{{ child_option.name }}"
                                              data-parent-id="{{ option.pk }}">
                                             <div class="checkbox">
@@ -89,15 +83,15 @@
                                                     $ {{ child_option.get_option_price_dollar }}</div>
                                                 {% if child_option.new_price_dollar %}
                                                     <div class="option_new_price">
-                                                        € {{ child_option.new_price_dollar }}</div>
+                                                        € {{ child_option.get_option_price_dollar }}</div>
                                                 {% endif %}
 
                                             {% else %}
 
                                                 <div class="option_price {% if option.new_price_euro %}old{% endif %}">
-                                                    € {{ option.price_euro }}</div>
+                                                    € {{ child_option.get_option_price_euro }}</div>
                                                 {% if option.new_price_euro %}
-                                                    <div class="option_new_price">€ {{ option.new_price_euro }}</div>
+                                                    <div class="option_new_price">€ {{ child_option.get_option_price_euro }}</div>
                                                 {% endif %}
 
                                             {% endif %}
@@ -193,9 +187,9 @@
         const imgURL = '{{ product.thumb.url }}'
         const productId = '{{ product.pk }}'
         {% if currency == 'us' %}
-            const currencySign = '$ '
+            const currencySign = '$'
         {% else %}
-            const currencySign = '€ '
+            const currencySign = '€'
         {% endif %}
 
         {% if currency == 'us' %}

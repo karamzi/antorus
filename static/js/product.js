@@ -83,13 +83,13 @@ function setPrice() {
     price = 0
     price += +productPrice.replace(',', '.')
     requiredChecked.forEach(item => {
-        price += +item.closest('.option').getAttribute('data-price').replace(',', '.')
+        price += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
     })
     requiredChildChecked.forEach(item => {
-        price += +item.closest('.option').getAttribute('data-price').replace(',', '.')
+        price += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
     })
     additionChecked.forEach(item => {
-        price += +item.closest('.option').getAttribute('data-price').replace(',', '.')
+        price += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
     })
     if (this === plus) {
         count.innerText = +count.innerHTML + 1
@@ -99,7 +99,7 @@ function setPrice() {
     }
     let quantity = +count.innerText
     price = price * quantity
-    priceHtml.innerText = currencySign + price.toFixed(2)
+    priceHtml.innerText = currencySign + ' ' + price.toFixed(2)
 }
 
 function generateProductObject() {
