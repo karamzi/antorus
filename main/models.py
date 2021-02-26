@@ -114,6 +114,12 @@ class RequiredOption(models.Model):
         else:
             return self.price_euro
 
+    def get_option_price_dollar(self):
+        if self.new_price_dollar:
+            return self.new_price_dollar
+        else:
+            return self.price_dollar
+
     class Meta:
         verbose_name = 'Обязательная опция'
         verbose_name_plural = 'Обязательные опции'
@@ -159,6 +165,12 @@ class AdditionOptions(models.Model):
             return self.new_price_euro
         else:
             return self.price_euro
+
+    def get_option_price_dollar(self):
+        if self.new_price_dollar:
+            return self.new_price_dollar
+        else:
+            return self.price_dollar
 
     class Meta:
         verbose_name = 'Дополнительная опция'

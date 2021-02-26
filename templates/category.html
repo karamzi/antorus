@@ -24,9 +24,9 @@
                             </div>
                             {% if category.categories_subcategories.all %}
                                 <div class="accordion">
-                                {% for subcategory in category.categories_subcategories.all %}
-                                    <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
-                                {% endfor %}
+                                    {% for subcategory in category.categories_subcategories.all %}
+                                        <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                                    {% endfor %}
                                 </div>
                             {% endif %}
                         {% endfor %}
@@ -36,11 +36,15 @@
                     <h2>{% if category %}{{ category }}{% else %}{{ sub_category }}{% endif %}</h2>
                     <div class="products">
                         {% for product in products %}
-                        <div class="product">
-                            <img src="{{ product.image.url }}" alt="">
-                            <a href="{{ product.get_absolute_url }}" class="name">{{ product.name }}</a>
-                            <p class="price">$ {{ product.price_dollar }}</p>
-                        </div>
+                            <div class="product">
+                                <img src="{{ product.image.url }}" alt="">
+                                <a href="{{ product.get_absolute_url }}" class="name">{{ product.name }}</a>
+                                {% if currency == 'us' %}
+                                    <p class="price">$ {{ product.price_dollar }}</p>
+                                {% else %}
+                                    <p class="price">€ {{ product.price_euro }}</p>
+                                {% endif %}
+                            </div>
                         {% endfor %}
                     </div>
                 </div>

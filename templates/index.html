@@ -48,7 +48,11 @@
                             <div class="product">
                                 <img src="{{ product.image.url }}" alt="">
                                 <a href="{{ product.get_absolute_url }}" class="name">{{ product.name }}</a>
-                                <p class="price">$ {{ product.price_dollar }}</p>
+                                {% if currency == 'us' %}
+                                    <p class="price">$ {{ product.price_dollar }}</p>
+                                {% else %}
+                                    <p class="price">€ {{ product.price_euro }}</p>
+                                {% endif %}
                             </div>
                         {% endfor %}
                     </div>

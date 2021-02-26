@@ -2,6 +2,13 @@ from django.shortcuts import render
 from .models import Products, Categories, SubCategories
 
 
+def global_var(request):
+    currency = request.COOKIES.get('currency', 'us')
+    return {
+        'currency': currency
+    }
+
+
 def index(request):
     categories = Categories.objects.all()
     products = Products.objects.all()
