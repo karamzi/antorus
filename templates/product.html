@@ -1,6 +1,6 @@
 {% extends 'basic/basic.html' %}
 {% load static %}
-
+{% load thumbnail %}
 
 {% block style %}
     <link rel="stylesheet" href="{% static 'css/product.css' %}">
@@ -17,6 +17,7 @@
                     <div class="product_img">
                         <img src="{{ product.image.url }}" alt="">
                     </div>
+
                     {% if product.product_required_option.all %}
                         <div class="required_options">
                             <p>Select options:</p>
@@ -27,9 +28,11 @@
                                         {% else %}
                                      data-price="{{ option.get_option_price_euro }}"
                                         {% endif %}
-                                     data-name="{{ option.name }}">
+                                     data-name="{{ option.name }}"
+                                     data-id="{{ option.pk }}">
                                     <div class="checkbox">
-                                        <input class="required" type="checkbox" id="cd{{ option.name }}{{ option.pk }}">
+                                        <input class="required parent" type="checkbox"
+                                               id="cd{{ option.name }}{{ option.pk }}">
                                         <label for="cd{{ option.name }}{{ option.pk }}">
                                             <div class="tick"></div>
                                         </label>
@@ -39,10 +42,9 @@
 
                                         <div class="option_price {% if option.new_price_dollar %}old{% endif %}">
                                             $ {{ option.price_dollar }}</div>
-                                        {% if new_price_dollar %}
+                                        {% if option.new_price_dollar %}
                                             <div class="option_new_price">€ {{ option.new_price_dollar }}</div>
                                         {% endif %}
-                                        </div>
 
                                     {% else %}
 
@@ -51,80 +53,133 @@
                                         {% if option.new_price_euro %}
                                             <div class="option_new_price">€ {{ option.new_price_euro }}</div>
                                         {% endif %}
-                                        </div>
 
                                     {% endif %}
+                                </div>
                             {% endfor %}
                         </div>
                     {% endif %}
-                {% if product.product_addition_option.all %}
-                    <div class="addition_options">
-                        <p>Select options:</p>
-                        {% for option in product.product_addition_option.all %}
-                            <div class="option"
-                                    {% if currency == 'us' %}
-                                 data-price="{{ option.get_option_price_dollar }}"
-                                    {% else %}
-                                 data-price="{{ option.get_option_price_euro }}"
-                                    {% endif %}
-                                 data-name="{{ option.name }}">
-                                <div class="checkbox">
-                                    <input class="addition" type="checkbox" id="cd{{ option.name }}{{ option.pk }}">
-                                    <label for="cd{{ option.name }}{{ option.pk }}">
-                                        <div class="tick"></div>
-                                    </label>
+
+                    {% if product.product_required_option.all %}
+                        {% for option in product.product_required_option.all %}
+                            {% if option.required_option_child.all %}
+                                <div style="display: none"
+                                     class="{% if product.child_required %}required_options{% else %}addition_options{% endif %} child_option">
+                                    <p>Select options:</p>
+                                    {% for child_option in option.required_option_child.all %}
+                                        <div class="option"
+                                                {% if currency == 'us' %}
+                                             data-price="{{ child_option.get_option_price_dollar }}"
+                                                {% else %}
+                                             data-price="{{ child_option.get_option_price_euro }}"
+                                                {% endif %}
+                                             data-name="{{ child_option.name }}"
+                                             data-parent-id="{{ option.pk }}">
+                                            <div class="checkbox">
+                                                <input class="required child" type="checkbox"
+                                                       id="cd{{ child_option.name }}{{ child_option.pk }}">
+                                                <label for="cd{{ child_option.name }}{{ child_option.pk }}">
+                                                    <div class="tick"></div>
+                                                </label>
+                                            </div>
+                                            <div class="option_name">{{ child_option.name }}</div>
+                                            {% if currency == 'us' %}
+
+                                                <div class="option_price {% if child_option.new_price_dollar %}old{% endif %}">
+                                                    $ {{ child_option.get_option_price_dollar }}</div>
+                                                {% if child_option.new_price_dollar %}
+                                                    <div class="option_new_price">
+                                                        € {{ child_option.new_price_dollar }}</div>
+                                                {% endif %}
+
+                                            {% else %}
+
+                                                <div class="option_price {% if option.new_price_euro %}old{% endif %}">
+                                                    € {{ option.price_euro }}</div>
+                                                {% if option.new_price_euro %}
+                                                    <div class="option_new_price">€ {{ option.new_price_euro }}</div>
+                                                {% endif %}
+
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                                <div class="option_name">{{ option.name }}</div>
-
-                                {% if currency == 'us' %}
-
-                                    <div class="option_price {% if option.new_price_dollar %}old{% endif %}">
-                                        $ {{ option.price_dollar }}</div>
-                                    {% if new_price_dollar %}
-                                        <div class="option_new_price">€ {{ option.new_price_dollar }}</div>
-                                    {% endif %}
-                                    </div>
-
-                                {% else %}
-
-                                    <div class="option_price {% if option.new_price_euro %}old{% endif %}">
-                                        € {{ option.price_euro }}</div>
-                                    {% if option.new_price_euro %}
-                                        <div class="option_new_price">€ {{ option.new_price_euro }}</div>
-                                    {% endif %}
-                                    </div>
-                                {% endif %}
+                            {% endif %}
                         {% endfor %}
+                    {% endif %}
+
+
+                    {% if product.product_addition_option.all %}
+                        <div class="addition_options">
+                            <p>Select options:</p>
+                            {% for option in product.product_addition_option.all %}
+                                <div class="option"
+                                        {% if currency == 'us' %}
+                                     data-price="{{ option.get_option_price_dollar }}"
+                                        {% else %}
+                                     data-price="{{ option.get_option_price_euro }}"
+                                        {% endif %}
+                                     data-name="{{ option.name }}">
+                                    <div class="checkbox">
+                                        <input class="addition" type="checkbox" id="cd{{ option.name }}{{ option.pk }}">
+                                        <label for="cd{{ option.name }}{{ option.pk }}">
+                                            <div class="tick"></div>
+                                        </label>
+                                    </div>
+                                    <div class="option_name">{{ option.name }}</div>
+
+                                    {% if currency == 'us' %}
+
+                                        <div class="option_price {% if option.new_price_dollar %}old{% endif %}">
+                                            $ {{ option.price_dollar }}</div>
+                                        {% if new_price_dollar %}
+                                            <div class="option_new_price">€ {{ option.new_price_dollar }}</div>
+                                        {% endif %}
+
+                                    {% else %}
+
+                                        <div class="option_price {% if option.new_price_euro %}old{% endif %}">
+                                            € {{ option.price_euro }}</div>
+                                        {% if option.new_price_euro %}
+                                            <div class="option_new_price">€ {{ option.new_price_euro }}</div>
+                                        {% endif %}
+
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="price">
+                        {% if currency == 'us' and product.price_dollar > 0 %}
+                            <p>$ {{ product.price_dollar }}</p>
+                        {% elif currency == 'eu' and product.price_euro > 0 %}
+                            <p>$ {{ product.price_dollar }}</p>
+                        {% else %}
+                            <p>€ {{ product.price_euro }}</p>
+                        {% endif %}
                     </div>
-                {% endif %}
-            <div class="price">
-                {% if currency == 'us' and product.price_dollar > 0 %}
-                    <p>$ {{ product.price_dollar }}</p>
-                {% elif currency == 'eu' and product.price_euro > 0 %}
-                    <p>$ {{ product.price_dollar }}</p>
-                {% else %}
-                    <p>€ {{ product.price_euro }}</p>
-                {% endif %}
-            </div>
-            <div class="product_buttons">
-                <div class="quantity">
-                    <div class="minus"></div>
-                    <div class="count">1</div>
-                    <div class="plus">+</div>
+                    <div class="product_buttons">
+                        <div class="quantity">
+                            <div class="minus"></div>
+                            <div class="count">1</div>
+                            <div class="plus">+</div>
+                        </div>
+                        <div class="add_to_cart">
+                            <p>add to cart</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="add_to_cart">
-                    <p>add to cart</p>
+
+
+                <div class="product_right">
+                    <div class="product_name">{{ product.name }}</div>
+                    <p>DESCRIPTION</p>
+                    <div class="length">⏱️ Length: <span>{{ product.length }}</span></div>
+                    <div class="requirements">⚠️ Character Requirements: <span>{{ product.char_req }}</span></div>
+                    <div class="description">{{ product.description }}</div>
                 </div>
             </div>
-        </div>
-        <div class="product_right">
-            <div class="product_name">{{ product.name }}</div>
-            <p>DESCRIPTION</p>
-            <div class="length">⏱️ Length: <span>{{ product.length }}</span></div>
-            <div class="requirements">⚠️ Character Requirements: <span>{{ product.char_req }}</span></div>
-            <div class="description">{{ product.description }}</div>
-        </div>
-        </div>
         </div>
     </section>
 {% endblock %}
@@ -134,6 +189,9 @@
         const quantityRequiredOptions = '{{ product.quantity_required_options }}'
         const quantityAdditionOptions = '{{ product.quantity_addition_options }}'
         const name = '{{ product.name }}'
+        const childIsRequired = '{{ product.child_required }}'
+        const imgURL = '{{ product.thumb.url }}'
+        const productId = '{{ product.pk }}'
         {% if currency == 'us' %}
             const currencySign = '$ '
         {% else %}

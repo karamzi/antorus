@@ -14,7 +14,7 @@ class RequiredOptionChildAdmin(admin.TabularInline):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         path = request.path
-        if not re.findall(r'^/add/$', path):
+        if len(re.findall(r'/add/$', path)) > 0:
             return super().formfield_for_foreignkey(db_field, request, **kwargs)
         digit = re.findall(r'\d+', path)
         if db_field.name == 'required_option':
@@ -27,22 +27,22 @@ class AdditionsOptionAdmin(admin.TabularInline):
     extra = 1
 
 
-class AdditionsOptionChildAdmin(admin.TabularInline):
-    model = models.AdditionOptionsChild
-    extra = 1
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        path = request.path
-        if not re.findall(r'^/add/$', path):
-            return super().formfield_for_foreignkey(db_field, request, **kwargs)
-        digit = re.findall(r'\d+', path)
-        if db_field.name == 'addition_option':
-            kwargs['queryset'] = models.AdditionOptions.objects.filter(product_id=int(digit[0]))
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+# class AdditionsOptionChildAdmin(admin.TabularInline):
+#     model = models.AdditionOptionsChild
+#     extra = 1
+#
+#     def formfield_for_foreignkey(self, db_field, request, **kwargs):
+#         path = request.path
+#         if len(re.findall(r'/add/$', path)) > 0:
+#             return super().formfield_for_foreignkey(db_field, request, **kwargs)
+#         digit = re.findall(r'\d+', path)
+#         if db_field.name == 'addition_option':
+#             kwargs['queryset'] = models.AdditionOptions.objects.filter(product_id=int(digit[0]))
+#         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 class ProductsAdmin(admin.ModelAdmin):
-    inlines = [RequiredOptionAdmin, RequiredOptionChildAdmin, AdditionsOptionAdmin, AdditionsOptionChildAdmin]
+    inlines = [RequiredOptionAdmin, RequiredOptionChildAdmin, AdditionsOptionAdmin]
 
 
 admin.site.register(models.Products, ProductsAdmin)

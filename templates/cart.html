@@ -20,52 +20,31 @@
                         <div class="head_quantity">QUANTITY</div>
                         <div class="head_total">TOTAL</div>
                     </div>
-                    <div class="product">
-                        <div class="product_description">
-                            <img src="{% static 'img/test2.png' %}" alt="">
-                            <div class="description">
-                                <div class="product_name"><a href="">CASTLE NATHRIA HEROIC RUN (TRADERS ONLY EU)</a>
-                                </div>
-                                <div class="product_options">
-                                    <h4>Options</h4>
-                                    <p>Select options: 10/10 bosses</p>
-                                    <p>Select options: Self Play</p>
-                                    <div class="remove">Remove</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="price">$83.00</div>
-                        <div class="product_quantity">
-                            <div class="quantity">
-                                <div class="minus"></div>
-                                <div class="count">1</div>
-                                <div class="plus">+</div>
-                            </div>
-                        </div>
-                        <div class="total">$83.00</div>
-                    </div>
-                    <div class="product">
-                        <div class="product_description">
-                            <img src="{% static 'img/test2.png' %}" alt="">
-                            <div class="description">
-                                <div class="product_name"><a href="">CASTLE NATHRIA HEROIC RUN (TRADERS ONLY EU)</a>
-                                </div>
-                                <div class="product_options">
-                                    <h4>Options</h4>
-                                    <p>Select options: 10/10 bosses</p>
-                                    <p>Select options: Self Play</p>
+                    <div class="products">
+                        <div class="product">
+                            <div class="product_description">
+                                <img src="{% static 'img/test2.png' %}" alt="">
+                                <div class="description">
+                                    <div class="product_name"><a href="">CASTLE NATHRIA HEROIC RUN (TRADERS ONLY EU)</a>
+                                    </div>
+                                    <div class="product_options">
+                                        <h4>Options</h4>
+                                        <p>Select options: 10/10 bosses</p>
+                                        <p>Select options: Self Play</p>
+                                        <div class="remove">Remove</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="price">$83.00</div>
-                        <div class="product_quantity">
-                            <div class="quantity">
-                                <div class="minus"></div>
-                                <div class="count">1</div>
-                                <div class="plus">+</div>
+                            <div class="price">$83.00</div>
+                            <div class="product_quantity">
+                                <div class="quantity">
+                                    <div class="minus"></div>
+                                    <div class="count">1</div>
+                                    <div class="plus">+</div>
+                                </div>
                             </div>
+                            <div class="total">$83.00</div>
                         </div>
-                        <div class="total">$83.00</div>
                     </div>
                     <div class="promo_code">
                         <p>Enter your promotional code</p>
@@ -79,7 +58,7 @@
                     <h4>CART TOTALS</h4>
                     <div class="subtotal">
                         <p>Subtotal</p>
-                        <p>€ 66.00</p>
+                        <p id="subtotal">€ 66.00</p>
                     </div>
                     <div class="coupon">
                         <p>Coupon: own2020</p>
@@ -87,11 +66,16 @@
                     </div>
                     <div class="cart_total">
                         <p>Total</p>
-                        <p>€ 62.70</p>
+                        <p id="cart_total">€ 62.70</p>
                     </div>
                     <a href="#" class="cart_button">Proceed to checkout</a>
                 </div>
             </div>
         </div>
     </section>
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="{% static 'js//cart.js' %}"></script>
 {% endblock %}
