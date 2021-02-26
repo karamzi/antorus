@@ -171,6 +171,7 @@ class RequiredOptionChild(models.Model):
     class Meta:
         verbose_name = 'Обязательная опция(дочерняя)'
         verbose_name_plural = 'Обязательные опции(дочерняя)'
+        ordering = ['required_option']
 
 
 class AdditionOptions(models.Model):

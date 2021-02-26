@@ -24,7 +24,7 @@ if (additionChecked) {
 }
 
 if (requiredChildInputs) {
-    checkInputs(requiredChildInputs, '1', requiredChildChecked)
+    checkInputs(requiredChildInputs, '', requiredChildChecked)
 }
 
 function checkInputs(inputs, max, array) {
@@ -67,11 +67,12 @@ function showChildOptions(option) {
 function hideChildOptions(option) {
     const option_id = option.closest('.option').getAttribute('data-id')
     if (option_id) {
-        requiredChildInputs.forEach(item => {
+        requiredChildInputs.forEach((item, index, array) => {
             const parentId = item.closest('.option').getAttribute('data-parent-id')
             if (parentId === option_id) {
                 item.closest('.child_option').style.display = 'none'
-                requiredChildChecked = []
+                item.checked = false
+                Array.prototype.slice.call(array).splice(index, 1)
             }
         })
     }
