@@ -198,14 +198,23 @@
 }
 
 .success {
-    top: 10px;
+    top: 20px;
     right: 0;
     position: fixed;
     background-color: #45db42ad;
     border-radius: 10px;
 }
 
-.success p {
+
+.success p, .error p {
     color: white;
     padding: 20px 20px;
+}
+
+.error {
+    top: 20px;
+    right: 0;
+    position: fixed;
+    background-color: #842029;
+    border-radius: 10px;
 }

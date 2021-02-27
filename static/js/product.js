@@ -91,11 +91,11 @@ function setPrice() {
     })
     requiredChildChecked.forEach(item => {
         priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
-         priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
+        priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
     })
     additionChecked.forEach(item => {
         priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
-         priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
+        priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
     })
     if (this === plus) {
         count.innerText = +count.innerHTML + 1
@@ -104,7 +104,7 @@ function setPrice() {
         count.innerText = +count.innerHTML - 1
     }
     let quantity = +count.innerText
-    priceUs= priceUs * quantity
+    priceUs = priceUs * quantity
     priceEu = priceEu * quantity
     if (currency === 'us') {
         priceHtml.innerText = '$ ' + ' ' + priceUs.toFixed(2)
@@ -149,7 +149,21 @@ function generateOptionObject(input, region) {
 
 function addToCart() {
     const notificationSuccess = document.querySelector('.success')
-    console.log(notificationSuccess)
+    const notificationError = document.querySelector('.error')
+    if (requiredInputs.length > 0 && requiredChecked.length === 0) {
+        notificationError.style.display = 'block'
+        setTimeout(function () {
+            notificationError.style.display = 'none'
+        }, 2500)
+        return
+    }
+    if (childIsRequired === 'True' && requiredChildChecked.length === 0) {
+        notificationError.style.display = 'block'
+        setTimeout(function () {
+            notificationError.style.display = 'none'
+        }, 2500)
+        return
+    }
     let productUs = generateProductObject(priceUs, 'us')
     let productEu = generateProductObject(priceEu, 'eu')
     productUs['currency'] = '$'
@@ -175,7 +189,7 @@ function addToCart() {
     notificationSuccess.style.display = 'block'
     setTimeout(function () {
         notificationSuccess.style.display = 'none'
-    }, 2000)
+    }, 2500)
 }
 
 options.forEach(item => {
