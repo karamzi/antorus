@@ -89,7 +89,7 @@
     margin-bottom: 7px;
 }
 
-.remove {
+.remove, .removeFromCart {
     cursor: pointer;
     color: white;
     font-weight: 400;
@@ -98,7 +98,7 @@
     text-decoration: underline;
 }
 
-.remove:hover {
+.remove:hover, .removeFromCart:hover {
     color: rgb(136, 136, 136);
     transition: color 0.3s ease;
 }

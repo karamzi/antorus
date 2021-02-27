@@ -26,7 +26,7 @@ function renderCart() {
         item.options.forEach(item => {
             html += '<p>Select options: ' + item.name + '</p>'
         })
-
+        html += '<span class="removeFromCart">Remove</span>'
         html += '</div>' +
             '</div>' +
             '</div>' +
@@ -46,9 +46,11 @@ function renderCart() {
     minus = document.querySelectorAll('.minus')
     plus = document.querySelectorAll('.plus')
     count = document.querySelector('.count')
+    const removeFromCartButton = document.querySelectorAll('.removeFromCart')
 
     minus && minus.forEach(item => item.addEventListener('click', setPrice))
     plus && plus.forEach(item => item.addEventListener('click', setPrice))
+    removeFromCartButton && removeFromCartButton.forEach(item => item.addEventListener('click', removeFromCart))
     countCart()
 }
 
@@ -119,6 +121,27 @@ function checkCoupon() {
             messageError.style.display = 'block'
         }
     })
+}
+
+function removeFromCart() {
+    const productId = this.closest('.product').getAttribute('data-id')
+    let cartUs = getCookie('cartUs')
+    let cartEu = getCookie('cartEu')
+    cartUs.forEach((item, index, array) => {
+        if (item.id === productId) {
+            array.splice(index, 1)
+        }
+    })
+    cartEu.forEach((item, index, array) => {
+        if (item.id === productId) {
+            array.splice(index, 1)
+        }
+    })
+    cartUs = JSON.stringify(cartUs)
+    cartEu = JSON.stringify(cartEu)
+    setCookie(cartUs, 'cartUs')
+    setCookie(cartEu, 'cartEu')
+    renderCart()
 }
 
 renderCart()

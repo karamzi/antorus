@@ -36,7 +36,7 @@ function countCart() {
         document.getElementById('coupon_price').innerHTML = '- ' + discount.toFixed(2) + ' <span class="coupon_remove">Remove</span>'
         total = subtotal - discount
     } else {
-       total = subtotal
+        total = subtotal
     }
     total = total.toFixed(2)
     subtotal = subtotal.toFixed(2)
@@ -44,6 +44,15 @@ function countCart() {
     document.getElementById('cart_total').innerText = currencyTotal + ' ' + total
 }
 
+function product_quantity() {
+    if (currency === 'us') {
+        document.getElementById('cart_count').innerText = getCookie('cartUs').length
+    } else {
+        document.getElementById('cart_count').innerText = getCookie('cartEu').length
+    }
+}
+
+product_quantity()
 
 function getCookie(name) {
     let results = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
@@ -69,5 +78,5 @@ function setCookie(value, name) {
 }
 
 function eraseCookie(name) {
-    document.cookie = name+'=; Max-Age=-99999999;';
+    document.cookie = name + '=; Max-Age=-99999999;';
 }

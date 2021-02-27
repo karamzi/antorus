@@ -186,6 +186,7 @@ function addToCart() {
     cartEu = JSON.stringify(cartEu)
     setCookie(cartUs, 'cartUs')
     setCookie(cartEu, 'cartEu')
+    product_quantity()
     notificationSuccess.style.display = 'block'
     setTimeout(function () {
         notificationSuccess.style.display = 'none'

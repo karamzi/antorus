@@ -64,3 +64,27 @@ ______________________________________________ */
 .logo img {
     max-width: 200px;
 }
+
+.cart {
+    position: relative;
+}
+
+.cart_count {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: #45db428c;
+    top: -2px;
+    right: -8px;
+}
+
+.cart_count p {
+    color: white;
+    font-size: 12px;
+    font-weight: 400;
+}
+
