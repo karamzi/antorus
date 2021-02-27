@@ -168,7 +168,7 @@
                     <p>DESCRIPTION</p>
                     <div class="length">⏱️ Length: <span>{{ product.length }}</span></div>
                     <div class="requirements">⚠️ Character Requirements: <span>{{ product.char_req }}</span></div>
-                    <div class="description">{{ product.description }}</div>
+                    <div class="description">{{ product.description|safe }}</div>
                 </div>
             </div>
         </div>
