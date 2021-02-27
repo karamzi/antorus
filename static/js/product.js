@@ -148,6 +148,8 @@ function generateOptionObject(input, region) {
 }
 
 function addToCart() {
+    const notificationSuccess = document.querySelector('.success')
+    console.log(notificationSuccess)
     let productUs = generateProductObject(priceUs, 'us')
     let productEu = generateProductObject(priceEu, 'eu')
     productUs['currency'] = '$'
@@ -170,6 +172,10 @@ function addToCart() {
     cartEu = JSON.stringify(cartEu)
     setCookie(cartUs, 'cartUs')
     setCookie(cartEu, 'cartEu')
+    notificationSuccess.style.display = 'block'
+    setTimeout(function () {
+        notificationSuccess.style.display = 'none'
+    }, 2000)
 }
 
 options.forEach(item => {
