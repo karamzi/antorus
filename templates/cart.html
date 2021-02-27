@@ -48,8 +48,9 @@
                     </div>
                     <div class="promo_code">
                         <p>Enter your promotional code</p>
+                        <p style="display: none; color: red; margin-bottom: 10px" id="couponNotFound">Coupon not found</p>
                         <div class="input">
-                            <input type="text" placeholder="Coupon code">
+                            <input id="coupon" value="" type="text" placeholder="Coupon code">
                             <div class="input_button">OK</div>
                         </div>
                     </div>
@@ -58,15 +59,15 @@
                     <h4>CART TOTALS</h4>
                     <div class="subtotal">
                         <p>Subtotal</p>
-                        <p id="subtotal">€ 66.00</p>
+                        <p id="subtotal"></p>
                     </div>
-                    <div class="coupon">
-                        <p>Coupon: own2020</p>
-                        <p style="color: darkred">-€ 3.30 <span class="coupon_remove">Remove</span></p>
+                    <div style="display: none" class="coupon">
+                        <p id="coupon_name">Coupon: </p>
+                        <p id="coupon_price" style="color: darkred"><span class="coupon_remove">Remove</span></p>
                     </div>
                     <div class="cart_total">
                         <p>Total</p>
-                        <p id="cart_total">€ 62.70</p>
+                        <p id="cart_total"></p>
                     </div>
                     <a href="{% url 'checkout' %}" class="cart_button">Proceed to checkout</a>
                 </div>

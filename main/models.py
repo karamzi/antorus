@@ -259,7 +259,9 @@ class Order(models.Model):
         ('1', 'Создан'),
     )
     status = models.CharField(verbose_name='Статус заказа', choices=STATUS, max_length=100)
-    price = models.CharField(verbose_name='Итого', max_length=50)
+    price = models.CharField(verbose_name='Без купона', max_length=50)
+    coupon = models.CharField(verbose_name='Купон', max_length=50, blank=True)
+    total = models.CharField(verbose_name='Итого', max_length=50)
 
     def __str__(self):
         return 'Заказ № ' + str(self.id)
@@ -267,3 +269,16 @@ class Order(models.Model):
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
+
+
+class Coupon(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Купон')
+    discount = models.SmallIntegerField(default=0, verbose_name='Процент скидки')
+    count = models.SmallIntegerField(default=0, verbose_name='Количество использований')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Купон'
+        verbose_name_plural = 'Купоны'

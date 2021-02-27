@@ -12,7 +12,7 @@ euButton.addEventListener('click', () => {
 
 const instance = axios.create({
     baseURL: 'http://127.0.0.1:8000/',
-    //baseURL: 'https://bowling-petersburg.ru/api/1.0/',
+    //baseURL: '',
 })
 
 function countCart() {
@@ -25,9 +25,22 @@ function countCart() {
         cart = getCookie('cartEu')
         currencyTotal = '€'
     }
-    let total = cart.reduce((sum, item) => sum + +item.total, 0)
+    let subtotal = cart.reduce((sum, item) => sum + +item.total, 0)
+    let total
+    let coupon = getCookie('coupon')
+    if (coupon && cart.length > 0) {
+        let discount
+        document.getElementById('coupon_name').innerText = 'Coupon: ' + coupon.name
+        document.querySelector('.coupon').style.display = 'flex'
+        discount = +coupon.discount / 100 * subtotal
+        document.getElementById('coupon_price').innerHTML = '- ' + discount.toFixed(2) + ' <span class="coupon_remove">Remove</span>'
+        total = subtotal - discount
+    } else {
+       total = subtotal
+    }
     total = total.toFixed(2)
-    document.getElementById('subtotal').innerText = currencyTotal + ' ' + total
+    subtotal = subtotal.toFixed(2)
+    document.getElementById('subtotal').innerText = currencyTotal + ' ' + subtotal
     document.getElementById('cart_total').innerText = currencyTotal + ' ' + total
 }
 
@@ -36,6 +49,9 @@ function getCookie(name) {
     let results = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
     if (name === 'csrftoken') {
         return results[2]
+    }
+    if (name === 'coupon' && !results) {
+        return undefined
     }
     if (results)
         return JSON.parse(unescape(results[2]))
@@ -50,4 +66,8 @@ function setCookie(value, name) {
     date.setTime(date.getTime() + (90 * 1000))
     expires = "; expires=" + date.toUTCString()
     document.cookie = name + "=" + (value || "") + expires + ";" + ' path=/;'
+}
+
+function eraseCookie(name) {
+    document.cookie = name+'=; Max-Age=-99999999;';
 }

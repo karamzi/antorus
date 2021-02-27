@@ -1,5 +1,5 @@
 const button = document.querySelector('.button')
-button.addEventListener('click', evt =>  createOrder(evt))
+button.addEventListener('click', evt => createOrder(evt))
 
 function renderCart() {
     const products = document.querySelector('.products')
@@ -40,19 +40,26 @@ function createOrder(e) {
     const comment = document.getElementById('comment').value
     let cart
     let total
+    let coupon = getCookie('coupon')
     if (currency === 'us') {
         cart = getCookie('cartUs')
-        total = cart.reduce((sum, item) => sum + +item.total, 0)
-        cart = JSON.stringify(cart)
     } else {
         cart = getCookie('cartEu')
-        total = cart.reduce((sum, item) => sum + +item.total, 0)
-        cart = JSON.stringify(cart)
     }
-    if (!characterServer && !faction && !connection && !email || cart === '[]') {
+    if (!characterServer && !faction && !connection && !email || cart.length === 0) {
         return
     }
+    total = cart.reduce((sum, item) => sum + +item.total, 0)
+    cart = JSON.stringify(cart)
     let data = new FormData()
+    if (coupon) {
+        let discount
+        discount = +coupon.discount / 100 * total
+        data.append('oldPrice', total.toFixed(2))
+        data.append('coupon', coupon.name)
+        total = total - discount
+    }
+    total = total.toFixed(2)
     data.append('cart', cart)
     data.append('total', total)
     data.append('currency', currency)
@@ -68,9 +75,7 @@ function createOrder(e) {
             'Content-Type': 'multipart/form-data',
             'X-CSRFToken': getCookie('csrftoken')
         }
-    }).then(response => {
-        console.log(response)
-    })
+    }).then(response => {})
 }
 
 renderCart()

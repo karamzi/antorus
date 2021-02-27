@@ -1,6 +1,7 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
-from .models import Products, Categories, SubCategories, Order, Cart, CartOptions
+from django.core.exceptions import ObjectDoesNotExist
+from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon
 import json
 
 
@@ -61,6 +62,7 @@ def cart(request):
 
 
 def checkout(request):
+    # TODO если корзина пустая закрыть страницу
     return render(request, 'checkout.html')
 
 
@@ -75,7 +77,18 @@ def create_order(request):
         order.email = request.POST['email']
         order.comment = request.POST['comment']
         order.status = 1
-        order.price = sing + ' ' + request.POST['total']
+        order.total = sing + ' ' + request.POST['total']
+        coupon = request.POST.get('coupon', '')
+        old_price = request.POST.get('oldPrice', '')
+        if coupon:
+            order.coupon = coupon
+            coupon = Coupon.objects.get(name=coupon)
+            coupon.count = coupon.count + 1
+            coupon.save()
+        if old_price:
+            order.price = sing + ' ' + old_price
+        else:
+            order.price = order.total
         order.save()
         cart = json.loads(request.POST['cart'])
         for item in cart:
@@ -96,3 +109,19 @@ def create_order(request):
     return JsonResponse({
         'status': 'created'
     })
+
+
+def check_coupon(request):
+    if request.method == 'POST':
+        try:
+            coupon = Coupon.objects.get(name=request.POST['coupon'])
+            return JsonResponse({
+                'status': 'True',
+                'discount': coupon.discount,
+                'name': coupon.name
+            })
+        except ObjectDoesNotExist:
+            return JsonResponse({
+                'status': 'False'
+            })
+    return HttpResponse(status=200)

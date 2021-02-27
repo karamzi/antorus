@@ -146,6 +146,27 @@ form input, form textarea {
     font-size: 16px;
 }
 
+.coupon {
+    display: flex;
+    justify-content: space-between;
+    color: rgb(142, 142, 142);
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 10px;
+}
+
+.coupon_remove {
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.coupon_remove:hover {
+    color: rgb(142, 142, 142);
+    transition: color 0.3s ease;
+}
+
 .total {
     margin-bottom: 20px;
     padding-bottom: 20px;

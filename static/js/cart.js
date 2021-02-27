@@ -1,7 +1,9 @@
+const inputButton = document.querySelector('.input_button')
 let minus = document.querySelector('.minus')
 let plus = document.querySelector('.plus')
 let count = document.querySelector('.count')
 
+inputButton.addEventListener('click', checkCoupon)
 
 function renderCart() {
     const products = document.querySelector('.products')
@@ -88,6 +90,35 @@ function changeButtons(cart, pressedButton) {
         }
     })
     return cart
+}
+
+function checkCoupon() {
+    const coupon = document.getElementById('coupon').value
+    const messageError = document.getElementById('couponNotFound')
+    messageError.style.display = 'none'
+    if (!coupon) {
+        return
+    }
+    let data = new FormData()
+    data.append('coupon', coupon)
+    instance.post('checkCoupon/', data,  {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    }).then(response => {
+        if (response.data.status === 'True') {
+            let discount = {
+                'name': response.data.name,
+                'discount': response.data.discount,
+            }
+            discount = JSON.stringify(discount)
+            setCookie(discount, 'coupon')
+            countCart()
+        } else if (response.data.status === 'False') {
+            messageError.style.display = 'block'
+        }
+    })
 }
 
 renderCart()
