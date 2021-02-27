@@ -101,6 +101,16 @@ class Products(models.Model):
     def get_absolute_url(self):
         return reverse('product', kwargs={'slug': self.slug})
 
+    def get_quantity_required_options(self):
+        if self.quantity_required_options:
+            return self.quantity_required_options
+        return ''
+
+    def get_quantity_addition_options(self):
+        if self.quantity_addition_options:
+            return self.quantity_addition_options
+        return ''
+
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
@@ -210,9 +220,50 @@ class Cart(models.Model):
     price = models.CharField(verbose_name='Цена', max_length=50)
     quantity = models.SmallIntegerField(verbose_name='Количество')
     total = models.CharField(verbose_name='Итого', max_length=50)
+    order = models.ForeignKey('Order', on_delete=models.PROTECT, verbose_name='Заказ', related_name='order_product')
+
+    def __str__(self):
+        return self.product
+
+    class Meta:
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'
+        ordering = ['-product']
 
 
 class CartOptions(models.Model):
-    product = models.ForeignKey(Cart, on_delete=models.PROTECT, verbose_name='Товар')
+    product = models.ForeignKey(Cart, on_delete=models.PROTECT, verbose_name='Товар', related_name='cart_cart_options')
+    order = models.ForeignKey('Order', on_delete=models.PROTECT, verbose_name='Заказ',
+                              related_name='order_cart_options')
     name = models.CharField(verbose_name='Опция', max_length=255)
     price = models.CharField(verbose_name='Цена', max_length=50)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Опция'
+        verbose_name_plural = 'Опции'
+        ordering = ['product']
+
+
+class Order(models.Model):
+    id = models.AutoField(primary_key=True)
+    character_server = models.CharField(max_length=255, verbose_name='Персонаж и Сервер')
+    battle_tag = models.CharField(max_length=50, verbose_name='Battle tag', blank=True)
+    faction = models.CharField(max_length=50, verbose_name='Фракция')
+    connection = models.CharField(max_length=255, verbose_name='Skype или Discord')
+    email = models.EmailField(verbose_name='Почта')
+    comment = models.TextField(verbose_name='Комментарий', blank=True)
+    STATUS = (
+        ('1', 'Создан'),
+    )
+    status = models.CharField(verbose_name='Статус заказа', choices=STATUS, max_length=100)
+    price = models.CharField(verbose_name='Итого', max_length=50)
+
+    def __str__(self):
+        return 'Заказ № ' + str(self.id)
+
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'

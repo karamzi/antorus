@@ -1,5 +1,7 @@
+from django.http import JsonResponse
 from django.shortcuts import render
-from .models import Products, Categories, SubCategories
+from .models import Products, Categories, SubCategories, Order, Cart, CartOptions
+import json
 
 
 def global_var(request):
@@ -60,3 +62,37 @@ def cart(request):
 
 def checkout(request):
     return render(request, 'checkout.html')
+
+
+def create_order(request):
+    if request.method == 'POST':
+        sing = '€' if request.POST['currency'] == 'eu' else '$'
+        order = Order()
+        order.character_server = request.POST['characterServer']
+        order.battle_tag = request.POST['battleTag']
+        order.faction = request.POST['faction']
+        order.connection = request.POST['connection']
+        order.email = request.POST['email']
+        order.comment = request.POST['comment']
+        order.status = 1
+        order.price = sing + ' ' + request.POST['total']
+        order.save()
+        cart = json.loads(request.POST['cart'])
+        for item in cart:
+            product = Cart()
+            product.product = item['name']
+            product.quantity = item['quantity']
+            product.price = item['currency'] + ' ' + item['price']
+            product.total = item['currency'] + ' ' + item['total']
+            product.order = order
+            product.save()
+            for item_option in item['options']:
+                option = CartOptions()
+                option.name = item_option['name']
+                option.price = item['currency'] + ' ' + item_option['price']
+                option.order = order
+                option.product = product
+                option.save()
+    return JsonResponse({
+        'status': 'created'
+    })

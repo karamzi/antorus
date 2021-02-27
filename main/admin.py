@@ -42,6 +42,23 @@ class ProductsAdmin(admin.ModelAdmin):
     form = ProductAdminForm
 
 
+class CartAdmin(admin.TabularInline):
+    readonly_fields = ('product', 'price', 'quantity', 'total')
+    model = models.Cart
+    extra = 0
+
+
+class CartOptionsAdmin(admin.TabularInline):
+    readonly_fields = ('product', 'name', 'price')
+    model = models.CartOptions
+    extra = 0
+
+
+class OrderAdmin(admin.ModelAdmin):
+    inlines = [CartAdmin, CartOptionsAdmin]
+
+
 admin.site.register(models.Products, ProductsAdmin)
 admin.site.register(models.Categories)
 admin.site.register(models.SubCategories)
+admin.site.register(models.Order, OrderAdmin)

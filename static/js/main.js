@@ -10,6 +10,11 @@ euButton.addEventListener('click', () => {
     window.location.reload()
 })
 
+const instance = axios.create({
+    baseURL: 'http://127.0.0.1:8000/',
+    //baseURL: 'https://bowling-petersburg.ru/api/1.0/',
+})
+
 function countCart() {
     let cart
     let currencyTotal
@@ -29,7 +34,9 @@ function countCart() {
 
 function getCookie(name) {
     let results = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
-
+    if (name === 'csrftoken') {
+        return results[2]
+    }
     if (results)
         return JSON.parse(unescape(results[2]))
     else

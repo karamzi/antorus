@@ -114,7 +114,7 @@ function setPrice() {
 
 }
 
-function generateProductObject(price) {
+function generateProductObject(price, region) {
     let product = {}
     product['name'] = name
     product['total'] = price.toFixed(2)
@@ -125,25 +125,31 @@ function generateProductObject(price) {
     product['id'] = productId
     product['options'] = []
     requiredChecked.forEach(input => {
-        product.options.push(generateOptionObject(input))
+        product.options.push(generateOptionObject(input, region))
     })
     additionChecked.forEach(input => {
-        product.options.push(generateOptionObject(input))
+        product.options.push(generateOptionObject(input, region))
     })
     requiredChildChecked.forEach(input => {
-        product.options.push(generateOptionObject(input))
+        product.options.push(generateOptionObject(input, region))
     })
     return product
 }
 
-function generateOptionObject(input) {
-    let item = input.closest('.option').getAttribute('data-name')
+function generateOptionObject(input, region) {
+    let item = {}
+    item['name'] = input.closest('.option').getAttribute('data-name')
+    if (region === 'us') {
+        item['price'] = input.closest('.option').getAttribute('data-price-us')
+    } else {
+        item['price'] = input.closest('.option').getAttribute('data-price-eu')
+    }
     return item
 }
 
 function addToCart() {
-    let productUs = generateProductObject(priceUs)
-    let productEu = generateProductObject(priceEu)
+    let productUs = generateProductObject(priceUs, 'us')
+    let productEu = generateProductObject(priceEu, 'eu')
     productUs['currency'] = '$'
     productEu['currency'] = '€'
     let cartUs = getCookie('cartUs')

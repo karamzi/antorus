@@ -1,6 +1,5 @@
 {% extends 'basic/basic.html' %}
 {% load static %}
-{% load thumbnail %}
 
 {% block style %}
     <link rel="stylesheet" href="{% static 'css/product.css' %}">
@@ -177,8 +176,8 @@
 
 {% block scripts %}
     <script>
-        const quantityRequiredOptions = '{{ product.quantity_required_options }}'
-        const quantityAdditionOptions = '{{ product.quantity_addition_options }}'
+        const quantityRequiredOptions = '{{ product.get_quantity_required_options }}'
+        const quantityAdditionOptions = '{{ product.get_quantity_addition_options }}'
         const name = '{{ product.name }}'
         const childIsRequired = '{{ product.child_required }}'
         const imgURL = '{{ product.thumb.url }}'
@@ -187,6 +186,6 @@
         const productPriceEu = '{{ product.price_euro }}'
     </script>
     <script src="{% static 'js/product.js' %}"></script>
-    <script>const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true};</script>
+    <script>const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true}</script>
     <script src="https://wow.zamimg.com/widgets/power.js"></script>
 {% endblock %}

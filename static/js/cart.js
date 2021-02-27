@@ -22,7 +22,7 @@ function renderCart() {
             '<h4>Options</h4>'
 
         item.options.forEach(item => {
-            html += '<p>Select options: ' + item + '</p>'
+            html += '<p>Select options: ' + item.name + '</p>'
         })
 
         html += '</div>' +
