@@ -9,7 +9,8 @@ const addToCartButton = document.querySelector('.add_to_cart')
 let requiredChecked = []
 let requiredChildChecked = []
 let additionChecked = []
-let price = 0
+let priceUs = 0
+let priceEu = 0
 
 minus.addEventListener('click', setPrice)
 plus.addEventListener('click', setPrice)
@@ -80,16 +81,21 @@ function hideChildOptions(option) {
 
 function setPrice() {
     const priceHtml = document.querySelector('.price').querySelector('p')
-    price = 0
-    price += +productPrice.replace(',', '.')
+    priceUs = 0
+    priceEu = 0
+    priceUs += +productPriceUs.replace(',', '.')
+    priceEu += +productPriceEu.replace(',', '.')
     requiredChecked.forEach(item => {
-        price += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
+        priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
+        priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
     })
     requiredChildChecked.forEach(item => {
-        price += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
+        priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
+         priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
     })
     additionChecked.forEach(item => {
-        price += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
+        priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
+         priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
     })
     if (this === plus) {
         count.innerText = +count.innerHTML + 1
@@ -98,11 +104,17 @@ function setPrice() {
         count.innerText = +count.innerHTML - 1
     }
     let quantity = +count.innerText
-    price = price * quantity
-    priceHtml.innerText = currencySign + ' ' + price.toFixed(2)
+    priceUs= priceUs * quantity
+    priceEu = priceEu * quantity
+    if (currency === 'us') {
+        priceHtml.innerText = '$ ' + ' ' + priceUs.toFixed(2)
+    } else {
+        priceHtml.innerText = '€ ' + ' ' + priceEu.toFixed(2)
+    }
+
 }
 
-function generateProductObject() {
+function generateProductObject(price) {
     let product = {}
     product['name'] = name
     product['total'] = price.toFixed(2)
@@ -130,16 +142,28 @@ function generateOptionObject(input) {
 }
 
 function addToCart() {
-    let product = generateProductObject()
-    let cart = getCookie('cart')
-    cart.forEach((item, index, array) => {
-        if (item.id === product.id) {
+    let productUs = generateProductObject(priceUs)
+    let productEu = generateProductObject(priceEu)
+    productUs['currency'] = '$'
+    productEu['currency'] = '€'
+    let cartUs = getCookie('cartUs')
+    let cartEu = getCookie('cartEu')
+    cartUs.forEach((item, index, array) => {
+        if (item.id === productUs.id) {
             array.splice(index, 1)
         }
     })
-    cart.push(product)
-    cart = JSON.stringify(cart)
-    setCookie(cart, 'cart')
+    cartEu.forEach((item, index, array) => {
+        if (item.id === productEu.id) {
+            array.splice(index, 1)
+        }
+    })
+    cartUs.push(productUs)
+    cartEu.push(productEu)
+    cartUs = JSON.stringify(cartUs)
+    cartEu = JSON.stringify(cartEu)
+    setCookie(cartUs, 'cartUs')
+    setCookie(cartEu, 'cartEu')
 }
 
 options.forEach(item => {

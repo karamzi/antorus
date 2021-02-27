@@ -10,6 +10,22 @@ euButton.addEventListener('click', () => {
     window.location.reload()
 })
 
+function countCart() {
+    let cart
+    let currencyTotal
+    if (currency === 'us') {
+        cart = getCookie('cartUs')
+        currencyTotal = '$'
+    } else {
+        cart = getCookie('cartEu')
+        currencyTotal = '€'
+    }
+    let total = cart.reduce((sum, item) => sum + +item.total, 0)
+    total = total.toFixed(2)
+    document.getElementById('subtotal').innerText = currencyTotal + ' ' + total
+    document.getElementById('cart_total').innerText = currencyTotal + ' ' + total
+}
+
 
 function getCookie(name) {
     let results = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')

@@ -108,11 +108,8 @@
                             <p>Select options:</p>
                             {% for option in product.product_addition_option.all %}
                                 <div class="option"
-                                        {% if currency == 'us' %}
-                                     data-price="{{ option.get_option_price_dollar }}"
-                                        {% else %}
-                                     data-price="{{ option.get_option_price_euro }}"
-                                        {% endif %}
+                                     data-price-us="{{ option.get_option_price_dollar }}"
+                                     data-price-eu="{{ option.get_option_price_euro }}"
                                      data-name="{{ option.name }}">
                                     <div class="checkbox">
                                         <input class="addition" type="checkbox" id="cd{{ option.name }}{{ option.pk }}">
@@ -186,17 +183,8 @@
         const childIsRequired = '{{ product.child_required }}'
         const imgURL = '{{ product.thumb.url }}'
         const productId = '{{ product.pk }}'
-        {% if currency == 'us' %}
-            const currencySign = '$'
-        {% else %}
-            const currencySign = '€'
-        {% endif %}
-
-        {% if currency == 'us' %}
-            const productPrice = '{{ product.price_dollar }}'
-        {% else %}
-            const productPrice = '{{ product.price_euro }}'
-        {% endif %}
+        const productPriceUs = '{{ product.price_dollar }}'
+        const productPriceEu = '{{ product.price_euro }}'
     </script>
     <script src="{% static 'js/product.js' %}"></script>
 {% endblock %}

@@ -7,6 +7,7 @@ media/*
 .DS_Store
 */.DS_Store
 venv/*
-static/video/
 antorus/settings.py
 .idea
+static/admin/
+static/ckeditor/

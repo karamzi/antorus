@@ -59,18 +59,20 @@
                                 <div class="product_price">$50.40</div>
                             </div>
                             <div class="product_options">
-                                <div class="options">Select options::
+                                <div class="option">Select options::
                                     7/10 bosses
                                 </div>
                             </div>
                         </div>
-                        <div class="subtotal">
+
+                    </div>
+                    <div class="subtotal">
                             <p>Subtotal</p>
-                            <p>$50.40</p>
+                            <p id="subtotal">$50.40</p>
                         </div>
                         <div class="total">
                             <p>total</p>
-                            <p>$50.40</p>
+                            <p id="cart_total">$50.40</p>
                         </div>
                         <div class="agree">
                             <label>I have read and agree to the website terms and conditions</label>
@@ -79,7 +81,6 @@
                         <div class="button">
                             <a href="#">PLACE ORDER</a>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -88,5 +89,5 @@
 
 
 {% block scripts %}
-
+    <script src="{% static 'js/checkout.js' %}"></script>
 {% endblock %}

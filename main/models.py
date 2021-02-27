@@ -204,3 +204,15 @@ class AdditionOptions(models.Model):
         verbose_name = 'Дополнительная опция'
         verbose_name_plural = 'Дополнительные опции'
 
+
+class Cart(models.Model):
+    product = models.CharField(max_length=255, verbose_name='Товар')
+    price = models.CharField(verbose_name='Цена', max_length=50)
+    quantity = models.SmallIntegerField(verbose_name='Количество')
+    total = models.CharField(verbose_name='Итого', max_length=50)
+
+
+class CartOptions(models.Model):
+    product = models.ForeignKey(Cart, on_delete=models.PROTECT, verbose_name='Товар')
+    name = models.CharField(verbose_name='Опция', max_length=255)
+    price = models.CharField(verbose_name='Цена', max_length=50)

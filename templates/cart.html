@@ -68,7 +68,7 @@
                         <p>Total</p>
                         <p id="cart_total">€ 62.70</p>
                     </div>
-                    <a href="#" class="cart_button">Proceed to checkout</a>
+                    <a href="{% url 'checkout' %}" class="cart_button">Proceed to checkout</a>
                 </div>
             </div>
         </div>
@@ -77,5 +77,5 @@
 
 
 {% block scripts %}
-    <script src="{% static 'js//cart.js' %}"></script>
+    <script src="{% static 'js/cart.js' %}"></script>
 {% endblock %}

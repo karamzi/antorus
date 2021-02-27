@@ -1,6 +1,16 @@
 from django.contrib import admin
+from django import forms
+from ckeditor.widgets import CKEditorWidget
 from . import models
 import re
+
+
+class ProductAdminForm(forms.ModelForm):
+    description = forms.CharField(label='Описание', widget=CKEditorWidget())
+
+    class Meta:
+        model = models.Products
+        fields = '__all__'
 
 
 class RequiredOptionAdmin(admin.TabularInline):
@@ -29,6 +39,7 @@ class AdditionsOptionAdmin(admin.TabularInline):
 
 class ProductsAdmin(admin.ModelAdmin):
     inlines = [RequiredOptionAdmin, RequiredOptionChildAdmin, AdditionsOptionAdmin]
+    form = ProductAdminForm
 
 
 admin.site.register(models.Products, ProductsAdmin)

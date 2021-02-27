@@ -5,7 +5,12 @@ let count = document.querySelector('.count')
 
 function renderCart() {
     const products = document.querySelector('.products')
-    let cart = getCookie('cart')
+    let cart
+    if (currency === 'us') {
+        cart = getCookie('cartUs')
+    } else {
+        cart = getCookie('cartEu')
+    }
     let html = ''
     cart.forEach(item => {
         html += '<div class="product" data-id="' + item.id + '">' +
@@ -23,7 +28,7 @@ function renderCart() {
         html += '</div>' +
             '</div>' +
             '</div>' +
-            '<div class="price">' + item.price + '</div>' +
+            '<div class="price">' + item.currency + ' ' + item.price + '</div>' +
             '<div class="product_quantity">' +
             '<div class="quantity">' +
             '<div class="minus"></div>' +
@@ -31,7 +36,7 @@ function renderCart() {
             '<div class="plus">+</div>' +
             '</div>' +
             '</div>' +
-            '<div class="total">' + item.total + '</div>' +
+            '<div class="total">' + item.currency + ' ' + item.total + '</div>' +
             '</div>'
     })
     products.innerHTML = html
@@ -46,10 +51,21 @@ function renderCart() {
 }
 
 function setPrice() {
-    let cart = getCookie('cart')
+    let cartUs = getCookie('cartUs')
+    let cartEu = getCookie('cartEu')
+    cartUs = changeButtons(cartUs, this)
+    cartEu = changeButtons(cartEu, this)
+    cartUs = JSON.stringify(cartUs)
+    setCookie(cartUs, 'cartUs')
+    cartEu = JSON.stringify(cartEu)
+    setCookie(cartEu, 'cartEu')
+    renderCart()
+}
+
+function changeButtons(cart, pressedButton) {
     plus.forEach(item => {
-        if (this === item) {
-            let id = this.closest('.product').getAttribute('data-id')
+        if (pressedButton === item) {
+            let id = pressedButton.closest('.product').getAttribute('data-id')
             cart.forEach(item => {
                 if (item.id === id) {
                     item.quantity = +item.quantity + 1
@@ -60,8 +76,8 @@ function setPrice() {
         }
     })
     minus.forEach(item => {
-        if (this === item && +count.innerText > 1) {
-            let id = this.closest('.product').getAttribute('data-id')
+        if (pressedButton === item && +count.innerText > 1) {
+            let id = pressedButton.closest('.product').getAttribute('data-id')
             cart.forEach(item => {
                 if (item.id === id) {
                     item.quantity = +item.quantity - 1
@@ -71,17 +87,7 @@ function setPrice() {
             })
         }
     })
-
-    cart = JSON.stringify(cart)
-    setCookie(cart, 'cart')
-    renderCart()
-}
-
-function countCart() {
-    const cart = getCookie('cart')
-    let total = cart.reduce((sum, item) => sum + +item.total, 0)
-    document.getElementById('subtotal').innerText = '€ ' + total
-    document.getElementById('cart_total').innerText = '€ ' + total
+    return cart
 }
 
 renderCart()
