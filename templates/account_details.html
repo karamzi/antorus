@@ -15,30 +15,31 @@
             <div class="account_details_content">
                 <div class="account_details_left">
                     <div class="nav_bar">
-                        <a class="nav_bar_link" href="#">ORDERS</a>
+                        <a class="nav_bar_link" href="{% url 'orders' %}">ORDERS</a>
                         <a class="nav_bar_link active" href="{% url 'account_details' %}">ACCOUNT DETAILS</a>
-                        <a class="nav_bar_link" href="#">LOGOUT</a>
+                        <a class="nav_bar_link" href="{% url 'logout' %}">LOGOUT</a>
                     </div>
                 </div>
                 <div class="account_details_right">
-                    <form>
+                    <form action="{% url 'changeDetails' %}" method="post">
+                        {% csrf_token %}
                         <div class="user">
                             <div class="first_name">
                                 <label class="required">First name</label>
-                                <input type="text">
+                                <input name="first_name" type="text" value="{{ user.first_name }}" required>
                             </div>
                             <div class="last_name">
                                 <label class="required">Last name</label>
-                                <input type="text">
+                                <input name="last_name" type="text" value="{{ user.last_name }}" required>
                             </div>
                         </div>
                         <div>
                             <label class="required">Login</label>
-                            <input type="text">
+                            <input name="username" type="text" value="{{ user.username }}" required>
                         </div>
                         <div>
                             <label class="required">Email address</label>
-                            <input type="text">
+                            <input name="email" type="email" value="{{ user.email }}" required>
                         </div>
                         <div class="change_password">
                             <h4>PASSWORD CHANGE</h4>

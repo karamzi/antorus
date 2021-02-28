@@ -1,0 +1,50 @@
+{% extends 'basic/basic.html' %}
+{% load static %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/orders.css' %}">
+{% endblock %}
+
+{% block title %}My Account - ANTORUS{% endblock %}
+
+{% block content %}
+    <section class="orders_section">
+        <div class="container">
+            <h2>MY ACCOUNT</h2>
+            <div class="orders_content">
+                <div class="order_left">
+                    <div class="nav_bar">
+                        <a class="nav_bar_link active" href="{% url 'orders' %}">ORDERS</a>
+                        <a class="nav_bar_link" href="{% url 'account_details' %}">ACCOUNT DETAILS</a>
+                        <a class="nav_bar_link" href="{% url 'logout' %}">LOGOUT</a>
+                    </div>
+                </div>
+                <div class="order_right">
+                    <div class="table_head">
+                        <p>ORDER</p>
+                        <p>DATE</p>
+                        <p>STATUS</p>
+                        <p>TOTAL</p>
+                        <p>ACTIONS</p>
+                    </div>
+                    <div class="table_body">
+                        {% for order in orders %}
+                        <div class="order">
+                            <p>#{{ order.pk }}</p>
+                            <p>{{ order.date|date:'d.m.Y' }}</p>
+                            <p>{{ order.get_status_display }}</p>
+                            <p>{{ order.total }}</p>
+                            <a href="#">VIEW</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}

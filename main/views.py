@@ -1,9 +1,11 @@
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate, login, logout
 from main.utils.customAuth import CustomAuth
 from django.contrib import messages
+from django.contrib.auth.models import User
 from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday
 import json
 
@@ -103,14 +105,38 @@ def reset_password(request):
     return render(request, 'reset_password.html')
 
 
+@login_required(redirect_field_name='/myAccount/')
 def account_details(request):
     return render(request, 'account_details.html')
+
+
+def change_account_details(request):
+    if request.method == 'POST':
+        user = User.objects.get(username=request.user.username)
+        # TODO проверить повторения
+        user.username = request.POST['username']
+        user.email = request.POST['email']
+        user.first_name = request.POST['first_name']
+        user.last_name = request.POST['last_name']
+        user.save()
+        return redirect(reverse('account_details'))
+    return redirect(reverse('index'))
+
+
+@login_required(redirect_field_name='/myAccount/')
+def orders(request):
+    orders = Order.objects.filter(user=request.user)
+    context = {
+        'orders': orders
+    }
+    return render(request, 'orders.html', context)
 
 
 def create_order(request):
     if request.method == 'POST':
         sing = '€' if request.POST['currency'] == 'eu' else '$'
         order = Order()
+        order.user_id = request.user.pk if request.user.is_authenticated else None
         order.character_server = request.POST['characterServer']
         order.battle_tag = request.POST['battleTag']
         order.faction = request.POST['faction']

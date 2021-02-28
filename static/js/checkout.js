@@ -36,7 +36,7 @@ function createOrder(e) {
     const faction = document.getElementById('faction').value
     const connection = document.getElementById('connection').value
     const email = document.getElementById('email').value
-    const account = document.getElementById('checkbox').checked
+    const account = document.getElementById('cd1').checked
     const comment = document.getElementById('comment').value
     let cart
     let total

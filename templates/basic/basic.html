@@ -29,7 +29,7 @@
                 <div class="account">
                     <p>{{ user.username }}</p>
                     <div class="account_accordion">
-                        <a href="">Orders</a>
+                        <a href="{% url 'orders' %}">Orders</a>
                         <a href="{% url 'account_details' %}">Account details</a>
                         <a href="{% url 'logout' %}">Logout</a>
                     </div>

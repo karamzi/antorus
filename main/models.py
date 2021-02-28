@@ -3,6 +3,7 @@ from datetime import datetime
 from os.path import splitext
 from django.shortcuts import reverse
 from easy_thumbnails.fields import ThumbnailerImageField
+from django.contrib.auth.models import User
 
 
 def get_img_path(instance, filename):
@@ -285,6 +286,7 @@ class CartOptions(models.Model):
 
 class Order(models.Model):
     id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.PROTECT, verbose_name='Пользователь', null=True)
     character_server = models.CharField(max_length=255, verbose_name='Персонаж и Сервер')
     battle_tag = models.CharField(max_length=50, verbose_name='Battle tag', blank=True)
     faction = models.CharField(max_length=50, verbose_name='Фракция')
@@ -292,12 +294,14 @@ class Order(models.Model):
     email = models.EmailField(verbose_name='Почта')
     comment = models.TextField(verbose_name='Комментарий', blank=True)
     STATUS = (
-        ('1', 'Создан'),
+        ('1', 'CREATED'),
     )
     status = models.CharField(verbose_name='Статус заказа', choices=STATUS, max_length=100)
     price = models.CharField(verbose_name='Без купона', max_length=50)
     coupon = models.CharField(verbose_name='Купон', max_length=50, blank=True)
     total = models.CharField(verbose_name='Итого', max_length=50)
+    # TODO убрать null
+    date = models.DateField(auto_now_add=True, verbose_name='Дата создания', null=True)
 
     def __str__(self):
         return 'Заказ № ' + str(self.id)
