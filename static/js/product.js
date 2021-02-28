@@ -25,7 +25,7 @@ if (additionChecked) {
 }
 
 if (requiredChildInputs) {
-    checkInputs(requiredChildInputs, '', requiredChildChecked)
+    checkInputs(requiredChildInputs, quantityRequiredChildOptions, requiredChildChecked)
 }
 
 function checkInputs(inputs, max, array) {
@@ -106,12 +106,15 @@ function setPrice() {
     let quantity = +count.innerText
     priceUs = priceUs * quantity
     priceEu = priceEu * quantity
-    if (currency === 'us') {
+    if (currency === 'us' && priceUs > 0) {
         priceHtml.innerText = '$ ' + ' ' + priceUs.toFixed(2)
-    } else {
+    } else if (currency === 'us' && priceUs === 0) {
+        priceHtml.innerHTML = '<p>Choose options to continue</p>'
+    } else if (currency === 'eu' && priceEu > 0) {
         priceHtml.innerText = '€ ' + ' ' + priceEu.toFixed(2)
+    } else if (currency === 'eu' && priceEu === 0) {
+        priceHtml.innerHTML = '<p>Choose options to continue</p>'
     }
-
 }
 
 function generateProductObject(price, region) {
@@ -199,5 +202,3 @@ options.forEach(item => {
         input.click()
     })
 })
-
-setPrice()

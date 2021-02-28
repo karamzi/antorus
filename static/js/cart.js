@@ -13,6 +13,11 @@ function renderCart() {
     } else {
         cart = getCookie('cartEu')
     }
+    if (!cart.length) {
+        document.querySelector('.cart_content').style.display = 'none'
+        document.querySelector('.cart_empty').style.display = 'flex'
+        return
+    }
     let html = ''
     cart.forEach(item => {
         html += '<div class="product" data-id="' + item.id + '">' +

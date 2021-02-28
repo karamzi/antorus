@@ -286,3 +286,35 @@
     background-color: rgb(46, 157, 16);
     transition: background-color 0.3s ease;
 }
+
+.cart_empty {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 100px;
+}
+
+.cart_empty h2 {
+    margin-bottom: 20px;
+}
+
+.cart_empty p {
+    color: rgb(142, 142, 142);
+    margin-bottom: 20px;
+}
+
+.cart_empty a {
+    text-decoration: none;
+    color: white;
+    font-weight: 300;
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #2A2A2A;
+}
+
+.cart_empty a:hover {
+    background-color: rgb(142, 142, 142);
+    transition: background-color 0.3s ease;
+}

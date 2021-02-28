@@ -1,5 +1,6 @@
 const usButton = document.getElementById('us')
 const euButton = document.getElementById('eu')
+const navLink = document.querySelectorAll('.nav_link')
 
 usButton.addEventListener('click', () => {
     setCookie('us', 'currency')
@@ -53,6 +54,23 @@ function product_quantity() {
 }
 
 product_quantity()
+
+if (navLink) {
+    navLink.forEach(item => {
+        item.addEventListener('click', function () {
+            const nextSibling = this.nextSibling.nextSibling
+            if (nextSibling.classList.contains('accordion') && nextSibling.style.display === 'none') {
+                nextSibling.style.display = 'flex'
+                this.classList.add('active')
+                this.classList.add('open')
+            } else if (nextSibling.classList.contains('accordion') && nextSibling.style.display === 'flex') {
+                nextSibling.style.display = 'none'
+                this.classList.remove('active')
+                this.classList.remove('open')
+            }
+        })
+    })
+}
 
 function getCookie(name) {
     let results = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')

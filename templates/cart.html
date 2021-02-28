@@ -21,34 +21,11 @@
                         <div class="head_total">TOTAL</div>
                     </div>
                     <div class="products">
-                        <div class="product">
-                            <div class="product_description">
-                                <img src="{% static 'img/test2.png' %}" alt="">
-                                <div class="description">
-                                    <div class="product_name"><a href="">CASTLE NATHRIA HEROIC RUN (TRADERS ONLY EU)</a>
-                                    </div>
-                                    <div class="product_options">
-                                        <h4>Options</h4>
-                                        <p>Select options: 10/10 bosses</p>
-                                        <p>Select options: Self Play</p>
-                                        <div class="remove">Remove</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="price">$83.00</div>
-                            <div class="product_quantity">
-                                <div class="quantity">
-                                    <div class="minus"></div>
-                                    <div class="count">1</div>
-                                    <div class="plus">+</div>
-                                </div>
-                            </div>
-                            <div class="total">$83.00</div>
-                        </div>
                     </div>
                     <div class="promo_code">
                         <p>Enter your promotional code</p>
-                        <p style="display: none; color: red; margin-bottom: 10px" id="couponNotFound">Coupon not found</p>
+                        <p style="display: none; color: red; margin-bottom: 10px" id="couponNotFound">Coupon
+                            not found</p>
                         <div class="input">
                             <input id="coupon" value="" type="text" placeholder="Coupon code">
                             <div class="input_button">OK</div>
@@ -63,7 +40,8 @@
                     </div>
                     <div style="display: none" class="coupon">
                         <p id="coupon_name">Coupon: </p>
-                        <p id="coupon_price" style="color: darkred"><span class="coupon_remove">Remove</span></p>
+                        <p id="coupon_price" style="color: darkred"><span
+                                class="coupon_remove">Remove</span></p>
                     </div>
                     <div class="cart_total">
                         <p>Total</p>
@@ -71,6 +49,12 @@
                     </div>
                     <a href="{% url 'checkout' %}" class="cart_button">Proceed to checkout</a>
                 </div>
+            </div>
+            <div class="cart_empty">
+                <h2>YOUR SHOPPING CART IS EMPTY</h2>
+                <p>We invite you to get acquainted with an assortment of our shop.Surely you can find something for
+                    yourself!</p>
+                <a href="{% url 'index' %}">RETURN TO SHOP</a>
             </div>
         </div>
     </section>

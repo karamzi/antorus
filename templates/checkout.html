@@ -4,6 +4,7 @@
 
 {% block style %}
     <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/checkbox.css' %}">
 {% endblock %}
 
 {% block title %}Checkout - ANTORUS{% endblock %}
@@ -39,8 +40,13 @@
                             <input id="email" type="email">
                         </div>
                         <div class="account">
-                            <label>Create an account?</label>
-                            <input id="checkbox" type="checkbox" value="">
+                            <label class="account_label">Create an account?</label>
+                            <div class="checkbox">
+                                <input class="addition" type="checkbox" id="cd1">
+                                <label class="custom" for="cd1">
+                                    <div class="tick"></div>
+                                </label>
+                            </div>
                         </div>
                         <div class="comment">
                             <label>Comment to the order (optional)</label>
@@ -80,7 +86,12 @@
                     </div>
                     <div class="agree">
                         <label>I have read and agree to the website terms and conditions</label>
-                        <input type="checkbox">
+                        <div class="checkbox">
+                            <input class="addition" type="checkbox" id="cd2">
+                            <label class="custom" for="cd2">
+                                <div class="tick"></div>
+                            </label>
+                        </div>
                     </div>
                     <div class="button">
                         <a href="#">PLACE ORDER</a>

@@ -29,7 +29,7 @@
                                     <div class="checkbox">
                                         <input class="required parent" type="checkbox"
                                                id="cd{{ option.name }}{{ option.pk }}">
-                                        <label for="cd{{ option.name }}{{ option.pk }}">
+                                        <label class="custom" for="cd{{ option.name }}{{ option.pk }}">
                                             <div class="tick"></div>
                                         </label>
                                     </div>
@@ -39,7 +39,7 @@
                                         <div class="option_price {% if option.new_price_dollar %}old{% endif %}">
                                             $ {{ option.price_dollar }}</div>
                                         {% if option.new_price_dollar %}
-                                            <div class="option_new_price">€ {{ option.new_price_dollar }}</div>
+                                            <div class="option_new_price">$ {{ option.new_price_dollar }}</div>
                                         {% endif %}
 
                                     {% else %}
@@ -71,7 +71,8 @@
                                             <div class="checkbox">
                                                 <input class="required child" type="checkbox"
                                                        id="cd{{ child_option.name }}{{ child_option.pk }}">
-                                                <label for="cd{{ child_option.name }}{{ child_option.pk }}">
+                                                <label class="custom"
+                                                       for="cd{{ child_option.name }}{{ child_option.pk }}">
                                                     <div class="tick"></div>
                                                 </label>
                                             </div>
@@ -82,7 +83,7 @@
                                                     $ {{ child_option.get_option_price_dollar }}</div>
                                                 {% if child_option.new_price_dollar %}
                                                     <div class="option_new_price">
-                                                        € {{ child_option.get_option_price_dollar }}</div>
+                                                        $ {{ child_option.get_option_price_dollar }}</div>
                                                 {% endif %}
 
                                             {% else %}
@@ -90,7 +91,8 @@
                                                 <div class="option_price {% if option.new_price_euro %}old{% endif %}">
                                                     € {{ child_option.get_option_price_euro }}</div>
                                                 {% if option.new_price_euro %}
-                                                    <div class="option_new_price">€ {{ child_option.get_option_price_euro }}</div>
+                                                    <div class="option_new_price">
+                                                        € {{ child_option.get_option_price_euro }}</div>
                                                 {% endif %}
 
                                             {% endif %}
@@ -112,7 +114,7 @@
                                      data-name="{{ option.name }}">
                                     <div class="checkbox">
                                         <input class="addition" type="checkbox" id="cd{{ option.name }}{{ option.pk }}">
-                                        <label for="cd{{ option.name }}{{ option.pk }}">
+                                        <label class="custom" for="cd{{ option.name }}{{ option.pk }}">
                                             <div class="tick"></div>
                                         </label>
                                     </div>
@@ -143,10 +145,12 @@
                     <div class="price">
                         {% if currency == 'us' and product.price_dollar > 0 %}
                             <p>$ {{ product.price_dollar }}</p>
+                        {% elif currency == 'us' and product.price_dollar == 0 %}
+                            <p>Choose options to continue</p>
                         {% elif currency == 'eu' and product.price_euro > 0 %}
                             <p>$ {{ product.price_dollar }}</p>
-                        {% else %}
-                            <p>€ {{ product.price_euro }}</p>
+                        {% elif currency == 'eu' and product.price_euro == 0 %}
+                            <p>Choose options to continue</p>
                         {% endif %}
                     </div>
                     <div class="product_buttons">
@@ -168,21 +172,24 @@
                     <div class="length">⏱️ Length: <span>{{ product.length }}</span></div>
                     <div class="requirements">⚠️ Character Requirements: <span>{{ product.char_req }}</span></div>
                     <div class="description">{{ product.description|safe }}</div>
+                    <p>FEEL FREE TO CONTACT OUR OPERATORS ANY TIME FOR ANY FURTHER INFORMATION. WE ARE ALWAYS FOR YOUR
+                        SERVICE!</p>
                 </div>
             </div>
         </div>
-    <div style="display: none" class="success">
-        <p>Товар был успешно добавлен в корзину</p>
-    </div>
-    <div style="display: none" class="error">
-        <p>Не выбрана обязательная опция</p>
-    </div>
+        <div style="display: none" class="success">
+            <p>{{ product.name }} has been added to your cart</p>
+        </div>
+        <div style="display: none" class="error">
+            <p>Please choose requirement option</p>
+        </div>
     </section>
 {% endblock %}
 
 {% block scripts %}
     <script>
         const quantityRequiredOptions = '{{ product.get_quantity_required_options }}'
+        const quantityRequiredChildOptions = '{{ product.get_quantity_required_child_options }}'
         const quantityAdditionOptions = '{{ product.get_quantity_addition_options }}'
         const name = '{{ product.name }}'
         const childIsRequired = '{{ product.child_required }}'

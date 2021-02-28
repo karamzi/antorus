@@ -4,7 +4,7 @@
 	--checkbox-size: 20px;
 	--checkbox-color: #FFFFFF;
 	--hover-color: #FF686B;
-	--tick-color: #84DCC6;
+	--tick-color: rgb(46, 157, 16);
 }
 
 h1 {
@@ -13,7 +13,7 @@ h1 {
 	margin: 50px 0;
 }
 
-label {
+.custom {
 	display: inline-block;
 	width: var(--checkbox-size);
 	height: var(--checkbox-size);
@@ -22,7 +22,7 @@ label {
     margin: 8px 0;
 }
 
-label:hover {
+.custom:hover {
 	border-color: var(--hover-color);
 }
 

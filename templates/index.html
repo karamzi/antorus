@@ -28,11 +28,11 @@
                             <div class="nav_link">
                                 <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
                                 {% if category.categories_subcategories.all %}
-                                    <span class="open"></span>
+                                    <span></span>
                                 {% endif %}
                             </div>
                             {% if category.categories_subcategories.all %}
-                                <div class="accordion">
+                                <div style="display: none" class="accordion">
                                     {% for subcategory in category.categories_subcategories.all %}
                                         <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
                                     {% endfor %}
@@ -45,15 +45,15 @@
                     <h2>BEST OFFERS TODAY</h2>
                     <div class="products">
                         {% for product in products %}
-                            <div class="product">
+                            <a class="product" href="{{ product.product.get_absolute_url }}">
                                 <img src="{{ product.product.image.url }}" alt="">
-                                <a href="{{ product.product.get_absolute_url }}" class="name">{{ product.product.name }}</a>
+                                <h4 class="name">{{ product.product.name }}</h4>
                                 {% if currency == 'us' %}
-                                    <p class="price">$ {{ product.product.price_dollar }}</p>
+                                    <p class="price">{{ product.product.get_price_us }}</p>
                                 {% else %}
-                                    <p class="price">€ {{ product.product.price_euro }}</p>
+                                    <p class="price">{{ product.product.get_price_eu }}</p>
                                 {% endif %}
-                            </div>
+                            </a>
                         {% endfor %}
                     </div>
                 </div>

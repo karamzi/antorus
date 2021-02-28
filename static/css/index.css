@@ -26,7 +26,7 @@ body {
 
 .intro_content > p, .intro_content > h2 {
     color: white;
-    font-weight: bold;
+    font-weight: 900;
     user-select: none;
 }
 
@@ -114,6 +114,7 @@ body {
     text-decoration: none;
     color: white;
     font-weight: 400;
+    user-select: none;
 }
 
 .nav_link > a:hover {
@@ -126,6 +127,7 @@ body {
     text-decoration: none;
     color: white;
     font-weight: 300;
+    user-select: none;
 }
 
 .nav_link span {
@@ -173,6 +175,7 @@ body {
     color: white;
     padding-bottom: 20px;
     border-bottom: 1px solid rgb(47, 47, 47);
+    user-select: none;
 }
 
 .products {
@@ -187,6 +190,7 @@ body {
     display: flex;
     flex-direction: column;
     margin-bottom: 50px;
+    text-decoration: none;
 }
 
 .product img {
@@ -194,15 +198,15 @@ body {
     margin-bottom: 10px;
 }
 
-.product a {
+.product h4 {
     text-decoration: none;
     color: white;
     text-align: center;
     line-height: 30px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
-.product a:hover {
+.product h4:hover {
     color: rgb(189, 189, 189);
     transition: color 0.3s ease;
 }

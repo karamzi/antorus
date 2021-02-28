@@ -50,6 +50,10 @@
     align-items: center;
 }
 
+.account_label {
+    margin-left: 10px;
+}
+
 form label {
     position: relative;
     font-size: 16px;
