@@ -12,7 +12,7 @@ euButton.addEventListener('click', () => {
 
 const instance = axios.create({
     baseURL: 'http://127.0.0.1:8000/',
-    //baseURL: '',
+    //baseURL: 'http://151.248.114.152/',
 })
 
 function countCart() {
@@ -88,6 +88,8 @@ login.addEventListener('mouseover', function () {
     loginAccordion.style.display = 'block'
 })
 
-login.addEventListener('mouseleave', function () {
-    loginAccordion.style.display = 'none'
+document.addEventListener('mousemove', function (e) {
+    if (!e.target.closest('.login')) {
+        loginAccordion.style.display = 'none'
+    }
 })
