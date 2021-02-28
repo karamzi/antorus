@@ -1,0 +1,82 @@
+.account_details_section {
+    flex-grow: 1;
+}
+
+.account_details_section h2 {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.account_details_content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.account_details_left {
+    width: 20%;
+}
+
+.nav_bar_link {
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 20px 0;
+    border-bottom: 1px solid rgb(47, 47, 47);
+}
+
+.nav_bar_link:hover {
+    color: #8e8e8e;
+    transition: color 0.3s ease;
+}
+
+.nav_bar_link.active {
+    color: rgb(40, 168, 5);
+}
+
+.account_details_right {
+    width: 75%;
+}
+
+.user {
+    display: flex;
+    justify-content: space-between;
+}
+
+.first_name, .last_name {
+    width: 48%;
+}
+
+.change_password {
+    margin-top: 10px;
+    position: relative;
+    padding: 30px;
+    border: 1px solid rgb(47, 47, 47);
+}
+
+.change_password h4 {
+    position: absolute;
+    color: white;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: 400;
+    top: -10px;
+}
+
+.account_details_right button {
+    margin-top: 30px;
+    color: white;
+    padding: 15px 25px;
+    background-color: #555555;
+}
+
+.account_details_right button:hover {
+    background-color: rgb(46, 157, 16);
+    transition: background-color 0.3s ease;
+}

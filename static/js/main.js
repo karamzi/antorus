@@ -80,3 +80,14 @@ function setCookie(value, name) {
 function eraseCookie(name) {
     document.cookie = name + '=; Max-Age=-99999999;';
 }
+
+const login = document.querySelector('.login')
+const loginAccordion = document.querySelector('.login_accordion')
+
+login.addEventListener('mouseover', function () {
+    loginAccordion.style.display = 'block'
+})
+
+login.addEventListener('mouseleave', function () {
+    loginAccordion.style.display = 'none'
+})

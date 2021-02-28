@@ -23,7 +23,26 @@
                 <a href="#">Contact Support</a>
             </div>
             <div class="login">
-                <a href="#">Sign In Or Create An Account</a>
+                <p>Sign In Or Create An Account</p>
+                <div class="login_accordion">
+                    <form>
+                        <div>
+                            <label class="required">Username or email address</label>
+                            <input type="text">
+                        </div>
+                        <div>
+                            <label class="required">Password</label>
+                            <input type="password">
+                        </div>
+                        <div class="lost_password_link">
+                            <a href="{% url 'reset_password' %}">Lost your password?</a>
+                        </div>
+                        <button type="submit">LOG IN</button>
+                    </form>
+                    <div class="new_client">
+                        <p>New client <a href="{% url 'login' %}">Register?</a></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -55,7 +74,7 @@
                 <p>All included here mentioned brand names are registered and property of the respective companies.</p>
             </div>
             <div class="footer_right">
-                <a href="">FAQ</a>
+                <a href="{% url 'faq' %}">FAQ</a>
                 <a href="">Terms of Service</a>
                 <a href="">Privacy policy</a>
             </div>

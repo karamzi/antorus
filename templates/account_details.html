@@ -1,0 +1,68 @@
+{% extends 'basic/basic.html' %}
+{% load static %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/account_details.css' %}">
+{% endblock %}
+
+{% block title %}My Account - ANTORUS{% endblock %}
+
+{% block content %}
+    <section class="account_details_section">
+        <div class="container">
+            <h2>MY ACCOUNT</h2>
+            <div class="account_details_content">
+                <div class="account_details_left">
+                    <div class="nav_bar">
+                        <a class="nav_bar_link" href="#">ORDERS</a>
+                        <a class="nav_bar_link active" href="{% url 'account_details' %}">ACCOUNT DETAILS</a>
+                        <a class="nav_bar_link" href="#">LOGOUT</a>
+                    </div>
+                </div>
+                <div class="account_details_right">
+                    <form>
+                        <div class="user">
+                            <div class="first_name">
+                                <label class="required">First name</label>
+                                <input type="text">
+                            </div>
+                            <div class="last_name">
+                                <label class="required">Last name</label>
+                                <input type="text">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="required">Login</label>
+                            <input type="text">
+                        </div>
+                        <div>
+                            <label class="required">Email address</label>
+                            <input type="text">
+                        </div>
+                        <div class="change_password">
+                            <h4>PASSWORD CHANGE</h4>
+                            <div>
+                                <label>Current password (leave blank to leave unchanged)</label>
+                                <input type="password">
+                            </div>
+                            <div>
+                                <label>New password (leave blank to leave unchanged)</label>
+                                <input type="password">
+                            </div>
+                            <div>
+                                <label>Confirm new password</label>
+                                <input type="password">
+                            </div>
+                        </div>
+                        <button type="submit">SAVE CHANGES</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}

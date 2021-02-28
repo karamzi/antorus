@@ -1,7 +1,7 @@
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon
+from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday
 import json
 
 
@@ -14,7 +14,7 @@ def global_var(request):
 
 def index(request):
     categories = Categories.objects.all()
-    products = Products.objects.all()
+    products = BestOffersToday.objects.all()
     context = {
         'categories': categories,
         'products': products,
@@ -61,9 +61,25 @@ def cart(request):
     return render(request, 'cart.html')
 
 
+def faq(request):
+    return render(request, 'faq.html')
+
+
 def checkout(request):
     # TODO если корзина пустая закрыть страницу
     return render(request, 'checkout.html')
+
+
+def login(request):
+    return render(request, 'login.html')
+
+
+def reset_password(request):
+    return render(request, 'reset_password.html')
+
+
+def account_details(request):
+    return render(request, 'account_details.html')
 
 
 def create_order(request):

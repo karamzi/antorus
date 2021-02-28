@@ -1,0 +1,58 @@
+{% extends 'basic/basic.html' %}
+{% load static %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block title %}My Account - ANTORUS{% endblock %}
+
+{% block content %}
+    <section class="login_section">
+        <div class="container">
+            <h2>MY ACCOUNT</h2>
+            <div class="login_content">
+                <div class="login_left">
+                    <h3>LOGIN</h3>
+                    <form>
+                        <div>
+                            <label class="required">Username or email address</label>
+                            <input type="text">
+                        </div>
+                        <div>
+                            <label class="required">Password</label>
+                            <input type="password">
+                        </div>
+                        <div class="login_footer">
+                            <button type="submit">LOG IN</button>
+                            <a href="{% url 'reset_password' %}">Lost your password?</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="login_right">
+                    <h3>REGISTER</h3>
+                    <form>
+                        <div>
+                            <label class="required">Email address</label>
+                            <input type="text">
+                        </div>
+                        <div>
+                            <label class="required">Password</label>
+                            <input type="password">
+                        </div>
+                        <div>
+                            <label class="required">Repeat password</label>
+                            <input type="password">
+                        </div>
+                        <button type="submit">REGISTER</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}

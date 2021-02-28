@@ -46,12 +46,12 @@
                     <div class="products">
                         {% for product in products %}
                             <div class="product">
-                                <img src="{{ product.image.url }}" alt="">
-                                <a href="{{ product.get_absolute_url }}" class="name">{{ product.name }}</a>
+                                <img src="{{ product.product.image.url }}" alt="">
+                                <a href="{{ product.product.get_absolute_url }}" class="name">{{ product.product.name }}</a>
                                 {% if currency == 'us' %}
-                                    <p class="price">$ {{ product.price_dollar }}</p>
+                                    <p class="price">$ {{ product.product.price_dollar }}</p>
                                 {% else %}
-                                    <p class="price">€ {{ product.price_euro }}</p>
+                                    <p class="price">€ {{ product.product.price_euro }}</p>
                                 {% endif %}
                             </div>
                         {% endfor %}

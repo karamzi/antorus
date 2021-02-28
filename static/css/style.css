@@ -19,8 +19,37 @@ body {
     background-color: #101211;
 }
 
+button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+form label {
+    position: relative;
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+}
+
+form input {
+    border: 1px solid rgb(47, 47, 47);
+    background-color: rgb(31, 31, 31);
+    font-size: 16px;
+    height: 34px;
+    padding: 0 17px;
+    color: white;
+    outline: none;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-top: 15px;
+}
+
 .container {
-    max-width: 1170px;
+    width: 1170px;
     margin: 0 auto;
     padding: 0  15px;
 }

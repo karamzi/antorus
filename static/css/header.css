@@ -10,10 +10,16 @@ ______________________________________________ */
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin: 5px 0;
+    height: 25px;
 }
 
-.contact_support > a, .login > a {
+.contact_support {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.contact_support > a, .login > p {
     font-size: 14px;
     font-weight: 400;
     text-decoration: none;
@@ -26,12 +32,90 @@ ______________________________________________ */
     border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.login > a {
-    padding-left: 10px;
+.login {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 
-.contact_support > a:hover, .login > a:hover {
+.login > p {
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.login_accordion {
+    display: none;
+    width: 380px;
+    position: absolute;
+    padding: 20px;
+    top: 24px;
+    right: 0;
+    border: 1px solid rgb(47, 47, 47);
+    background-color: rgb(26, 26, 26);
+    z-index: 1;
+}
+
+.required:after {
+    position: absolute;
+    content: '*';
+    color: red;
+    font-size: 25px;
+    top: -4px;
+    right: -12px;
+}
+
+.login_accordion button {
+    color: white;
+    padding: 10px 25px;
+    width: 100%;
+    background-color: rgb(34, 34, 34);
+    margin-bottom: 20px;
+}
+
+.login_accordion button:hover {
+    background-color: #555555;
+    transition: background-color 0.3s ease;
+}
+
+.lost_password_link {
+    float: right;
+    margin-bottom: 20px;
+}
+
+.lost_password_link a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.lost_password_link a:hover {
+    color: #8e8e8e;
+    transition: color 0.3s ease;
+}
+
+.contact_support > a:hover, .login > p:hover {
     color: rgb(189, 189, 189);
+    transition: color 0.3s ease;
+}
+
+.new_client p {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 300;
+    color: rgb(142, 142, 142);
+}
+
+.new_client a {
+    text-decoration: none;
+    color: white;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.new_client a:hover {
+    color: #8e8e8e;
     transition: color 0.3s ease;
 }
 

@@ -282,3 +282,14 @@ class Coupon(models.Model):
     class Meta:
         verbose_name = 'Купон'
         verbose_name_plural = 'Купоны'
+
+
+class BestOffersToday(models.Model):
+    product = models.OneToOneField(Products, on_delete=models.PROTECT, verbose_name='Товар')
+
+    def __str__(self):
+        return self.product.name
+
+    class Meta:
+        verbose_name = 'Лучшее предложение'
+        verbose_name_plural = 'Лучшие предложения'
