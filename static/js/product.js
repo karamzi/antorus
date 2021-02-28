@@ -17,14 +17,23 @@ plus.addEventListener('click', setPrice)
 addToCartButton.addEventListener('click', addToCart)
 
 if (requiredInputs) {
+    requiredInputs.forEach(item => {
+        item.checked = false
+    })
     checkInputs(requiredInputs, quantityRequiredOptions, requiredChecked)
 }
 
 if (additionChecked) {
+    additionChecked.forEach(item => {
+        item.checked = false
+    })
     checkInputs(additionInputs, quantityAdditionOptions, additionChecked)
 }
 
 if (requiredChildInputs) {
+    requiredChildInputs.forEach(item => {
+        item.checked = false
+    })
     checkInputs(requiredChildInputs, quantityRequiredChildOptions, requiredChildChecked)
 }
 
