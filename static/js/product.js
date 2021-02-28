@@ -17,23 +17,14 @@ plus.addEventListener('click', setPrice)
 addToCartButton.addEventListener('click', addToCart)
 
 if (requiredInputs) {
-    requiredInputs.forEach(item => {
-        item.checked = false
-    })
     checkInputs(requiredInputs, quantityRequiredOptions, requiredChecked)
 }
 
 if (additionChecked) {
-    additionChecked.forEach(item => {
-        item.checked = false
-    })
     checkInputs(additionInputs, quantityAdditionOptions, additionChecked)
 }
 
 if (requiredChildInputs) {
-    requiredChildInputs.forEach(item => {
-        item.checked = false
-    })
     checkInputs(requiredChildInputs, quantityRequiredChildOptions, requiredChildChecked)
 }
 
@@ -205,9 +196,19 @@ function addToCart() {
     }, 2500)
 }
 
+
 options.forEach(item => {
     item.addEventListener('click', function () {
         const input = this.closest('.option').querySelector('input')
         input.click()
     })
+})
+
+window.addEventListener("pageshow", function (event) {
+    let historyTraversal = event.persisted ||
+        (typeof window.performance != "undefined" &&
+            window.performance.navigation.type === 2);
+    if (historyTraversal) {
+        window.location.reload();
+    }
 })
