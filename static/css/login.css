@@ -71,3 +71,16 @@
     transition: color 0.3s ease;
 }
 
+.messages {
+    list-style: none;
+
+}
+
+.error {
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #842029;
+    border-radius: 10px;
+}
+

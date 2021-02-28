@@ -53,6 +53,7 @@
     font-weight: 400;
     font-size: 16px;
     white-space: nowrap;
+    transform: translateY(-1px);
 }
 
 .option_price.old {
@@ -165,10 +166,10 @@
     border-bottom: 1px solid rgb(47, 47, 47);
 }
 
-.product_right p {
+.product_right h3 {
     color: rgb(40, 168, 5);
     font-size: 18px;
-    font-weight: 300;
+    font-weight: 700;
     text-transform: uppercase;
     padding: 20px 0;
     border-bottom: 1px solid rgb(47, 47, 47);

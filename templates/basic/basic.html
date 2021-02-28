@@ -19,31 +19,46 @@
         <div class="head">
             <button id="us">US</button>
             <button id="eu">EU</button>
+            {% if user.is_superuser %}
+                <a class="admin" href="/admin/">admin</a>
+            {% endif %}
             <div class="contact_support">
                 <a href="#">Contact Support</a>
             </div>
-            <div class="login">
-                <p>Sign In Or Create An Account</p>
-                <div class="login_accordion">
-                    <form>
-                        <div>
-                            <label class="required">Username or email address</label>
-                            <input type="text">
-                        </div>
-                        <div>
-                            <label class="required">Password</label>
-                            <input type="password">
-                        </div>
-                        <div class="lost_password_link">
-                            <a href="{% url 'reset_password' %}">Lost your password?</a>
-                        </div>
-                        <button type="submit">LOG IN</button>
-                    </form>
-                    <div class="new_client">
-                        <p>New client <a href="{% url 'login' %}">Register?</a></p>
+            {% if user.is_authenticated %}
+                <div class="account">
+                    <p>{{ user.username }}</p>
+                    <div class="account_accordion">
+                        <a href="">Orders</a>
+                        <a href="{% url 'account_details' %}">Account details</a>
+                        <a href="{% url 'logout' %}">Logout</a>
                     </div>
                 </div>
-            </div>
+            {% else %}
+                <div class="login">
+                    <p>Sign In Or Create An Account</p>
+                    <div class="login_accordion">
+                        <form action="{% url 'login' %}" method="post">
+                            {% csrf_token %}
+                            <div>
+                                <label class="required">Username or email address</label>
+                                <input name="username" type="text">
+                            </div>
+                            <div>
+                                <label class="required">Password</label>
+                                <input name="password" type="password">
+                            </div>
+                            <div class="lost_password_link">
+                                <a href="{% url 'reset_password' %}">Lost your password?</a>
+                            </div>
+                            <button type="submit">LOG IN</button>
+                        </form>
+                        <div class="new_client">
+                            <p>New client <a href="{% url 'my_account' %}">Register?</a></p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

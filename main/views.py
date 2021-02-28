@@ -1,6 +1,9 @@
 from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth import authenticate, login, logout
+from main.utils.customAuth import CustomAuth
+from django.contrib import messages
 from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday
 import json
 
@@ -70,8 +73,30 @@ def checkout(request):
     return render(request, 'checkout.html')
 
 
-def login(request):
-    return render(request, 'login.html')
+def my_account(request):
+    return render(request, 'my_account.html')
+
+
+def my_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        if username.find('@') != -1:
+            user = CustomAuth()
+            user = user.authenticate(request, username=username, password=password)
+        else:
+            user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect(reverse('index'))
+        else:
+            messages.error(request, 'Username, email or password is incorrect')
+    return redirect(reverse('my_account'))
+
+
+def my_logout(request):
+    logout(request)
+    return redirect(reverse('my_account'))
 
 
 def reset_password(request):
@@ -122,9 +147,10 @@ def create_order(request):
                 option.order = order
                 option.product = product
                 option.save()
-    return JsonResponse({
-        'status': 'created'
-    })
+        return JsonResponse({
+            'status': 'created'
+        })
+    return redirect(reverse('index'))
 
 
 def check_coupon(request):
@@ -140,4 +166,4 @@ def check_coupon(request):
             return JsonResponse({
                 'status': 'False'
             })
-    return HttpResponse(status=200)
+    return redirect(reverse('index'))

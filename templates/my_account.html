@@ -12,17 +12,25 @@
     <section class="login_section">
         <div class="container">
             <h2>MY ACCOUNT</h2>
+            {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li style="color: white" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             <div class="login_content">
                 <div class="login_left">
                     <h3>LOGIN</h3>
-                    <form>
+                    <form action="{% url 'login' %}" method="post">
+                        {% csrf_token %}
                         <div>
                             <label class="required">Username or email address</label>
-                            <input type="text">
+                            <input name="username" type="text" required>
                         </div>
                         <div>
                             <label class="required">Password</label>
-                            <input type="password">
+                            <input name="password" type="password" required>
                         </div>
                         <div class="login_footer">
                             <button type="submit">LOG IN</button>

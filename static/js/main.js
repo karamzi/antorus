@@ -101,13 +101,29 @@ function eraseCookie(name) {
 
 const login = document.querySelector('.login')
 const loginAccordion = document.querySelector('.login_accordion')
+const account = document.querySelector('.account')
+const accountAccordion = document.querySelector('.account_accordion')
 
-login.addEventListener('mouseover', function () {
-    loginAccordion.style.display = 'block'
-})
+if (login) {
+    login.addEventListener('mouseover', function () {
+        loginAccordion.style.display = 'block'
+    })
 
-document.addEventListener('mousemove', function (e) {
-    if (!e.target.closest('.login')) {
-        loginAccordion.style.display = 'none'
-    }
-})
+    document.addEventListener('mousemove', function (e) {
+        if (!e.target.closest('.login')) {
+            loginAccordion.style.display = 'none'
+        }
+    })
+}
+
+if (account) {
+    account.addEventListener('mouseover', function () {
+        accountAccordion.style.display = 'flex'
+    })
+
+    document.addEventListener('mousemove', function (e) {
+        if (!e.target.closest('.account')) {
+            accountAccordion.style.display = 'none'
+        }
+    })
+}
