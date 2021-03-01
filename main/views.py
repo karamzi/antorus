@@ -151,6 +151,7 @@ def orders(request):
 
 
 def create_account(request):
+    from antorus import settings
     if request.method == 'POST':
         form = RegisterUserForm(request)
         if form.is_valid():
@@ -163,7 +164,7 @@ def create_account(request):
             token = json.dumps(token, ensure_ascii=False).encode()
             token = base64.b64encode(token).decode()
             AuthToken.objects.create(token=token)
-            url = request.build_absolute_uri(f'/checkEmail/{token}/')
+            url = settings.SITE_HOST + f'/checkEmail/{token}/'
             send_mail('Регистрация', url, 'federation.bratsk@gmail.com',
                       ['play-wow@yandex.ru'],
                       fail_silently=False)
