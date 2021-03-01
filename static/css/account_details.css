@@ -80,3 +80,23 @@
     background-color: rgb(46, 157, 16);
     transition: background-color 0.3s ease;
 }
+
+
+
+.success {
+    text-align: center;
+    background-color: #45db42ad;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    list-style: none;
+}
+
+.error {
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #842029;
+    border-radius: 10px;
+    list-style: none;
+}

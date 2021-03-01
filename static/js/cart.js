@@ -20,6 +20,7 @@ function renderCart() {
     }
     let html = ''
     cart.forEach(item => {
+        console.log(item)
         html += '<div class="product" data-id="' + item.id + '">' +
             '<div class="product_description">' +
             '<img src="' + item.image + '" alt="">' +
