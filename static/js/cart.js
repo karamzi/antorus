@@ -24,10 +24,9 @@ function renderCart() {
             '<div class="product_description">' +
             '<img src="' + item.image + '" alt="">' +
             '<div class="description">' +
-            '<div class="product_name"><a href="">' + item.name + '</a></div>' +
+            '<div class="product_name"><a href="'+ item.url +'">' + item.name + '</a></div>' +
             '<div class="product_options">' +
             '<h4>Options</h4>'
-
         item.options.forEach(item => {
             html += '<p>Select options: ' + item.name + '</p>'
         })

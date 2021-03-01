@@ -12,6 +12,14 @@
     <section class="account_details_section">
         <div class="container">
             <h2>MY ACCOUNT</h2>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li style="color: white" {% if message.tags %}
+                            class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             <div class="account_details_content">
                 <div class="account_details_left">
                     <div class="nav_bar">

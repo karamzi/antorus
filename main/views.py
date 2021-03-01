@@ -31,38 +31,44 @@ def index(request):
 
 
 def product(request, slug):
-    # TODO Обработать ошибку
-    product = Products.objects.get(slug=slug)
-    context = {
-        'product': product
-    }
-    return render(request, 'product.html', context)
+    try:
+        product = Products.objects.get(slug=slug)
+        context = {
+            'product': product
+        }
+        return render(request, 'product.html', context)
+    except ObjectDoesNotExist:
+        return redirect(reverse('index'))
 
 
 def category(request, slug):
-    categories = Categories.objects.all()
-    # TODO Обработать ошибку
-    category = Categories.objects.get(slug=slug)
-    products = category.products_category.all()
-    context = {
-        'categories': categories,
-        'category': category,
-        'products': products
-    }
-    return render(request, 'category.html', context)
+    try:
+        category = Categories.objects.get(slug=slug)
+        categories = Categories.objects.all()
+        products = category.products_category.all()
+        context = {
+            'categories': categories,
+            'category': category,
+            'products': products
+        }
+        return render(request, 'category.html', context)
+    except ObjectDoesNotExist:
+        return redirect(reverse('index'))
 
 
 def subcategory(request, category, subcategory):
-    categories = Categories.objects.all()
-    # TODO Обработать ошибку
-    sub_category = SubCategories.objects.get(slug=subcategory)
-    products = sub_category.products_subcategory.all()
-    context = {
-        'categories': categories,
-        'sub_category': sub_category,
-        'products': products
-    }
-    return render(request, 'category.html', context)
+    try:
+        sub_category = SubCategories.objects.get(slug=subcategory)
+        categories = Categories.objects.all()
+        products = sub_category.products_subcategory.all()
+        context = {
+            'categories': categories,
+            'sub_category': sub_category,
+            'products': products
+        }
+        return render(request, 'category.html', context)
+    except ObjectDoesNotExist:
+        return redirect(reverse('index'))
 
 
 def cart(request):
@@ -113,16 +119,25 @@ def account_details(request):
     return render(request, 'account_details.html')
 
 
+@login_required(redirect_field_name='/myAccount/')
 def change_account_details(request):
     if request.method == 'POST':
         user = User.objects.get(username=request.user.username)
-        # TODO проверить повторения
-        user.username = request.POST['username']
-        user.email = request.POST['email']
+        if user.username != request.POST['username'] and not User.objects.filter(
+                username=request.POST['username']).exists():
+            user.username = request.POST['username']
+        else:
+            messages.error(request, 'Пользователь с таким логином существует')
+            return redirect(reverse('account_details'))
+        if user.email != request.POST['email'] and not User.objects.filter(email=request.POST['email']).exists():
+            user.email = request.POST['email']
+        else:
+            messages.error(request, 'Пользователь с таким email существует')
+            return redirect(reverse('account_details'))
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']
         user.save()
-        return redirect(reverse('account_details'))
+        messages.success(request, 'Данные были обновленны успешно')
     return redirect(reverse('index'))
 
 
@@ -152,6 +167,7 @@ def create_account(request):
             send_mail('Регистрация', url, 'federation.bratsk@gmail.com',
                       ['play-wow@yandex.ru'],
                       fail_silently=False)
+            messages.success(request, f'На почту {form.cleaned_data["email"]} было высланно писмо подтверждения')
         return redirect(reverse('my_account'))
     return redirect(reverse('index'))
 

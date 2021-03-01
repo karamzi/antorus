@@ -13,12 +13,13 @@
         <div class="container">
             <h2>MY ACCOUNT</h2>
             {% if messages %}
-                    <ul class="messages">
-                        {% for message in messages %}
-                            <li style="color: white" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li style="color: white" {% if message.tags %}
+                            class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             <div class="login_content">
                 <div class="login_left">
                     <h3>LOGIN</h3>

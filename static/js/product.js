@@ -120,6 +120,7 @@ function setPrice() {
 function generateProductObject(price, region) {
     let product = {}
     product['name'] = name
+    product['url'] = url
     product['total'] = price.toFixed(2)
     product['quantity'] = count.innerText
     product['price'] = product.total / product.quantity
