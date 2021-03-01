@@ -6,7 +6,10 @@ from django.contrib.auth import authenticate, login, logout
 from main.utils.customAuth import CustomAuth
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday
+from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday, AuthToken
+from .forms import RegisterUserForm
+from django.core.mail import send_mail
+import base64
 import json
 
 
@@ -130,6 +133,47 @@ def orders(request):
         'orders': orders
     }
     return render(request, 'orders.html', context)
+
+
+def create_account(request):
+    if request.method == 'POST':
+        form = RegisterUserForm(request)
+        if form.is_valid():
+            form.save(commit=False)
+            token = {
+                'username': form.cleaned_data['username'],
+                'email': form.cleaned_data['email'],
+                'password': form.cleaned_data['password1'],
+            }
+            token = json.dumps(token, ensure_ascii=False).encode()
+            token = base64.b64encode(token).decode()
+            AuthToken.objects.create(token=token)
+            url = request.build_absolute_uri(f'/checkEmail/{token}/')
+            send_mail('Регистрация', url, 'federation.bratsk@gmail.com',
+                      ['play-wow@yandex.ru'],
+                      fail_silently=False)
+        return redirect(reverse('my_account'))
+    return redirect(reverse('index'))
+
+
+def check_auth_token(request, token):
+    try:
+        token_obj = AuthToken.objects.get(token=token)
+        token = base64.b64decode(token_obj.token).decode()
+        token = json.loads(token)
+        user = User()
+        user.username = token['username']
+        user.email = token['email']
+        user.set_password(token['password'])
+        user.save()
+        user = authenticate(request, username=token['username'], password=token['password'])
+        if user is not None:
+            login(request, user)
+            token_obj.delete()
+            return redirect(reverse('index'))
+    except ObjectDoesNotExist:
+        pass
+    return redirect(reverse('index'))
 
 
 def create_order(request):

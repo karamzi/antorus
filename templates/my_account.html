@@ -40,18 +40,23 @@
                 </div>
                 <div class="login_right">
                     <h3>REGISTER</h3>
-                    <form>
+                    <form action="{% url 'createAccount' %}" method="post">
+                        {% csrf_token %}
+                        <div>
+                            <label class="required">Username</label>
+                            <input name="username" type="text" required>
+                        </div>
                         <div>
                             <label class="required">Email address</label>
-                            <input type="text">
+                            <input name="email" type="email" required>
                         </div>
                         <div>
                             <label class="required">Password</label>
-                            <input type="password">
+                            <input name="password1" type="password" required>
                         </div>
                         <div>
                             <label class="required">Repeat password</label>
-                            <input type="password">
+                            <input name="password2" type="password" required>
                         </div>
                         <button type="submit">REGISTER</button>
                     </form>

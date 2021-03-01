@@ -35,10 +35,17 @@
                             <label class="required">Skype or Discord</label>
                             <input id="connection" type="text">
                         </div>
-                        <div class="email">
-                            <label class="required">email</label>
-                            <input id="email" type="email">
-                        </div>
+                        {% if user.is_authenticated %}
+                            <div class="email">
+                                <label class="required">email</label>
+                                <input value="{{ user.email }}" id="email" type="email" required>
+                            </div>
+                        {% else %}
+                            <div class="email">
+                                <label class="required">email</label>
+                                <input id="email" type="email" required>
+                            </div>
+                        {% endif %}
                         <div class="account">
                             <label class="account_label">Create an account?</label>
                             <div class="checkbox">

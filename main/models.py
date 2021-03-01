@@ -335,3 +335,15 @@ class BestOffersToday(models.Model):
         verbose_name = 'Лучшее предложение'
         verbose_name_plural = 'Лучшие предложения'
         ordering = ['product_order']
+
+
+class AuthToken(models.Model):
+    token = models.TextField(verbose_name='Токен')
+    time_created = models.DateTimeField(auto_now_add=True, verbose_name='Время создения')
+
+    def __str__(self):
+        return self.token
+
+    class Meta:
+        verbose_name = 'Токен'
+        verbose_name_plural = 'Токены'
