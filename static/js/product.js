@@ -197,6 +197,22 @@ function addToCart() {
     }, 2500)
 }
 
+const questions = document.querySelectorAll('.option_hint')
+
+if (questions) {
+    questions.forEach(item => {
+        item.addEventListener('mouseover', function () {
+            this.querySelector('.hint_text').classList.add('hint_active')
+        })
+    })
+
+    questions.forEach(item => {
+        item.addEventListener('mouseleave', function () {
+            this.querySelector('.hint_text').classList.remove('hint_active')
+        })
+    })
+}
+
 
 options.forEach(item => {
     item.addEventListener('click', function () {

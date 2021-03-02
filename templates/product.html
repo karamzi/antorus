@@ -51,6 +51,12 @@
                                         {% endif %}
 
                                     {% endif %}
+                                    {% if option.description %}
+                                    <div class="option_hint">
+                                        <img class="question" width="15" src="{% static 'img/question.png' %}" alt="">
+                                        <div class="hint_text">{{ option.description }}</div>
+                                    </div>
+                                {% endif %}
                                 </div>
                             {% endfor %}
                         </div>
