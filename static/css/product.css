@@ -78,6 +78,7 @@
 }
 
 .hint_text {
+    display: none;
     position: absolute;
     font-size: 10px;
     width: 250px;
@@ -94,7 +95,7 @@
 }
 
 .hint_text.hint_active {
-    bottom: 20px;
+    bottom: 15px;
     opacity: 1;
     transition: all 0.5s ease;
 }
@@ -209,7 +210,7 @@
 .length, .requirements {
     color: white;
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 700;
     margin-top: 20px;
 }
 
@@ -221,7 +222,7 @@
     margin-top: 20px;
     color: rgb(142, 142, 142);
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 700;
     line-height: 28px;
     text-align: justify;
 }

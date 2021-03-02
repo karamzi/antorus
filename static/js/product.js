@@ -198,10 +198,13 @@ function addToCart() {
 }
 
 const questions = document.querySelectorAll('.hint_img')
+let intervalID
 
 if (questions) {
     questions.forEach(item => {
         item.addEventListener('mouseover', function () {
+            clearInterval(intervalID)
+            this.nextSibling.nextSibling.querySelector('.hint_text').style.display = 'block'
             this.nextSibling.nextSibling.querySelector('.hint_text').classList.add('hint_active')
         })
     })
@@ -209,6 +212,9 @@ if (questions) {
     questions.forEach(item => {
         item.addEventListener('mouseleave', function () {
             this.nextSibling.nextSibling.querySelector('.hint_text').classList.remove('hint_active')
+            intervalID = setTimeout( () => {
+                this.nextSibling.nextSibling.querySelector('.hint_text').style.display = 'none'
+            }, 500)
         })
     })
 }
