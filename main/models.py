@@ -267,8 +267,8 @@ class Cart(models.Model):
         return self.product
 
     class Meta:
-        verbose_name = 'Товар'
-        verbose_name_plural = 'Товары'
+        verbose_name = 'Товар(заказа)'
+        verbose_name_plural = 'Товары(заказа)'
         ordering = ['-product']
 
 
@@ -326,7 +326,7 @@ class Order(models.Model):
 class Coupon(models.Model):
     name = models.CharField(max_length=50, verbose_name='Купон')
     discount = models.SmallIntegerField(default=0, verbose_name='Процент скидки')
-    count = models.SmallIntegerField(default=0, verbose_name='Количество использований')
+    count = models.SmallIntegerField(default=0, verbose_name='Количество использований', editable=False)
 
     def __str__(self):
         return self.name

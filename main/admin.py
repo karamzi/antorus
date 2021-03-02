@@ -40,6 +40,8 @@ class AdditionsOptionAdmin(admin.TabularInline):
 class ProductsAdmin(admin.ModelAdmin):
     inlines = [RequiredOptionAdmin, RequiredOptionChildAdmin, AdditionsOptionAdmin]
     form = ProductAdminForm
+    list_display = ('name', 'category', 'price_dollar', 'price_euro')
+    list_display_links = ('name', 'category', 'price_dollar', 'price_euro')
 
 
 class CartAdmin(admin.TabularInline):
@@ -56,12 +58,20 @@ class CartOptionsAdmin(admin.TabularInline):
 
 class OrderAdmin(admin.ModelAdmin):
     inlines = [CartAdmin, CartOptionsAdmin]
+    list_display = ('__str__', 'date', 'status', 'total')
+    list_display_links = ('__str__', 'date', 'total')
+    list_editable = ('status',)
+
+
+class CouponAdmin(admin.ModelAdmin):
+    list_display = ('name', 'discount', 'count')
+    list_display_links = ('name', 'discount', 'count')
+    readonly_fields = ('count',)
 
 
 admin.site.register(models.Products, ProductsAdmin)
 admin.site.register(models.Categories)
 admin.site.register(models.SubCategories)
 admin.site.register(models.Order, OrderAdmin)
-admin.site.register(models.Coupon)
+admin.site.register(models.Coupon, CouponAdmin)
 admin.site.register(models.BestOffersToday)
-admin.site.register(models.AuthToken)
