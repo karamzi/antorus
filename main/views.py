@@ -34,7 +34,7 @@ def index(request):
 
 def search_products(request):
     if request.method == 'POST':
-        products = Products.objects.filter(name__contains=request.POST['value'])
+        products = Products.objects.filter(name__icontains=request.POST['value'])
         context = {
             'products': products,
             'search_value': request.POST['value']
@@ -47,7 +47,7 @@ def search_result(request, search):
     if search == 'all':
         products = Products.objects.all()
     else:
-        products = Products.objects.filter(name__contains=search)
+        products = Products.objects.filter(name__icontains=search)
     categories = Categories.objects.all()
     context = {
         'categories': categories,
