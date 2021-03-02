@@ -160,6 +160,7 @@ ______________________________________________ */
 ______________________________________________ */
 
 .header {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -209,3 +210,102 @@ ______________________________________________ */
     font-weight: 400;
 }
 
+.search_accordion {
+    position: absolute;
+    display: none;
+    border: 1px solid rgb(47, 47, 47);
+    background-color: rgb(26, 26, 26);
+    width: 100%;
+    top: 100%;
+}
+
+.search_title {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid rgb(47, 47, 47);
+}
+
+.search_title p {
+    color: white;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.search_title a, .product_info a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.search_title a:hover, .product_info a:hover {
+    color: #45db428c;
+    transition: color 0.3s ease;
+}
+
+.search_body {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.search_product {
+    display: flex;
+    padding: 20px;
+    width: 50%;
+}
+
+.search_product img {
+    width: 100px;
+    margin-right: 20px;
+}
+
+.product_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product_info p {
+    color: #8e8e8e;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.not_found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.not_found h4 {
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.not_found p {
+    color: #8e8e8e;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.not_found a {
+    margin-top: 30px;
+    text-decoration: none;
+    display: block;
+    padding: 10px 20px;
+    background-color: #2A2A2A;
+    color: white;
+}
+
+.not_found a:hover {
+    background-color: #8e8e8e;
+    transition: background-color 0.3s ease;
+}

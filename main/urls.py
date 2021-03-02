@@ -22,4 +22,6 @@ urlpatterns = [
     path('createAccount/', views.create_account, name='createAccount'),
     path('checkEmail/<str:token>/', views.check_auth_token, name='checkEmail'),
     path('generatePassword/', views.send_new_password, name='generatePassword'),
+    path('searchProduct/', views.search_products),
+    path('result/<str:search>/', views.search_result, name='result'),
 ]

@@ -1,0 +1,27 @@
+{% if products %}
+    <div class="search_title">
+        <p>PRODUCTS FOUND</p>
+        <a href="{% url 'result' search=search_value %}">View all</a>
+    </div>
+    <div class="search_body">
+        {% for product in products %}
+            <div class="search_product">
+                <img src="{{ product.image.url }}" alt="">
+                <div class="product_info">
+                    <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+                    {% if currency == 'us' %}
+                        <p>{{ product.get_price_us }}</p>
+                    {% else %}
+                        <p>{{ product.get_price_eu }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="not_found">
+        <h4>NO RESULTS WERE FOUND</h4>
+        <p>No items matched your search <b>{{ search_value }}.</b></p>
+        <p>Check your spelling or search again with less specific terms.</p>
+    </div>
+{% endif %}

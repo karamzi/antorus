@@ -127,3 +127,29 @@ if (account) {
         }
     })
 }
+
+const searchBody = document.querySelector('.search_accordion')
+
+function search() {
+    const value = document.getElementById('search').value
+    if (!value) {
+        return
+    }
+    let data = new FormData()
+    data.append('value', value)
+    instance.post('searchProduct/', data, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    }).then(response => {
+        searchBody.style.display = 'block'
+        searchBody.innerHTML = response.data
+    })
+}
+
+document.body.addEventListener('click', function (e) {
+    if (!e.target.closest('.search_accordion')) {
+        searchBody.style.display = 'none'
+    }
+})

@@ -32,6 +32,31 @@ def index(request):
     return render(request, 'index.html', context)
 
 
+def search_products(request):
+    if request.method == 'POST':
+        products = Products.objects.filter(name__contains=request.POST['value'])
+        context = {
+            'products': products,
+            'search_value': request.POST['value']
+        }
+        return render(request, 'search_accordion.html', context)
+    return redirect(reverse('index'))
+
+
+def search_result(request, search):
+    if search == 'all':
+        products = Products.objects.all()
+    else:
+        products = Products.objects.filter(name__contains=search)
+    categories = Categories.objects.all()
+    context = {
+        'categories': categories,
+        'products': products,
+        'search': search,
+    }
+    return render(request, 'search_result.html', context)
+
+
 def product(request, slug):
     try:
         product = Products.objects.get(slug=slug)
