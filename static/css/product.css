@@ -70,32 +70,31 @@
 
 .option_hint {
     position: relative;
-    z-index: 1;
 }
 
-.option_hint img {
+.hint_img {
     margin-left: 5px;
-    transform: translateY(2px);
+    transform: translateY(1px);
 }
 
 .hint_text {
     position: absolute;
     font-size: 10px;
     width: 250px;
-    background-color: #000000d4;
+    background-color: #000000e3;
     border-radius: 10px;
     color: white;
     text-align: center;
     padding: 7px;
     bottom: 0;
-    left: -100px;
+    left: -130px;
     line-height: 1.5;
     opacity: 0;
     transition: all 0.5s ease;
 }
 
 .hint_text.hint_active {
-    bottom: 25px;
+    bottom: 20px;
     opacity: 1;
     transition: all 0.5s ease;
 }

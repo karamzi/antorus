@@ -52,11 +52,14 @@
 
                                     {% endif %}
                                     {% if option.description %}
-                                    <div class="option_hint">
-                                        <img class="question" width="15" src="{% static 'img/question.png' %}" alt="">
-                                        <div class="hint_text">{{ option.description }}</div>
-                                    </div>
-                                {% endif %}
+                                        <div class="hint_img">
+                                            <img class="question" width="15"
+                                                 src="{% static 'img/question.png' %}" alt="">
+                                        </div>
+                                        <div class="option_hint">
+                                            <div class="hint_text">{{ option.description }}</div>
+                                        </div>
+                                    {% endif %}
                                 </div>
                             {% endfor %}
                         </div>
@@ -102,6 +105,15 @@
                                                 {% endif %}
 
                                             {% endif %}
+                                            {% if child_option.description %}
+                                                <div class="hint_img">
+                                                    <img class="question" width="15"
+                                                         src="{% static 'img/question.png' %}" alt="">
+                                                </div>
+                                                <div class="option_hint">
+                                                    <div class="hint_text">{{ child_option.description }}</div>
+                                                </div>
+                                            {% endif %}
                                         </div>
                                     {% endfor %}
                                 </div>
@@ -142,6 +154,15 @@
                                             <div class="option_new_price">€ {{ option.new_price_euro }}</div>
                                         {% endif %}
 
+                                    {% endif %}
+                                    {% if option.description %}
+                                        <div class="hint_img">
+                                            <img class="question" width="15"
+                                                 src="{% static 'img/question.png' %}" alt="">
+                                        </div>
+                                        <div class="option_hint">
+                                            <div class="hint_text">{{ option.description }}</div>
+                                        </div>
                                     {% endif %}
                                 </div>
                             {% endfor %}
