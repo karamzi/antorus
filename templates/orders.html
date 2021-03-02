@@ -35,7 +35,7 @@
                             <p>{{ order.date|date:'d.m.Y' }}</p>
                             <p>{{ order.get_status_display }}</p>
                             <p>{{ order.total }}</p>
-                            <a href="#">VIEW</a>
+                            <a href="{% url 'order' pk=order.pk %}">VIEW</a>
                         </div>
                         {% endfor %}
                     </div>

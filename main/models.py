@@ -4,6 +4,7 @@ from os.path import splitext
 from django.shortcuts import reverse
 from easy_thumbnails.fields import ThumbnailerImageField
 from django.contrib.auth.models import User
+import re
 
 
 def get_img_path(instance, filename):
@@ -300,11 +301,19 @@ class Order(models.Model):
     price = models.CharField(verbose_name='Без купона', max_length=50)
     coupon = models.CharField(verbose_name='Купон', max_length=50, blank=True)
     total = models.CharField(verbose_name='Итого', max_length=50)
-    # TODO убрать null
     date = models.DateField(auto_now_add=True, verbose_name='Дата создания', null=True)
 
     def __str__(self):
         return 'Заказ № ' + str(self.id)
+
+    def get_discount(self):
+        reg = r'[0-9.]+'
+        reg2 = r'[$€]'
+        price = re.findall(reg, self.price)[0]
+        total = re.findall(reg, self.total)[0]
+        sing = re.findall(reg2, self.price)[0]
+        coupon = float(price) - float(total)
+        return '{} {:.2f}'.format(sing, coupon)
 
     class Meta:
         verbose_name = 'Заказ'

@@ -17,7 +17,9 @@ urlpatterns = [
     path('login/', views.my_login, name='login'),
     path('logout/', views.my_logout, name='logout'),
     path('orders/', views.orders, name='orders'),
+    path('order/<int:pk>/', views.order, name='order'),
     path('changeDetails/', views.change_account_details, name='changeDetails'),
     path('createAccount/', views.create_account, name='createAccount'),
     path('checkEmail/<str:token>/', views.check_auth_token, name='checkEmail'),
+    path('generatePassword/', views.send_new_password, name='generatePassword'),
 ]

@@ -3,12 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.hashers import check_password
 from main.utils.customAuth import CustomAuth
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday, AuthToken
 from .forms import RegisterUserForm
 from django.core.mail import send_mail
+from django.db.models import Q
 import base64
 import json
 
@@ -114,40 +116,59 @@ def reset_password(request):
     return render(request, 'reset_password.html')
 
 
-@login_required(redirect_field_name='/myAccount/')
+@login_required(login_url='/myAccount/')
 def account_details(request):
     return render(request, 'account_details.html')
 
 
-@login_required(redirect_field_name='/myAccount/')
+@login_required(login_url='/myAccount/')
 def change_account_details(request):
     if request.method == 'POST':
         user = User.objects.get(username=request.user.username)
-        if user.username != request.POST['username'] and not User.objects.filter(
-                username=request.POST['username']).exists():
-            user.username = request.POST['username']
-        else:
-            messages.error(request, 'Пользователь с таким логином существует')
-            return redirect(reverse('account_details'))
-        if user.email != request.POST['email'] and not User.objects.filter(email=request.POST['email']).exists():
-            user.email = request.POST['email']
-        else:
-            messages.error(request, 'Пользователь с таким email существует')
-            return redirect(reverse('account_details'))
+        if user.username != request.POST['username']:
+            if not User.objects.filter(username=request.POST['username']).exists():
+                user.username = request.POST['username']
+            else:
+                messages.error(request, 'Пользователь с таким логином существует')
+                return redirect(reverse('account_details'))
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']
+        if request.POST['currentPassword']:
+            if check_password(request.POST['currentPassword'], user.password):
+                password1 = request.POST['password1']
+                password2 = request.POST['password2']
+                if password1 and password2 and password1 == password2:
+                    user.set_password(password1)
+                    login(request, user)
+                else:
+                    messages.error(request, 'Пароли не совпадают')
+                    return redirect(reverse('account_details'))
+            else:
+                messages.error(request, 'Неправильный пароль')
+                return redirect(reverse('account_details'))
         user.save()
         messages.success(request, 'Данные были обновленны успешно')
-    return redirect(reverse('index'))
+    return redirect(reverse('account_details'))
 
 
-@login_required(redirect_field_name='/myAccount/')
+@login_required(login_url='/myAccount/')
 def orders(request):
     orders = Order.objects.filter(user=request.user)
     context = {
         'orders': orders
     }
     return render(request, 'orders.html', context)
+
+
+def order(request, pk):
+    try:
+        order = Order.objects.get(pk=pk)
+        context = {
+            'order': order
+        }
+        return render(request, 'order.html', context)
+    except ObjectDoesNotExist:
+        return redirect(reverse('account_details'))
 
 
 def create_account(request):
@@ -190,6 +211,26 @@ def check_auth_token(request, token):
             return redirect(reverse('index'))
     except ObjectDoesNotExist:
         pass
+    return redirect(reverse('index'))
+
+
+def send_new_password(request):
+    import random
+    import string
+    if request.method == 'POST':
+        user = User.objects.filter(Q(username=request.POST['username']) | Q(email=request.POST['username']))
+        if user.exists():
+            user = user[0]
+            password_characters = string.ascii_letters + string.digits + string.ascii_uppercase
+            password = ''.join(random.choice(password_characters) for i in range(15))
+            user.set_password(password)
+            user.save()
+            send_mail('Регистрация', f'Новый пароль: {password}', 'federation.bratsk@gmail.com', ['play-wow@yandex.ru'],
+                      fail_silently=False)
+            messages.success(request, f'На почту {user.email} было высланно письмо с новым паролем')
+        else:
+            messages.error(request, 'Такой пользователь не найден')
+        return redirect(reverse('reset_password'))
     return redirect(reverse('index'))
 
 

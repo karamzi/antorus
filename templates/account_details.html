@@ -47,21 +47,21 @@
                         </div>
                         <div>
                             <label class="required">Email address</label>
-                            <input name="email" type="email" value="{{ user.email }}" required>
+                            <input name="email" type="email" value="{{ user.email }}" disabled>
                         </div>
                         <div class="change_password">
                             <h4>PASSWORD CHANGE</h4>
                             <div>
                                 <label>Current password (leave blank to leave unchanged)</label>
-                                <input type="password">
+                                <input name="currentPassword" type="password">
                             </div>
                             <div>
                                 <label>New password (leave blank to leave unchanged)</label>
-                                <input type="password">
+                                <input name="password1" type="password">
                             </div>
                             <div>
                                 <label>Confirm new password</label>
-                                <input type="password">
+                                <input name="password2" type="password">
                             </div>
                         </div>
                         <button type="submit">SAVE CHANGES</button>

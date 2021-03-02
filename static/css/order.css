@@ -1,0 +1,107 @@
+.order_section {
+    flex-grow: 1;
+}
+
+.order_section h2 {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.order_content{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.order_left {
+    width: 20%;
+}
+
+.nav_bar_link {
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 20px 0;
+    border-bottom: 1px solid rgb(47, 47, 47);
+}
+
+.nav_bar_link:hover {
+    color: #8e8e8e;
+    transition: color 0.3s ease;
+}
+
+.nav_bar_link.active {
+    color: rgb(40, 168, 5);
+}
+
+.order_right {
+    width: 70%;
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table_head, .product {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgb(47, 47, 47);
+}
+
+.table_head p {
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.name > p {
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+ul {
+    color: #888888;
+    font-size: 14px;
+    font-weight: 300;
+    margin-left: 25px;
+}
+
+ul li {
+    margin: 7px 0;
+}
+
+.price {
+    color: #888888;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.subtotal, .coupon, .character, .faction, .connection {
+    margin-bottom: 20px;
+    color: #888888;
+}
+
+.subtotal h5, .coupon h5, .character h5, .faction h5, .connection h5 {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.subtotal p, .coupon p, .character p, .faction p, .connection p {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.total {
+    color: white;
+    font-size: 25px;
+    font-weight: 400;
+    margin-bottom: 40px;
+}
