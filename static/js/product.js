@@ -72,7 +72,7 @@ function countAdditionOptionsPrice() {
             currency === 'us' ? percent = option.getAttribute('data-percent-us') : percent = option.getAttribute('data-percent-eu')
             if (percent) {
                 percent = percent.replace(',', '.')
-                let amount = amountRequirementOptions * (1 - +percent)
+                let amount = amountRequirementOptions * +percent
                 currency === 'us' ? option.setAttribute('data-price-us', amount.toFixed(2)) : option.setAttribute('data-price-eu', amount.toFixed(2))
                 option.querySelector('.option_price').innerText = sing + ' ' + amount.toFixed(2)
             }
