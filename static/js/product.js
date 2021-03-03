@@ -116,6 +116,7 @@ function hideChildOptions(option) {
                 Array.prototype.slice.call(array).splice(index, 1)
             }
         })
+        requiredChildChecked.splice(0, requiredChildChecked.length)
     }
 }
 
