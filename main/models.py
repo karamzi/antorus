@@ -363,3 +363,11 @@ class AuthToken(models.Model):
     class Meta:
         verbose_name = 'Токен'
         verbose_name_plural = 'Токены'
+
+
+class Fondy(models.Model):
+    response = models.TextField(verbose_name='Ответ от сервера', blank=True)
+
+    class Meta:
+        verbose_name = 'Фонди'
+        verbose_name_plural = 'Фонди'

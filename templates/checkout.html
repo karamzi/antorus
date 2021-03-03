@@ -63,25 +63,10 @@
                 </div>
                 <div class="checkout_right">
                     <h3>YOUR ORDER</h3>
-                    <div class="products">
-                        <div class="product">
-                            <div class="product_head">
-                                <div class="product_name">
-                                    CASTLE NATHRIA HEROIC RUN (traders only EU)
-                                </div>
-                                <div class="product_price">$50.40</div>
-                            </div>
-                            <div class="product_options">
-                                <div class="option">Select options::
-                                    7/10 bosses
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+                    <div class="products"></div>
                     <div class="subtotal">
                         <p>Subtotal</p>
-                        <p id="subtotal">$50.40</p>
+                        <p id="subtotal"></p>
                     </div>
                     <div style="display: none" class="coupon">
                         <p id="coupon_name">Coupon: </p>
@@ -89,7 +74,7 @@
                     </div>
                     <div class="total">
                         <p>total</p>
-                        <p id="cart_total">$50.40</p>
+                        <p id="cart_total"></p>
                     </div>
                     <div class="agree">
                         <label>I have read and agree to the website terms and conditions</label>
@@ -100,9 +85,19 @@
                             </label>
                         </div>
                     </div>
-                    <div class="button">
-                        <a href="#">PLACE ORDER</a>
-                    </div>
+                    <form action="https://pay.fondy.eu/api/checkout/redirect/" method="post">
+                        <input type="hidden" name="server_callback_url" value="{% url 'fondy' %}">
+                        <input type="hidden" name="response_url" value="{% url 'index' %}">
+                        <input type="hidden" name="order_id" value="test4207135583">
+                        <input type="hidden" name="order_desc" value="Test payment">
+                        <input type="hidden" name="currency" value="RUB">
+                        <input type="hidden" name="amount" value="100">
+                        <input type="hidden" name="signature" value="1773cf135bd89656131134b98637894dad42f808">
+                        <input type="hidden" name="merchant_id" value="1">
+                        <div class="button">
+                            <button type="submit">PLACE ORDER</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

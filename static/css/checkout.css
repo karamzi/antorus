@@ -197,16 +197,17 @@ form input, form textarea {
     margin-left: 10px;
 }
 
-.button a {
+.button button {
     display: block;
     text-decoration: none;
     background-color: rgb(40, 168, 5);
     color: white;
     text-align: center;
     padding: 10px 0;
+    width: 100%;
 }
 
-.button a:hover {
+.button button:hover {
     background-color: #2A2A2A;
     transition: background-color 0.3s ease;
 }

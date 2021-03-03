@@ -227,6 +227,10 @@
     text-align: justify;
 }
 
+.description a {
+    text-decoration: none;
+}
+
 .description span {
     color: white;
 }

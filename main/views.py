@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse
 from django.core.exceptions import ObjectDoesNotExist
@@ -7,7 +7,8 @@ from django.contrib.auth.hashers import check_password
 from main.utils.customAuth import CustomAuth
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday, AuthToken
+from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday, AuthToken, \
+    Fondy
 from .forms import RegisterUserForm
 from django.core.mail import send_mail
 from django.db.models import Q
@@ -319,4 +320,13 @@ def check_coupon(request):
             return JsonResponse({
                 'status': 'False'
             })
+    return redirect(reverse('index'))
+
+
+def fondy_callback(request):
+    if request.method == 'POST':
+        print(request.POST)
+        fondy = json.dumps(request.POST, ensure_ascii=False)
+        fondy = Fondy.objects.create(response=fondy)
+        return HttpResponse(status=200)
     return redirect(reverse('index'))

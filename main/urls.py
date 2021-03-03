@@ -24,4 +24,5 @@ urlpatterns = [
     path('generatePassword/', views.send_new_password, name='generatePassword'),
     path('searchProduct/', views.search_products),
     path('result/<str:search>/', views.search_result, name='result'),
+    path('fondyCallback/', views.fondy_callback, name='fondy'),
 ]
