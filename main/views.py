@@ -12,6 +12,7 @@ from .models import Products, Categories, SubCategories, Order, Cart, CartOption
 from .forms import RegisterUserForm
 from django.core.mail import send_mail
 from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
 import base64
 import json
 
@@ -323,6 +324,7 @@ def check_coupon(request):
     return redirect(reverse('index'))
 
 
+@csrf_exempt
 def fondy_callback(request):
     if request.method == 'POST':
         print(request.POST)
