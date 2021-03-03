@@ -240,12 +240,16 @@ class AdditionOptions(models.Model):
         return self.name
 
     def get_option_price_euro(self):
+        if self.price_euro < 1:
+            return 0
         if self.new_price_euro:
             return self.new_price_euro
         else:
             return self.price_euro
 
     def get_option_price_dollar(self):
+        if self.price_dollar < 1:
+            return 0
         if self.new_price_dollar:
             return self.new_price_dollar
         else:

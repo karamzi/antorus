@@ -129,6 +129,12 @@
                                 <div class="option"
                                      data-price-us="{{ option.get_option_price_dollar }}"
                                      data-price-eu="{{ option.get_option_price_euro }}"
+                                        {% if option.price_dollar < 1 %}
+                                     data-percent-us="{{ option.price_dollar }}"
+                                        {% endif %}
+                                        {% if option.price_euro < 1 %}
+                                     data-percent-eu="{{ option.price_euro }}"
+                                        {% endif %}
                                      data-name="{{ option.name }}">
                                     <div class="checkbox">
                                         <input class="addition" type="checkbox" id="cd{{ option.name }}{{ option.pk }}">
@@ -139,21 +145,25 @@
                                     <div class="option_name">{{ option.name }}</div>
 
                                     {% if currency == 'us' %}
-
-                                        <div class="option_price {% if option.new_price_dollar %}old{% endif %}">
-                                            $ {{ option.price_dollar }}</div>
-                                        {% if new_price_dollar %}
-                                            <div class="option_new_price">€ {{ option.new_price_dollar }}</div>
+                                        {% if option.price_dollar > 1 %}
+                                            <div class="option_price {% if option.new_price_dollar %}old{% endif %}">
+                                                $ {{ option.price_dollar }}</div>
+                                            {% if new_price_dollar %}
+                                                <div class="option_new_price">€ {{ option.new_price_dollar }}</div>
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="option_price"></div>
                                         {% endif %}
-
                                     {% else %}
-
-                                        <div class="option_price {% if option.new_price_euro %}old{% endif %}">
-                                            € {{ option.price_euro }}</div>
-                                        {% if option.new_price_euro %}
-                                            <div class="option_new_price">€ {{ option.new_price_euro }}</div>
+                                        {% if option.price_euro > 1 %}
+                                            <div class="option_price {% if option.new_price_euro %}old{% endif %}">
+                                                € {{ option.price_euro }}</div>
+                                            {% if option.new_price_euro %}
+                                                <div class="option_new_price">€ {{ option.new_price_euro }}</div>
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="option_price"></div>
                                         {% endif %}
-
                                     {% endif %}
                                     {% if option.description %}
                                         <div class="hint_img">

@@ -2,13 +2,25 @@ const usButton = document.getElementById('us')
 const euButton = document.getElementById('eu')
 const navLink = document.querySelectorAll('.nav_link')
 
-usButton.addEventListener('click', () => {
+usButton.addEventListener('click', function () {
     setCookie('us', 'currency')
     window.location.reload()
 })
 euButton.addEventListener('click', () => {
     setCookie('eu', 'currency')
     window.location.reload()
+})
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (currency === 'us') {
+        euButton.classList.remove('active_currency')
+        usButton.classList.add('active_currency')
+    } else {
+        console.log('re')
+        console.log(euButton)
+        usButton.classList.remove('active_currency')
+        euButton.classList.add('active_currency')
+    }
 })
 
 const instance = axios.create({
@@ -153,3 +165,11 @@ document.body.addEventListener('click', function (e) {
         searchBody.style.display = 'none'
     }
 })
+
+const chatButton = document.getElementById('chatButton')
+
+if (chatButton) {
+    chatButton.addEventListener('click', () => {
+        tidioChatApi.open()
+    })
+}

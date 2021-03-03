@@ -162,7 +162,6 @@ ______________________________________________ */
 .header {
     position: relative;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 24px;
     border-bottom: 1px solid rgb(47, 47, 47);
@@ -179,16 +178,44 @@ ______________________________________________ */
     outline: none;
 }
 
+.search_bar {
+    width: 25%;
+}
+
 .logo {
-    transform: translateX(-25%);
+    display: flex;
+    justify-content: center;
+    width: 51%;
 }
 
 .logo img {
     max-width: 200px;
 }
 
+.currency_switcher {
+    width: 8%;
+    background-color: rgb(26, 26, 26);
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 3px;
+}
+
+#us, #eu {
+    width: 50%;
+    text-align: center;
+    cursor: pointer;
+}
+
+#us.active_currency, #eu.active_currency {
+    background-color: #45db428c;
+}
+
 .cart {
     position: relative;
+    width: 16%;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .cart_count {

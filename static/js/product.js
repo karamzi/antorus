@@ -48,9 +48,45 @@ function checkInputs(inputs, max, array) {
                     }
                 })
             }
+            countAdditionOptionsPrice()
             setPrice()
         })
     })
+}
+
+function countAdditionOptionsPrice() {
+    let sing
+    currency === 'us' ? sing = '$' : sing = '€'
+    let amountRequirementOptions = 0
+    requiredChecked.forEach(item => {
+        let price
+        currency === 'us' ? price = item.closest('.option').getAttribute('data-price-us') : price = item.closest('.option').getAttribute('data-price-eu')
+        price = price.replace(',', '.')
+        amountRequirementOptions += +price
+    })
+
+    if (amountRequirementOptions > 0) {
+        additionInputs.forEach(item => {
+            const option = item.closest('.option')
+            let percent
+            currency === 'us' ? percent = option.getAttribute('data-percent-us') : percent = option.getAttribute('data-percent-eu')
+            if (percent) {
+                percent = percent.replace(',', '.')
+                let amount = amountRequirementOptions * (1 - +percent)
+                currency === 'us' ? option.setAttribute('data-price-us', amount.toFixed(2)) : option.setAttribute('data-price-eu', amount.toFixed(2))
+                option.querySelector('.option_price').innerText = sing + ' ' + amount.toFixed(2)
+            }
+        })
+    } else {
+        additionInputs.forEach(item => {
+            const option = item.closest('.option')
+            let percent
+            currency === 'us' ? percent = option.getAttribute('data-percent-us') : percent = option.getAttribute('data-percent-eu')
+            if (percent) {
+                item.closest('.option').querySelector('.option_price').innerText = ''
+            }
+        })
+    }
 }
 
 function showChildOptions(option) {
@@ -212,7 +248,7 @@ if (questions) {
     questions.forEach(item => {
         item.addEventListener('mouseleave', function () {
             this.nextSibling.nextSibling.querySelector('.hint_text').classList.remove('hint_active')
-            intervalID = setTimeout( () => {
+            intervalID = setTimeout(() => {
                 this.nextSibling.nextSibling.querySelector('.hint_text').style.display = 'none'
             }, 500)
         })
