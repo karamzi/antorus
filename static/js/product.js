@@ -85,6 +85,7 @@ function countAdditionOptionsPrice() {
             if (percent) {
                 item.closest('.option').querySelector('.option_price').innerText = ''
                 currency === 'us' ? option.setAttribute('data-price-us', '') : option.setAttribute('data-price-eu', '')
+                item.checked = false
             }
         })
         additionChecked = []
