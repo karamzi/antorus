@@ -78,17 +78,16 @@ function countAdditionOptionsPrice() {
             }
         })
     } else {
-        additionInputs.forEach((item, index, array)=> {
+        additionInputs.forEach(item => {
             const option = item.closest('.option')
             let percent
             currency === 'us' ? percent = option.getAttribute('data-percent-us') : percent = option.getAttribute('data-percent-eu')
             if (percent) {
                 item.closest('.option').querySelector('.option_price').innerText = ''
                 currency === 'us' ? option.setAttribute('data-price-us', '') : option.setAttribute('data-price-eu', '')
-                item.checked = false
-                Array.prototype.slice.call(array).splice(index, 1)
             }
         })
+        additionChecked = []
     }
 }
 
