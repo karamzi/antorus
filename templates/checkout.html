@@ -86,8 +86,8 @@
                         </div>
                     </div>
                     <form action="https://pay.fondy.eu/api/checkout/redirect/" method="post">
-                        <input type="hidden" name="server_callback_url" value="{% url 'fondy' %}">
-                        <input type="hidden" name="response_url" value="{% url 'index' %}">
+                        <input type="hidden" name="server_callback_url" value="http://151.248.114.152{% url 'fondy' %}">
+                        <input type="hidden" name="response_url" value="http://151.248.114.152{% url 'index' %}">
                         <input type="hidden" name="order_id" value="test4207135583">
                         <input type="hidden" name="order_desc" value="Test payment">
                         <input type="hidden" name="currency" value="RUB">
