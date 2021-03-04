@@ -185,7 +185,7 @@
                         {% elif currency == 'us' and product.price_dollar == 0 %}
                             <p>Choose options to continue</p>
                         {% elif currency == 'eu' and product.price_euro > 0 %}
-                            <p>€ {{ product.price_dollar }}</p>
+                            <p>€ {{ product.price_euro }}</p>
                         {% elif currency == 'eu' and product.price_euro == 0 %}
                             <p>Choose options to continue</p>
                         {% endif %}
