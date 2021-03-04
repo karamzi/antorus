@@ -105,6 +105,12 @@ class Products(models.Model):
             self.slug = slug
         super().save(*args, **kwargs)
 
+    def get_price_dollar(self):
+        return to_fixed(self.price_dollar, 2)
+
+    def get_price_euro(self):
+        return to_fixed(self.price_dollar, 2)
+
     def get_absolute_url(self):
         return reverse('product', kwargs={'slug': self.slug})
 
@@ -178,9 +184,9 @@ class RequiredOption(models.Model):
 
     def get_option_price_dollar(self):
         if self.new_price_dollar:
-            return self.new_price_dollar
+            return to_fixed(self.new_price_dollar, 2)
         else:
-            return self.price_dollar
+            return to_fixed(self.price_dollar, 2)
 
     class Meta:
         verbose_name = 'Обязательная опция'
@@ -206,18 +212,18 @@ class RequiredOptionChild(models.Model):
 
     def get_option_price_euro(self):
         if self.new_price_euro:
-            return self.new_price_euro
+            return to_fixed(self.new_price_euro, 2)
         else:
-            return self.price_euro
+            return to_fixed(self.price_euro, 2)
 
     def get_option_price_dollar(self):
         if self.price_dollar < 1:
             price = self.required_option.price_dollar * self.price_dollar
             return to_fixed(price, 2)
         if self.new_price_dollar:
-            return self.new_price_dollar
+            return to_fixed(self.new_price_dollar, 2)
         else:
-            return self.price_dollar
+            return to_fixed(self.price_dollar, 2)
 
     class Meta:
         verbose_name = 'Обязательная опция(дочерняя)'
@@ -244,17 +250,17 @@ class AdditionOptions(models.Model):
         if self.price_euro < 1:
             return 0
         if self.new_price_euro:
-            return self.new_price_euro
+            return to_fixed(self.new_price_euro, 2)
         else:
-            return self.price_euro
+            return to_fixed(self.price_euro, 2)
 
     def get_option_price_dollar(self):
         if self.price_dollar < 1:
             return 0
         if self.new_price_dollar:
-            return self.new_price_dollar
+            return to_fixed(self.new_price_dollar, 2)
         else:
-            return self.price_dollar
+            return to_fixed(self.price_dollar, 2)
 
     class Meta:
         verbose_name = 'Дополнительная опция'

@@ -38,18 +38,18 @@
 
                                         {% if option.price_dollar != 0 %}
                                             <div class="option_price {% if option.new_price_dollar %}old{% endif %}">
-                                                $ {{ option.price_dollar }}</div>
+                                                $ {{ option.get_option_price_dollar }}</div>
                                         {% endif %}
                                         {% if option.new_price_dollar %}
-                                            <div class="option_new_price">$ {{ option.new_price_dollar }}</div>
+                                            <div class="option_new_price">$ {{ option.get_option_price_dollar }}</div>
                                         {% endif %}
 
                                     {% else %}
 
                                         <div class="option_price {% if option.new_price_euro %}old{% endif %}">
-                                            € {{ option.price_euro }}</div>
+                                            € {{ option.get_option_price_euro }}</div>
                                         {% if option.new_price_euro %}
-                                            <div class="option_new_price">€ {{ option.new_price_euro }}</div>
+                                            <div class="option_new_price">€ {{ option.get_option_price_euro }}</div>
                                         {% endif %}
 
                                     {% endif %}
@@ -150,10 +150,10 @@
                                         {% if option.price_dollar >= 1 %}
                                             {% if option.price_dollar != 0 %}
                                                 <div class="option_price {% if option.new_price_dollar %}old{% endif %}">
-                                                    $ {{ option.price_dollar }}</div>
+                                                    $ {{ option.get_option_price_dollar }}</div>
                                             {% endif %}
                                             {% if new_price_dollar %}
-                                                <div class="option_new_price">€ {{ option.new_price_dollar }}</div>
+                                                <div class="option_new_price">€ {{ option.get_option_price_dollar }}</div>
                                             {% endif %}
                                         {% else %}
                                             <div class="option_price"></div>
@@ -161,9 +161,9 @@
                                     {% else %}
                                         {% if option.price_euro >= 1 %}
                                             <div class="option_price {% if option.new_price_euro %}old{% endif %}">
-                                                € {{ option.price_euro }}</div>
+                                                € {{ option.get_option_price_euro }}</div>
                                             {% if option.new_price_euro %}
-                                                <div class="option_new_price">€ {{ option.new_price_euro }}</div>
+                                                <div class="option_new_price">€ {{ option.get_option_price_euro }}</div>
                                             {% endif %}
                                         {% else %}
                                             <div class="option_price"></div>
@@ -185,11 +185,11 @@
 
                     <div class="price">
                         {% if currency == 'us' and product.price_dollar > 0 %}
-                            <p>$ {{ product.price_dollar }}</p>
+                            <p>$ {{ product.get_price_dollar }}</p>
                         {% elif currency == 'us' and product.price_dollar == 0 %}
                             <p>Choose options to continue</p>
                         {% elif currency == 'eu' and product.price_euro > 0 %}
-                            <p>€ {{ product.price_euro }}</p>
+                            <p>€ {{ product.get_price_euro }}</p>
                         {% elif currency == 'eu' and product.price_euro == 0 %}
                             <p>Choose options to continue</p>
                         {% endif %}
