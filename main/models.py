@@ -319,7 +319,7 @@ class Order(models.Model):
     date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания', null=True)
 
     def __str__(self):
-        return 'Заказ № ' + str(self.id + 1000)
+        return 'Заказ ' + str(self.id + 1000)
 
     def get_discount(self):
         reg = r'[0-9.]+'

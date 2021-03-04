@@ -24,6 +24,7 @@ def global_var(request):
     }
 
 
+@csrf_exempt
 def index(request):
     categories = Categories.objects.all()
     products = BestOffersToday.objects.all()
