@@ -147,7 +147,7 @@
                                     <div class="option_name">{{ option.name }}</div>
 
                                     {% if currency == 'us' %}
-                                        {% if option.price_dollar > 1 %}
+                                        {% if option.price_dollar >= 1 %}
                                             {% if option.price_dollar != 0 %}
                                                 <div class="option_price {% if option.new_price_dollar %}old{% endif %}">
                                                     $ {{ option.price_dollar }}</div>
@@ -159,7 +159,7 @@
                                             <div class="option_price"></div>
                                         {% endif %}
                                     {% else %}
-                                        {% if option.price_euro > 1 %}
+                                        {% if option.price_euro >= 1 %}
                                             <div class="option_price {% if option.new_price_euro %}old{% endif %}">
                                                 € {{ option.price_euro }}</div>
                                             {% if option.new_price_euro %}
