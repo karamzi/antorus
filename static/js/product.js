@@ -48,7 +48,9 @@ function checkInputs(inputs, max, array) {
                     }
                 })
             }
-            document.querySelector('.data-percent-us') && countAdditionOptionsPrice()
+            if (document.querySelector('.option[data-percent-us]') || document.querySelector('.option[data-percent-eu]')) {
+                countAdditionOptionsPrice()
+            }
             setPrice()
         })
     })
