@@ -83,6 +83,10 @@ form input, form textarea {
     margin-top: 15px;
 }
 
+form input.input_error {
+    border: 1px solid darkred;
+}
+
 #comment {
     height: 100px;
     resize: vertical;

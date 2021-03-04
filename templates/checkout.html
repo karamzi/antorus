@@ -77,7 +77,7 @@
                         <p id="cart_total"></p>
                     </div>
                     <div class="agree">
-                        <label>I have read and agree to the website terms and conditions</label>
+                        <label id="cd2_label">I have read and agree to the website terms and conditions</label>
                         <div class="checkbox">
                             <input class="addition" type="checkbox" id="cd2">
                             <label class="custom" for="cd2">
@@ -85,19 +85,19 @@
                             </label>
                         </div>
                     </div>
-                    <form action="https://pay.fondy.eu/api/checkout/redirect/" method="post">
-                        <input type="hidden" name="amount" value="1000">
-                        <input type="hidden" name="currency" value="RUB">
+                    <form id="fondy" action="https://pay.fondy.eu/api/checkout/redirect/" method="post">
+                        <input id="amount" type="hidden" name="amount" value="">
+                        <input id="currency" type="hidden" name="currency" value="">
                         <input type="hidden" name="merchant_id" value="1470496">
-                        <input type="hidden" name="order_desc" value="Test payment">
-                        <input type="hidden" name="order_id" value="423424">
+                        <input id="order_desc" type="hidden" name="order_desc" value="">
+                        <input id="order_id" type="hidden" name="order_id" value="">
                         <input type="hidden" name="response_url" value="http://151.248.114.152{% url 'index' %}">
                         <input type="hidden" name="server_callback_url" value="http://151.248.114.152{% url 'fondy' %}">
-                        <input type="hidden" name="signature" value="14d41df264ed51e8b40c5d0f3457de3c924e336b">
-                        <div class="button">
-                            <button type="submit">PLACE ORDER</button>
-                        </div>
+                        <input id="signature" type="hidden" name="signature" value="">
                     </form>
+                    <div class="button">
+                        <button>PLACE ORDER</button>
+                    </div>
                 </div>
             </div>
         </div>

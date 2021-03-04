@@ -180,7 +180,7 @@ def change_account_details(request):
 
 @login_required(login_url='/myAccount/')
 def orders(request):
-    orders = Order.objects.filter(user=request.user)
+    orders = Order.objects.filter(user=request.user).order_by('-date', '-id')
     context = {
         'orders': orders
     }
@@ -302,8 +302,18 @@ def create_order(request):
                 option.order = order
                 option.product = product
                 option.save()
+        from main.utils.generateSignature import generate_signature
+        amount = float(request.POST['total']) * 100
+        currency = 'EUR' if request.POST['currency'] == 'eu' else 'USD'
+        order_desc = 'payment for order №' + order.get_order_number()
+        order_id = order.get_order_number()
         return JsonResponse({
-            'status': 'created'
+            'status': 'created',
+            'amount': amount,
+            'currency': currency,
+            'order_desc': order_desc,
+            'order_id': order_id,
+            'signature': generate_signature(amount, currency, order_desc, order_id),
         })
     return redirect(reverse('index'))
 

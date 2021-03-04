@@ -1,5 +1,5 @@
 const button = document.querySelector('.button')
-button.addEventListener('click', evt => createOrder(evt))
+button.addEventListener('click', createOrder)
 
 function renderCart() {
     const products = document.querySelector('.products')
@@ -29,13 +29,12 @@ function renderCart() {
     countCart()
 }
 
-function createOrder(e) {
-    e.preventDefault()
-    const characterServer = document.getElementById('characterServer').value
+function createOrder() {
+    const characterServer = document.getElementById('characterServer')
     const battleTag = document.getElementById('battleTag').value
-    const faction = document.getElementById('faction').value
-    const connection = document.getElementById('connection').value
-    const email = document.getElementById('email').value
+    const faction = document.getElementById('faction')
+    const connection = document.getElementById('connection')
+    const email = document.getElementById('email')
     const account = document.getElementById('cd1').checked
     const comment = document.getElementById('comment').value
     let cart
@@ -46,7 +45,8 @@ function createOrder(e) {
     } else {
         cart = getCookie('cartEu')
     }
-    if (!characterServer && !faction && !connection && !email || cart.length === 0) {
+    console.log(checkForm(characterServer, faction, connection, email))
+    if (!checkForm(characterServer, faction, connection, email) || cart.length === 0) {
         return
     }
     total = cart.reduce((sum, item) => sum + +item.total, 0)
@@ -63,11 +63,11 @@ function createOrder(e) {
     data.append('cart', cart)
     data.append('total', total)
     data.append('currency', currency)
-    data.append('characterServer', characterServer)
+    data.append('characterServer', characterServer.value)
     data.append('battleTag', battleTag)
-    data.append('faction', faction)
-    data.append('connection', connection)
-    data.append('email', email)
+    data.append('faction', faction.value)
+    data.append('connection', connection.value)
+    data.append('email', email.value)
     data.append('account', account)
     data.append('comment', comment)
     instance.post('createOrder/', data, {
@@ -75,7 +75,41 @@ function createOrder(e) {
             'Content-Type': 'multipart/form-data',
             'X-CSRFToken': getCookie('csrftoken')
         }
-    }).then(response => {})
+    }).then(response => {
+        data = response.data
+        document.getElementById('amount').value = data['amount']
+        document.getElementById('currency').value = data['currency']
+        document.getElementById('order_desc').value = data['order_desc']
+        document.getElementById('order_id').value = data['order_id']
+        document.getElementById('signature').value = data['signature']
+        //document.getElementById('fondy').submit()
+    })
+}
+
+function checkForm(characterServer, faction, connection, email) {
+    characterServer.classList.remove('input_error')
+    faction.classList.remove('input_error')
+    connection.classList.remove('input_error')
+    email.classList.remove('input_error')
+    if (checkInput(characterServer)) return false
+    if (checkInput(faction)) return false
+    if (checkInput(connection)) return false
+    if (checkInput(email)) return false
+    const agreeInput = document.getElementById('cd2')
+    const label = document.getElementById('cd2_label')
+    label.style.color = 'rgb(136, 136, 136)'
+    if (!agreeInput.checked) {
+        label.style.color = 'darkred'
+        return false
+    }
+    return true
+}
+
+function checkInput(input) {
+    if (input.value === '') {
+        input.classList.add('input_error')
+        return false
+    }
 }
 
 renderCart()

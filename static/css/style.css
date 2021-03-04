@@ -107,7 +107,7 @@ form input {
     display: flex;
 }
 
-.discord, .skype, .email {
+.discord, .skype, .email_modal {
     width: 33%;
     padding: 0 20px;
 }
@@ -125,7 +125,7 @@ form input {
     margin-top: 10px;
 }
 
-.discord img, .skype img, .email img {
+.discord img, .skype img, .email_modal img {
     width: 50px;
 }
 
@@ -137,7 +137,7 @@ form input {
     background-color: #1683ce;
 }
 
-.email > div {
+.email_modal > div {
     background-color: #383c3e;
 }
 
