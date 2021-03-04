@@ -306,7 +306,7 @@ def create_order(request):
         from main.utils.generateSignature import generate_signature
         amount = float(request.POST['total']) * 100
         currency = 'EUR' if request.POST['currency'] == 'eu' else 'USD'
-        order_desc = 'payment for order №' + order.get_order_number()
+        order_desc = 'payment for order ' + order.get_order_number()
         order_id = order.get_order_number()
         return JsonResponse({
             'status': 'created',
@@ -314,7 +314,7 @@ def create_order(request):
             'currency': currency,
             'order_desc': order_desc,
             'order_id': order_id,
-            'signature': generate_signature(amount, currency, order_desc, order_id),
+            'signature': generate_signature(str(int(amount)), currency, order_desc, order_id),
         })
     return redirect(reverse('index'))
 
