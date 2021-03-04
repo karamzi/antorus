@@ -48,7 +48,7 @@ function checkInputs(inputs, max, array) {
                     }
                 })
             }
-            countAdditionOptionsPrice()
+            document.querySelector('.data-percent-us') && countAdditionOptionsPrice()
             setPrice()
         })
     })

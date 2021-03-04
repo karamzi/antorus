@@ -15,12 +15,12 @@ class ProductAdminForm(forms.ModelForm):
 
 class RequiredOptionAdmin(admin.TabularInline):
     model = models.RequiredOption
-    extra = 1
+    extra = 0
 
 
 class RequiredOptionChildAdmin(admin.TabularInline):
     model = models.RequiredOptionChild
-    extra = 1
+    extra = 0
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         path = request.path
@@ -34,7 +34,7 @@ class RequiredOptionChildAdmin(admin.TabularInline):
 
 class AdditionsOptionAdmin(admin.TabularInline):
     model = models.AdditionOptions
-    extra = 1
+    extra = 0
 
 
 class ProductsAdmin(admin.ModelAdmin):
