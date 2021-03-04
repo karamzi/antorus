@@ -84,8 +84,8 @@ class Products(models.Model):
     slug = models.SlugField(verbose_name='Ссылка', blank=True, null=True)
     length = models.CharField(max_length=255, verbose_name='Длительность')
     char_req = models.CharField(max_length=255, verbose_name='Требования')
-    price_dollar = models.DecimalField(verbose_name='Цена в долларах', decimal_places=2, max_digits=7, default=0)
-    price_euro = models.DecimalField(verbose_name='Цена в евро', decimal_places=2, max_digits=7, default=0)
+    price_dollar = models.DecimalField(verbose_name='Цена в долларах', decimal_places=3, max_digits=8, default=0)
+    price_euro = models.DecimalField(verbose_name='Цена в евро', decimal_places=3, max_digits=8, default=0)
     quantity_required_options = models.IntegerField(verbose_name='max количество обязательных опций', blank=True,
                                                     null=True)
     quantity_required_child_options = models.IntegerField(verbose_name='max количество дочерних опций', blank=True,
@@ -160,11 +160,11 @@ class RequiredOption(models.Model):
                                 verbose_name='Товар')
     name = models.CharField(max_length=255, verbose_name='Название опции')
     description = models.CharField(verbose_name='Описание', blank=True, max_length=255)
-    price_dollar = models.DecimalField(default=0, verbose_name='Цена в долларах', decimal_places=2, max_digits=7)
-    price_euro = models.DecimalField(default=0, verbose_name='Цена в евро', decimal_places=2, max_digits=7)
-    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=2, max_digits=7,
+    price_dollar = models.DecimalField(default=0, verbose_name='Цена в долларах', decimal_places=3, max_digits=8)
+    price_euro = models.DecimalField(default=0, verbose_name='Цена в евро', decimal_places=3, max_digits=8)
+    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=3, max_digits=8,
                                            blank=True, null=True)
-    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=2, max_digits=7,
+    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=3, max_digits=8,
                                          blank=True, null=True)
 
     def __str__(self):
@@ -194,11 +194,11 @@ class RequiredOptionChild(models.Model):
                                         verbose_name='Родительская')
     name = models.CharField(max_length=255, verbose_name='Название опции')
     description = models.CharField(verbose_name='Описание', blank=True, max_length=255)
-    price_dollar = models.DecimalField(default=0, verbose_name='Цена в долларах', decimal_places=2, max_digits=7)
-    price_euro = models.DecimalField(default=0, verbose_name='Цена в евро', decimal_places=2, max_digits=7)
-    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=2, max_digits=7,
+    price_dollar = models.DecimalField(default=0, verbose_name='Цена в долларах', decimal_places=3, max_digits=8)
+    price_euro = models.DecimalField(default=0, verbose_name='Цена в евро', decimal_places=3, max_digits=8)
+    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=3, max_digits=8,
                                            blank=True, null=True)
-    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=2, max_digits=7,
+    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=3, max_digits=8,
                                          blank=True, null=True)
 
     def __str__(self):
@@ -230,11 +230,11 @@ class AdditionOptions(models.Model):
                                 verbose_name='Товар')
     name = models.CharField(max_length=255, verbose_name='Название опции')
     description = models.CharField(verbose_name='Описание', blank=True, max_length=255)
-    price_dollar = models.DecimalField(default=0, decimal_places=2, max_digits=7, verbose_name='Цена в долларах')
-    price_euro = models.DecimalField(default=0, decimal_places=2, max_digits=7, verbose_name='Цена в евро')
-    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=2, max_digits=7,
+    price_dollar = models.DecimalField(default=0, decimal_places=3, max_digits=8, verbose_name='Цена в долларах')
+    price_euro = models.DecimalField(default=0, decimal_places=3, max_digits=8, verbose_name='Цена в евро')
+    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=3, max_digits=8,
                                            blank=True, null=True)
-    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=2, max_digits=7,
+    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=3, max_digits=8,
                                          blank=True, null=True)
 
     def __str__(self):
