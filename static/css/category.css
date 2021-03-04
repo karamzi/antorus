@@ -27,7 +27,7 @@
     border-left: 3px solid transparent;
 }
 
-.nav_link, .accordion {
+.nav_link, .accordion a {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -53,6 +53,10 @@
 .nav_link > a:hover {
     color: rgb(189, 189, 189);
     transition: color 0.3s ease;
+}
+
+.accordion {
+    flex-direction: column;
 }
 
 .accordion a {

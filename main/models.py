@@ -309,7 +309,7 @@ class Order(models.Model):
     price = models.CharField(verbose_name='Без купона', max_length=50)
     coupon = models.CharField(verbose_name='Купон', max_length=50, blank=True)
     total = models.CharField(verbose_name='Итого', max_length=50)
-    date = models.DateField(auto_now_add=True, verbose_name='Дата создания', null=True)
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания', null=True)
 
     def __str__(self):
         return 'Заказ № ' + str(self.id + 1000)
