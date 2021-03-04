@@ -131,7 +131,7 @@ class Products(models.Model):
 
     def get_price_us(self):
         if self.price_dollar:
-            return '$ ' + str(self.price_dollar)
+            return '$ ' + str(to_fixed(self.price_dollar, 2))
         else:
             req_options = self.product_required_option.all()
             min_price = 100000
@@ -140,11 +140,11 @@ class Products(models.Model):
                     min_price = item.new_price_dollar
                 elif item.price_dollar < min_price:
                     min_price = item.price_dollar
-            return 'from $ ' + str(min_price)
+            return 'from $ ' + str(to_fixed(min_price, 2))
 
     def get_price_eu(self):
         if self.price_euro:
-            return '€ ' + str(self.price_dollar)
+            return '€ ' + str(to_fixed(self.price_dollar, 2))
         else:
             req_options = self.product_required_option.all()
             min_price = 100000
@@ -153,7 +153,7 @@ class Products(models.Model):
                     min_price = item.new_price_euro
                 elif item.price_euro < min_price:
                     min_price = item.price_euro
-            return 'from € ' + str(min_price)
+            return 'from € ' + str(to_fixed(min_price, 2))
 
     class Meta:
         verbose_name = 'Товар'
