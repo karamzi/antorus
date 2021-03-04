@@ -131,7 +131,7 @@
                                 <div class="option"
                                      data-price-us="{{ option.get_option_price_dollar }}"
                                      data-price-eu="{{ option.get_option_price_euro }}"
-                                        {% if option.price_dollar < 1 and option.price_euro > 0 %}
+                                        {% if option.price_dollar < 1 and option.price_dollar > 0 %}
                                      data-percent-us="{{ option.price_dollar }}"
                                         {% endif %}
                                         {% if option.price_euro < 1 and option.price_euro > 0 %}
