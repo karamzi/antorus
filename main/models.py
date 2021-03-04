@@ -86,9 +86,12 @@ class Products(models.Model):
     char_req = models.CharField(max_length=255, verbose_name='Требования')
     price_dollar = models.DecimalField(verbose_name='Цена в долларах', decimal_places=2, max_digits=7, default=0)
     price_euro = models.DecimalField(verbose_name='Цена в евро', decimal_places=2, max_digits=7, default=0)
-    quantity_required_options = models.IntegerField(verbose_name='max количество обязательных опций', blank=True)
-    quantity_required_child_options = models.IntegerField(verbose_name='max количество дочерних опций', blank=True)
-    quantity_addition_options = models.IntegerField(verbose_name='max количество доп опций', blank=True)
+    quantity_required_options = models.IntegerField(verbose_name='max количество обязательных опций', blank=True,
+                                                    null=True)
+    quantity_required_child_options = models.IntegerField(verbose_name='max количество дочерних опций', blank=True,
+                                                          null=True)
+    quantity_addition_options = models.IntegerField(verbose_name='max количество доп опций', blank=True,
+                                                    null=True)
     child_required = models.BooleanField(verbose_name='Дочернии обязательны', default=False)
 
     def __str__(self):
