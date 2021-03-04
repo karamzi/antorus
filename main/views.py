@@ -24,9 +24,7 @@ def global_var(request):
     }
 
 
-@csrf_exempt
 def index(request):
-    print(request.POST)
     categories = Categories.objects.all()
     products = BestOffersToday.objects.all()
     context = {
@@ -329,7 +327,6 @@ def check_coupon(request):
 @csrf_exempt
 def fondy_callback(request):
     if request.method == 'POST':
-        print(request.POST)
         fondy = json.dumps(request.POST, ensure_ascii=False)
         fondy = Fondy.objects.create(response=fondy)
         return HttpResponse(status=200)

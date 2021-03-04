@@ -21,7 +21,7 @@
                 <a class="admin" href="/azarkes/">admin</a>
             {% endif %}
             <div class="contact_support">
-                <a href="#">Contact Support</a>
+                <p id="contact_support">Contact Support</p>
             </div>
             {% if user.is_authenticated %}
                 <div class="account">
@@ -64,7 +64,8 @@
     <div class="container">
         <div class="header">
             <div class="search_bar">
-                <input autocomplete="off" oninput="search()" value="" id="search" placeholder="Type here..." type="text">
+                <input autocomplete="off" oninput="search()" value="" id="search" placeholder="Type here..."
+                       type="text">
             </div>
             <div class="logo">
                 <a href="{% url 'index' %}"><img src="{% static 'img/logo-2.png' %}" alt="logo"></a>
@@ -99,6 +100,33 @@
         </div>
     </div>
 </footer>
+<div class="modal_container">
+    <div class="modal">
+        <h3>CONTACT ANTORUS TEAM</h3>
+        <p>Please use the chat widget in the bottom right corner of the screen.</p>
+        <p>You can also contact us with one of the following methods:</p>
+        <div class="modal_links">
+            <a href="" class="discord">
+                <div class="modal_link_container">
+                    <img src="{% static 'img/discord.png' %}" alt="">
+                    <p>discord</p>
+                </div>
+            </a>
+            <a href="" class="skype">
+                <div class="modal_link_container">
+                    <img src="{% static 'img/skype.png' %}" alt="">
+                    <p>skype</p>
+                </div>
+            </a>
+            <a href="" class="email">
+                <div class="modal_link_container">
+                    <img src="{% static 'img/email.png' %}" alt="">
+                    <p>email</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
 <script>
     const currency = '{{ currency }}'
 </script>

@@ -20,12 +20,12 @@ body {
 }
 
 button {
-  padding: 0;
-  border: none;
-  font: inherit;
-  color: inherit;
-  background-color: transparent;
-  cursor: pointer;
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
 }
 
 form label {
@@ -51,5 +51,107 @@ form input {
 .container {
     width: 1170px;
     margin: 0 auto;
-    padding: 0  15px;
+    padding: 0 10px;
+}
+
+.modal_container {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 525px;
+    transform: translate(-80%, -50%);
+    background-color: #2A2A2A;
+    z-index: 2;
+    opacity: 0;
+}
+
+@keyframes show_modal {
+    from {
+        opacity: 0;
+        transform: translate(-80%, -50%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.modal_container.modal_active {
+    display: block;
+    animation-name: show_modal;
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+}
+
+.modal {
+    padding: 30px;
+}
+
+.modal h3 {
+    color: white;
+    margin-bottom: 30px;
+    font-weight: 900;
+    font-size: 25px;
+}
+
+.modal > p {
+    color: rgb(142, 142, 142);
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    line-height: 25px;
+}
+
+.modal_links {
+    display: flex;
+}
+
+.discord, .skype, .email {
+    width: 33%;
+    padding: 0 20px;
+}
+
+.modal_link_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.modal_link_container p {
+    color: white;
+    margin-top: 10px;
+}
+
+.discord img, .skype img, .email img {
+    width: 50px;
+}
+
+.discord > div {
+    background-color: #465bb4;
+}
+
+.skype > div {
+    background-color: #1683ce;
+}
+
+.email > div {
+    background-color: #383c3e;
+}
+
+.body_modal {
+    position: relative;
+}
+
+.body_modal:after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0, 0.3);
+    z-index: 1;
 }

@@ -19,7 +19,7 @@ ______________________________________________ */
     align-items: center;
 }
 
-.contact_support > a, .login > p, .account > p {
+.contact_support > p, .login > p, .account > p {
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
@@ -27,7 +27,8 @@ ______________________________________________ */
     transition: color 0.3s ease;
 }
 
-.contact_support > a {
+.contact_support > p {
+    cursor: pointer;
     padding-right: 10px;
     border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -95,7 +96,7 @@ ______________________________________________ */
     transition: color 0.3s ease;
 }
 
-.contact_support > a:hover, .login > p:hover {
+.contact_support > p:hover, .login > p:hover {
     color: rgb(189, 189, 189);
     transition: color 0.3s ease;
 }

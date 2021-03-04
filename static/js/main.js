@@ -173,3 +173,18 @@ if (chatButton) {
         tidioChatApi.open()
     })
 }
+
+const contactSupport = document.getElementById('contact_support')
+const modal = document.querySelector('.modal_container')
+
+contactSupport.addEventListener('click', function () {
+    modal.classList.add('modal_active')
+    document.body.classList.add('body_modal')
+})
+
+document.body.addEventListener('click', function (e) {
+    if (!e.target.closest('.modal_container') && !e.target.closest('#contact_support')) {
+        modal.classList.remove('modal_active')
+        document.body.classList.remove('body_modal')
+    }
+})
