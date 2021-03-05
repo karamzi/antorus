@@ -45,9 +45,10 @@
                                         {% endif %}
 
                                     {% else %}
-
-                                        <div class="option_price {% if option.new_price_euro %}old{% endif %}">
-                                            € {{ option.get_option_price_euro }}</div>
+                                        {% if option.get_option_price_euro != 0 %}
+                                            <div class="option_price {% if option.new_price_euro %}old{% endif %}">
+                                                € {{ option.get_option_price_euro }}</div>
+                                        {% endif %}
                                         {% if option.new_price_euro %}
                                             <div class="option_new_price">€ {{ option.get_option_price_euro }}</div>
                                         {% endif %}
@@ -153,15 +154,18 @@
                                                     $ {{ option.get_option_price_dollar }}</div>
                                             {% endif %}
                                             {% if new_price_dollar %}
-                                                <div class="option_new_price">€ {{ option.get_option_price_dollar }}</div>
+                                                <div class="option_new_price">
+                                                    € {{ option.get_option_price_dollar }}</div>
                                             {% endif %}
                                         {% else %}
                                             <div class="option_price"></div>
                                         {% endif %}
                                     {% else %}
                                         {% if option.price_euro >= 1 %}
-                                            <div class="option_price {% if option.new_price_euro %}old{% endif %}">
-                                                € {{ option.get_option_price_euro }}</div>
+                                            {% if option.price_euro != 0 %}
+                                                <div class="option_price {% if option.new_price_euro %}old{% endif %}">
+                                                    € {{ option.get_option_price_euro }}</div>
+                                            {% endif %}
                                             {% if option.new_price_euro %}
                                                 <div class="option_new_price">€ {{ option.get_option_price_euro }}</div>
                                             {% endif %}
@@ -223,6 +227,18 @@
         </div>
         <div style="display: none" class="error">
             <p>Please choose requirement option</p>
+        </div>
+    </section>
+    <section class="reviews_section">
+        <div class="container">
+            <!-- TrustBox widget - Carousel -->
+            <div class="trustpilot-widget" data-locale="en-US" data-template-id="53aa8912dec7e10d38f59f36"
+                 data-businessunit-id="5c04f06812c7bf0001af86e0" data-style-height="200px" data-style-width="100%"
+                 data-theme="dark" data-stars="1,2,3,4,5" data-review-languages="en">
+                <a href="https://www.trustpilot.com/review/antorus.com" target="_blank"
+                   rel="noopener">Trustpilot</a>
+            </div>
+            <!-- End TrustBox widget -->
         </div>
     </section>
 {% endblock %}
