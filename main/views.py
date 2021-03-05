@@ -358,7 +358,7 @@ def fondy_callback(request):
         transaction.currency = request.POST['currency']
         transaction.amount = int(request.POST['amount']) / 100
         transaction.response = response
-        date_format = '%d.%m.%Y %H:%M:S'
+        date_format = '%d.%m.%Y %H:%M:%S'
         transaction.date = datetime.strptime(request.POST['order_time'], date_format)
         transaction.save()
         if request.POST['order_status'] == 'approved':

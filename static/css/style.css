@@ -28,6 +28,10 @@ button {
     cursor: pointer;
 }
 
+button:active, button:focus {
+  outline: none;
+}
+
 form label {
     position: relative;
     font-size: 16px;
