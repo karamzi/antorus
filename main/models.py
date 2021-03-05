@@ -178,9 +178,9 @@ class RequiredOption(models.Model):
 
     def get_option_price_euro(self):
         if self.new_price_euro:
-            return self.new_price_euro
+            return to_fixed(self.new_price_euro, 2)
         else:
-            return self.price_euro
+            return to_fixed(self.price_euro, 2)
 
     def get_option_price_dollar(self):
         if self.new_price_dollar:

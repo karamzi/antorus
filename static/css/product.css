@@ -227,6 +227,10 @@
     text-align: justify;
 }
 
+.description p, .description li {
+    margin-bottom: 7px;
+}
+
 .description a {
     text-decoration: none;
 }

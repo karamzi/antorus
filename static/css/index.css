@@ -132,6 +132,12 @@ body {
     color: white;
     font-weight: 700;
     user-select: none;
+    margin-bottom: 0;
+    background-color: #353535;
+}
+
+.accordion a:last-child {
+    margin-bottom: 2px;
 }
 
 .nav_link span {
