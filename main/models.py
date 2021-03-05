@@ -388,7 +388,7 @@ class Transactions(models.Model):
     service = models.CharField(max_length=50, verbose_name='Сервис оплаты', choices=SERVICE)
     status = models.CharField(max_length=20, verbose_name='Статус оплаты')
     currency = models.CharField(max_length=10, verbose_name='Валюта')
-    amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Сумма')
+    amount = models.DecimalField(default=0, max_digits=10, decimal_places=2, verbose_name='Сумма')
     date = models.DateTimeField(verbose_name='Дата транзакции')
     response = models.TextField(verbose_name='Ответ от сервера', blank=True)
 
