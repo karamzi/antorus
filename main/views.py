@@ -368,7 +368,7 @@ def fondy_callback(request):
             html_message = render_to_string('email/emails.html', {'order': order})
             plain_message = strip_tags(html_message)
             # TODO Почта анторуса
-            from_email = 'From <federation.bratsk@gmail.com>'
+            from_email = 'From federation.bratsk@gmail.com'
             to = order.email
             mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
         if request.POST['order_status'] == 'declined':
