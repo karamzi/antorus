@@ -351,7 +351,7 @@ def fondy_callback(request):
         response = json.dumps(request.POST, ensure_ascii=False)
         order_id = int(request.POST['order_id']) - 1000
         order = Order.objects.get(pk=order_id)
-        transaction = Transactions()
+        transaction, status = Transactions.objects.get_or_create(order_id=order_id)
         transaction.order = order
         transaction.service = 1
         transaction.status = request.POST['order_status']
