@@ -72,10 +72,15 @@ class CouponAdmin(admin.ModelAdmin):
     readonly_fields = ('count',)
 
 
+class TransactionsAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'service', 'status', 'currency', 'amount', 'date')
+    list_display_links = ('__str__', 'service', 'status', 'currency', 'amount', 'date')
+
+
 admin.site.register(models.Products, ProductsAdmin)
 admin.site.register(models.Categories)
 admin.site.register(models.SubCategories)
 admin.site.register(models.Order, OrderAdmin)
 admin.site.register(models.Coupon, CouponAdmin)
 admin.site.register(models.BestOffersToday)
-admin.site.register(models.Transactions)
+admin.site.register(models.Transactions, TransactionsAdmin)
