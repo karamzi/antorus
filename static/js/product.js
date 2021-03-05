@@ -48,7 +48,7 @@ function checkInputs(inputs, max, array) {
                     }
                 })
             }
-            if (document.querySelector('.option[data-percent-us]') || document.querySelector('.option[data-percent-eu]')) {
+            if ((document.querySelector('.option[data-percent-us]') && currency === 'us') || (document.querySelector('.option[data-percent-eu]') && currency === 'eu')) {
                 countAdditionOptionsPrice()
             }
             setPrice()

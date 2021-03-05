@@ -17,6 +17,7 @@ class RegisterUserForm(forms.ModelForm):
     def clean(self):
         password1 = self.cleaned_data['password1']
         password2 = self.cleaned_data['password2']
+        # TODO английский текст
         if password1 and password2 and password1 != password2:
             messages.error(self.request, 'Пароли не совпадают')
             raise ValidationError('')

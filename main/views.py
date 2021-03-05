@@ -8,13 +8,17 @@ from main.utils.customAuth import CustomAuth
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday, AuthToken, \
-    Fondy
+    Transactions
 from .forms import RegisterUserForm
 from django.core.mail import send_mail
+from django.core import mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 import base64
 import json
+from datetime import datetime
 
 
 def global_var(request):
@@ -157,6 +161,7 @@ def change_account_details(request):
             if not User.objects.filter(username=request.POST['username']).exists():
                 user.username = request.POST['username']
             else:
+                # TODO английский текст
                 messages.error(request, 'Пользователь с таким логином существует')
                 return redirect(reverse('account_details'))
         user.first_name = request.POST['first_name']
@@ -169,12 +174,15 @@ def change_account_details(request):
                     user.set_password(password1)
                     login(request, user)
                 else:
+                    # TODO английский текст
                     messages.error(request, 'Пароли не совпадают')
                     return redirect(reverse('account_details'))
             else:
+                # TODO английский текст
                 messages.error(request, 'Неправильный пароль')
                 return redirect(reverse('account_details'))
         user.save()
+        # TODO английский текст
         messages.success(request, 'Данные были обновленны успешно')
     return redirect(reverse('account_details'))
 
@@ -214,6 +222,7 @@ def create_account(request):
             token = base64.b64encode(token).decode()
             AuthToken.objects.create(token=token)
             url = settings.SITE_HOST + f'/checkEmail/{token}/'
+            # TODO почта анторуса и пользователя и английский текст
             send_mail('Регистрация', url, 'federation.bratsk@gmail.com',
                       ['play-wow@yandex.ru'],
                       fail_silently=False)
@@ -253,6 +262,7 @@ def send_new_password(request):
             password = ''.join(random.choice(password_characters) for i in range(15))
             user.set_password(password)
             user.save()
+            # TODO Почта анторуса и пользователя и английский текст
             send_mail('Регистрация', f'Новый пароль: {password}', 'federation.bratsk@gmail.com', ['play-wow@yandex.ru'],
                       fail_silently=False)
             messages.success(request, f'На почту {user.email} было высланно письмо с новым паролем')
@@ -338,7 +348,31 @@ def check_coupon(request):
 @csrf_exempt
 def fondy_callback(request):
     if request.method == 'POST':
-        fondy = json.dumps(request.POST, ensure_ascii=False)
-        fondy = Fondy.objects.create(response=fondy)
+        response = json.dumps(request.POST, ensure_ascii=False)
+        order_id = int(request.POST['order_id']) - 1000
+        order = Order.objects.get(pk=order_id)
+        transaction = Transactions()
+        transaction.order = order
+        transaction.service = 1
+        transaction.status = request.POST['order_status']
+        transaction.currency = request.POST['currency']
+        transaction.amount = int(request.POST['amount']) / 100
+        transaction.response = response
+        date_format = '%d.%m.%Y %H:%M:S'
+        transaction.date = datetime.strptime(request.POST['order_time'], date_format)
+        transaction.save()
+        if request.POST['order_status'] == 'approved':
+            order.status = 2
+            subject = 'Order №' + order.get_order_number()
+            # TODO ссылки на изображения
+            html_message = render_to_string('email/emails.html', {'order': order})
+            plain_message = strip_tags(html_message)
+            # TODO Почта анторуса
+            from_email = 'From <federation.bratsk@gmail.com>'
+            to = order.email
+            mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+        if request.POST['order_status'] == 'declined':
+            order.status = 3
+        order.save()
         return HttpResponse(status=200)
     return redirect(reverse('index'))
