@@ -20,7 +20,12 @@ if (requiredInputs) {
     checkInputs(requiredInputs, quantityRequiredOptions, requiredChecked)
 }
 
-if (additionChecked) {
+if (additionInputs) {
+    additionInputs.forEach(item => {
+        if (item.checked) {
+            additionChecked.push(item)
+        }
+    })
     checkInputs(additionInputs, quantityAdditionOptions, additionChecked)
 }
 
@@ -278,3 +283,5 @@ window.addEventListener("pageshow", function (event) {
         window.location.reload();
     }
 })
+
+setPrice()

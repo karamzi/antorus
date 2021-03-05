@@ -246,6 +246,7 @@ class AdditionOptions(models.Model):
                                 verbose_name='Товар')
     name = models.CharField(max_length=255, verbose_name='Название опции')
     description = models.CharField(verbose_name='Описание', blank=True, max_length=255)
+    default = models.BooleanField(verbose_name='По умолчанию', default=False)
     price_dollar = models.DecimalField(default=0, decimal_places=3, max_digits=8, verbose_name='Цена в долларах')
     price_euro = models.DecimalField(default=0, decimal_places=3, max_digits=8, verbose_name='Цена в евро')
     new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=3, max_digits=8,

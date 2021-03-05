@@ -140,7 +140,7 @@
                                         {% endif %}
                                      data-name="{{ option.name }}">
                                     <div class="checkbox">
-                                        <input class="addition" type="checkbox" id="cd{{ option.name }}{{ option.pk }}">
+                                        <input {% if option.default %}checked="checked"{% endif %} class="addition" type="checkbox" id="cd{{ option.name }}{{ option.pk }}">
                                         <label class="custom" for="cd{{ option.name }}{{ option.pk }}">
                                             <div class="tick"></div>
                                         </label>
