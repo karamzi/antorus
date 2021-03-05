@@ -138,7 +138,7 @@ class Products(models.Model):
             for item in req_options:
                 if item.new_price_dollar and item.new_price_dollar < min_price:
                     min_price = item.new_price_dollar
-                elif item.price_dollar < min_price:
+                elif item.price_dollar < min_price and item.price_dollar != 0:
                     min_price = item.price_dollar
             return 'from $ ' + str(to_fixed(min_price, 2))
 
@@ -151,7 +151,7 @@ class Products(models.Model):
             for item in req_options:
                 if item.new_price_euro and item.new_price_euro < min_price:
                     min_price = item.new_price_euro
-                elif item.price_euro < min_price:
+                elif item.price_euro < min_price and item.price_euro != 0:
                     min_price = item.price_euro
             return 'from € ' + str(to_fixed(min_price, 2))
 
