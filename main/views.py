@@ -371,7 +371,7 @@ def fondy_callback(request):
             from_email = 'From federation.bratsk@gmail.com'
             to = order.email.lower()
             mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
-        if request.POST['order_status'] == 'declined':
+        if request.POST['order_status'] == 'declined' or request.POST['order_status'] == 'expired':
             order.status = 3
         order.save()
         return HttpResponse(status=200)
