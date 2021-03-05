@@ -310,11 +310,11 @@ class Order(models.Model):
     email = models.EmailField(verbose_name='Почта')
     comment = models.TextField(verbose_name='Комментарий', blank=True)
     STATUS = (
-        (1, 'CREATED'),
-        (2, 'PAID'),
-        (3, 'PAYMENT ERROR'),
-        (4, 'PROCESSING'),
-        (5, 'COMPLETED'),
+        ('1', 'CREATED'),
+        ('2', 'PAID'),
+        ('3', 'PAYMENT ERROR'),
+        ('4', 'PROCESSING'),
+        ('5', 'COMPLETED'),
     )
     status = models.CharField(verbose_name='Статус заказа', choices=STATUS, max_length=100)
     price = models.CharField(verbose_name='Без купона', max_length=50)
@@ -383,7 +383,7 @@ class AuthToken(models.Model):
 class Transactions(models.Model):
     order = models.ForeignKey(Order, verbose_name='Заказ', related_name='order_transactions', on_delete=models.PROTECT)
     SERVICE = (
-        (1, 'Fondy'),
+        ('1', 'Fondy'),
     )
     service = models.CharField(max_length=50, verbose_name='Сервис оплаты', choices=SERVICE)
     status = models.CharField(max_length=20, verbose_name='Статус оплаты')

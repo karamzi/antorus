@@ -62,8 +62,9 @@ class OrderAdmin(admin.ModelAdmin):
     list_display_links = ('__str__', 'date', 'total')
     list_editable = ('status',)
     readonly_fields = (
-    'user', 'character_server', 'battle_tag', 'faction', 'connection', 'email', 'comment', 'price', 'coupon', 'total',
-    'date')
+        'user', 'character_server', 'battle_tag', 'faction', 'connection', 'email', 'comment', 'price', 'coupon',
+        'total',
+        'date')
 
 
 class CouponAdmin(admin.ModelAdmin):
