@@ -120,7 +120,7 @@ class Products(models.Model):
         return ''
 
     def get_quantity_required_child_options(self):
-        if self.quantity_required_options:
+        if self.quantity_required_child_options:
             return self.quantity_required_child_options
         return ''
 

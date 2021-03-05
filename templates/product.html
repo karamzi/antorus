@@ -45,7 +45,7 @@
                                         {% endif %}
 
                                     {% else %}
-                                        {% if option.get_option_price_euro != 0 %}
+                                        {% if option.price_euro != 0 %}
                                             <div class="option_price {% if option.new_price_euro %}old{% endif %}">
                                                 € {{ option.get_option_price_euro }}</div>
                                         {% endif %}
