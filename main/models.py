@@ -389,7 +389,7 @@ class Transactions(models.Model):
     status = models.CharField(max_length=20, verbose_name='Статус оплаты')
     currency = models.CharField(max_length=10, verbose_name='Валюта')
     amount = models.DecimalField(default=0, max_digits=10, decimal_places=2, verbose_name='Сумма')
-    date = models.DateTimeField(verbose_name='Дата транзакции')
+    date = models.DateTimeField(verbose_name='Дата транзакции', auto_now_add=True)
     response = models.TextField(verbose_name='Ответ от сервера', blank=True)
 
     def __str__(self):
