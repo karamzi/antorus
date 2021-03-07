@@ -25,6 +25,8 @@ footer {
 
 .footer_right {
     width: 58%;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .footer_right a {
@@ -46,4 +48,50 @@ footer {
 .footer_right a:hover {
     color: rgb(189, 189, 189);
     transition: color 0.3s ease;
+}
+
+@media (max-width: 830px) {
+    .footer_left {
+        width: 60%;
+    }
+
+    .footer_right {
+        width: 38%;
+    }
+}
+
+@media (max-width: 750px) {
+    .footer_right a {
+        font-size: 10px;
+    }
+
+    .footer_left p {
+        font-size: 10px;
+    }
+
+    .footer_right {
+        min-width: 215px;
+    }
+}
+
+@media (max-width: 500px) {
+    footer {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 450px) {
+    .footer_content {
+        flex-direction: column;
+    }
+
+    .footer_left p {
+        text-align: center;
+        line-height: 20px;
+        margin-bottom: 10px;
+    }
+
+    .footer_left {
+        width: 65%;
+    }
 }

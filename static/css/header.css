@@ -345,6 +345,143 @@ ______________________________________________ */
     display: none;
 }
 
-.burger_menu {
-    display: none;
+@media (max-width: 830px) {
+    .cart {
+        width: 10%;
+    }
+
+    .currency_switcher {
+        width: 14%;
+    }
+
+    .nav_bar {
+        width: 30%;
+    }
+}
+
+@media (max-width: 750px) {
+    .search_bar {
+        display: none;
+    }
+
+    .logo {
+        justify-content: center;
+        width: 51%;
+    }
+
+    .burger_button {
+        display: block;
+        width: 25%;
+    }
+}
+
+@media (max-width: 550px) {
+    .modal_container {
+        width: 440px;
+    }
+
+    .discord, .skype, .email_modal {
+        padding: 0 7px;
+    }
+}
+
+@media (max-width: 500px) {
+    .burger_button {
+        width: 25%;
+    }
+
+    .logo {
+        width: 46%;
+    }
+
+    .logo img {
+        width: 100px;
+    }
+
+    .header {
+        padding: 24px 0;
+    }
+
+    .currency_switcher {
+        font-size: 12px;
+        width: 23%;
+    }
+
+    .cart {
+        width: 14%;
+    }
+}
+
+@media (max-width: 450px) {
+    .login_accordion {
+        top: 100%;
+        right: -10px;
+    }
+
+    .account_accordion {
+        top: 100%;
+        right: -10px;
+    }
+
+    .modal_container {
+        width: 360px;
+    }
+
+    .modal h3 {
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .modal > p {
+        text-align: center;
+    }
+
+    .modal_links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .discord, .skype, .email_modal {
+        width: 50%;
+        padding: 0 7px 10px;
+    }
+
+    .login_accordion {
+        width: 375px;
+    }
+
+    .cart img {
+        width: 25px;
+    }
+
+    .cart_count {
+        width: 15px;
+        height: 15px;
+    }
+
+    .cart_count p {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 374px) {
+    .modal_container {
+        width: 300px;
+    }
+
+    .contact_support > p {
+        font-size: 12px;
+    }
+
+    .login, .account {
+        font-size: 12px;
+    }
+
+    .login_accordion {
+        width: 320px;
+    }
+
+    .cart_count p {
+        font-size: 8px;
+    }
 }

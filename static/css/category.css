@@ -163,3 +163,47 @@
     color: rgb(189, 189, 189);
     text-align: center;
 }
+
+
+@media (max-width: 900px) {
+    .product {
+        width: 50%;
+    }
+
+    .products_block {
+        width: 65%;
+    }
+
+    .nav_bar {
+        width: 33%;
+    }
+}
+
+@media (max-width: 750px) {
+    .product {
+        width: 100%;
+    }
+
+    .products_block {
+        width: 55%;
+    }
+
+    .nav_bar {
+        width: 43%;
+    }
+}
+
+@media (max-width: 600px) {
+    .products_content {
+        flex-direction: column;
+    }
+
+    .products_block {
+        width: 100%;
+    }
+
+    .nav_bar {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}

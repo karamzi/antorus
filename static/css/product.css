@@ -206,6 +206,7 @@
     text-transform: uppercase;
     padding: 20px 0;
     border-bottom: 1px solid rgb(47, 47, 47);
+    line-height: 25px;
 }
 
 .length, .requirements {
@@ -260,4 +261,34 @@
     position: fixed;
     background-color: #842029;
     border-radius: 10px;
+}
+
+
+@media (max-width: 850px) {
+    .description {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 700px) {
+    .product_content {
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .product_left {
+        width: 60%;
+        margin-bottom: 30px;
+    }
+
+    .product_right {
+        width: 100%;
+    }
+}
+
+@media (max-width: 500px) {
+    .product_left {
+        width: 95%;
+    }
 }
