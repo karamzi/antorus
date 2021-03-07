@@ -87,6 +87,7 @@ body {
 
 .nav_bar {
     width: 23%;
+    margin-bottom: 20px;
 }
 
 .nav_link {
@@ -236,11 +237,14 @@ body {
 }
 
 .text_1_block img {
-    width: 30%;
+    width: 350px;
+    height: 320px;
+    padding: 10px 10px 10px 0;
 }
 
 .text_1 {
-    width: 65%;
+    width: 100%;
+    padding: 0 10px;
 }
 
 .text_1 p {
@@ -262,7 +266,7 @@ body {
     margin-bottom: 60px;
 }
 
-.about_section h2  {
+.about_section h2 {
     color: white;
     text-align: center;
     font-size: 30px;
@@ -277,7 +281,7 @@ body {
 }
 
 .about_item {
-    width: 30%;
+    width: 33%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -351,3 +355,290 @@ body {
     color: white;
     transition: color 0.3s ease;
 }
+
+@media (max-width: 830px) {
+    .cart {
+        width: 10%;
+    }
+
+    .currency_switcher {
+        width: 14%;
+    }
+
+    .about_item {
+        padding: 60px 10px 40px;
+    }
+
+    .product {
+        width: 50%;
+    }
+
+    .products_block {
+        width: 68%;
+    }
+
+    .nav_bar {
+        width: 30%;
+    }
+
+    .footer_left {
+        width: 60%;
+    }
+
+    .footer_right {
+        width: 38%;
+    }
+}
+
+@media (max-width: 750px) {
+    .intro_content > h2 {
+        font-size: 60px;
+    }
+
+    .products_content {
+        flex-direction: column;
+    }
+
+    .nav_bar {
+        width: 100%;
+    }
+
+    .products_block {
+        width: 100%;
+    }
+
+    .text_1_block img {
+        width: 300px;
+        height: 280px;
+    }
+
+    .text_1 p {
+        font-size: 14px;
+    }
+
+    .search_bar {
+        display: none;
+    }
+
+    .logo {
+        justify-content: center;
+        width: 51%;
+    }
+
+    .burger_button {
+        display: block;
+        width: 25%;
+    }
+
+    .footer_right a {
+        font-size: 10px;
+    }
+
+    .footer_left p {
+        font-size: 10px;
+    }
+
+    .footer_right {
+        min-width: 215px;
+    }
+}
+
+@media (max-width: 600px) {
+    .about_content {
+        flex-direction: column;
+    }
+
+    .about_item {
+        width: 100%;
+        padding: 20px 10px;
+    }
+
+    .forums_content {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 0;
+    }
+
+    .forums_item {
+        width: 50%;
+        margin-bottom: 20px;
+    }
+
+    .intro_content > h2 {
+        font-size: 50px;
+    }
+
+    .intro_buttons a {
+        font-size: 14px;
+    }
+
+    .text_1_block img {
+        width: 300px;
+        height: 280px;
+    }
+}
+
+@media (max-width: 550px) {
+    .modal_container {
+        width: 440px;
+    }
+
+    .discord, .skype, .email_modal {
+        padding: 0 7px;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .burger_button {
+        width: 25%;
+    }
+
+    .logo {
+        width: 46%;
+    }
+
+    .logo img {
+        width: 100px;
+    }
+
+    .header {
+        padding: 24px 0;
+    }
+
+    .currency_switcher {
+        font-size: 12px;
+        width: 23%;
+    }
+
+    .cart {
+        width: 14%;
+    }
+
+    .intro_content > h2 {
+        font-size: 35px;
+    }
+
+    .intro_buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .intro_buttons a {
+        margin-bottom: 20px;
+    }
+
+    .intro_buttons p {
+        margin-left: 0;
+    }
+
+    .intro_content {
+        padding-left: 0;
+        width: 100%;
+    }
+
+    footer {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 450px) {
+    .product {
+        width: 100%;
+    }
+
+    .text_1_block img {
+        width: 100%;
+        height: auto;
+    }
+
+    .forums_item {
+        width: 100%;
+    }
+
+    .reviews_section {
+        margin-bottom: 40px;
+    }
+
+    .login_accordion {
+        top: 100%;
+        right: -10px;
+    }
+
+    .modal_container {
+        width: 360px;
+    }
+
+    .modal h3 {
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .modal > p {
+        text-align: center;
+    }
+
+    .modal_links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .discord, .skype, .email_modal {
+        width: 50%;
+        padding: 0 7px 10px;
+    }
+
+    .login_accordion {
+        width: 375px;
+    }
+
+    .footer_content {
+        flex-direction: column;
+    }
+
+    .footer_left p {
+        text-align: center;
+        line-height: 20px;
+    }
+
+    .footer_left {
+        width: 65%;
+    }
+
+    .cart img {
+        width: 25px;
+    }
+
+    .cart_count {
+        width: 15px;
+        height: 15px;
+    }
+
+    .cart_count p {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 374px) {
+    .modal_container {
+        width: 300px;
+    }
+
+    .contact_support > p {
+        font-size: 12px;
+    }
+
+    .login, .account {
+        font-size: 12px;
+    }
+
+    .login_accordion {
+        width: 320px;
+    }
+
+    .cart_count p {
+        font-size: 8px;
+    }
+}
+
+

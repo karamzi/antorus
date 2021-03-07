@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
@@ -66,6 +67,12 @@
 <header>
     <div class="container">
         <div class="header">
+            <div class="burger_button">
+                <span></span>
+            </div>
+            <div class="burger_menu">
+
+            </div>
             <div class="search_bar">
                 <input autocomplete="off" oninput="search()" value="" id="search" placeholder="Type here..."
                        type="text">

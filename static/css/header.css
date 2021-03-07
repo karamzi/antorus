@@ -337,3 +337,14 @@ ______________________________________________ */
     background-color: #8e8e8e;
     transition: background-color 0.3s ease;
 }
+
+/* mobile navbar
+ ================================*/
+
+.burger_button {
+    display: none;
+}
+
+.burger_menu {
+    display: none;
+}
