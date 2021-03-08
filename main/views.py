@@ -66,7 +66,7 @@ def search_result(request, search):
 
 def product(request, slug):
     try:
-        product = Products.objects.get(slug=slug, draft=False)
+        product = Products.objects.get(slug=slug)
         if product.draft and not request.user.is_superuser:
             return redirect(reverse('index'))
         context = {
