@@ -245,6 +245,7 @@ ______________________________________________ */
     background-color: rgb(26, 26, 26);
     width: 100%;
     top: 100%;
+    z-index: 1;
 }
 
 .search_title {
