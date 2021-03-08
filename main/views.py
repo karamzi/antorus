@@ -79,7 +79,7 @@ def category(request, slug):
     try:
         category = Categories.objects.get(slug=slug)
         categories = Categories.objects.all()
-        products = category.products_category.all()
+        products = category.products_category.filter(draft=False)
         context = {
             'categories': categories,
             'category': category,
@@ -94,7 +94,7 @@ def subcategory(request, category, subcategory):
     try:
         sub_category = SubCategories.objects.get(slug=subcategory)
         categories = Categories.objects.all()
-        products = sub_category.products_subcategory.all()
+        products = sub_category.products_subcategory.filter(draft=False)
         context = {
             'categories': categories,
             'sub_category': sub_category,
