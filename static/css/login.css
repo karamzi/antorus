@@ -92,3 +92,24 @@
     border-radius: 10px;
 }
 
+
+@media (max-width: 800px) {
+    .login_content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .login_left, .login_right {
+        width: 90%;
+    }
+
+    .login_left {
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 500px) {
+.login_left, .login_right {
+        width: 100%;
+    }
+}

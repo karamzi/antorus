@@ -79,3 +79,49 @@
     background-color: rgb(40, 168, 5);
     transition: background-color 0.3s ease;
 }
+
+@media (max-width: 1000px) {
+    .orders_content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .order_left {
+        width: 40%;
+        margin-bottom: 40px;
+    }
+
+    .order_right {
+        width: 100%;
+    }
+}
+
+@media (max-width: 830px) {
+    .nav_bar {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .table_head p, .order p {
+        font-size: 12px;
+    }
+
+    .order a {
+        font-size: 12px;
+    }
+
+    .order_left {
+        width: 90%;
+    }
+}
+
+@media (max-width: 400px) {
+    .table_head p, .order p {
+        font-size: 10px;
+    }
+
+    .order a {
+        font-size: 10px;
+    }
+}
