@@ -235,6 +235,11 @@
 
 .description a {
     text-decoration: none;
+    color: white;
+}
+
+.description strong {
+    font-weight: 900;
 }
 
 .description span {

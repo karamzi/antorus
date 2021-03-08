@@ -40,7 +40,7 @@ class Categories(models.Model):
 
     class Meta:
         verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
+        verbose_name_plural = '6. Категории'
 
 
 class SubCategories(models.Model):
@@ -66,7 +66,7 @@ class SubCategories(models.Model):
 
     class Meta:
         verbose_name = 'Подкатегория'
-        verbose_name_plural = 'Подкатегории'
+        verbose_name_plural = '7. Подкатегории'
 
 
 class Products(models.Model):
@@ -74,7 +74,6 @@ class Products(models.Model):
                                  on_delete=models.PROTECT)
     subcategory = models.ForeignKey(SubCategories, related_name='products_subcategory', blank=True, null=True,
                                     verbose_name='Подкатегория', on_delete=models.PROTECT)
-    # TODO Валидация названия
     name = models.CharField(max_length=255, verbose_name='Название товара', unique=True)
     description = models.TextField(verbose_name='Описание')
     product_order = models.SmallIntegerField(verbose_name='Порядок лота', default=0)
@@ -93,6 +92,7 @@ class Products(models.Model):
     quantity_addition_options = models.IntegerField(verbose_name='max количество доп опций', blank=True,
                                                     null=True)
     child_required = models.BooleanField(verbose_name='Дочернии обязательны', default=False)
+    draft = models.BooleanField(default=False, verbose_name='Черновик')
 
     def __str__(self):
         return self.name
@@ -167,7 +167,7 @@ class Products(models.Model):
 
     class Meta:
         verbose_name = 'Товар'
-        verbose_name_plural = 'Товары'
+        verbose_name_plural = '3. Товары'
         ordering = ['product_order']
 
 
@@ -350,7 +350,7 @@ class Order(models.Model):
 
     class Meta:
         verbose_name = 'Заказ'
-        verbose_name_plural = 'Заказы'
+        verbose_name_plural = '1. Заказы'
 
 
 class Coupon(models.Model):
@@ -363,7 +363,7 @@ class Coupon(models.Model):
 
     class Meta:
         verbose_name = 'Купон'
-        verbose_name_plural = 'Купоны'
+        verbose_name_plural = '5. Купоны'
 
 
 class BestOffersToday(models.Model):
@@ -375,7 +375,7 @@ class BestOffersToday(models.Model):
 
     class Meta:
         verbose_name = 'Лучшее предложение'
-        verbose_name_plural = 'Лучшие предложения'
+        verbose_name_plural = '4. Лучшие предложения'
         ordering = ['product_order']
 
 
@@ -408,5 +408,5 @@ class Transactions(models.Model):
 
     class Meta:
         verbose_name = 'Транзакция'
-        verbose_name_plural = 'Транзакции'
+        verbose_name_plural = '2. Транзакции'
         ordering = ['-date']

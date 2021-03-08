@@ -31,7 +31,18 @@ function renderCart() {
         item.options.forEach(item => {
             html += '<p>Select options: ' + item.name + '</p>'
         })
-        html += '<span class="removeFromCart">Remove</span>'
+        html += '<span class="removeFromCart">Remove</span>'+
+            '<div class="mobile_cart">'+
+            '<div class="price mobile">' + item.currency + ' ' + item.price + '</div>' +
+            '<div class="product_quantity mobile">' +
+            '<div class="quantity mobile">' +
+            '<div class="minus"></div>' +
+            '<div class="count">' + item.quantity + '</div>' +
+            '<div class="plus">+</div>' +
+            '</div>' +
+            '</div>' +
+            '<div class="total mobile">' + item.currency + ' ' + item.total + '</div>'+
+            '</div>'
         html += '</div>' +
             '</div>' +
             '</div>' +

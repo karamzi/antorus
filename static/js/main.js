@@ -46,7 +46,7 @@ function countCart() {
         document.getElementById('coupon_name').innerText = 'Coupon: ' + coupon.name
         document.querySelector('.coupon').style.display = 'flex'
         discount = +coupon.discount / 100 * subtotal
-        document.getElementById('coupon_price').innerHTML = '- ' + discount.toFixed(2) + ' <span class="coupon_remove">Remove</span>'
+        document.getElementById('coupon_price').innerHTML = '- ' + discount.toFixed(2)
         total = subtotal - discount
     } else {
         total = subtotal
