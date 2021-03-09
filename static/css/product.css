@@ -17,6 +17,10 @@
     width: 100%;
 }
 
+.required_options, .addition_options {
+    width: fit-content;
+}
+
 .required_options p, .addition_options p {
     position: relative;
     font-size: 16px;
@@ -43,9 +47,10 @@
 .option_name {
     color: white;
     margin-left: 10px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
-    transform: translateY(-2px);
+    line-height: 20px;
+    width: 100%;
 }
 
 .option_price {
@@ -54,7 +59,6 @@
     font-weight: 400;
     font-size: 16px;
     white-space: nowrap;
-    transform: translateY(-1px);
 }
 
 .option_price.old {
@@ -101,11 +105,16 @@
     transition: all 0.5s ease;
 }
 
+.price {
+    display: flex;
+}
+
 .price p {
     color: rgb(136, 136, 136);
     font-size: 20px;
     font-weight: 400;
     margin-top: 10px;
+    margin-right: 10px;
 }
 
 .product_buttons {

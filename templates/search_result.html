@@ -42,10 +42,25 @@
                                     <img src="{{ product.image.url }}" alt="">
                                     <h4 class="name">{{ product.name }}</h4>
                                     {% if currency == 'us' %}
-                                        <p class="price">{{ product.get_price_us }}</p>
+                                    {% if product.new_price_dollar %}
+                                        <div class="price">
+                                            <p style="text-decoration: line-through;">
+                                                $ {{ product.get_price_dollar }}</p>
+                                            <p style="color: rgb(40, 168, 5);">$ {{ product.get_price_new_dollar }}</p>
+                                        </div>
                                     {% else %}
-                                        <p class="price">{{ product.get_price_eu }}</p>
+                                        <p>{{ product.get_price_us }}</p>
                                     {% endif %}
+                                {% else %}
+                                    {% if product.new_price_euro %}
+                                        <div class="price">
+                                            <p style="text-decoration: line-through;">€ {{ product.get_price_euro }}</p>
+                                            <p style="color: rgb(40, 168, 5);">€ {{ product.get_price_new_euro }}</p>
+                                        </div>
+                                    {% else %}
+                                        <p>{{ product.get_price_eu }}</p>
+                                    {% endif %}
+                                {% endif %}
                                 </a>
                             {% endfor %}
                         </div>

@@ -128,7 +128,7 @@ function hideChildOptions(option) {
 }
 
 function setPrice() {
-    const priceHtml = document.querySelector('.price').querySelector('p')
+    const priceHtml = document.getElementById('price')
     priceUs = 0
     priceEu = 0
     priceUs += +productPriceUs.replace(',', '.')

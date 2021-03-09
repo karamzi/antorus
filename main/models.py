@@ -85,6 +85,10 @@ class Products(models.Model):
     char_req = models.CharField(max_length=255, verbose_name='Требования')
     price_dollar = models.DecimalField(verbose_name='Цена в долларах', decimal_places=3, max_digits=8, default=0)
     price_euro = models.DecimalField(verbose_name='Цена в евро', decimal_places=3, max_digits=8, default=0)
+    new_price_dollar = models.DecimalField(verbose_name='Цена со скдкой(доллар)', decimal_places=3, max_digits=8,
+                                           blank=True, null=True)
+    new_price_euro = models.DecimalField(verbose_name='Цена со скдкой(евро)', decimal_places=3, max_digits=8,
+                                         blank=True, null=True)
     quantity_required_options = models.IntegerField(verbose_name='max количество обязательных опций', blank=True,
                                                     null=True)
     quantity_required_child_options = models.IntegerField(verbose_name='max количество дочерних опций', blank=True,
@@ -108,8 +112,14 @@ class Products(models.Model):
     def get_price_dollar(self):
         return to_fixed(self.price_dollar, 2)
 
+    def get_price_new_dollar(self):
+        return to_fixed(self.new_price_dollar, 2)
+
     def get_price_euro(self):
         return to_fixed(self.price_dollar, 2)
+
+    def get_price_new_euro(self):
+        return to_fixed(self.new_price_euro, 2)
 
     def get_absolute_url(self):
         return reverse('product', kwargs={'slug': self.slug})

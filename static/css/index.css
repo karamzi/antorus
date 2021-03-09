@@ -227,6 +227,15 @@ body {
     text-align: center;
 }
 
+.price {
+    display: flex;
+    justify-content: center;
+}
+
+.price p {
+    margin-right: 5px;
+}
+
 /* copywriting_section
 ========================= */
 

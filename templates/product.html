@@ -140,7 +140,8 @@
                                         {% endif %}
                                      data-name="{{ option.name }}">
                                     <div class="checkbox">
-                                        <input {% if option.default %}checked="checked"{% endif %} class="addition" type="checkbox" id="cd{{ option.name }}{{ option.pk }}">
+                                        <input {% if option.default %}checked="checked"{% endif %} class="addition"
+                                               type="checkbox" id="cd{{ option.name }}{{ option.pk }}">
                                         <label class="custom" for="cd{{ option.name }}{{ option.pk }}">
                                             <div class="tick"></div>
                                         </label>
@@ -189,11 +190,21 @@
 
                     <div class="price">
                         {% if currency == 'us' and product.price_dollar > 0 %}
-                            <p>$ {{ product.get_price_dollar }}</p>
+                            {% if product.new_price_dollar %}
+                                <p style="text-decoration: line-through;">$ {{ product.get_price_dollar }}</p>
+                                <p id="price" style="color: rgb(40, 168, 5);">$ {{ product.get_price_new_dollar }}</p>
+                            {% else %}
+                                <p id="price">$ {{ product.get_price_dollar }}</p>
+                            {% endif %}
                         {% elif currency == 'us' and product.price_dollar == 0 %}
                             <p>Choose options to continue</p>
                         {% elif currency == 'eu' and product.price_euro > 0 %}
-                            <p>€ {{ product.get_price_euro }}</p>
+                            {% if product.new_price_euro %}
+                                <p style="text-decoration: line-through;">€ {{ product.get_price_euro }}</p>
+                                <p id="price" style="color: rgb(40, 168, 5);">€ {{ product.get_price_new_euro }}</p>
+                            {% else %}
+                                <p id="price">€ {{ product.price_euro }}</p>
+                            {% endif %}
                         {% elif currency == 'eu' and product.price_euro == 0 %}
                             <p>Choose options to continue</p>
                         {% endif %}
@@ -252,8 +263,16 @@
         const childIsRequired = '{{ product.child_required }}'
         const imgURL = '{{ product.thumb.url }}'
         const productId = '{{ product.pk }}'
-        const productPriceUs = '{{ product.price_dollar }}'
-        const productPriceEu = '{{ product.price_euro }}'
+        {% if product.new_price_dollar %}
+            const productPriceUs = '{{ product.get_price_new_dollar }}'
+        {% else %}
+            const productPriceUs = '{{ product.get_price_dollar }}'
+        {% endif %}
+        {% if product.new_price_euro %}
+            const productPriceEu = '{{ product.get_price_new_euro }}'
+        {% else %}
+            const productPriceEu = '{{ product.get_price_euro }}'
+        {% endif %}
         const url = '{{ product.get_absolute_url }}'
     </script>
     <script src="{% static 'js/product.js' %}"></script>
