@@ -128,6 +128,7 @@ form input.input_error {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
+    align-items: center;
 }
 
 .product_name {
@@ -141,6 +142,7 @@ form input.input_error {
 .product_price, .options {
     color: rgb(136, 136, 136);
     font-size: 14px;
+    white-space: nowrap;
 }
 
 .subtotal, .total {
@@ -214,4 +216,54 @@ form input.input_error {
 .button button:hover {
     background-color: #2A2A2A;
     transition: background-color 0.3s ease;
+}
+
+@media (max-width: 1000px) {
+    .checkout_content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .checkout_left {
+        width: 100%;
+    }
+
+    .checkout_right {
+        width: 50%;
+    }
+}
+
+@media (max-width: 800px) {
+    .checkout_right {
+        width: 70%;
+    }
+}
+
+@media (max-width: 600px) {
+    .character {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .name, .tag {
+        width: 100%;
+    }
+
+    .checkout_right {
+        width: 90%;
+    }
+
+    .product_name {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 400px) {
+    .checkout_right {
+        width: 100%;
+    }
+
+    .product_name {
+        font-size: 12px;
+    }
 }

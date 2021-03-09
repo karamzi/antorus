@@ -20,7 +20,6 @@ def to_fixed(numObj, digits=0):
 
 
 class Categories(models.Model):
-    # TODO Валидация названия
     name = models.CharField(max_length=255, verbose_name='Название категории', unique=True)
     slug = models.SlugField(verbose_name='Слаг', blank=True)
 
@@ -46,7 +45,6 @@ class Categories(models.Model):
 class SubCategories(models.Model):
     category = models.ForeignKey(Categories, related_name='categories_subcategories', verbose_name='Категория',
                                  on_delete=models.PROTECT)
-    # TODO Валидация названия
     name = models.CharField(max_length=255, verbose_name='Название подкатегории', unique=True)
     slug = models.SlugField(verbose_name='Слаг', blank=True)
 
@@ -334,7 +332,7 @@ class Order(models.Model):
         ('1', 'CREATED'),
         ('2', 'PAID'),
         ('3', 'PAYMENT ERROR'),
-        ('4', 'PROCESSING'),
+        ('4', 'REFUND'),
         ('5', 'COMPLETED'),
     )
     status = models.CharField(verbose_name='Статус заказа', choices=STATUS, max_length=100)
