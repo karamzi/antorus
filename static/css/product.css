@@ -42,6 +42,7 @@
 .option {
     display: flex;
     align-items: center;
+    margin-bottom: 5px;
 }
 
 .option_name {
@@ -304,5 +305,10 @@
 @media (max-width: 500px) {
     .product_left {
         width: 95%;
+    }
+
+    .option_name {
+        font-size: 12px;
+        line-height: 15px;
     }
 }
