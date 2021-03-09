@@ -197,7 +197,7 @@
                                 <p id="price">$ {{ product.get_price_dollar }}</p>
                             {% endif %}
                         {% elif currency == 'us' and product.price_dollar == 0 %}
-                            <p>Choose options to continue</p>
+                            <p id="price">Choose options to continue</p>
                         {% elif currency == 'eu' and product.price_euro > 0 %}
                             {% if product.new_price_euro %}
                                 <p style="text-decoration: line-through;">€ {{ product.get_price_euro }}</p>
@@ -206,7 +206,7 @@
                                 <p id="price">€ {{ product.price_euro }}</p>
                             {% endif %}
                         {% elif currency == 'eu' and product.price_euro == 0 %}
-                            <p>Choose options to continue</p>
+                            <p id="price">Choose options to continue</p>
                         {% endif %}
                     </div>
                     <div class="product_buttons">
