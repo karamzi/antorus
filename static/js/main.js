@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 const instance = axios.create({
     baseURL: 'http://127.0.0.1:8000/',
-    //baseURL: 'http://151.248.114.152/',
+    //baseURL: 'https://antorus.com/',
 })
 
 function countCart() {

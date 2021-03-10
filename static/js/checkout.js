@@ -35,7 +35,7 @@ function createOrder() {
     const faction = document.getElementById('faction')
     const connection = document.getElementById('connection')
     const email = document.getElementById('email')
-    const account = document.getElementById('cd1').checked
+    //const account = document.getElementById('cd1').checked
     const comment = document.getElementById('comment').value
     let cart
     let total
@@ -81,7 +81,7 @@ function createOrder() {
         document.getElementById('order_desc').value = data['order_desc']
         document.getElementById('order_id').value = data['order_id']
         document.getElementById('signature').value = data['signature']
-        //document.getElementById('fondy').submit()
+        document.getElementById('fondy').submit()
     })
 }
 
