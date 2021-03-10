@@ -99,18 +99,13 @@ form input {
     font-size: 25px;
 }
 
-.modal > a {
+.modal > p {
     text-decoration: none;
     color: rgb(142, 142, 142);
     font-size: 16px;
     font-weight: 400;
     margin-bottom: 20px;
     line-height: 25px;
-}
-
-.modal > a {
-    color: white;
-    transition: color 0.3s ease;
 }
 
 .modal_links {
