@@ -21,7 +21,7 @@
 <div class="top_bar">
     <div class="container">
         <div class="head">
-            {% if user.is_superuser %}
+            {% if user.is_superuser or user.is_staff %}
                 <a class="admin" href="/azarkes/">admin</a>
             {% endif %}
             <div class="contact_support">
