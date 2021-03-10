@@ -81,6 +81,9 @@ function createOrder() {
         document.getElementById('order_desc').value = data['order_desc']
         document.getElementById('order_id').value = data['order_id']
         document.getElementById('signature').value = data['signature']
+        eraseCookie('cartEu')
+        eraseCookie('cartUs')
+        eraseCookie('coupon')
         document.getElementById('fondy').submit()
     })
 }

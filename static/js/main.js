@@ -102,7 +102,7 @@ function getCookie(name) {
 function setCookie(value, name) {
     let expires = ""
     let date = new Date()
-    date.setTime(date.getTime() + (90 * 1000))
+    date.setTime(date.getTime() + (24 * 60 * 60 * 1000))
     expires = "; expires=" + date.toUTCString()
     document.cookie = name + "=" + (value || "") + expires + ";" + ' path=/;'
 }
