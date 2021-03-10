@@ -233,7 +233,7 @@ def create_account(request):
             url = settings.SITE_HOST + f'/checkEmail/{token}/'
             # TODO почта анторуса
             subject = 'Antorus - registration'
-            from_email = 'From federation.bratsk@gmail.com'
+            from_email = 'ANTORUS.COM – Your boosting store'
             to = email.lower()
             message = 'To activate your account click on the link:'
             html_message = render_to_string('email/registration.html',
@@ -278,7 +278,7 @@ def send_new_password(request):
             user.save()
             # TODO Почта анторуса
             subject = 'Antorus - reset password'
-            from_email = 'From federation.bratsk@gmail.com'
+            from_email = 'ANTORUS.COM – Your boosting store'
             to = user.email.lower()
             message = f'Your new password: {password}'
             html_message = render_to_string('email/registration.html', {'message': message, 'user': user.username})
@@ -382,7 +382,7 @@ def fondy_callback(request):
         transaction.save()
         subject = 'Order №' + order.get_order_number()
         # TODO Почта анторуса
-        from_email = 'From federation.bratsk@gmail.com'
+        from_email = 'ANTORUS.COM – Your boosting store'
         to = order.email.lower()
         if request.POST['order_status'] == 'approved':
             order.status = 2
