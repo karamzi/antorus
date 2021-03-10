@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{% static 'css/category.css' %}">
 {% endblock %}
 
-{% block title %}{% if category %}{{ category }}{% else %}{{ sub_category }}{% endif %}{% endblock %}
+{% block title %}{% if sub_category %}{{ sub_category.name }}{% else %}{{ category }}{% endif %}{% endblock %}
 
 {% block content %}
     <section class="products_sections">
@@ -15,16 +15,16 @@
                 <div class="nav_bar">
                     <h3>CATEGORIES</h3>
                     <nav>
-                        {% for category in categories %}
-                            <div class="nav_link">
-                                <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
-                                {% if category.categories_subcategories.all %}
+                        {% for item in categories %}
+                            <div {% if category.name == item.name %}class="nav_link active open"{% else %}class="nav_link"{% endif %}>
+                                <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>
+                                {% if item.categories_subcategories.all %}
                                     <span></span>
                                 {% endif %}
                             </div>
-                            {% if category.categories_subcategories.all %}
-                                <div style="display: none" class="accordion">
-                                    {% for subcategory in category.categories_subcategories.all %}
+                            {% if item.categories_subcategories.all %}
+                                <div {% if category.name == item.name %}style="display: flex"{% else %}style="display: none"{% endif %} class="accordion">
+                                    {% for subcategory in item.categories_subcategories.all %}
                                         <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
                                     {% endfor %}
                                 </div>
@@ -33,7 +33,7 @@
                     </nav>
                 </div>
                 <div class="products_block">
-                    <h2>{% if category %}{{ category }}{% else %}{{ sub_category }}{% endif %}</h2>
+                    <h2>{% if sub_category %}{{ sub_category.name }}{% else %}{{ category }}{% endif %}</h2>
                     <div class="products">
                         {% for product in products %}
                             <a class="product" href="{{ product.get_absolute_url }}">

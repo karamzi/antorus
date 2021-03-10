@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+          rel="stylesheet">
+    <style>
+        h1, h2, h3, h4, h5, h6, p {
+            font-family: 'Lato', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+<div class="es-wrapper-color" style="
+        margin: 0;
+        padding: 70px 0;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-image: url('http://151.248.114.152/static/img/background_email.png')">
+    <table cellspacing="0" width="100%" cellpadding="0">
+        <tbody>
+        <tr>
+            <td valign="top">
+                <table style="max-width: 600px; width: 100%;" cellspacing="0" cellpadding="0" border="1px"
+                       align="center">
+                    <tbody>
+                    <tr>
+                        <td align="center" style="background-color: #0d0f0d;">
+                            <img src="http://151.248.114.152/static/img/logo-2.png">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table style="background-color: #3a7d16; max-width: 600px; width: 100%" cellspacing="0" cellpadding="0"
+                       border="1px" align="center">
+                    <tbody>
+                    <tr>
+                        <td align="left" style="padding-left: 20px;">
+                            <h1 style="color: #ffffff; padding: 20px 0 20px 0; margin-bottom: 0; margin-top: 0;
+                                ">New Order: #{{ order.get_order_number }}</h1>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table style="max-width: 600px; width: 100%;" cellspacing="0" cellpadding="0" align="center"
+                       border="1px" bgcolor="#ffffff">
+                    <tbody>
+                    <tr>
+                        <td align="left" style="padding: 15px 20px 15px 20px;">
+                            <p style="font-size: 16px; color: #777777;">Payment error :<br>
+                            </p>
+                            <p style="font-size: 20px;"><a href="#" target="_blank">[Order #{{ order.get_order_number }}]</a>
+                                ({{ order.date|date:'d.m.Y' }})</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table border="1px" cellspacing="0" width="600" cellpadding="0" align="center">
+                    <tbody>
+                    <tr>
+                        <td align="center">
+                            <table style="width: 100%" cellpadding="0" cellspacing="0" bgcolor="#ffffff" align="center">
+                                <tbody>
+                                <tr>
+                                    <td align="left">
+                                        <table style="max-width: 600px; width: 100%;" cellspacing="1" cellpadding="1"
+                                               bgcolor="#eeeeee" align="left">
+                                            <tbody>
+                                            <tr>
+                                                <td width="60%" style="padding: 10px 5px 10px 20px;">
+                                                    <h4>Product</h4>
+                                                </td>
+                                                <td width="20%" style="padding: 10px 5px 10px 5px;">
+                                                    <h4>Quantity</h4>
+                                                </td>
+                                                <td width="20%" style="padding: 10px 5px 10px 5px;">
+                                                    <h4>Price</h4>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left">
+                                        <table style="max-width: 600px; width: 100%;" cellspacing="1" cellpadding="1"
+                                               align="left">
+                                            <tbody>
+                                            {% for product in order.order_product.all %}
+                                                <tr>
+                                                    <td width="60%" align="left" style="padding: 10px 5px 10px 20px;">
+                                                        <p>{{ product.product }}</p>
+                                                        {% for option in product.cart_cart_options.all %}
+                                                            <p>Select option: {{ option.name }}</p>
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td width="20%" align="left" style="padding: 10px 5px 10px 5px;">
+                                                        <p>{{ product.quantity }}</p>
+                                                    </td>
+                                                    <td width="20%" align="left" style="padding: 10px 5px 10px 5px;">
+                                                        <p>{{ product.total }}</p>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left">
+                                        <table style="max-width: 600px; width: 100%; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;"
+                                               cellspacing="1" cellpadding="1" align="left">
+                                            <tbody>
+                                            <tr>
+                                                <td width="80%" align="left" style="padding: 10px 5px 10px 20px;">
+                                                    <h4>Subtotal:</h4>
+                                                </td>
+                                                <td width="20%" align="left" style="padding: 10px 5px 10px 5px;">
+                                                    <h4>{{ order.price }}</h4>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                {% if order.coupon %}
+                                    <tr>
+                                        <td align="left">
+                                            <table style="max-width: 600px; width: 100%; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;"
+                                                   cellspacing="1" cellpadding="1" align="left">
+                                                <tbody>
+                                                <tr>
+                                                    <td width="80%" align="left" style="padding: 10px 5px 10px 20px;">
+                                                        <h4>coupon: {{ order.coupon }}</h4>
+                                                    </td>
+                                                    <td width="20%" align="left"
+                                                        style="padding: 10px 5px 10px 5px; color: #28a805">
+                                                        <h4>-{{ order.get_discount }}</h4>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                <tr>
+                                    <td align="left">
+                                        <table style="width: 100%;" class="cke_show_border" cellspacing="1"
+                                               cellpadding="1" border="0" align="left">
+                                            <tbody>
+                                            <tr>
+                                                <td width="80%" align="left" style="padding: 10px 5px 10px 20px;">
+                                                    <h4>Payment method:</h4>
+                                                </td>
+                                                <td width="20%" align="left" style="padding: 10px 5px 10px 5px;">
+                                                    <h4>Online payments</h4>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left">
+                                        <table style="max-width: 600px; width: 100%; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;"
+                                               cellspacing="1" cellpadding="1" align="left">
+                                            <tbody>
+                                            <tr>
+                                                <td width="80%" align="left" style="padding: 10px 5px 10px 20px;">
+                                                    <h4>Total:</h4>
+                                                </td>
+                                                <td width="20%" align="left" style="padding: 10px 5px 10px 5px;">
+                                                    <h4>{{ order.total }}</h4>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table style="max-width: 600px; width: 100%;" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
+                       border="1px" align="center">
+                    <tbody>
+                    <tr>
+                        <td align="left" style="padding: 15px 20px 15px 20px;">
+                            <p style="font-size: 16px; margin-bottom: 5px; margin-top: 0;"><b>Character Name and Server
+                                Name:</b> {{ order.character_server }}</p>
+                            <p style="font-size: 16px; margin-bottom: 5px; margin-top: 0;">
+                                <b>Faction:</b> {{ order.faction }}</p>
+                            <p style="font-size: 16px; margin-bottom: 5px; margin-top: 0;"><a
+                                    href="mailto:{{ order.email }}">{{ order.email }}</a></p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table style="background-color: #3a7d16; height: 50px; max-width: 600px; width: 100%;" cellspacing="0"
+                       cellpadding="0" border="1px" align="center">
+                    <tbody>
+                    <tr>
+                        <td align="center">
+                            <a href="" target="_blank" style="margin-right: 5px; color: transparent;">
+                                <img style="width: 30px;" src="http://151.248.114.152/static/img/telegram_email.png">
+                            </a>
+                            <a href="" target="_blank" style="margin-right: 5px; color: transparent;">
+                                <img style="width: 30px;" src="http://151.248.114.152/static/img/skype_email.png">
+                            </a>
+                            <a href="" target="_blank" style="margin-right: 5px; color: transparent;">
+                                <img style="width: 30px;" src="http://151.248.114.152/static/img/email_email.png">
+                            </a>
+                            <a href="" target="_blank" style="margin-right: 5px; color: transparent;">
+                                <img style="width: 30px;" src="http://151.248.114.152/static/img/discord_email.png">
+                            </a>
+                            <a href="" target="_blank" style="margin-right: 5px; color: transparent;">
+                                <img style="width: 30px;" src="http://151.248.114.152/static/img/link_email.png">
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table style="background-color: transparent; max-width: 600px; width: 100%;" cellspacing="0"
+                       cellpadding="0" border="1px" align="center">
+                    <tbody>
+                    <tr>
+                        <td align="center" style="background-color: #0d0f0d;">
+                            <p style="color: white;">Antorus.com 24/7 online</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+
+</html>

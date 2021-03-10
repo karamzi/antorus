@@ -23,7 +23,7 @@
                                 {% endif %}
                             </div>
                             {% if category.categories_subcategories.all %}
-                                <div class="accordion">
+                                <div style="display: flex" class="accordion">
                                     {% for subcategory in category.categories_subcategories.all %}
                                         <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
                                     {% endfor %}

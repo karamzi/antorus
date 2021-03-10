@@ -95,10 +95,12 @@ def category(request, slug):
 def subcategory(request, category, subcategory):
     try:
         sub_category = SubCategories.objects.get(slug=subcategory)
+        category = Categories.objects.get(slug=category)
         categories = Categories.objects.all()
         products = sub_category.products_subcategory.filter(draft=False)
         context = {
             'categories': categories,
+            'category': category,
             'sub_category': sub_category,
             'products': products
         }
@@ -116,12 +118,19 @@ def faq(request):
 
 
 def checkout(request):
-    # TODO если корзина пустая закрыть страницу
     return render(request, 'checkout.html')
 
 
 def my_account(request):
     return render(request, 'my_account.html')
+
+
+def privacy_policy(request):
+    return render(request, 'privacy_policy.html')
+
+
+def terms_of_service(request):
+    return render(request, 'terms_of_service.html')
 
 
 def my_login(request):
@@ -163,8 +172,7 @@ def change_account_details(request):
             if not User.objects.filter(username=request.POST['username']).exists():
                 user.username = request.POST['username']
             else:
-                # TODO английский текст
-                messages.error(request, 'Пользователь с таким логином существует')
+                messages.error(request, 'the same username already exists')
                 return redirect(reverse('account_details'))
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']
@@ -176,16 +184,13 @@ def change_account_details(request):
                     user.set_password(password1)
                     login(request, user)
                 else:
-                    # TODO английский текст
-                    messages.error(request, 'Пароли не совпадают')
+                    messages.error(request, 'passwords don\'t match')
                     return redirect(reverse('account_details'))
             else:
-                # TODO английский текст
-                messages.error(request, 'Неправильный пароль')
+                messages.error(request, 'incorrect password')
                 return redirect(reverse('account_details'))
         user.save()
-        # TODO английский текст
-        messages.success(request, 'Данные были обновленны успешно')
+        messages.success(request, 'details have been updated')
     return redirect(reverse('account_details'))
 
 
@@ -215,20 +220,25 @@ def create_account(request):
         form = RegisterUserForm(request)
         if form.is_valid():
             form.save(commit=False)
+            email = form.cleaned_data['email']
             token = {
                 'username': form.cleaned_data['username'],
-                'email': form.cleaned_data['email'],
+                'email': email,
                 'password': form.cleaned_data['password1'],
             }
             token = json.dumps(token, ensure_ascii=False).encode()
             token = base64.b64encode(token).decode()
             AuthToken.objects.create(token=token)
             url = settings.SITE_HOST + f'/checkEmail/{token}/'
-            # TODO почта анторуса и пользователя и английский текст
-            send_mail('Регистрация', url, 'federation.bratsk@gmail.com',
-                      ['play-wow@yandex.ru'],
-                      fail_silently=False)
-            messages.success(request, f'На почту {form.cleaned_data["email"]} было высланно писмо подтверждения')
+            # TODO почта анторуса
+            subject = 'Antorus - registration'
+            from_email = 'From federation.bratsk@gmail.com'
+            to = email.lower()
+            message = 'To activate your account click on the link:'
+            html_message = render_to_string('email/registration.html', {'message': message, 'link': url})
+            plain_message = strip_tags(html_message)
+            mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+            messages.success(request, f'Confirmation has been sent to {email}')
         return redirect(reverse('my_account'))
     return redirect(reverse('index'))
 
@@ -264,12 +274,17 @@ def send_new_password(request):
             password = ''.join(random.choice(password_characters) for i in range(15))
             user.set_password(password)
             user.save()
-            # TODO Почта анторуса и пользователя и английский текст
-            send_mail('Регистрация', f'Новый пароль: {password}', 'federation.bratsk@gmail.com', ['play-wow@yandex.ru'],
-                      fail_silently=False)
-            messages.success(request, f'На почту {user.email} было высланно письмо с новым паролем')
+            # TODO Почта анторуса
+            subject = 'Antorus - reset password'
+            from_email = 'From federation.bratsk@gmail.com'
+            to = user.email.lower()
+            message = f'Your new password: {password}'
+            html_message = render_to_string('email/registration.html', {'message': message})
+            plain_message = strip_tags(html_message)
+            mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+            messages.success(request, f'New password has been sent to {user.email}')
         else:
-            messages.error(request, 'Такой пользователь не найден')
+            messages.error(request, 'the same username or email haven\'t been found')
         return redirect(reverse('reset_password'))
     return redirect(reverse('index'))
 
@@ -363,18 +378,22 @@ def fondy_callback(request):
         date_format = '%d.%m.%Y %H:%M:%S'
         transaction.date = datetime.strptime(request.POST['order_time'], date_format)
         transaction.save()
+        subject = 'Order №' + order.get_order_number()
+        # TODO Почта анторуса
+        from_email = 'From federation.bratsk@gmail.com'
+        to = order.email.lower()
         if request.POST['order_status'] == 'approved':
             order.status = 2
-            subject = 'Order №' + order.get_order_number()
             # TODO ссылки на изображения
             html_message = render_to_string('email/emails.html', {'order': order})
             plain_message = strip_tags(html_message)
-            # TODO Почта анторуса
-            from_email = 'From federation.bratsk@gmail.com'
-            to = order.email.lower()
             mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
         if request.POST['order_status'] == 'declined' or request.POST['order_status'] == 'expired':
             order.status = 3
+            # TODO ссылки на изображения
+            html_message = render_to_string('email/error.html', {'order': order})
+            plain_message = strip_tags(html_message)
+            mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
         order.save()
         return HttpResponse(status=200)
     return redirect(reverse('index'))
