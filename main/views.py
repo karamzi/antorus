@@ -233,7 +233,7 @@ def create_account(request):
             url = settings.SITE_HOST + f'/checkEmail/{token}/'
             # TODO почта анторуса
             subject = 'Antorus - registration'
-            from_email = 'ANTORUS.COM – Your boosting store'
+            from_email = 'From federation.bratsk@gmail.com'
             to = email.lower()
             message = 'To activate your account click on the link:'
             html_message = render_to_string('email/registration.html',
