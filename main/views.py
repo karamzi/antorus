@@ -226,6 +226,7 @@ def create_account(request):
                 'username': username,
                 'email': email,
                 'password': form.cleaned_data['password1'],
+                'time': str(datetime.now()),
             }
             token = json.dumps(token, ensure_ascii=False).encode()
             token = base64.b64encode(token).decode()
