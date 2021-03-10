@@ -382,7 +382,7 @@ def fondy_callback(request):
         transaction.save()
         subject = 'Order №' + order.get_order_number()
         # TODO Почта анторуса
-        from_email = 'ANTORUS.COM – Your boosting store'
+        from_email = 'From <shop@antorus.com>'
         to = order.email.lower()
         if request.POST['order_status'] == 'approved':
             order.status = 2
