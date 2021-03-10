@@ -396,3 +396,7 @@ def fondy_callback(request):
         order.save()
         return HttpResponse(status=200)
     return redirect(reverse('index'))
+
+
+def page_404(request):
+    return redirect(reverse('index'))
