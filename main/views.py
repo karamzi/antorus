@@ -381,18 +381,15 @@ def fondy_callback(request):
         transaction.date = datetime.strptime(request.POST['order_time'], date_format)
         transaction.save()
         subject = 'Order №' + order.get_order_number()
-        # TODO Почта анторуса
         from_email = 'From <shop@antorus.com>'
         to = order.email.lower()
         if request.POST['order_status'] == 'approved':
             order.status = 2
-            # TODO ссылки на изображения
             html_message = render_to_string('email/emails.html', {'order': order})
             plain_message = strip_tags(html_message)
             mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
         if request.POST['order_status'] == 'declined' or request.POST['order_status'] == 'expired':
             order.status = 3
-            # TODO ссылки на изображения
             html_message = render_to_string('email/error.html', {'order': order})
             plain_message = strip_tags(html_message)
             mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)

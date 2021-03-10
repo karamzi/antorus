@@ -114,7 +114,7 @@ class Products(models.Model):
         return to_fixed(self.new_price_dollar, 2)
 
     def get_price_euro(self):
-        return to_fixed(self.price_dollar, 2)
+        return to_fixed(self.price_euro, 2)
 
     def get_price_new_euro(self):
         return to_fixed(self.new_price_euro, 2)
