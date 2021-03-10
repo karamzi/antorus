@@ -221,8 +221,9 @@ def create_account(request):
         if form.is_valid():
             form.save(commit=False)
             email = form.cleaned_data['email']
+            username = form.cleaned_data['username']
             token = {
-                'username': form.cleaned_data['username'],
+                'username': username,
                 'email': email,
                 'password': form.cleaned_data['password1'],
             }
@@ -235,7 +236,8 @@ def create_account(request):
             from_email = 'From federation.bratsk@gmail.com'
             to = email.lower()
             message = 'To activate your account click on the link:'
-            html_message = render_to_string('email/registration.html', {'message': message, 'link': url})
+            html_message = render_to_string('email/registration.html',
+                                            {'message': message, 'link': url, 'user': username})
             plain_message = strip_tags(html_message)
             mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
             messages.success(request, f'Confirmation has been sent to {email}')
@@ -279,7 +281,7 @@ def send_new_password(request):
             from_email = 'From federation.bratsk@gmail.com'
             to = user.email.lower()
             message = f'Your new password: {password}'
-            html_message = render_to_string('email/registration.html', {'message': message})
+            html_message = render_to_string('email/registration.html', {'message': message, 'user': user.username})
             plain_message = strip_tags(html_message)
             mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
             messages.success(request, f'New password has been sent to {user.email}')
