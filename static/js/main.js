@@ -16,8 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
         euButton.classList.remove('active_currency')
         usButton.classList.add('active_currency')
     } else {
-        console.log('re')
-        console.log(euButton)
         usButton.classList.remove('active_currency')
         euButton.classList.add('active_currency')
     }
@@ -108,7 +106,7 @@ function setCookie(value, name) {
 }
 
 function eraseCookie(name) {
-    document.cookie = name + '=; Max-Age=-99999999;';
+    document.cookie = name + '=; Max-Age=0; path=/;'
 }
 
 const login = document.querySelector('.login')

@@ -67,7 +67,7 @@ function createOrder() {
     data.append('faction', faction.value)
     data.append('connection', connection.value)
     data.append('email', email.value)
-    data.append('account', account)
+    //data.append('account', account)
     data.append('comment', comment)
     instance.post('createOrder/', data, {
         headers: {
@@ -82,7 +82,6 @@ function createOrder() {
         document.getElementById('order_id').value = data['order_id']
         document.getElementById('signature').value = data['signature']
         eraseCookie('cartEu')
-        eraseCookie('cartUs')
         eraseCookie('coupon')
         document.getElementById('fondy').submit()
     })
