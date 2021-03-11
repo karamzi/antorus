@@ -386,11 +386,13 @@ def fondy_callback(request):
             html_message = render_to_string('email/emails.html', {'order': order})
             plain_message = strip_tags(html_message)
             mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+            mail.send_mail(subject, plain_message, from_email, ['antorusOperator@gmail.com'], html_message=html_message)
         if request.POST['order_status'] == 'declined' or request.POST['order_status'] == 'expired':
             order.status = 3
             html_message = render_to_string('email/error.html', {'order': order})
             plain_message = strip_tags(html_message)
             mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+            mail.send_mail(subject, plain_message, from_email, ['antorusOperator@gmail.com'], html_message=html_message)
         order.save()
         return HttpResponse(status=200)
     return redirect(reverse('index'))
