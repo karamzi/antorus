@@ -415,7 +415,8 @@ class AuthToken(models.Model):
 
 
 class Transactions(models.Model):
-    order = models.ForeignKey(Order, verbose_name='Заказ', related_name='order_transactions', null=True, on_delete=models.SET_NULL)
+    order = models.ForeignKey(Order, verbose_name='Заказ', related_name='order_transactions', null=True,
+                              on_delete=models.CASCADE)
     SERVICE = (
         ('1', 'Fondy'),
     )
