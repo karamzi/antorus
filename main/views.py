@@ -337,7 +337,7 @@ def create_order(request):
         order_id = order.get_order_number()
         return JsonResponse({
             'status': 'created',
-            'amount': amount,
+            'amount': str(int(amount)),
             'currency': currency,
             'order_desc': order_desc,
             'order_id': order_id,
