@@ -295,7 +295,7 @@ class Cart(models.Model):
     price = models.CharField(verbose_name='Цена', max_length=50)
     quantity = models.SmallIntegerField(verbose_name='Количество')
     total = models.CharField(verbose_name='Итого', max_length=50)
-    order = models.ForeignKey('Order', on_delete=models.PROTECT, verbose_name='Заказ', related_name='order_product')
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, verbose_name='Заказ', related_name='order_product')
 
     def __str__(self):
         return self.product
@@ -307,8 +307,8 @@ class Cart(models.Model):
 
 
 class CartOptions(models.Model):
-    product = models.ForeignKey(Cart, on_delete=models.PROTECT, verbose_name='Товар', related_name='cart_cart_options')
-    order = models.ForeignKey('Order', on_delete=models.PROTECT, verbose_name='Заказ',
+    product = models.ForeignKey(Cart, on_delete=models.CASCADE, verbose_name='Товар', related_name='cart_cart_options')
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, verbose_name='Заказ',
                               related_name='order_cart_options')
     name = models.CharField(verbose_name='Опция', max_length=255)
     price = models.CharField(verbose_name='Цена', max_length=50)
