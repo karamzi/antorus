@@ -37,6 +37,11 @@ class AdditionsOptionAdmin(admin.TabularInline):
     extra = 0
 
 
+class OrderImagesAdmin(admin.TabularInline):
+    model = models.OrderImages
+    extra = 0
+
+
 class ProductsAdmin(admin.ModelAdmin):
     inlines = [RequiredOptionAdmin, RequiredOptionChildAdmin, AdditionsOptionAdmin]
     form = ProductAdminForm
@@ -57,7 +62,7 @@ class CartOptionsAdmin(admin.TabularInline):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    inlines = [CartAdmin, CartOptionsAdmin]
+    inlines = [CartAdmin, CartOptionsAdmin, OrderImagesAdmin]
     list_display = ('__str__', 'date', 'status', 'total')
     list_display_links = ('__str__', 'date', 'total')
     list_editable = ('status',)

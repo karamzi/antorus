@@ -231,7 +231,6 @@ def create_account(request):
             token = base64.b64encode(token).decode()
             AuthToken.objects.create(token=token)
             url = settings.SITE_HOST + f'/checkEmail/{token}/'
-            # TODO почта анторуса
             subject = 'Antorus - registration'
             from_email = 'ANTORUS.COM – Your boosting store <shop@antorus.com>'
             to = email.lower()
@@ -276,7 +275,6 @@ def send_new_password(request):
             password = ''.join(random.choice(password_characters) for i in range(15))
             user.set_password(password)
             user.save()
-            # TODO Почта анторуса
             subject = 'Antorus - reset password'
             from_email = 'ANTORUS.COM – Your boosting store <shop@antorus.com>'
             to = user.email.lower()

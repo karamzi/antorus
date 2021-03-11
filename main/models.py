@@ -15,6 +15,10 @@ def get_thumbs_path(instance, filename):
     return 'thumbs/%s_%s%s' % (instance.slug, datetime.now().timestamp(), splitext(filename)[1])
 
 
+def get_order_image_path(instance, filename):
+    return 'orderImages/%s%s' % (datetime.now().timestamp(), splitext(filename)[1])
+
+
 def to_fixed(numObj, digits=0):
     return f"{numObj:.{digits}f}"
 
@@ -359,6 +363,17 @@ class Order(models.Model):
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = '1. Заказы'
+
+
+class OrderImages(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name='order_images')
+    description = models.TextField(verbose_name='Описание', blank=True)
+    img = models.ImageField(upload_to=get_order_image_path, verbose_name='Изображение')
+    date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Изображение для заказа'
+        verbose_name_plural = 'Изображения для заказа'
 
 
 class Coupon(models.Model):
