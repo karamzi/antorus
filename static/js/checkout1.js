@@ -75,14 +75,15 @@ function createOrder() {
             'X-CSRFToken': getCookie('csrftoken')
         }
     }).then(response => {
+        eraseCookie('cartEu')
+        eraseCookie('cartUs')
+        eraseCookie('coupon')
         data = response.data
         document.getElementById('amount').value = data['amount']
         document.getElementById('currency').value = data['currency']
         document.getElementById('order_desc').value = data['order_desc']
         document.getElementById('order_id').value = data['order_id']
         document.getElementById('signature').value = data['signature']
-        eraseCookie('cartEu')
-        eraseCookie('coupon')
         document.getElementById('fondy').submit()
     })
 }

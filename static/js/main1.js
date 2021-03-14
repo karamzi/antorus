@@ -106,7 +106,7 @@ function setCookie(value, name) {
 }
 
 function eraseCookie(name) {
-    document.cookie = name + '=; Max-Age=0; path=/;'
+    document.cookie = name + '=; Max-Age=0; path=/; domain=antorus.com;'
 }
 
 const login = document.querySelector('.login')
