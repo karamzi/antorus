@@ -28,5 +28,6 @@ urlpatterns = [
     path('searchProduct/', views.search_products),
     path('result/<str:search>/', views.search_result, name='result'),
     path('fondyCallback/', views.fondy_callback, name='fondy'),
-    url(r'^', views.page_404),
+    path('successOrder/', views.success_order, name='success_order'),
+    url(r'^', views.page_404, name='404'),
 ]

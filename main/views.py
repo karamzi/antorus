@@ -25,7 +25,6 @@ def global_var(request):
     }
 
 
-@csrf_exempt
 def index(request):
     categories = Categories.objects.all()
     products = BestOffersToday.objects.all()
@@ -374,5 +373,22 @@ def fondy_callback(request):
     return redirect(reverse('index'))
 
 
-def page_404(request):
+@csrf_exempt
+def success_order(request):
+    if request.method == 'POST':
+        order_id = int(request.POST['order_id']) - 1000
+        try:
+            order = Order.objects.get(pk=order_id)
+            context = {
+                'order': order,
+            }
+            return render(request, 'success_order.html', context)
+        except ObjectDoesNotExist:
+            return redirect(reverse('404'))
     return redirect(reverse('index'))
+
+
+
+def page_404(request):
+    response = render(request, '404.html')
+    return response

@@ -1,0 +1,82 @@
+{% extends 'basic/basic.html' %}
+{% load static %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/success_order.css' %}">
+{% endblock %}
+
+{% block title %}Order №{{ order.get_order_number }} - ANTORUS{% endblock %}
+
+{% block content %}
+    <section class="order_section">
+        <div class="container">
+            <h2>THANK YOU. YOUR ORDER HAS BEEN RECEIVED</h2>
+            <div class="order_main_info">
+                <p>Order number: <span>{{ order.pk }}</span></p>
+                <p>Date: <span>{{ order.date|date:'d.m.Y' }}</span></p>
+                <p>Email: <span>{{ order.email }}</span></p>
+                <p>Total: <span>{{ order.total }}</span></p>
+            </div>
+            <div class="order_content">
+                <div class="order_right">
+                    <div class="row table_head">
+                        <p>PRODUCT</p>
+                        <p>TOTAL</p>
+                    </div>
+                    <div class="table_body">
+                        <div class="order">
+                            {% for product in order.order_product.all %}
+                                <div class="row product">
+                                    <div class="name">
+                                        <p>{{ product.product }} x {{ product.quantity }}</p>
+                                        {% if product.cart_cart_options.all %}
+                                            <div class="options">
+                                                <ul>
+                                                    {% for option in product.cart_cart_options.all %}
+                                                        <li>{{ option.name }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="price">{{ product.total }}</div>
+                                </div>
+                            {% endfor %}
+                            <div class="row subtotal">
+                                <h5>Subtotal:</h5>
+                                <p>{{ order.price }}</p>
+                            </div>
+                            {% if order.coupon %}
+                                <div class="row coupon">
+                                    <h5>coupon: <span style="color: white">{{ order.coupon }}</span></h5>
+                                    <p style="color: #28a805">-{{ order.get_discount }}</p>
+                                </div>
+                            {% endif %}
+                            <div class="row total">
+                                <h5>TOTAL:</h5>
+                                <p>{{ order.total }}</p>
+                            </div>
+                            <div class="row character">
+                                <h5>Character Name and Server Name:</h5>
+                                <p>{{ order.character_server }}</p>
+                            </div>
+                            <div class="row faction">
+                                <h5>Faction:</h5>
+                                <p>{{ order.faction }}</p>
+                            </div>
+                            <div class="row connection">
+                                <h5>Skype or Discord:</h5>
+                                <p>{{ order.connection }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}
