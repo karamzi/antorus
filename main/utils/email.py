@@ -12,7 +12,7 @@ class Email:
         plain_message = strip_tags(html_message)
         to = order.email.lower()
         mail.send_mail(subject, plain_message, self.from_email, [to], html_message=html_message)
-        if order.status == 1:
+        if order.status == '1':
             mail.send_mail(subject, plain_message, self.from_email, ['antorusshop@gmail.com'],
                            html_message=html_message)
 
