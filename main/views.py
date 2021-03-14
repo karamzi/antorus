@@ -10,14 +10,12 @@ from django.contrib.auth.models import User
 from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday, AuthToken, \
     Transactions
 from .forms import RegisterUserForm
-from django.core import mail
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 import base64
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
+from .utils.email import Email
 
 
 def global_var(request):
@@ -231,14 +229,7 @@ def create_account(request):
             token = base64.b64encode(token).decode()
             AuthToken.objects.create(token=token)
             url = settings.SITE_HOST + f'/checkEmail/{token}/'
-            subject = 'Antorus - registration'
-            from_email = 'ANTORUS.COM – Your boosting store <shop@antorus.com>'
-            to = email.lower()
-            message = 'To activate your account click on the link:'
-            html_message = render_to_string('email/registration.html',
-                                            {'message': message, 'link': url, 'user': username})
-            plain_message = strip_tags(html_message)
-            mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+            Email().create_account(email, url, username)
             messages.success(request, f'Confirmation has been sent to {email}')
         return redirect(reverse('my_account'))
     return redirect(reverse('index'))
@@ -275,13 +266,7 @@ def send_new_password(request):
             password = ''.join(random.choice(password_characters) for i in range(15))
             user.set_password(password)
             user.save()
-            subject = 'Antorus - reset password'
-            from_email = 'ANTORUS.COM – Your boosting store <shop@antorus.com>'
-            to = user.email.lower()
-            message = f'Your new password: {password}'
-            html_message = render_to_string('email/registration.html', {'message': message, 'user': user.username})
-            plain_message = strip_tags(html_message)
-            mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+            Email().send_new_password(user, password)
             messages.success(request, f'New password has been sent to {user.email}')
         else:
             messages.error(request, 'the same username or email haven\'t been found')
@@ -376,23 +361,14 @@ def fondy_callback(request):
         transaction.amount = int(request.POST['amount']) / 100
         transaction.response = response
         date_format = '%d.%m.%Y %H:%M:%S'
-        transaction.date = datetime.strptime(request.POST['order_time'], date_format)
+        transaction.date = datetime.strptime(request.POST['order_time'], date_format) + timedelta(hours=1)
         transaction.save()
-        subject = 'Order №' + order.get_order_number()
-        from_email = 'ANTORUS.COM – Your boosting store <shop@antorus.com>'
-        to = order.email.lower()
         if request.POST['order_status'] == 'approved':
             order.status = 2
-            html_message = render_to_string('email/emails.html', {'order': order})
-            plain_message = strip_tags(html_message)
-            mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
-            mail.send_mail(subject, plain_message, from_email, ['antorusOperator@gmail.com'], html_message=html_message)
+            Email().send_order(order, 'email/emails.html')
         if request.POST['order_status'] == 'declined' or request.POST['order_status'] == 'expired':
             order.status = 3
-            html_message = render_to_string('email/error.html', {'order': order})
-            plain_message = strip_tags(html_message)
-            mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
-            mail.send_mail(subject, plain_message, from_email, ['antorusOperator@gmail.com'], html_message=html_message)
+            Email().send_order(order, 'email/error.html')
         order.save()
         return HttpResponse(status=200)
     return redirect(reverse('index'))

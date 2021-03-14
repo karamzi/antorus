@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django import forms
 from ckeditor.widgets import CKEditorWidget
+from .utils.email import Email
 from . import models
 import re
 
@@ -68,8 +69,16 @@ class OrderAdmin(admin.ModelAdmin):
     list_editable = ('status',)
     readonly_fields = (
         'user', 'character_server', 'battle_tag', 'faction', 'connection', 'email', 'comment', 'price', 'coupon',
-        'total',
-        'date')
+        'total', 'date')
+    list_filter = ('status',)
+
+    def save_model(self, request, obj, form, change):
+        order = models.Order.objects.get(pk=obj.pk)
+        if obj.status == '4' and order != '4':
+            pass
+        if obj.status == '5' and order != '5':
+            pass
+        super().save_model(request, obj, form, change)
 
 
 class CouponAdmin(admin.ModelAdmin):

@@ -239,24 +239,23 @@ body {
 /* copywriting_section
 ========================= */
 
-.text_1_block {
+.text_block {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
 }
 
-.text_1_block img {
+.text_block img {
     width: 350px;
     height: 320px;
-    padding: 10px 10px 10px 0;
 }
 
-.text_1 {
+.text {
     width: 100%;
     padding: 0 10px;
 }
 
-.text_1 p {
+.text p {
     text-align: justify;
     color: #8e8e8e;
     font-size: 16px;
@@ -264,8 +263,25 @@ body {
     margin-bottom: 20px;
 }
 
-.text_1 p:last-child {
-    margin-bottom: 0px;
+.text p:last-child {
+    margin-bottom: 0;
+}
+
+.text h4 {
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.text ul {
+    color: #8e8e8e;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.text ul li {
+    margin-bottom: 10px;
 }
 
 /* about_section
@@ -396,12 +412,12 @@ body {
         width: 100%;
     }
 
-    .text_1_block img {
+    .text_block img {
         width: 300px;
         height: 280px;
     }
 
-    .text_1 p {
+    .text p {
         font-size: 14px;
     }
 }
@@ -435,7 +451,7 @@ body {
         font-size: 14px;
     }
 
-    .text_1_block img {
+    .text_block img {
         width: 300px;
         height: 280px;
     }
@@ -471,7 +487,7 @@ body {
         width: 100%;
     }
 
-    .text_1_block img {
+    .text_block img {
         width: 100%;
         height: auto;
     }
