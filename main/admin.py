@@ -66,11 +66,13 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [CartAdmin, CartOptionsAdmin, OrderImagesAdmin]
     list_display = ('__str__', 'date', 'status', 'total')
     list_display_links = ('__str__', 'date', 'total')
-    list_editable = ('status',)
     readonly_fields = (
         'user', 'character_server', 'battle_tag', 'faction', 'connection', 'email', 'comment', 'price', 'coupon',
         'total', 'date')
     list_filter = ('status',)
+
+    def get_status_html(self):
+        pass
 
     def save_model(self, request, obj, form, change):
         order = models.Order.objects.get(pk=obj.pk)
