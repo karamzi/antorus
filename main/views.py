@@ -388,7 +388,6 @@ def success_order(request):
     return redirect(reverse('index'))
 
 
-
 def page_404(request):
     response = render(request, '404.html')
     return response

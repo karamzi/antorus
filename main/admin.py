@@ -75,9 +75,9 @@ class OrderAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         order = models.Order.objects.get(pk=obj.pk)
         if obj.status == '4' and order != '4':
-            pass
+            Email().send_order(order, 'email/refund.html')
         if obj.status == '5' and order != '5':
-            pass
+            Email().send_order(order, 'email/completed.html')
         super().save_model(request, obj, form, change)
 
 
