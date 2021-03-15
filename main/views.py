@@ -363,8 +363,8 @@ def fondy_callback(request):
         transaction.date = datetime.strptime(request.POST['order_time'], date_format) + timedelta(hours=1)
         transaction.save()
         if request.POST['order_status'] == 'approved':
-            order.status = 2
             Email().send_order(order, 'email/emails.html')
+            order.status = 2
         if request.POST['order_status'] == 'declined' or request.POST['order_status'] == 'expired':
             order.status = 3
             Email().send_order(order, 'email/error.html')
