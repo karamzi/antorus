@@ -198,17 +198,17 @@ class RequiredOption(models.Model):
     def __str__(self):
         return self.name
 
+    def get_option_new_price_euro(self):
+        return to_fixed(self.new_price_euro, 2)
+
     def get_option_price_euro(self):
-        if self.new_price_euro:
-            return to_fixed(self.new_price_euro, 2)
-        else:
-            return to_fixed(self.price_euro, 2)
+        return to_fixed(self.price_euro, 2)
+
+    def get_option_new_price_dollar(self):
+        return to_fixed(self.new_price_dollar, 2)
 
     def get_option_price_dollar(self):
-        if self.new_price_dollar:
-            return to_fixed(self.new_price_dollar, 2)
-        else:
-            return to_fixed(self.price_dollar, 2)
+        return to_fixed(self.price_dollar, 2)
 
     class Meta:
         verbose_name = 'Обязательная опция'
@@ -232,20 +232,31 @@ class RequiredOptionChild(models.Model):
     def __str__(self):
         return self.name
 
+    def get_option_new_price_euro(self):
+        return to_fixed(self.new_price_euro, 2)
+
     def get_option_price_euro(self):
-        if self.new_price_euro:
-            return to_fixed(self.new_price_euro, 2)
-        else:
-            return to_fixed(self.price_euro, 2)
+        if self.price_euro < 1:
+            if self.required_option.new_price_euro:
+                price = self.required_option.new_price_euro * self.price_euro
+                return to_fixed(price, 2)
+            else:
+                price = self.required_option.price_euro * self.price_euro
+                return to_fixed(price, 2)
+        return to_fixed(self.price_euro, 2)
+
+    def get_option_new_price_dollar(self):
+        return to_fixed(self.new_price_dollar, 2)
 
     def get_option_price_dollar(self):
         if self.price_dollar < 1:
-            price = self.required_option.price_dollar * self.price_dollar
-            return to_fixed(price, 2)
-        if self.new_price_dollar:
-            return to_fixed(self.new_price_dollar, 2)
-        else:
-            return to_fixed(self.price_dollar, 2)
+            if self.required_option.new_price_dollar:
+                price = self.required_option.new_price_dollar * self.price_dollar
+                return to_fixed(price, 2)
+            else:
+                price = self.required_option.price_dollar * self.price_dollar
+                return to_fixed(price, 2)
+        return to_fixed(self.price_dollar, 2)
 
     class Meta:
         verbose_name = 'Обязательная опция(дочерняя)'
