@@ -116,7 +116,7 @@ function checkInput(input) {
 }
 
 function checkEmail(email) {
-    let regexEmail = new RegExp('^[\\w]{1}[\\w-\\.]*@[\\w-]+\\.[a-z]{2,4}$')
+    let regexEmail = new RegExp('^[\\w]{1}[\\w-\\.]*@[\\w-]+\\.[a-z]{2,4}[.a-z]{0,4}$')
     if (regexEmail.test(email.value)) {
         return true
     }

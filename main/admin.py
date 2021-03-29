@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django import forms
 from ckeditor.widgets import CKEditorWidget
+from django.utils.safestring import mark_safe
+
 from .utils.email import Email
 from . import models
 import re
@@ -64,15 +66,29 @@ class CartOptionsAdmin(admin.TabularInline):
 
 class OrderAdmin(admin.ModelAdmin):
     inlines = [CartAdmin, CartOptionsAdmin, OrderImagesAdmin]
-    list_display = ('__str__', 'date', 'status', 'total')
+    list_display = ('__str__', 'date', 'get_status_html', 'total')
     list_display_links = ('__str__', 'date', 'total')
     readonly_fields = (
         'user', 'character_server', 'battle_tag', 'faction', 'connection', 'email', 'comment', 'price', 'coupon',
         'total', 'date')
     list_filter = ('status',)
 
-    def get_status_html(self):
-        pass
+    def get_status_html(self, obj):
+        if obj.status == '1':
+            return mark_safe(
+                f'<div style="background-color: #e2e3e5; text-align: center; border-radius: 10px; padding: 3px 0;">{obj.get_status_display()}</div>')
+        if obj.status == '2':
+            return mark_safe(
+                f'<div style="background-color: #fff3cd; text-align: center; border-radius: 10px; padding: 3px 0;">{obj.get_status_display()}</div>')
+        if obj.status == '3':
+            return mark_safe(
+                f'<div style="background-color: #f8d7da; text-align: center; border-radius: 10px; padding: 3px 0;">{obj.get_status_display()}</div>')
+        if obj.status == '4':
+            return mark_safe(
+                f'<div style="background-color: #cfe2ff; text-align: center; border-radius: 10px; padding: 3px 0;">{obj.get_status_display()}</div>')
+        if obj.status == '5':
+            return mark_safe(
+                f'<div style="background-color: #badbcc; text-align: center; border-radius: 10px; padding: 3px 0;">{obj.get_status_display()}</div>')
 
     def save_model(self, request, obj, form, change):
         order = models.Order.objects.get(pk=obj.pk)
@@ -81,6 +97,8 @@ class OrderAdmin(admin.ModelAdmin):
         if obj.status == '5' and order != '5':
             Email().send_order(order, 'email/completed.html')
         super().save_model(request, obj, form, change)
+
+    get_status_html.short_description = 'Статус заказа'
 
 
 class CouponAdmin(admin.ModelAdmin):
