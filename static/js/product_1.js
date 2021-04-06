@@ -245,6 +245,17 @@ function addToCart() {
     }, 2500)
 }
 
+const service_info = document.querySelectorAll('.service_item')
+
+service_info.forEach(item => {
+    item.addEventListener('mouseover', function () {
+        this.querySelector('.service_info').style.display = 'block'
+    })
+    item.addEventListener('mouseleave', function () {
+        this.querySelector('.service_info').style.display = 'none'
+    })
+})
+
 const questions = document.querySelectorAll('.hint_img')
 let intervalID
 

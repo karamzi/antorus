@@ -209,6 +209,41 @@
     border-bottom: 1px solid rgb(47, 47, 47);
 }
 
+.service {
+    display: flex;
+    margin-top: 20px;
+}
+
+.service_item {
+    position: relative;
+    display: flex;
+    padding: 6px;
+    border-radius: 5px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    line-height: 20px;
+    color: white;
+}
+
+.service img {
+    max-width: 20px;
+    max-height: 20px;
+    margin-right: 6px;
+}
+
+.service span {
+    display: none;
+    position: absolute;
+    text-align: justify;
+    width: 250px;
+    border-radius: 5px;
+    background-color: rgba(0,0,0,0.9);
+    padding: 12px;
+    font-size: 14px;
+    bottom: 125%;
+    left: -50%;
+}
+
 .product_right h3 {
     color: rgb(40, 168, 5);
     font-size: 18px;

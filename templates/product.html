@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block style %}
-    <link rel="stylesheet" href="{% static 'css/product.css' %}">
+    <link rel="stylesheet" href="{% static 'css/product_1.css' %}">
     <link rel="stylesheet" href="{% static 'css/checkbox.css' %}">
 {% endblock %}
 
@@ -224,6 +224,33 @@
 
                 <div class="product_right">
                     <div class="product_name">{{ product.name }}</div>
+                    <div class="service">
+                        <div style="background: #00ad4e;" class="service_item">
+                            <img src="{% static 'img/safeboost.png' %}" alt="">
+                            <p>Safe Service</p>
+                            <span class="service_info">While working on accounts, we comply with all security measures. We do not use bots and scripts. We do not use in-game chat.Also, we do not allow the intersection of IP and MAC addresses.</span>
+                        </div>
+                        <div style="background: #84ccdf;" class="service_item">
+                            <img src="{% static 'img/support_(1).png' %}" alt="">
+                            <p>24/7 Support</p>
+                            <span class="service_info">Our team works 24 hours per day.</span>
+                        </div>
+                        <div style="background: #6c47c6;" class="service_item">
+                            <img src="{% static 'img/ssl.png' %}" alt="">
+                            <p>SSL Secure</p>
+                            <span class="service_info">The site uses SSL protocol, it fully protects input data and information. We also use the HTTPS protocol to encrypt data.</span>
+                        </div>
+                        <div style="background: #006fff;" class="service_item">
+                            <img src="{% static 'img/vpn.png' %}" alt="">
+                            <p>VPN</p>
+                            <span class="service_info">We use the VPN of your country to disguise our actions on the account. This greatly increases the security of the account.</span>
+                        </div>
+                        <div style="background: #ff9100;" class="service_item">
+                            <img src="{% static 'img/money-refund.png' %}" alt="">
+                            <p>Money refunds</p>
+                            <span class="service_info">We provide a full or partial refund if you change your mind or if there is an accident. You can learn more about this from the operator.</span>
+                        </div>
+                    </div>
                     <h3>DESCRIPTION</h3>
                     <div class="length">⏱️ Length: <span>{{ product.length }}</span></div>
                     <div class="requirements">⚠️ Character Requirements: <span>{{ product.char_req }}</span></div>
@@ -275,7 +302,7 @@
         {% endif %}
         const url = '{{ product.get_absolute_url }}'
     </script>
-    <script src="{% static 'js/product.js' %}"></script>
+    <script src="{% static 'js/product_1.js' %}"></script>
     <script>const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true}</script>
     <script src="https://wow.zamimg.com/widgets/power.js"></script>
 {% endblock %}
