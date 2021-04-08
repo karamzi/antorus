@@ -16,21 +16,7 @@
             <div class="checkout_content">
                 <div class="checkout_left">
                     <h3>BILLING DETAILS</h3>
-                    <form action="">
-                        <div class="character">
-                            <div class="name">
-                                <label class="required">Character Name and Server Name</label>
-                                <input id="characterServer" type="text" value="">
-                            </div>
-                            <div class="tag">
-                                <label>Battle tag (optional)</label>
-                                <input id="battleTag" type="text">
-                            </div>
-                        </div>
-                        <div class="faction">
-                            <label class="required">Faction</label>
-                            <input id="faction" type="text">
-                        </div>
+                    <form>
                         <div class="connections">
                             <label class="required">Skype or Discord</label>
                             <input id="connection" type="text">
@@ -46,15 +32,6 @@
                                 <input id="email" type="email" required>
                             </div>
                         {% endif %}
-{#                        <div class="account">#}
-{#                            <label class="account_label">Create an account?</label>#}
-{#                            <div class="checkbox">#}
-{#                                <input class="addition" type="checkbox" id="cd1">#}
-{#                                <label class="custom" for="cd1">#}
-{#                                    <div class="tick"></div>#}
-{#                                </label>#}
-{#                            </div>#}
-{#                        </div>#}
                         <div class="comment">
                             <label>Comment to the order (optional)</label>
                             <textarea id="comment" name="comment" id="" cols="30" rows="10"></textarea>
@@ -107,5 +84,5 @@
 
 
 {% block scripts %}
-    <script src="{% static 'js/checkout_3.js' %}"></script>
+    <script src="{% static 'js/checkout_4.js' %}"></script>
 {% endblock %}

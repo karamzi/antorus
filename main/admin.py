@@ -69,7 +69,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'date', 'get_status_html', 'total')
     list_display_links = ('__str__', 'date', 'total')
     readonly_fields = (
-        'user', 'character_server', 'battle_tag', 'faction', 'connection', 'email', 'comment', 'price', 'coupon',
+        'user', 'connection', 'email', 'comment', 'price', 'coupon',
         'total', 'date')
     list_filter = ('status',)
 

@@ -278,9 +278,6 @@ def create_order(request):
         sing = '€' if request.POST['currency'] == 'eu' else '$'
         order = Order()
         order.user_id = request.user.pk if request.user.is_authenticated else None
-        order.character_server = request.POST['characterServer']
-        order.battle_tag = request.POST['battleTag']
-        order.faction = request.POST['faction']
         order.connection = request.POST['connection']
         order.email = request.POST['email']
         order.comment = request.POST['comment']

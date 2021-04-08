@@ -30,12 +30,8 @@ function renderCart() {
 }
 
 function createOrder() {
-    const characterServer = document.getElementById('characterServer')
-    const battleTag = document.getElementById('battleTag').value
-    const faction = document.getElementById('faction')
     const connection = document.getElementById('connection')
     const email = document.getElementById('email')
-    //const account = document.getElementById('cd1').checked
     const comment = document.getElementById('comment').value
     let cart
     let total
@@ -45,7 +41,7 @@ function createOrder() {
     } else {
         cart = getCookie('cartEu')
     }
-    if (!checkForm(characterServer, faction, connection, email) || cart.length === 0) {
+    if (!checkForm(connection, email) || cart.length === 0) {
         return
     }
     total = cart.reduce((sum, item) => sum + +item.total, 0)
@@ -62,12 +58,8 @@ function createOrder() {
     data.append('cart', cart)
     data.append('total', total)
     data.append('currency', currency)
-    data.append('characterServer', characterServer.value)
-    data.append('battleTag', battleTag)
-    data.append('faction', faction.value)
     data.append('connection', connection.value)
     data.append('email', email.value)
-    //data.append('account', account)
     data.append('comment', comment)
     instance.post('createOrder/', data, {
         headers: {
@@ -88,13 +80,9 @@ function createOrder() {
     })
 }
 
-function checkForm(characterServer, faction, connection, email) {
-    characterServer.classList.remove('input_error')
-    faction.classList.remove('input_error')
+function checkForm(connection, email) {
     connection.classList.remove('input_error')
     email.classList.remove('input_error')
-    if (checkInput(characterServer)) return false
-    if (checkInput(faction)) return false
     if (checkInput(connection)) return false
     if (checkInput(email)) return false
     const agreeInput = document.getElementById('cd2')
