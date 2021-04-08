@@ -337,9 +337,9 @@ class Order(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Пользователь', null=True,
                              related_name='user_order')
-    character_server = models.CharField(max_length=255, verbose_name='Персонаж и Сервер')
-    battle_tag = models.CharField(max_length=50, verbose_name='Battle tag', blank=True)
-    faction = models.CharField(max_length=50, verbose_name='Фракция')
+    # character_server = models.CharField(max_length=255, verbose_name='Персонаж и Сервер')
+    # battle_tag = models.CharField(max_length=50, verbose_name='Battle tag', blank=True)
+    # faction = models.CharField(max_length=50, verbose_name='Фракция')
     connection = models.CharField(max_length=255, verbose_name='Skype или Discord')
     email = models.EmailField(verbose_name='Почта')
     comment = models.TextField(verbose_name='Комментарий', blank=True)

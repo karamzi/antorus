@@ -97,7 +97,6 @@ function checkForm(characterServer, faction, connection, email) {
     if (checkInput(faction)) return false
     if (checkInput(connection)) return false
     if (checkInput(email)) return false
-    if (!checkEmail(email)) return false
     const agreeInput = document.getElementById('cd2')
     const label = document.getElementById('cd2_label')
     label.style.color = 'rgb(136, 136, 136)'
@@ -113,15 +112,6 @@ function checkInput(input) {
         input.classList.add('input_error')
         return false
     }
-}
-
-function checkEmail(email) {
-    let regexEmail = new RegExp('^[\\w]{1}[\\w-\\.]*@[\\w-]+\\.[a-z]{2,4}[.a-z]{0,4}$')
-    if (regexEmail.test(email.value)) {
-        return true
-    }
-    email.classList.add('input_error')
-    return false
 }
 
 renderCart()

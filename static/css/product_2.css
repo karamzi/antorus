@@ -210,6 +210,12 @@
     border-bottom: 1px solid rgb(47, 47, 47);
 }
 
+.service {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
 .service_item {
     position: relative;
     display: flex;
@@ -225,6 +231,10 @@
     max-width: 20px;
     max-height: 20px;
     margin-right: 6px;
+}
+
+.service p {
+    white-space: nowrap;
 }
 
 .service span {
@@ -330,6 +340,18 @@
 
     .product_right {
         width: 100%;
+    }
+
+    .service {
+        position: relative;
+    }
+
+    .service_item {
+        position: unset;
+    }
+
+    .service span {
+        left: 0;
     }
 }
 
