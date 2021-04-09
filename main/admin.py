@@ -72,6 +72,17 @@ class OrderAdmin(admin.ModelAdmin):
         'user', 'connection', 'email', 'comment', 'price', 'coupon',
         'total', 'date')
     list_filter = ('status',)
+    search_fields = ('pk',)
+
+    def get_search_results(self, request, queryset, search_term):
+        queryset, use_distinct = super().get_search_results(request, queryset, search_term)
+        try:
+            search_term = int(search_term)
+            search_term = search_term - 1000
+        except ValueError:
+            return queryset, use_distinct
+        queryset = models.Order.objects.filter(pk=search_term)
+        return queryset, use_distinct
 
     def get_status_html(self, obj):
         if obj.status == '1':
