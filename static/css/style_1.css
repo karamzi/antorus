@@ -167,14 +167,16 @@ form input {
     left: 0;
     right: 0;
     background-color: #1e222a;
-    height: 100px;
+    min-height: 100px;
+    z-index: 1000000000;
 }
 
 .section_cookie > .container {
     display: flex;
     align-items: center;
     color: white;
-    height: 100%;
+    min-height: 100px;
+    line-height: 25px;
 }
 
 .cookie_info a {
@@ -191,4 +193,29 @@ form input {
     margin-left: 30px;
     background: linear-gradient(90deg, #00ad4e 0%, #666a6b9e 99.98%);
     cursor: pointer;
+    white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+    .section_cookie > .container {
+        flex-direction: column;
+        padding: 20px 5px 0;
+    }
+
+    .cookie_info {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .cookie_accept {
+        margin-bottom: 20px;
+        padding: 10px 80px;
+    }
+}
+
+@media (max-width: 350px) {
+    .section_cookie > .container {
+        font-size: 14px;
+        line-height: 22px;
+    }
 }
