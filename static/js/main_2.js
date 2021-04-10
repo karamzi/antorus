@@ -87,7 +87,7 @@ function getCookie(name) {
     if (name === 'csrftoken') {
         return results[2]
     }
-    if (name === 'coupon' && !results) {
+    if ((name === 'coupon' || name === 'cookie_accepted') && !results) {
         return undefined
     }
     if (results)
@@ -186,3 +186,18 @@ document.body.addEventListener('click', function (e) {
         document.body.classList.remove('body_modal')
     }
 })
+
+const cookie = document.getElementById('cookie')
+const isCookieAccepted = getCookie('cookie_accepted')
+const acceptCookie = document.getElementById('accept_cookie')
+
+acceptCookie.addEventListener('click', function () {
+    setCookie('true', 'cookie_accepted')
+    cookie.style.display = 'none'
+})
+
+if (isCookieAccepted) {
+    cookie.style.display = 'none'
+} else {
+    cookie.style.display = 'block'
+}

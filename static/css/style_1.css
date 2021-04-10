@@ -160,3 +160,35 @@ form input {
     background-color: rgba(0,0,0, 0.3);
     z-index: 1;
 }
+
+.section_cookie {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #1e222a;
+    height: 100px;
+}
+
+.section_cookie > .container {
+    display: flex;
+    align-items: center;
+    color: white;
+    height: 100%;
+}
+
+.cookie_info a {
+    color: rgb(46, 157, 16);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 5px;
+}
+
+.cookie_accept {
+    display: block;
+    padding: 10px 60px;
+    margin-left: 30px;
+    background: linear-gradient(90deg, #00ad4e 0%, #666a6b9e 99.98%);
+    cursor: pointer;
+}

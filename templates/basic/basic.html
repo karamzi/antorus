@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_1.css' %}">
     <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     {% block style %}
@@ -132,12 +132,21 @@
         </div>
     </div>
 </div>
+<section id="cookie" class="section_cookie">
+    <div class="container">
+        <div class="cookie_info">
+            <p>We use cookies to improve your experience on our site. To learn more about cookies and data we collect,
+                check out our <a href="{% url 'privacyPolicy' %}">Privacy Policy</a></p>
+        </div>
+        <p id="accept_cookie" class="cookie_accept">I ACCEPT</p>
+    </div>
+</section>
 <script>
     const currency = '{{ currency }}'
 </script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="//code.tidio.co/qtfccqsgrgx4usthk3x1dxkxtllrlcx1.js" async></script>
-<script src="{% static 'js/main1.js' %}"></script>
+<script src="{% static 'js/main_2.js' %}"></script>
 {% block scripts %}
 {% endblock %}
 </body>
