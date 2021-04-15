@@ -9,7 +9,7 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
-    <section class="product_section">
+    <section class="product_section" data-name="{{ product.name }}">
         <div class="container">
             <div class="product_content">
                 <div class="product_left">
@@ -303,7 +303,7 @@
         const quantityRequiredOptions = '{{ product.get_quantity_required_options }}'
         const quantityRequiredChildOptions = '{{ product.get_quantity_required_child_options }}'
         const quantityAdditionOptions = '{{ product.get_quantity_addition_options }}'
-        const name = '{{ product.name }}'
+        const name = document.querySelector('.product_section').getAttribute('data-name')
         const childIsRequired = '{{ product.child_required }}'
         const imgURL = '{{ product.thumb.url }}'
         const productId = '{{ product.pk }}'
