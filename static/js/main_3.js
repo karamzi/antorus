@@ -90,9 +90,9 @@ function getCookie(name) {
     if ((name === 'coupon' || name === 'cookie_accepted') && !results) {
         return undefined
     }
-    if (results)
-        return JSON.parse(unescape(results[2]))
-    else
+    if (results) {
+        return JSON.parse(results[2])
+    } else
         return []
 }
 

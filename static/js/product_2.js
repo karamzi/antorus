@@ -218,8 +218,6 @@ function addToCart() {
     }
     let productUs = generateProductObject(priceUs, 'us')
     let productEu = generateProductObject(priceEu, 'eu')
-    productUs['currency'] = '$'
-    productEu['currency'] = '€'
     let cartUs = getCookie('cartUs')
     let cartEu = getCookie('cartEu')
     cartUs.forEach((item, index, array) => {
@@ -236,6 +234,7 @@ function addToCart() {
     cartEu.push(productEu)
     cartUs = JSON.stringify(cartUs)
     cartEu = JSON.stringify(cartEu)
+    console.log(cartEu)
     setCookie(cartUs, 'cartUs')
     setCookie(cartEu, 'cartEu')
     product_quantity()
