@@ -161,7 +161,7 @@ class Products(models.Model):
 
     def get_price_eu(self):
         if self.price_euro:
-            return '€ ' + str(to_fixed(self.price_dollar, 2))
+            return '€ ' + str(to_fixed(self.price_euro, 2))
         else:
             req_options = self.product_required_option.all()
             min_price = 100000
