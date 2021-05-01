@@ -8,10 +8,13 @@ inputButton.addEventListener('click', checkCoupon)
 function renderCart() {
     const products = document.querySelector('.products')
     let cart
+    let sing
     if (currency === 'us') {
         cart = getCookie('cartUs')
+        sing = '$'
     } else {
         cart = getCookie('cartEu')
+        sing = '€'
     }
     if (!cart.length) {
         document.querySelector('.cart_content').style.display = 'none'
@@ -20,7 +23,6 @@ function renderCart() {
     }
     let html = ''
     cart.forEach(item => {
-        console.log(item)
         html += '<div class="product" data-id="' + item.id + '">' +
             '<div class="product_description">' +
             '<img src="' + item.image + '" alt="">' +
@@ -33,7 +35,7 @@ function renderCart() {
         })
         html += '<span class="removeFromCart">Remove</span>'+
             '<div class="mobile_cart">'+
-            '<div class="price mobile">' + item.currency + ' ' + item.price + '</div>' +
+            '<div class="price mobile">' + sing + ' ' + item.price + '</div>' +
             '<div class="product_quantity mobile">' +
             '<div class="quantity mobile">' +
             '<div class="minus"></div>' +
@@ -41,12 +43,12 @@ function renderCart() {
             '<div class="plus">+</div>' +
             '</div>' +
             '</div>' +
-            '<div class="total mobile">' + item.currency + ' ' + item.total + '</div>'+
+            '<div class="total mobile">' + sing + ' ' + item.total + '</div>'+
             '</div>'
         html += '</div>' +
             '</div>' +
             '</div>' +
-            '<div class="price">' + item.currency + ' ' + item.price + '</div>' +
+            '<div class="price">' + sing + ' ' + item.price + '</div>' +
             '<div class="product_quantity">' +
             '<div class="quantity">' +
             '<div class="minus"></div>' +
@@ -54,7 +56,7 @@ function renderCart() {
             '<div class="plus">+</div>' +
             '</div>' +
             '</div>' +
-            '<div class="total">' + item.currency + ' ' + item.total + '</div>' +
+            '<div class="total">' + sing + ' ' + item.total + '</div>' +
             '</div>'
     })
     products.innerHTML = html

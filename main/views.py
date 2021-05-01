@@ -300,14 +300,14 @@ def create_order(request):
             product = Cart()
             product.product = item['name']
             product.quantity = item['quantity']
-            product.price = item['currency'] + ' ' + item['price']
-            product.total = item['currency'] + ' ' + item['total']
+            product.price = sing + ' ' + item['price']
+            product.total = sing + ' ' + item['total']
             product.order = order
             product.save()
             for item_option in item['options']:
                 option = CartOptions()
                 option.name = item_option['name']
-                option.price = item['currency'] + ' ' + item_option['price']
+                option.price = sing + ' ' + item_option['price']
                 option.order = order
                 option.product = product
                 option.save()

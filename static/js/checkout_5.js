@@ -4,17 +4,20 @@ button.addEventListener('click', createOrder)
 function renderCart() {
     const products = document.querySelector('.products')
     let cart
+    let sing
     if (currency === 'us') {
         cart = getCookie('cartUs')
+        sing = '$'
     } else {
         cart = getCookie('cartEu')
+        sing = '€'
     }
     let html = ''
     cart.forEach(item => {
         html += '<div class="product">' +
             '<div class="product_head">' +
             '<div class="product_name">' + item.name + ' x ' + item.quantity + '</div>' +
-            '<div class="product_price">' + item.currency + ' ' + item.total + '</div>' +
+            '<div class="product_price">' + sing + ' ' + item.total + '</div>' +
             '</div>' +
             '<div class="product_options">'
 
