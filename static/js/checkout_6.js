@@ -70,9 +70,6 @@ function createOrder() {
             'X-CSRFToken': getCookie('csrftoken')
         }
     }).then(response => {
-        eraseCookie('cartEu')
-        eraseCookie('cartUs')
-        eraseCookie('coupon')
         data = response.data
         document.getElementById('amount').value = data['amount']
         document.getElementById('currency').value = data['currency']

@@ -114,6 +114,11 @@ def faq(request):
 
 
 def checkout(request):
+    cart_us = request.COOKIES.get('cartUs', '[]')
+    cart_eu = request.COOKIES.get('cartUs', '[]')
+    currency = request.COOKIES.get('currency', 'us')
+    if cart_us == '[]' and currency == 'us' or cart_eu == '[]' and currency == 'eu':
+        return redirect(reverse('cart'))
     return render(request, 'checkout.html')
 
 
@@ -379,7 +384,11 @@ def success_order(request):
             context = {
                 'order': order,
             }
-            return render(request, 'success_order.html', context)
+            response = render(request, 'success_order.html', context)
+            response.delete_cookie('cartUs')
+            response.delete_cookie('cartEu')
+            response.delete_cookie('coupon')
+            return response
         except ObjectDoesNotExist:
             return redirect(reverse('404'))
     return redirect(reverse('index'))
