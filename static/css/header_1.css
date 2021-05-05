@@ -442,7 +442,7 @@ ______________________________________________ */
         justify-content: center;
     }
 
-    .discord, .skype, .email_modal {
+    .discord, .skype, .email_modal, .telegram_modal {
         width: 50%;
         padding: 0 7px 10px;
     }

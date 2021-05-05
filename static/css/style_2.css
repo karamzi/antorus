@@ -112,9 +112,9 @@ form input {
     display: flex;
 }
 
-.discord, .skype, .email_modal {
-    width: 33%;
-    padding: 0 20px;
+.discord, .skype, .email_modal, .telegram_modal {
+    width: 25%;
+    padding: 0 5px;
 }
 
 .modal_link_container {
@@ -130,19 +130,23 @@ form input {
     margin-top: 10px;
 }
 
-.discord img, .skype img, .email_modal img {
+.discord img, .skype img, .email_modal img, .telegram_modal img {
     width: 50px;
 }
 
 .discord > div {
-    background-color: #465bb4;
+    background-color: #383c3e;
 }
 
 .skype > div {
-    background-color: #1683ce;
+    background-color: #383c3e;
 }
 
 .email_modal > div {
+    background-color: #383c3e;
+}
+
+.telegram_modal > div {
     background-color: #383c3e;
 }
 
