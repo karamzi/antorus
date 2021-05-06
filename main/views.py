@@ -279,6 +279,9 @@ def send_new_password(request):
 
 
 def create_order(request):
+    print(request)
+    print(request.POST)
+    print(request.GET)
     if request.method == 'POST':
         sing = '€' if request.POST['currency'] == 'eu' else '$'
         order = Order()
