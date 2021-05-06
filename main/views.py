@@ -329,6 +329,9 @@ def create_order(request):
             'order_id': order_id,
             'signature': generate_signature(str(int(amount)), currency, order_desc, order_id),
         })
+    print(request)
+    print(request.POST)
+    print(request.GET)
     return redirect(reverse('index'))
 
 
