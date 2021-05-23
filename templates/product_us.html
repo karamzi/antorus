@@ -15,9 +15,9 @@
                 <a href="/">HOME</a>
                 <div class="arrow arrow-top"></div>
                 <a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a>
-                <div class="arrow arrow-top"></div>
                 {% if product.subcategory %}
-                <a href="{{ product.subcategory.get_absolute_url }}">{{ product.subcategory.name }}</a>
+                    <div class="arrow arrow-top"></div>
+                    <a href="{{ product.subcategory.get_absolute_url }}">{{ product.subcategory.name }}</a>
                 {% endif %}
             </div>
             <div class="product_content">
