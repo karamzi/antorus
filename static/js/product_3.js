@@ -129,22 +129,38 @@ function hideChildOptions(option) {
 
 function setPrice() {
     const priceHtml = document.getElementById('price')
-    priceUs = 0
-    priceEu = 0
-    priceUs += +productPriceUs.replace(',', '.')
-    priceEu += +productPriceEu.replace(',', '.')
-    requiredChecked.forEach(item => {
-        priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
-        priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
-    })
-    requiredChildChecked.forEach(item => {
-        priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
-        priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
-    })
-    additionChecked.forEach(item => {
-        priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
-        priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
-    })
+    if (currency === 'us') {
+        priceUs = 0
+        priceUs += +productPriceUs.replace(',', '.')
+        requiredChecked.forEach(item => {
+            priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
+        })
+        requiredChecked.forEach(item => {
+            priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
+        })
+        requiredChildChecked.forEach(item => {
+            priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
+        })
+        additionChecked.forEach(item => {
+            priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
+        })
+    }
+
+    if (currency === 'eu') {
+        priceEu = 0
+        priceEu += +productPriceEu.replace(',', '.')
+        requiredChecked.forEach(item => {
+            priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
+        })
+        requiredChildChecked.forEach(item => {
+            priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
+        })
+        additionChecked.forEach(item => {
+            priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
+        })
+    }
+
+
     if (this === plus) {
         count.innerText = +count.innerHTML + 1
     }
@@ -152,16 +168,22 @@ function setPrice() {
         count.innerText = +count.innerHTML - 1
     }
     let quantity = +count.innerText
-    priceUs = priceUs * quantity
-    priceEu = priceEu * quantity
-    if (currency === 'us' && priceUs > 0) {
-        priceHtml.innerText = '$ ' + ' ' + priceUs.toFixed(2)
-    } else if (currency === 'us' && priceUs === 0) {
-        priceHtml.innerHTML = '<p>Choose options to continue</p>'
-    } else if (currency === 'eu' && priceEu > 0) {
-        priceHtml.innerText = '€ ' + ' ' + priceEu.toFixed(2)
-    } else if (currency === 'eu' && priceEu === 0) {
-        priceHtml.innerHTML = '<p>Choose options to continue</p>'
+
+    if (currency === 'us') {
+        priceUs = priceUs * quantity
+        if (priceUs > 0) {
+            priceHtml.innerText = '$ ' + ' ' + priceUs.toFixed(2)
+        } else if (priceUs === 0) {
+            priceHtml.innerHTML = '<p>Choose options to continue</p>'
+        }
+    }
+    if (currency === 'eu') {
+        priceEu = priceEu * quantity
+        if (priceEu > 0) {
+            priceHtml.innerText = '€ ' + ' ' + priceEu.toFixed(2)
+        } else if ( priceEu === 0) {
+            priceHtml.innerHTML = '<p>Choose options to continue</p>'
+        }
     }
 }
 
@@ -216,27 +238,35 @@ function addToCart() {
         }, 2500)
         return
     }
-    let productUs = generateProductObject(priceUs, 'us')
-    let productEu = generateProductObject(priceEu, 'eu')
-    let cartUs = getCookie('cartUs')
-    let cartEu = getCookie('cartEu')
-    cartUs.forEach((item, index, array) => {
-        if (item.id === productUs.id) {
-            array.splice(index, 1)
-        }
-    })
-    cartEu.forEach((item, index, array) => {
-        if (item.id === productEu.id) {
-            array.splice(index, 1)
-        }
-    })
-    cartUs.push(productUs)
-    cartEu.push(productEu)
-    cartUs = JSON.stringify(cartUs)
-    cartEu = JSON.stringify(cartEu)
-    console.log(cartEu)
-    setCookie(cartUs, 'cartUs')
-    setCookie(cartEu, 'cartEu')
+    if (currency === 'us') {
+        let productUs = generateProductObject(priceUs, 'us')
+        let cartUs = getCookie('cartUs')
+
+        cartUs.forEach((item, index, array) => {
+            if (item.id === productUs.id) {
+                array.splice(index, 1)
+            }
+        })
+        cartUs.push(productUs)
+        cartUs = JSON.stringify(cartUs)
+        setCookie(cartUs, 'cartUs')
+    }
+
+    if (currency === 'eu') {
+        let productEu = generateProductObject(priceEu, 'eu')
+        let cartEu = getCookie('cartEu')
+
+        cartEu.forEach((item, index, array) => {
+            if (item.id === productEu.id) {
+                array.splice(index, 1)
+            }
+        })
+        cartEu.push(productEu)
+        cartEu = JSON.stringify(cartEu)
+        setCookie(cartEu, 'cartEu')
+    }
+
+
     product_quantity()
     notificationSuccess.style.display = 'block'
     setTimeout(function () {

@@ -61,6 +61,7 @@ def search_result(request, search):
 
 
 def product(request, slug):
+    currency = request.COOKIES.get('currency', 'us')
     try:
         product = Products.objects.get(slug=slug)
         if product.draft and not request.user.is_superuser:
@@ -68,7 +69,10 @@ def product(request, slug):
         context = {
             'product': product
         }
-        return render(request, 'product.html', context)
+        if currency == 'us':
+            return render(request, 'product_us.html', context)
+        if currency == 'eu':
+            return render(request, 'product_eu.html', context)
     except ObjectDoesNotExist:
         return redirect(reverse('index'))
 
@@ -115,9 +119,11 @@ def faq(request):
 
 def checkout(request):
     cart_us = request.COOKIES.get('cartUs', '[]')
-    cart_eu = request.COOKIES.get('cartUs', '[]')
+    cart_eu = request.COOKIES.get('cartEu', '[]')
     currency = request.COOKIES.get('currency', 'us')
-    if cart_us == '[]' and currency == 'us' or cart_eu == '[]' and currency == 'eu':
+    if currency == 'us' and cart_us == '[]':
+        return redirect(reverse('cart'))
+    if currency == 'eu' and cart_eu == '[]':
         return redirect(reverse('cart'))
     return render(request, 'checkout.html')
 

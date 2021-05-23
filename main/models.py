@@ -194,6 +194,8 @@ class RequiredOption(models.Model):
                                            blank=True, null=True)
     new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=3, max_digits=8,
                                          blank=True, null=True)
+    us = models.BooleanField(verbose_name='us', default=True)
+    eu = models.BooleanField(verbose_name='eu', default=True)
 
     def __str__(self):
         return self.name
@@ -228,6 +230,8 @@ class RequiredOptionChild(models.Model):
                                            blank=True, null=True)
     new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=3, max_digits=8,
                                          blank=True, null=True)
+    us = models.BooleanField(verbose_name='us', default=True)
+    eu = models.BooleanField(verbose_name='eu', default=True)
 
     def __str__(self):
         return self.name
@@ -276,6 +280,8 @@ class AdditionOptions(models.Model):
                                            blank=True, null=True)
     new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=3, max_digits=8,
                                          blank=True, null=True)
+    us = models.BooleanField(verbose_name='us', default=True)
+    eu = models.BooleanField(verbose_name='eu', default=True)
 
     def __str__(self):
         return self.name

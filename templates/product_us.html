@@ -1,0 +1,264 @@
+{% extends 'basic/basic.html' %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/product_2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/checkbox.css' %}">
+{% endblock %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+    <section class="product_section" data-name="{{ product.name }}">
+        <div class="container">
+            <div class="product_content">
+                <div class="product_left">
+                    <div class="product_img">
+                        <img src="{{ product.image.url }}" alt="">
+                    </div>
+
+                    {% if product.product_required_option.all %}
+                        <div class="required_options">
+                            <p>Select options:</p>
+                            {% for option in product.product_required_option.all %}
+                                {% if option.us %}
+                                    <div class="option"
+                                            {% if option.new_price_dollar %}
+                                         data-price-us="{{ option.get_option_new_price_dollar }}"
+                                            {% else %}
+                                         data-price-us="{{ option.get_option_price_dollar }}"
+                                            {% endif %}
+                                         data-name="{{ option.name }}"
+                                         data-id="{{ option.pk }}">
+                                        <div class="checkbox">
+                                            <input class="required parent" type="checkbox"
+                                                   id="cd{{ option.name }}{{ option.pk }}">
+                                            <label class="custom" for="cd{{ option.name }}{{ option.pk }}">
+                                                <div class="tick"></div>
+                                            </label>
+                                        </div>
+                                        <div class="option_name">{{ option.name }}</div>
+
+                                        {% if option.price_dollar != 0 %}
+                                            <div class="option_price {% if option.new_price_dollar %}old{% endif %}">
+                                                $ {{ option.get_option_price_dollar }}</div>
+                                        {% endif %}
+                                        {% if option.new_price_dollar %}
+                                            <div class="option_new_price">
+                                                $ {{ option.get_option_new_price_dollar }}</div>
+                                        {% endif %}
+
+                                        {% if option.description %}
+                                            <div class="hint_img">
+                                                <img class="question" width="15"
+                                                     src="{% static 'img/question.png' %}" alt="">
+                                            </div>
+                                            <div class="option_hint">
+                                                <div class="hint_text">{{ option.description }}</div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% if product.product_required_option.all %}
+                        {% for option in product.product_required_option.all %}
+                            {% if option.required_option_child.all %}
+                                <div style="display: none"
+                                     class="{% if product.child_required %}required_options{% else %}addition_options{% endif %} child_option">
+                                    <p>Select options for {{ option.name }}</p>
+                                    {% for child_option in option.required_option_child.all %}
+                                        {% if child_option.us %}
+                                            <div class="option"
+                                                    {% if child_option.new_price_dollar %}
+                                                 data-price-us="{{ child_option.get_option_new_price_dollar }}"
+                                                    {% else %}
+                                                 data-price-us="{{ child_option.get_option_price_dollar }}"
+                                                    {% endif %}
+                                                 data-name="{{ child_option.name }}"
+                                                 data-parent-id="{{ option.pk }}">
+                                                <div class="checkbox">
+                                                    <input class="required child" type="checkbox"
+                                                           id="cd{{ child_option.name }}{{ child_option.pk }}">
+                                                    <label class="custom"
+                                                           for="cd{{ child_option.name }}{{ child_option.pk }}">
+                                                        <div class="tick"></div>
+                                                    </label>
+                                                </div>
+                                                <div class="option_name">{{ child_option.name }}</div>
+                                                <div class="option_price {% if child_option.new_price_dollar %}old{% endif %}">
+                                                    $ {{ child_option.get_option_price_dollar }}</div>
+                                                {% if child_option.new_price_dollar %}
+                                                    <div class="option_new_price">
+                                                        $ {{ child_option.get_option_new_price_dollar }}</div>
+                                                {% endif %}
+                                                {% if child_option.description %}
+                                                    <div class="hint_img">
+                                                        <img class="question" width="15"
+                                                             src="{% static 'img/question.png' %}" alt="">
+                                                    </div>
+                                                    <div class="option_hint">
+                                                        <div class="hint_text">{{ child_option.description }}</div>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+
+                    {% if product.product_addition_option.all %}
+                        <div class="addition_options">
+                            <p>Select options:</p>
+                            {% for option in product.product_addition_option.all %}
+                                {% if option.us %}
+                                    <div class="option"
+                                         data-price-us="{{ option.get_option_price_dollar }}"
+                                            {% if option.price_dollar < 1 and option.price_dollar > 0 %}
+                                         data-percent-us="{{ option.price_dollar }}"
+                                            {% endif %}
+                                         data-name="{{ option.name }}">
+                                        <div class="checkbox">
+                                            <input {% if option.default %}checked="checked"{% endif %} class="addition"
+                                                   type="checkbox" id="cd{{ option.name }}{{ option.pk }}">
+                                            <label class="custom" for="cd{{ option.name }}{{ option.pk }}">
+                                                <div class="tick"></div>
+                                            </label>
+                                        </div>
+                                        <div class="option_name">{{ option.name }}</div>
+                                        {% if option.price_dollar >= 1 %}
+                                            {% if option.price_dollar != 0 %}
+                                                <div class="option_price {% if option.new_price_dollar %}old{% endif %}">
+                                                    $ {{ option.get_option_price_dollar }}</div>
+                                            {% endif %}
+                                            {% if new_price_dollar %}
+                                                <div class="option_new_price">
+                                                    € {{ option.get_option_price_dollar }}</div>
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="option_price"></div>
+                                        {% endif %}
+                                        {% if option.description %}
+                                            <div class="hint_img">
+                                                <img class="question" width="15"
+                                                     src="{% static 'img/question.png' %}" alt="">
+                                            </div>
+                                            <div class="option_hint">
+                                                <div class="hint_text">{{ option.description }}</div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="price">
+                        {% if product.price_dollar > 0 %}
+                            {% if product.new_price_dollar %}
+                                <p style="text-decoration: line-through;">$ {{ product.get_price_dollar }}</p>
+                                <p id="price" style="color: rgb(40, 168, 5);">$ {{ product.get_price_new_dollar }}</p>
+                            {% else %}
+                                <p id="price">$ {{ product.get_price_dollar }}</p>
+                            {% endif %}
+                        {% elif product.price_dollar == 0 %}
+                            <p id="price">Choose options to continue</p>
+                        {% endif %}
+                    </div>
+                    <div class="product_buttons">
+                        <div class="quantity">
+                            <div class="minus"></div>
+                            <div class="count">1</div>
+                            <div class="plus">+</div>
+                        </div>
+                        <div class="add_to_cart">
+                            <p>add to cart</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="product_right">
+                    <div class="product_name">{{ product.name }}</div>
+                    <div class="service">
+                        <div style="background: #00ad4e;" class="service_item">
+                            <img src="{% static 'img/safeboost.png' %}" alt="">
+                            <p>Safe Service</p>
+                            <span class="service_info">While working on accounts, we comply with all security measures. We do not use bots and scripts. We do not use in-game chat.</span>
+                        </div>
+                        <div style="background: #84ccdf;" class="service_item">
+                            <img src="{% static 'img/support_(1).png' %}" alt="">
+                            <p>24/7 Support</p>
+                            <span class="service_info">Our team works 24 hours per day.</span>
+                        </div>
+                        <div style="background: #6c47c6;" class="service_item">
+                            <img src="{% static 'img/ssl.png' %}" alt="">
+                            <p>SSL Secure</p>
+                            <span class="service_info">The site uses SSL protocol, it fully protects input data and information. We also use the HTTPS protocol to encrypt data.</span>
+                        </div>
+                        <div style="background: #006fff;" class="service_item">
+                            <img src="{% static 'img/vpn.png' %}" alt="">
+                            <p>VPN</p>
+                            <span class="service_info">We can use the VPN of your country.</span>
+                        </div>
+                        <div style="background: #ff9100;" class="service_item">
+                            <img src="{% static 'img/money-refund.png' %}" alt="">
+                            <p>Money refunds</p>
+                            <span class="service_info">We provide a full or partial refund if you change your mind or if there is an accident. You can learn more about this from the operator.</span>
+                        </div>
+                    </div>
+                    <h3>DESCRIPTION</h3>
+                    <div class="length">⏱️ Length: <span>{{ product.length }}</span></div>
+                    <div class="requirements">⚠️ Character Requirements: <span>{{ product.char_req }}</span></div>
+                    <div class="description">{{ product.description|safe }}</div>
+                    <h3>FEEL FREE TO CONTACT OUR OPERATORS ANY TIME FOR ANY FURTHER INFORMATION. WE ARE ALWAYS FOR YOUR
+                        SERVICE!</h3>
+                </div>
+            </div>
+        </div>
+        <div style="display: none" class="success">
+            <p>{{ product.name }} has been added to your cart</p>
+        </div>
+        <div style="display: none" class="error">
+            <p>Please choose requirement option</p>
+        </div>
+    </section>
+    <section class="reviews_section">
+        <div class="container">
+            <!-- TrustBox widget - Carousel -->
+            <div class="trustpilot-widget" data-locale="en-US" data-template-id="53aa8912dec7e10d38f59f36"
+                 data-businessunit-id="5c04f06812c7bf0001af86e0" data-style-height="200px" data-style-width="100%"
+                 data-theme="dark" data-stars="1,2,3,4,5" data-review-languages="en">
+                <a href="https://www.trustpilot.com/review/antorus.com" target="_blank"
+                   rel="noopener">Trustpilot</a>
+            </div>
+            <!-- End TrustBox widget -->
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        const quantityRequiredOptions = '{{ product.get_quantity_required_options }}'
+        const quantityRequiredChildOptions = '{{ product.get_quantity_required_child_options }}'
+        const quantityAdditionOptions = '{{ product.get_quantity_addition_options }}'
+        const name = document.querySelector('.product_section').getAttribute('data-name')
+        const childIsRequired = '{{ product.child_required }}'
+        const imgURL = '{{ product.thumb.url }}'
+        const productId = '{{ product.pk }}'
+        {% if product.new_price_dollar %}
+            const productPriceUs = '{{ product.get_price_new_dollar }}'
+        {% else %}
+            const productPriceUs = '{{ product.get_price_dollar }}'
+        {% endif %}
+        const url = '{{ product.get_absolute_url }}'
+    </script>
+    <script src="{% static 'js/product_3.js' %}"></script>
+    <script>const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true}</script>
+    <script src="https://wow.zamimg.com/widgets/power.js"></script>
+{% endblock %}
