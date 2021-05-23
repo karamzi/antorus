@@ -4,6 +4,35 @@
     margin-bottom: 80px;
 }
 
+.product_nav {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.product_nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+}
+
+.product_nav a:hover {
+    color: #00ad4e;
+    transition: color 0.3s ease;
+}
+
+.arrow {
+    width: 9px;
+    height: 9px;
+    border-top: 2px solid white;
+    border-right: 2px solid white;
+    margin: 0 7px;
+}
+
+.arrow-top {
+    transform: rotate(45deg);
+}
+
 .product_content {
     display: flex;
     justify-content: space-between;
@@ -243,7 +272,7 @@
     text-align: justify;
     width: 250px;
     border-radius: 5px;
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(0, 0, 0, 0.9);
     padding: 12px;
     font-size: 14px;
     bottom: 125%;

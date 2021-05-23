@@ -103,6 +103,12 @@ class Products(models.Model):
     def __str__(self):
         return self.name
 
+    def count_us(self):
+        return self.product_required_option.filter(us=True).count()
+
+    def count_eu(self):
+        return self.product_required_option.filter(eu=True).count()
+
     def save(self, *args, **kwargs):
         if not self.slug:
             slug = self.name.strip()

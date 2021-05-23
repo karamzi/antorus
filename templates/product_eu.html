@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block style %}
-    <link rel="stylesheet" href="{% static 'css/product_2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/product_3.css' %}">
     <link rel="stylesheet" href="{% static 'css/checkbox.css' %}">
 {% endblock %}
 
@@ -11,13 +11,22 @@
 {% block content %}
     <section class="product_section" data-name="{{ product.name }}">
         <div class="container">
+            <div class="product_nav">
+                <a href="/">HOME</a>
+                <div class="arrow arrow-top"></div>
+                <a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a>
+                <div class="arrow arrow-top"></div>
+                {% if product.subcategory %}
+                <a href="{{ product.subcategory.get_absolute_url }}">{{ product.subcategory.name }}</a>
+                {% endif %}
+            </div>
             <div class="product_content">
                 <div class="product_left">
                     <div class="product_img">
                         <img src="{{ product.image.url }}" alt="">
                     </div>
 
-                    {% if product.product_required_option.all %}
+                    {% if product.count_eu %}
                         <div class="required_options">
                             <p>Select options:</p>
                             {% for option in product.product_required_option.all %}
