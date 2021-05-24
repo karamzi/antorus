@@ -129,12 +129,10 @@ function hideChildOptions(option) {
 
 function setPrice() {
     const priceHtml = document.getElementById('price')
+    priceUs = 0
+    priceEu = 0
     if (currency === 'us') {
-        priceUs = 0
         priceUs += +productPriceUs.replace(',', '.')
-        requiredChecked.forEach(item => {
-            priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
-        })
         requiredChecked.forEach(item => {
             priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
         })
@@ -147,7 +145,6 @@ function setPrice() {
     }
 
     if (currency === 'eu') {
-        priceEu = 0
         priceEu += +productPriceEu.replace(',', '.')
         requiredChecked.forEach(item => {
             priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
