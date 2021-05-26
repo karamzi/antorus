@@ -1,6 +1,9 @@
 {% extends 'basic/basic.html' %}
 {% load static %}
 
+{% block meta %}
+    {{ product.meta|safe }}
+{% endblock %}
 {% block style %}
     <link rel="stylesheet" href="{% static 'css/product_3.css' %}">
     <link rel="stylesheet" href="{% static 'css/checkbox.css' %}">

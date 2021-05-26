@@ -99,6 +99,7 @@ class Products(models.Model):
                                                     null=True)
     child_required = models.BooleanField(verbose_name='Дочернии обязательны', default=False)
     draft = models.BooleanField(default=False, verbose_name='Черновик')
+    meta = models.TextField(verbose_name='мета теги', blank=True, null=True)
 
     def __str__(self):
         return self.name
