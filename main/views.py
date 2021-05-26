@@ -8,7 +8,7 @@ from main.utils.customAuth import CustomAuth
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday, AuthToken, \
-    Transactions
+    Transactions, SEO
 from .forms import RegisterUserForm
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
@@ -28,9 +28,14 @@ def global_var(request):
 def index(request):
     categories = Categories.objects.all()
     products = BestOffersToday.objects.all()
+    try:
+        seo = SEO.objects.get(url='/')
+    except ObjectDoesNotExist:
+        seo = False
     context = {
         'categories': categories,
         'products': products,
+        'seo': seo,
     }
     return render(request, 'index.html', context)
 
@@ -66,8 +71,14 @@ def product(request, slug):
         product = Products.objects.get(slug=slug)
         if product.draft and not request.user.is_superuser:
             return redirect(reverse('index'))
+        url = product.get_absolute_url()
+        try:
+            seo = SEO.objects.get(url=url)
+        except ObjectDoesNotExist:
+            seo = False
         context = {
-            'product': product
+            'product': product,
+            'seo':  seo,
         }
         if currency == 'us':
             return render(request, 'product_us.html', context)

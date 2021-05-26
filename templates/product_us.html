@@ -2,14 +2,18 @@
 {% load static %}
 
 {% block meta %}
-    {{ product.meta|safe }}
+    {{ seo.meta|safe }}
 {% endblock %}
 {% block style %}
     <link rel="stylesheet" href="{% static 'css/product_3.css' %}">
     <link rel="stylesheet" href="{% static 'css/checkbox.css' %}">
 {% endblock %}
 
-{% block title %}{{ product.name }}{% endblock %}
+{% if seo.title %}
+    {% block title %}{{ seo.title }}{% endblock %}
+{% else %}
+    {% block title %}{{ product.name }}{% endblock %}
+{% endif %}
 
 {% block content %}
     <section class="product_section" data-name="{{ product.name }}">

@@ -99,7 +99,6 @@ class Products(models.Model):
                                                     null=True)
     child_required = models.BooleanField(verbose_name='Дочернии обязательны', default=False)
     draft = models.BooleanField(default=False, verbose_name='Черновик')
-    meta = models.TextField(verbose_name='мета теги', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -455,3 +454,9 @@ class Transactions(models.Model):
         verbose_name = 'Транзакция'
         verbose_name_plural = '2. Транзакции'
         ordering = ['-date']
+
+
+class SEO(models.Model):
+    title = models.CharField(max_length=500)
+    meta = models.TextField(blank=True, null=True)
+    url = models.CharField(max_length=250, verbose_name='адрес страницы')
