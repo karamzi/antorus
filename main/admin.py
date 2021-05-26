@@ -123,6 +123,11 @@ class TransactionsAdmin(admin.ModelAdmin):
     list_display_links = ('__str__', 'service', 'status', 'currency', 'amount', 'date')
 
 
+class SEOAdmin(admin.ModelAdmin):
+    list_display = ('title', 'url')
+    list_display_links = ('title', 'url')
+
+
 admin.site.register(models.Products, ProductsAdmin)
 admin.site.register(models.Categories)
 admin.site.register(models.SubCategories)
@@ -130,3 +135,4 @@ admin.site.register(models.Order, OrderAdmin)
 admin.site.register(models.Coupon, CouponAdmin)
 admin.site.register(models.BestOffersToday)
 admin.site.register(models.Transactions, TransactionsAdmin)
+admin.site.register(models.SEO, SEOAdmin)
