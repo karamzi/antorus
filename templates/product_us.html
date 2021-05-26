@@ -9,11 +9,13 @@
     <link rel="stylesheet" href="{% static 'css/checkbox.css' %}">
 {% endblock %}
 
-{% if seo.title %}
-    {% block title %}{{ seo.title }}{% endblock %}
-{% else %}
-    {% block title %}{{ product.name }}{% endblock %}
-{% endif %}
+{% block title %}
+    {% if seo.title %}
+        {{ seo.title }}
+    {% else %}
+        {{ product.name }}
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     <section class="product_section" data-name="{{ product.name }}">
