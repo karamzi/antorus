@@ -119,7 +119,7 @@ class Products(models.Model):
         pattern = r'(<a(.*)</a>)'
         find = re.findall(pattern, description)
         for index in range(len(find)):
-            if 'rel="nofollow' in find[index][0]:
+            if 'rel="nofollow"' in find[index][0]:
                 continue
             description = description.replace(find[index][0], f'<a rel="nofollow"{find[index][1]}</a>')
         self.description = description

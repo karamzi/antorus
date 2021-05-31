@@ -20,22 +20,23 @@ from .utils.email import Email
 
 def global_var(request):
     currency = request.COOKIES.get('currency', 'us')
+    path = request.path
+    try:
+        seo = SEO.objects.get(url=path)
+    except ObjectDoesNotExist:
+        seo = False
     return {
-        'currency': currency
+        'currency': currency,
+        'seo': seo,
     }
 
 
 def index(request):
     categories = Categories.objects.all()
     products = BestOffersToday.objects.all()
-    try:
-        seo = SEO.objects.get(url='/')
-    except ObjectDoesNotExist:
-        seo = False
     context = {
         'categories': categories,
         'products': products,
-        'seo': seo,
     }
     return render(request, 'index.html', context)
 
@@ -71,14 +72,8 @@ def product(request, slug):
         product = Products.objects.get(slug=slug)
         if product.draft and not request.user.is_superuser:
             return redirect(reverse('index'))
-        url = product.get_absolute_url()
-        try:
-            seo = SEO.objects.get(url=url)
-        except ObjectDoesNotExist:
-            seo = False
         context = {
             'product': product,
-            'seo':  seo,
         }
         if currency == 'us':
             return render(request, 'product_us.html', context)
