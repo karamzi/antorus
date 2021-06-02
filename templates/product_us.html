@@ -1,20 +1,9 @@
 {% extends 'basic/basic.html' %}
 {% load static %}
 
-{% block meta %}
-    {{ seo.meta|safe }}
-{% endblock %}
 {% block style %}
     <link rel="stylesheet" href="{% static 'css/product_3.css' %}">
     <link rel="stylesheet" href="{% static 'css/checkbox.css' %}">
-{% endblock %}
-
-{% block title %}
-    {% if seo.title %}
-        {{ seo.title }}
-    {% else %}
-        {{ product.name }}
-    {% endif %}
 {% endblock %}
 
 {% block content %}
