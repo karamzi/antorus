@@ -410,8 +410,3 @@ def success_order(request):
         except ObjectDoesNotExist:
             return redirect(reverse('404'))
     return redirect(reverse('index'))
-
-
-def page_404(request):
-    response = render(request, '404.html')
-    return response

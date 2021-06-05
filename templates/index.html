@@ -53,7 +53,7 @@
                     <div class="products">
                         {% for product in products %}
                             <a class="product" href="{{ product.product.get_absolute_url }}">
-                                <img src="{{ product.product.image.url }}" alt="">
+                                <img src="{{ product.product.image.url }}" alt="{{ product.product.alt }}">
                                 <h4 class="name">{{ product.product.name }}</h4>
                                 {% if currency == 'us' %}
                                     {% if product.product.new_price_dollar %}

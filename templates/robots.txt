@@ -1,0 +1,11 @@
+User-agent: *
+ 
+Disallow: /azarkes/
+Disallow: /orders/
+Disallow: /accountDetails/
+Disallow: /myAccount/
+Disallow: /cart/
+
+ 
+Host: https://antorus.com
+Sitemap: https://antorus.com/sitemap.xml

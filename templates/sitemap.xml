@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+	<loc>https://antorus.com/</loc>
+	<lastmod>2021-06-05T08:56:40+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://antorus.com/resetPassword/</loc>
+	<lastmod>2021-06-05T08:56:42+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://antorus.com/myAccount/</loc>
+	<lastmod>2021-06-05T08:56:45+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://antorus.com/cart/</loc>
+	<lastmod>2021-06-05T08:56:45+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://antorus.com/result/all/</loc>
+	<lastmod>2021-06-05T08:56:46+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/category/raids/</loc>
+	<lastmod>2021-06-05T08:56:46+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/category/raids/castle-nathria/</loc>
+	<lastmod>2021-06-05T08:56:47+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>https://antorus.com/category/dungeons/</loc>
+	<lastmod>2021-06-05T08:56:50+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/category/powerleveling/</loc>
+	<lastmod>2021-06-05T08:56:47+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/category/shadowlands/</loc>
+	<lastmod>2021-06-05T08:56:47+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/category/pvp/</loc>
+	<lastmod>2021-06-05T08:56:48+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/category/pvp/arena/</loc>
+	<lastmod>2021-06-05T08:56:48+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>https://antorus.com/category/pvp/rbg/</loc>
+	<lastmod>2021-06-05T08:56:48+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>https://antorus.com/category/pvp/achievements-and-titles/</loc>
+	<lastmod>2021-06-05T08:56:49+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>https://antorus.com/category/achievements/</loc>
+	<lastmod>2021-06-05T08:56:49+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/category/mounts/</loc>
+	<lastmod>2021-06-05T08:56:49+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/category/reputations/</loc>
+	<lastmod>2021-06-05T08:56:50+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/category/wow-classic/</loc>
+	<lastmod>2021-06-05T08:56:57+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/category/wow-the-burning-crusade/</loc>
+	<lastmod>2021-06-05T08:56:50+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/mythic-boost-run-2-15-keys/</loc>
+	<lastmod>2021-06-05T08:56:50+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/castle-nathria-heroic-run/</loc>
+	<lastmod>2021-06-05T08:56:51+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/power-leveling-50-60/</loc>
+	<lastmod>2021-06-05T08:56:51+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/gear-boost/</loc>
+	<lastmod>2021-06-05T08:56:51+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/world-quests/</loc>
+	<lastmod>2021-06-05T08:56:51+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/torghast-tower-of-the-damned/</loc>
+	<lastmod>2021-06-05T08:56:51+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/arena-3x3-raiting/</loc>
+	<lastmod>2021-06-05T08:56:52+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/season-mount-vicious-saddle-mount/</loc>
+	<lastmod>2021-06-05T08:56:52+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/tbc-character-leveling/</loc>
+	<lastmod>2021-06-05T08:56:52+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/faq/</loc>
+	<lastmod>2021-06-05T08:56:52+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://antorus.com/termsOfService/</loc>
+	<lastmod>2021-06-05T08:56:52+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://antorus.com/privacyPolicy/</loc>
+	<lastmod>2021-06-05T08:56:53+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/castle-nathria-normal-run/</loc>
+	<lastmod>2021-06-05T08:56:53+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/all-old-glory-of-raider/</loc>
+	<lastmod>2021-06-05T08:56:53+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/castle-nathria-mythic-run/</loc>
+	<lastmod>2021-06-05T08:56:53+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/sire-denathrius-kill/</loc>
+	<lastmod>2021-06-05T08:56:54+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/heroic-specific-boss-kill/</loc>
+	<lastmod>2021-06-05T08:56:54+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/mythic-specific-boss-kill/</loc>
+	<lastmod>2021-06-05T08:56:54+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/castle-nathria-full-gear-service/</loc>
+	<lastmod>2021-06-05T08:56:54+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/glory-of-the-nathria-raider/</loc>
+	<lastmod>2021-06-05T08:56:54+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/all-old-glory-of-hero/</loc>
+	<lastmod>2021-06-05T08:56:54+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/8-8-mythic-boost-run/</loc>
+	<lastmod>2021-06-05T08:56:54+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/mythic-10-boost-run/</loc>
+	<lastmod>2021-06-05T08:56:55+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/mythic-15-boost-run/</loc>
+	<lastmod>2021-06-05T08:56:55+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/mythic-boost-run-16-20-keys/</loc>
+	<lastmod>2021-06-05T08:56:55+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/shadowlands-keystone-master-season-one/</loc>
+	<lastmod>2021-06-05T08:56:55+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/rio-score-boost/</loc>
+	<lastmod>2021-06-05T08:56:55+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/glory-of-the-shadowlands-hero/</loc>
+	<lastmod>2021-06-05T08:56:56+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/character-leveling-1-60/</loc>
+	<lastmod>2021-06-05T08:56:56+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/unlocking-allied-race/</loc>
+	<lastmod>2021-06-05T08:56:56+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/profession-leveling/</loc>
+	<lastmod>2021-06-05T08:56:56+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/unlocking-torghast-maw/</loc>
+	<lastmod>2021-06-05T08:56:56+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/shadowlands-diplomat/</loc>
+	<lastmod>2021-06-05T08:56:57+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/stygia-farm/</loc>
+	<lastmod>2021-06-05T08:56:57+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/anima-or-valor-points-farm/</loc>
+	<lastmod>2021-06-05T08:56:57+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/renown-boost/</loc>
+	<lastmod>2021-06-05T08:56:58+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/arena-2x2-raiting/</loc>
+	<lastmod>2021-06-05T08:56:57+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/arena-coaching/</loc>
+	<lastmod>2021-06-05T08:56:58+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/gladiator-title/</loc>
+	<lastmod>2021-06-05T08:56:57+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/rbg-wins/</loc>
+	<lastmod>2021-06-05T08:56:58+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/test-rbg-rating-boost/</loc>
+	<lastmod>2021-06-05T08:56:59+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/draenor-legion-bfa-pathfinder-flying-wow/</loc>
+	<lastmod>2021-06-05T08:56:59+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/the-loremaster/</loc>
+	<lastmod>2021-06-05T08:56:58+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/herald-of-the-titans/</loc>
+	<lastmod>2021-06-05T08:56:59+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/proving-yourself/</loc>
+	<lastmod>2021-06-05T08:56:59+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/timewalking-farm/</loc>
+	<lastmod>2021-06-05T08:56:59+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/classic-reputation-boost-retail-wow/</loc>
+	<lastmod>2021-06-05T08:56:59+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/the-burning-crusade-reputation-boost/</loc>
+	<lastmod>2021-06-05T08:56:59+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/wrath-of-the-lich-king-reputation-boost/</loc>
+	<lastmod>2021-06-05T08:57:00+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/cataclysm-reputation-boost/</loc>
+	<lastmod>2021-06-05T08:57:00+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/mists-of-pandaria-reputation-boost/</loc>
+	<lastmod>2021-06-05T08:57:00+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/warlords-of-draenor-reputation-boost/</loc>
+	<lastmod>2021-06-05T08:57:00+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/legion-reputation-boost/</loc>
+	<lastmod>2021-06-05T08:57:00+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/battle-for-azeroth-reputation-boost/</loc>
+	<lastmod>2021-06-05T08:57:01+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/shadowlands-reputation-boost/</loc>
+	<lastmod>2021-06-05T08:57:01+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/1-60-character-leveling-classic/</loc>
+	<lastmod>2021-06-05T08:57:01+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/attunement-access-key/</loc>
+	<lastmod>2021-06-05T08:57:01+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/professions-learning-1-300/</loc>
+	<lastmod>2021-06-05T08:57:01+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/pvp-ranks/</loc>
+	<lastmod>2021-06-05T08:57:01+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/vanilla-full-gear/</loc>
+	<lastmod>2021-06-05T08:57:02+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/honor-marks-farm/</loc>
+	<lastmod>2021-06-05T08:57:02+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/tbc-attunement-access-key/</loc>
+	<lastmod>2021-06-05T08:57:03+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/tbc-professions-learning-1-375/</loc>
+	<lastmod>2021-06-05T08:57:02+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/tbc-full-gear/</loc>
+	<lastmod>2021-06-05T08:57:02+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/tbc-dungeons/</loc>
+	<lastmod>2021-06-05T08:57:02+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/tbc-mount-boost/</loc>
+	<lastmod>2021-06-05T08:57:03+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/tbc-reputation-boost/</loc>
+	<lastmod>2021-06-05T08:57:03+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://antorus.com/product/custom-order/</loc>
+	<lastmod>2021-06-05T08:57:03+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+</urlset>

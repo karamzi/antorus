@@ -99,6 +99,7 @@ class Products(models.Model):
                                                     null=True)
     child_required = models.BooleanField(verbose_name='Дочернии обязательны', default=False)
     draft = models.BooleanField(default=False, verbose_name='Черновик')
+    alt = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -116,7 +117,7 @@ class Products(models.Model):
             slug = slug.replace(' ', '-')
             self.slug = slug
         description = self.description
-        pattern = r'(<a(.*)</a>)'
+        pattern = r'(<a([^<]*)</a>)'
         find = re.findall(pattern, description)
         for index in range(len(find)):
             if 'rel="nofollow"' in find[index][0]:

@@ -1,6 +1,7 @@
 from django.urls import path
 from django.conf.urls import url
 from . import views
+from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -29,5 +30,6 @@ urlpatterns = [
     path('result/<str:search>/', views.search_result, name='result'),
     path('fondyCallback/', views.fondy_callback, name='fondy'),
     path('successOrder/', views.success_order, name='success_order'),
-    url(r'^', views.page_404, name='404'),
+    path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
+    path("sitemap.xml", TemplateView.as_view(template_name="sitemap.xml", content_type="text/plain")),
 ]
