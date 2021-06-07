@@ -15,7 +15,7 @@
     width: 23%;
 }
 
-.nav_bar h3 {
+.nav_bar p {
     color: white;
     font-size: 14px;
     border-bottom: 1px solid rgb(47, 47, 47);
@@ -115,7 +115,7 @@
     width: 75%;
 }
 
-.products_block h2 {
+.products_block h1 {
     font-size: 24px;
     width: 100%;
     font-weight: 400;

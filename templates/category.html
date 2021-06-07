@@ -3,7 +3,7 @@
 
 
 {% block style %}
-    <link rel="stylesheet" href="{% static 'css/category.css' %}">
+    <link rel="stylesheet" href="{% static 'css/category_1.css' %}">
 {% endblock %}
 
 {% block title %}{% if sub_category %}{{ sub_category.name }}{% else %}{{ category }}{% endif %}{% endblock %}
@@ -13,7 +13,7 @@
         <div class="container">
             <div class="products_content">
                 <div class="nav_bar">
-                    <h3>CATEGORIES</h3>
+                    <p>CATEGORIES</p>
                     <nav>
                         {% for item in categories %}
                             <div {% if category.name == item.name %}class="nav_link active open"{% else %}class="nav_link"{% endif %}>
@@ -33,7 +33,7 @@
                     </nav>
                 </div>
                 <div class="products_block">
-                    <h2>{% if sub_category %}{{ sub_category.name }}{% else %}{{ category }}{% endif %}</h2>
+                    <h1>{% if sub_category %}{{ sub_category.name }}{% else %}{{ category }}{% endif %}</h1>
                     <div class="products">
                         {% for product in products %}
                             <a class="product" href="{{ product.get_absolute_url }}">

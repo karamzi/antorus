@@ -6,26 +6,6 @@
 	<priority>1.0</priority>
 </url>
 <url>
-	<loc>https://antorus.com/resetPassword/</loc>
-	<lastmod>2021-06-05T08:56:42+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://antorus.com/myAccount/</loc>
-	<lastmod>2021-06-05T08:56:45+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://antorus.com/cart/</loc>
-	<lastmod>2021-06-05T08:56:45+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://antorus.com/result/all/</loc>
-	<lastmod>2021-06-05T08:56:46+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
 	<loc>https://antorus.com/category/raids/</loc>
 	<lastmod>2021-06-05T08:56:46+01:00</lastmod>
 	<priority>0.6</priority>
