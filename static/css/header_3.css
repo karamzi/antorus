@@ -343,7 +343,7 @@ ______________________________________________ */
  ================================*/
 
 .burger_button {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     height: 30px;
@@ -401,6 +401,12 @@ ______________________________________________ */
 
     .burger_button {
         width: 25%;
+    }
+}
+
+@media (max-width: 600px) {
+    .burger_button {
+        display: flex;
     }
 }
 

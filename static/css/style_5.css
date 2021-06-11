@@ -82,6 +82,106 @@ form input {
     }
 }
 
+.nav_bar {
+    width: 23%;
+}
+
+.nav_bar p {
+    color: white;
+    font-size: 14px;
+    border-bottom: 1px solid rgb(47, 47, 47);
+    padding-bottom: 26px;
+    margin-bottom: 26px;
+}
+
+.nav_link {
+    border-left: 3px solid transparent;
+}
+
+.nav_link, .accordion a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 54px;
+    background-color: #2A2A2A;
+    padding: 0 10px;
+    margin-bottom: 2px;
+}
+
+.nav_link.active {
+    background-color: #404141;
+    border-left-color: #45db42;
+}
+
+.nav_link > a {
+    text-transform: uppercase;
+    text-decoration: none;
+    color: white;
+    font-weight: 900;
+    user-select: none;
+}
+
+.nav_link > a:hover {
+    color: rgb(189, 189, 189);
+    transition: color 0.3s ease;
+}
+
+.accordion {
+    flex-direction: column;
+}
+
+.accordion a {
+    text-transform: uppercase;
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    user-select: none;
+    margin-bottom: 0;
+    background-color: #353535;
+}
+
+.accordion a:last-child {
+    margin-bottom: 2px;
+}
+
+.nav_link span {
+    color: white;
+    font-size: 25px;
+}
+
+.nav_link span {
+    position: relative;
+}
+
+.nav_link span:after {
+    position: absolute;
+    content: '';
+    height: 1px;
+    width: 15px;
+    left: -20px;
+    background-color: white;
+}
+
+.nav_link span:before {
+    position: absolute;
+    content: '';
+    height: 1px;
+    width: 15px;
+    left: -20px;
+    background-color: white;
+    transform: rotate(90deg);
+}
+
+.nav_link.open span:before {
+    position: absolute;
+    content: '';
+    height: 1px;
+    width: 15px;
+    left: -20px;
+    background-color: white;
+    transform: rotate(0deg);
+}
+
 .modal_container.modal_active {
     display: block;
     animation-name: show_modal;
@@ -258,6 +358,20 @@ form input {
     .cookie_accept {
         margin-bottom: 20px;
         padding: 10px 80px;
+    }
+}
+
+@media (max-width: 600px) {
+    .nav_bar {
+        width: 100%;
+    }
+
+    #nav_bar {
+        display: none;
+    }
+
+    .burger_button {
+        display: flex;
     }
 }
 

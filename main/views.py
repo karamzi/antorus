@@ -19,6 +19,7 @@ from .utils.email import Email
 
 
 def global_var(request):
+    categories = Categories.objects.all()
     currency = request.COOKIES.get('currency', 'us')
     path = request.path
     try:
@@ -28,14 +29,13 @@ def global_var(request):
     return {
         'currency': currency,
         'seo': seo,
+        'categories': categories,
     }
 
 
 def index(request):
-    categories = Categories.objects.all()
     products = BestOffersToday.objects.all()
     context = {
-        'categories': categories,
         'products': products,
     }
     return render(request, 'index.html', context)
@@ -57,9 +57,7 @@ def search_result(request, search):
         products = Products.objects.filter(draft=False)
     else:
         products = Products.objects.filter(name__icontains=search, draft=False)
-    categories = Categories.objects.all()
     context = {
-        'categories': categories,
         'products': products,
         'search': search,
     }
@@ -86,10 +84,8 @@ def product(request, slug):
 def category(request, slug):
     try:
         category = Categories.objects.get(slug=slug)
-        categories = Categories.objects.all()
         products = category.products_category.filter(draft=False)
         context = {
-            'categories': categories,
             'category': category,
             'products': products
         }
@@ -102,10 +98,8 @@ def subcategory(request, category, subcategory):
     try:
         sub_category = SubCategories.objects.get(slug=subcategory)
         category = Categories.objects.get(slug=category)
-        categories = Categories.objects.all()
         products = sub_category.products_subcategory.filter(draft=False)
         context = {
-            'categories': categories,
             'category': category,
             'sub_category': sub_category,
             'products': products
