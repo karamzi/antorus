@@ -343,7 +343,36 @@ ______________________________________________ */
  ================================*/
 
 .burger_button {
-    display: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+}
+
+.burger_button span {
+    display: block;
+    position: relative;
+    height: 2px;
+    width: 30px;
+    background-color: white;
+}
+
+.burger_button span:after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    background-color: white;
+    top: 10px;
+}
+
+.burger_button span:before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    background-color: white;
+    top: -10px;
 }
 
 @media (max-width: 830px) {
@@ -371,7 +400,6 @@ ______________________________________________ */
     }
 
     .burger_button {
-        display: block;
         width: 25%;
     }
 }

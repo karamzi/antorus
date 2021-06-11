@@ -201,3 +201,15 @@ if (isCookieAccepted) {
 } else {
     cookie.style.display = 'block'
 }
+
+const burgerButton = document.querySelector('.burger_button')
+const closeButton = document.querySelector('.close_button')
+const mobileMenu = document.querySelector('.mobile_menu')
+
+burgerButton.addEventListener('click', () => {
+    mobileMenu.classList.add('in')
+})
+
+closeButton.addEventListener('click', () => {
+    mobileMenu.classList.remove('in')
+})

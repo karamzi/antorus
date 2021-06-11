@@ -211,6 +211,10 @@
         width: 100%;
     }
 
+    #nav_bar {
+        display: none;
+    }
+
     .nav_bar {
         width: 100%;
         margin-bottom: 20px;

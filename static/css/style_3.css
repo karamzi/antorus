@@ -10,6 +10,7 @@ html, body {
 }
 
 body {
+    position: relative;
     background-color: #0d0f0d;
     display: flex;
     flex-direction: column;
@@ -198,6 +199,49 @@ form input {
     background: linear-gradient(90deg, #00ad4e 0%, #666a6b9e 99.98%);
     cursor: pointer;
     white-space: nowrap;
+}
+
+.mobile_menu_header {
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.close_button {
+    position: relative;
+    display: block;
+    height: 2px;
+    width: 30px;
+    background-color: white;
+    margin-right: 20px;
+    transform: rotate(45grad);
+}
+
+.close_button:after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 30px;
+    background-color: white;
+    transform: rotate(90deg);
+}
+
+.mobile_menu {
+    position: fixed;
+    background-color: #0d0f0d;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    z-index: 100000000000000;
+    height: 100%;
+    overflow-y: scroll;
+    transition: left 0.3s ease;
+}
+
+.mobile_menu.in {
+    left: 0;
+    transition: left 0.3s ease;
 }
 
 @media (max-width: 700px) {

@@ -396,8 +396,13 @@ body {
 }
 
 @media (max-width: 750px) {
+    #nav_bar {
+        display: none;
+    }
+
     .nav_bar {
         width: 100%;
+        margin-bottom: 20px;
     }
 
     .intro_content > h2 {

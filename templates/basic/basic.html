@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'css/style_2.css' %}">
-    <link rel="stylesheet" href="{% static 'css/header_1.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_3.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header_2.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     {% block style %}
     {% endblock %}
@@ -105,7 +105,9 @@
 <header>
     <div class="container">
         <div class="header">
-            <div class="burger_button"></div>
+            <div class="burger_button">
+                <span></span>
+            </div>
             <div class="search_bar">
                 <input autocomplete="off" oninput="search()" value="" id="search" placeholder="Type here..."
                        type="text">
@@ -177,6 +179,32 @@
         </div>
     </div>
 </div>
+<section class="mobile_menu">
+    <div class="mobile_menu_header">
+        <span class="close_button"></span>
+    </div>
+    <div class="nav_bar">
+        <nav>
+            {% for item in categories %}
+                <div {% if category.name == item.name %}class="nav_link active open"
+                     {% else %}class="nav_link"{% endif %}>
+                    <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>
+                    {% if item.categories_subcategories.all %}
+                        <span></span>
+                    {% endif %}
+                </div>
+                {% if item.categories_subcategories.all %}
+                    <div {% if category.name == item.name %}style="display: flex"
+                         {% else %}style="display: none"{% endif %} class="accordion">
+                        {% for subcategory in item.categories_subcategories.all %}
+                            <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </nav>
+    </div>
+</section>
 <section id="cookie" class="section_cookie">
     <div class="container">
         <div class="cookie_info">
@@ -191,7 +219,7 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="//code.tidio.co/qtfccqsgrgx4usthk3x1dxkxtllrlcx1.js" async></script>
-<script src="{% static 'js/main_3.js' %}"></script>
+<script src="{% static 'js/main_4.js' %}"></script>
 {% block scripts %}
 {% endblock %}
 </body>
