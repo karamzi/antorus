@@ -44,6 +44,7 @@ body {
 
 .intro_buttons {
     display: flex;
+    margin-bottom: 30px;
 }
 
 .intro_buttons a {
