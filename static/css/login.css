@@ -1,0 +1,115 @@
+.login_section {
+    flex-grow: 1;
+}
+
+.login_section h2 {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.login_content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.login_left, .login_right {
+    width: 47%;
+    padding: 20px;
+    border: 1px solid rgb(47, 47, 47);
+    height: fit-content;
+}
+
+.login_left h3, .login_right h3 {
+    margin-top: 10px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 14px;
+    font-weight: 400;
+    border-bottom: 1px solid rgb(47, 47, 47);
+}
+
+.required:after {
+    position: absolute;
+    content: '*';
+    color: red;
+    font-size: 25px;
+    top: -4px;
+    right: -12px;
+}
+
+.login_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login_footer button, .login_right button {
+    color: white;
+    padding: 10px 25px;
+    background-color: rgb(34, 34, 34);
+}
+
+.login_footer button:hover, .login_right button:hover {
+    background-color: #555555;
+    transition: background-color 0.3s ease;
+}
+
+.login_footer a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.login_footer a:hover {
+    color: #8e8e8e;
+    transition: color 0.3s ease;
+}
+
+.messages {
+    list-style: none;
+
+}
+
+.success {
+    text-align: center;
+    background-color: #45db42ad;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.error {
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #842029;
+    border-radius: 10px;
+}
+
+
+@media (max-width: 800px) {
+    .login_content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .login_left, .login_right {
+        width: 90%;
+    }
+
+    .login_left {
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 500px) {
+.login_left, .login_right {
+        width: 100%;
+    }
+}
