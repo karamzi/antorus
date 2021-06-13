@@ -31,5 +31,5 @@ urlpatterns = [
     path('fondyCallback/', views.fondy_callback, name='fondy'),
     path('successOrder/', views.success_order, name='success_order'),
     path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
-    path("sitemap.xml", TemplateView.as_view(template_name="sitemap.xml", content_type="text/plain")),
+    path("sitemap.xml", TemplateView.as_view(template_name="sitemap.xml", content_type="text/xml")),
 ]
