@@ -6,7 +6,7 @@ let count = document.querySelector('.count')
 inputButton.addEventListener('click', checkCoupon)
 
 function renderCart() {
-    const products = document.querySelector('.products')
+    const products = document.querySelector('.cart_products')
     let cart
     let sing
     if (currency === 'us') {

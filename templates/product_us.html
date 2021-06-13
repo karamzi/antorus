@@ -1,11 +1,6 @@
 {% extends 'basic/basic.html' %}
 {% load static %}
 
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/product_4.css' %}">
-    <link rel="stylesheet" href="{% static 'css/checkbox.css' %}">
-{% endblock %}
-
 {% block content %}
     <section class="product_section" data-name="{{ product.name }}">
         <div class="container">
@@ -165,7 +160,7 @@
                         </div>
                     {% endif %}
 
-                    <div class="price">
+                    <div class="product_price">
                         {% if product.price_dollar > 0 %}
                             {% if product.new_price_dollar %}
                                 <p style="text-decoration: line-through;">$ {{ product.get_price_dollar }}</p>

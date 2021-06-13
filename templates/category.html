@@ -1,11 +1,6 @@
 {% extends 'basic/basic.html' %}
 {% load static %}
 
-
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/category_2.css' %}">
-{% endblock %}
-
 {% block title %}{% if sub_category %}{{ sub_category.name }}{% else %}{{ category }}{% endif %}{% endblock %}
 
 {% block content %}
@@ -36,7 +31,7 @@
                     <h1>{% if sub_category %}{{ sub_category.name }}{% else %}{{ category }}{% endif %}</h1>
                     <div class="products">
                         {% for product in products %}
-                            <a class="product" href="{{ product.get_absolute_url }}">
+                            <a class="product_item" href="{{ product.get_absolute_url }}">
                                 <img src="{{ product.image.url }}" alt="{{ product.alt }}">
                                 <h4 class="name">{{ product.name }}</h4>
                                 {% if currency == 'us' %}

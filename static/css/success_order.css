@@ -48,13 +48,13 @@
     justify-content: space-between;
 }
 
-.table_head, .product {
+.order_right .table_head, .product {
     padding-bottom: 20px;
     margin-bottom: 20px;
     border-bottom: 1px solid rgb(47, 47, 47);
 }
 
-.table_head p {
+.order_right .table_head p {
     color: white;
     font-size: 18px;
     font-weight: 700;
@@ -83,12 +83,12 @@ ul li {
     font-weight: 400;
 }
 
-.subtotal, .coupon, .character, .faction, .connection {
+.order_content .subtotal, .coupon, .character, .faction, .connection {
     margin-bottom: 20px;
     color: #888888;
 }
 
-.subtotal h5, .coupon h5, .character h5, .faction h5, .connection h5 {
+.order_content .subtotal h5, .coupon h5, .character h5, .faction h5, .connection h5 {
     font-size: 18px;
     font-weight: 400;
 }
@@ -98,7 +98,7 @@ ul li {
     font-weight: 400;
 }
 
-.total {
+.order_content .total {
     color: white;
     font-size: 25px;
     font-weight: 400;
@@ -133,7 +133,7 @@ ul li {
         margin-bottom: 40px;
     }
 
-    .table_head p, .name > p, ul, .price {
+    .order_right .table_head p, .name > p, ul, .price {
         font-size: 14px;
     }
 
@@ -141,7 +141,7 @@ ul li {
         white-space: nowrap;
     }
 
-    .subtotal h5, .coupon h5, .character h5, .faction h5, .connection h5 {
+    .order_content .subtotal h5, .coupon h5, .character h5, .faction h5, .connection h5 {
         font-size: 14px;
     }
 
@@ -153,17 +153,17 @@ ul li {
         padding-right: 5px;
     }
 
-    .subtotal p, .coupon p, .character p, .faction p, .connection p {
+    .order_content .subtotal p, .coupon p, .character p, .faction p, .connection p {
         font-size: 14px;
     }
 }
 
 @media (max-width: 374px) {
-    .table_head p, .name > p, ul, .price {
+    .order_right .table_head p, .name > p, ul, .price {
         font-size: 12px;
     }
 
-    .subtotal h5, .coupon h5, .character h5, .faction h5, .connection h5 {
+    .order_content .subtotal h5, .coupon h5, .character h5, .faction h5, .connection h5 {
         font-size: 12px;
     }
 
@@ -175,7 +175,7 @@ ul li {
         padding-right: 5px;
     }
 
-    .subtotal p, .coupon p, .character p, .faction p, .connection p {
+    .order_content .subtotal p, .coupon p, .character p, .faction p, .connection p {
         font-size: 12px;
     }
 }

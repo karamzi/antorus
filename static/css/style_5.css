@@ -82,7 +82,7 @@ form input {
     }
 }
 
-.nav_bar {
+.products_content  > .nav_bar {
     width: 23%;
 }
 
@@ -344,6 +344,20 @@ form input {
     transition: left 0.3s ease;
 }
 
+@media (max-width: 750px) {
+    .nav_bar {
+        width: 100%;
+    }
+
+    #nav_bar {
+        display: none;
+    }
+
+    .burger_button {
+        display: flex;
+    }
+}
+
 @media (max-width: 700px) {
     .section_cookie > .container {
         flex-direction: column;
@@ -358,20 +372,6 @@ form input {
     .cookie_accept {
         margin-bottom: 20px;
         padding: 10px 80px;
-    }
-}
-
-@media (max-width: 600px) {
-    .nav_bar {
-        width: 100%;
-    }
-
-    #nav_bar {
-        display: none;
-    }
-
-    .burger_button {
-        display: flex;
     }
 }
 

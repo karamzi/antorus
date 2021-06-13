@@ -41,7 +41,7 @@
     color: rgb(40, 168, 5);
 }
 
-.order_right {
+.account_order_right {
     width: 70%;
 }
 .row {
@@ -84,22 +84,22 @@ ul li {
     font-weight: 400;
 }
 
-.subtotal, .coupon, .character, .faction, .connection {
+.account_order_right .subtotal, .coupon, .character, .faction, .connection {
     margin-bottom: 20px;
     color: #888888;
 }
 
-.subtotal h5, .coupon h5, .character h5, .faction h5, .connection h5 {
+.account_order_right .subtotal h5, .coupon h5, .character h5, .faction h5, .connection h5 {
     font-size: 18px;
     font-weight: 400;
 }
 
-.subtotal p, .coupon p, .character p, .faction p, .connection p {
+.account_order_right .subtotal p, .coupon p, .character p, .faction p, .connection p {
     font-size: 16px;
     font-weight: 400;
 }
 
-.total {
+.account_order_right .total {
     color: white;
     font-size: 25px;
     font-weight: 400;
@@ -117,7 +117,7 @@ ul li {
         margin-bottom: 40px;
     }
 
-    .order_right {
+    .account_order_right {
         width: 100%;
     }
 }
@@ -142,7 +142,7 @@ ul li {
         white-space: nowrap;
     }
 
-    .subtotal h5, .coupon h5, .character h5, .faction h5, .connection h5 {
+    .account_order_right .subtotal h5, .coupon h5, .character h5, .faction h5, .connection h5 {
         font-size: 14px;
     }
 
@@ -154,7 +154,7 @@ ul li {
         padding-right: 5px;
     }
 
-    .subtotal p, .coupon p, .character p, .faction p, .connection p {
+    .account_order_right .subtotal p, .coupon p, .character p, .faction p, .connection p {
         font-size: 14px;
     }
 }
@@ -164,7 +164,7 @@ ul li {
         font-size: 12px;
     }
 
-    .subtotal h5, .coupon h5, .character h5, .faction h5, .connection h5 {
+    .account_order_right .subtotal h5, .coupon h5, .character h5, .faction h5, .connection h5 {
         font-size: 12px;
     }
 
@@ -176,7 +176,7 @@ ul li {
         padding-right: 5px;
     }
 
-    .subtotal p, .coupon p, .character p, .faction p, .connection p {
+    .account_order_right .subtotal p, .coupon p, .character p, .faction p, .connection p {
         font-size: 12px;
     }
 }

@@ -5,10 +5,6 @@
     {{ seo.meta|safe }}
 {% endblock %}
 
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/index_4.css' %}">
-{% endblock %}
-
 {% if seo.title %}
     {% block title %}{{ seo.title }}{% endblock %}
 {% endif %}
@@ -52,7 +48,7 @@
                     <h2>BEST OFFERS TODAY</h2>
                     <div class="products">
                         {% for product in products %}
-                            <a class="product" href="{{ product.product.get_absolute_url }}">
+                            <a class="product_item" href="{{ product.product.get_absolute_url }}">
                                 <img src="{{ product.product.image.url }}" alt="{{ product.product.alt }}">
                                 <h4 class="name">{{ product.product.name }}</h4>
                                 {% if currency == 'us' %}

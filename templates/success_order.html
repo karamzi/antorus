@@ -1,11 +1,6 @@
 {% extends 'basic/basic.html' %}
 {% load static %}
 
-
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/success_order.css' %}">
-{% endblock %}
-
 {% block title %}Order №{{ order.get_order_number }} - ANTORUS{% endblock %}
 
 {% block content %}
@@ -25,7 +20,7 @@
                         <p>TOTAL</p>
                     </div>
                     <div class="table_body">
-                        <div class="order">
+                        <div>
                             {% for product in order.order_product.all %}
                                 <div class="row product">
                                     <div class="name">

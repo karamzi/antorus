@@ -36,7 +36,7 @@
     transition: color 0.3s ease;
 }
 
-.order_right {
+.account_order_right {
     width: 75%;
 }
 
@@ -44,7 +44,7 @@
     color: rgb(40, 168, 5);
 }
 
-.table_head, .order {
+.account_order_right .table_head, .order {
     display: flex;
     padding-bottom: 20px;
     margin-bottom: 20px;
@@ -57,7 +57,7 @@
     align-items: center;
 }
 
-.table_head p, .order p {
+.account_order_right .table_head p, .order p {
     width: 20%;
     text-align: center;
     color: white;
@@ -91,7 +91,7 @@
         margin-bottom: 40px;
     }
 
-    .order_right {
+    .account_order_right {
         width: 100%;
     }
 }
@@ -103,7 +103,7 @@
 }
 
 @media (max-width: 600px) {
-    .table_head p, .order p {
+    .account_order_right .table_head p, .order p {
         font-size: 12px;
     }
 
@@ -117,7 +117,7 @@
 }
 
 @media (max-width: 400px) {
-    .table_head p, .order p {
+    .account_order_right .table_head p, .order p {
         font-size: 10px;
     }
 

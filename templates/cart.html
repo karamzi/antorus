@@ -1,11 +1,6 @@
 {% extends 'basic/basic.html' %}
 {% load static %}
 
-
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
-{% endblock %}
-
 {% block title %}Cart - ANTORUS{% endblock %}
 
 {% block content %}
@@ -20,7 +15,7 @@
                         <div class="head_quantity">QUANTITY</div>
                         <div class="head_total">TOTAL</div>
                     </div>
-                    <div class="products">
+                    <div class="cart_products">
                     </div>
                     <div class="promo_code">
                         <p>Enter your promotional code</p>

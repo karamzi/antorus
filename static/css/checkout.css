@@ -118,7 +118,7 @@ form input.input_error {
     border-bottom: 1px solid rgb(47, 47, 47);
 }
 
-.product {
+.checkout_right .product {
     padding-bottom: 20px;
     border-bottom: 1px solid rgb(47, 47, 47);
     margin-bottom: 20px;
@@ -131,7 +131,7 @@ form input.input_error {
     align-items: center;
 }
 
-.product_name {
+.checkout_right .product_name {
     width: 80%;
     color: white;
     font-size: 16px;
@@ -139,13 +139,13 @@ form input.input_error {
     line-height: 22px;
 }
 
-.product_price, .options {
+.checkout_right .product_price, .checkout_right .options {
     color: rgb(136, 136, 136);
     font-size: 14px;
     white-space: nowrap;
 }
 
-.subtotal, .total {
+.checkout_right .subtotal, .checkout_right .total {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
@@ -177,13 +177,13 @@ form input.input_error {
     transition: color 0.3s ease;
 }
 
-.total {
+.checkout_right .total {
     margin-bottom: 20px;
     padding-bottom: 20px;
     border-bottom: 1px solid rgb(47, 47, 47);
 }
 
-.total p {
+.checkout_right .total p {
     font-size: 16px;
     color: white;
 }
@@ -253,7 +253,7 @@ form input.input_error {
         width: 90%;
     }
 
-    .product_name {
+    .checkout_right .product_name {
         font-size: 14px;
     }
 }
@@ -263,7 +263,7 @@ form input.input_error {
         width: 100%;
     }
 
-    .product_name {
+    .checkout_right .product_name {
         font-size: 12px;
     }
 }
