@@ -11,6 +11,7 @@ antorus/settings.py
 .idea
 static/admin/
 static/ckeditor/
+static/css/
 node_modules/
 package-lock.json
 package.json
