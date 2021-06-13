@@ -67,14 +67,14 @@
     font-weight: 400;
 }
 
-ul {
+.account_order_right ul {
     color: #888888;
     font-size: 14px;
     font-weight: 300;
     margin-left: 25px;
 }
 
-ul li {
+.account_order_right ul li {
     margin: 7px 0;
 }
 

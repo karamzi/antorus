@@ -66,14 +66,14 @@
     font-weight: 400;
 }
 
-ul {
+.order_right ul {
     color: #888888;
     font-size: 14px;
     font-weight: 300;
     margin-left: 25px;
 }
 
-ul li {
+.order_right ul li {
     margin: 7px 0;
 }
 
