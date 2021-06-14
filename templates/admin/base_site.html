@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static 'style/admin.css' %}">
+{% endblock %}
+
+{% block title %}Администрирование Antorus{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name"><a href="{% url 'admin:index' %}">Antorus</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
