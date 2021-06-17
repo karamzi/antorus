@@ -64,19 +64,23 @@ function createOrder() {
     data.append('connection', connection.value)
     data.append('email', email.value)
     data.append('comment', comment)
+    button.querySelector('button').setAttribute('disabled', 'disabled')
     instance.post('createOrder/', data, {
         headers: {
             'Content-Type': 'multipart/form-data',
             'X-CSRFToken': getCookie('csrftoken')
         }
     }).then(response => {
-        data = response.data
-        document.getElementById('amount').value = data['amount']
-        document.getElementById('currency').value = data['currency']
-        document.getElementById('order_desc').value = data['order_desc']
-        document.getElementById('order_id').value = data['order_id']
-        document.getElementById('signature').value = data['signature']
-        document.getElementById('fondy').submit()
+        if (response.status === 200) {
+            data = response.data
+            document.getElementById('amount').value = data['amount']
+            document.getElementById('currency').value = data['currency']
+            document.getElementById('order_desc').value = data['order_desc']
+            document.getElementById('order_id').value = data['order_id']
+            document.getElementById('signature').value = data['signature']
+            document.getElementById('fondy').submit()
+        }
+        button.querySelector('button').removeAttribute('disabled')
     })
 }
 

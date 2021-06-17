@@ -203,7 +203,7 @@ if (isCookieAccepted) {
 }
 
 const burgerButton = document.querySelector('.burger_button')
-const closeButton = document.querySelector('.close_button')
+const closeButton = document.querySelector('.mobile_menu_header')
 const mobileMenu = document.querySelector('.mobile_menu')
 
 burgerButton.addEventListener('click', () => {
