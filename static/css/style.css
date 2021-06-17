@@ -105,9 +105,12 @@ form input {
 
 .accordion {
     flex-direction: column;
+    overflow: hidden;
+    height: 0;
 }
 
 .accordion a {
+    display: flex;
     text-transform: uppercase;
     text-decoration: none;
     color: white;
@@ -115,6 +118,7 @@ form input {
     user-select: none;
     margin-bottom: 0;
     background-color: #353535;
+    min-height: 54px;
 }
 
 .accordion a:last-child {

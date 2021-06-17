@@ -73,10 +73,35 @@ if (navLink) {
                 nextSibling.style.display = 'flex'
                 this.classList.add('active')
                 this.classList.add('open')
+                // Анимация открытия подкатеглоий
+                const countLength = nextSibling.querySelectorAll('a').length
+                const height = countLength * 54 + 2
+                let currentHeight = 0
+                let counter = 0
+                let open = setInterval(() => {
+                    counter += 1
+                    currentHeight += height / 20
+                    nextSibling.style.height = currentHeight + 'px'
+                    if (counter === 20) {
+                        return clearInterval(open)
+                    }
+                }, 10)
             } else if (nextSibling.classList.contains('accordion') && nextSibling.style.display === 'flex') {
-                nextSibling.style.display = 'none'
-                this.classList.remove('active')
-                this.classList.remove('open')
+                const height = nextSibling.querySelectorAll('a').length * 54 + 2
+                let currentHeight = height
+                let counter = 0
+                // Анимация закрытия подкатеглоий
+                let close = setInterval(() => {
+                    counter += 1
+                    currentHeight -= height / 20
+                    nextSibling.style.height = currentHeight + 'px'
+                    if (counter === 20) {
+                        nextSibling.style.display = 'none'
+                        this.classList.remove('active')
+                        this.classList.remove('open')
+                        return clearInterval(close)
+                    }
+                }, 10)
             }
         })
     })
