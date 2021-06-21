@@ -26,6 +26,8 @@ def to_fixed(numObj, digits=0):
 class Categories(models.Model):
     name = models.CharField(max_length=255, verbose_name='Название категории', unique=True)
     slug = models.SlugField(verbose_name='Слаг', blank=True)
+    text_above_products = models.TextField(verbose_name='Текст над продуктами', blank=True, null=True)
+    text_below_products = models.TextField(verbose_name='Текст под продуктами', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -51,6 +53,8 @@ class SubCategories(models.Model):
                                  on_delete=models.PROTECT)
     name = models.CharField(max_length=255, verbose_name='Название подкатегории', unique=True)
     slug = models.SlugField(verbose_name='Слаг', blank=True)
+    text_above_products = models.TextField(verbose_name='Текст над продуктами', blank=True, null=True)
+    text_below_products = models.TextField(verbose_name='Текст под продуктами', blank=True, null=True)
 
     def __str__(self):
         return self.name

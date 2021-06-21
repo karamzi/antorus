@@ -12,14 +12,23 @@
     text-align: center;
     color: white;
     padding-bottom: 20px;
-    border-bottom: 1px solid rgb(47, 47, 47);
     user-select: none;
+    margin-bottom: 0;
 }
 
 .products_block > .products {
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
+}
+
+.products_block > p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 30px;
+    text-align: justify;
+    color: #8e8e8e;
+    white-space: pre-line;
 }
 
 

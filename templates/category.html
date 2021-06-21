@@ -11,14 +11,16 @@
                     <p>CATEGORIES</p>
                     <nav>
                         {% for item in categories %}
-                            <div {% if category.name == item.name %}class="nav_link active open"{% else %}class="nav_link"{% endif %}>
+                            <div {% if category.name == item.name %}class="nav_link active open"
+                                 {% else %}class="nav_link"{% endif %}>
                                 <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>
                                 {% if item.categories_subcategories.all %}
                                     <span></span>
                                 {% endif %}
                             </div>
                             {% if item.categories_subcategories.all %}
-                                <div {% if category.name == item.name %}style="display: flex"{% else %}style="display: none"{% endif %} class="accordion">
+                                <div {% if category.name == item.name %}style="display: flex"
+                                     {% else %}style="display: none"{% endif %} class="accordion">
                                     {% for subcategory in item.categories_subcategories.all %}
                                         <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
                                     {% endfor %}
@@ -29,6 +31,8 @@
                 </div>
                 <div class="products_block">
                     <h1>{% if sub_category %}{{ sub_category.name }}{% else %}{{ category }}{% endif %}</h1>
+                    <p>{% if sub_category %}{{ sub_category.text_above_products }}{% else %}
+                        {{ category.text_above_products }}{% endif %}</p>
                     <div class="products">
                         {% for product in products %}
                             <a class="product_item" href="{{ product.get_absolute_url }}">
@@ -57,6 +61,8 @@
                             </a>
                         {% endfor %}
                     </div>
+                    <p>{% if sub_category %}{{ sub_category.text_below_products }}{% else %}
+                        {{ category.text_below_products }}{% endif %}</p>
                 </div>
             </div>
         </div>
