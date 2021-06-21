@@ -22,7 +22,7 @@
     flex-wrap: wrap;
 }
 
-.products_block > p {
+.products_block > .category_description {
     font-size: 16px;
     font-weight: 400;
     line-height: 30px;
