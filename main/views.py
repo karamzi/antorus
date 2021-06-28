@@ -43,7 +43,7 @@ def index(request):
 
 def search_products(request):
     if request.method == 'POST':
-        products = Products.objects.filter(name__icontains=request.POST['value'], draft=False)[:10]
+        products = Products.objects.filter(name__icontains=request.POST['value'], draft=False, archive=False)[:10]
         context = {
             'products': products,
             'search_value': request.POST['value']
@@ -54,9 +54,9 @@ def search_products(request):
 
 def search_result(request, search):
     if search == 'all':
-        products = Products.objects.filter(draft=False)
+        products = Products.objects.filter(draft=False, archive=False)
     else:
-        products = Products.objects.filter(name__icontains=search, draft=False)
+        products = Products.objects.filter(name__icontains=search, draft=False, archive=False)
     context = {
         'products': products,
         'search': search,
@@ -84,7 +84,7 @@ def product(request, slug):
 def category(request, slug):
     try:
         category = Categories.objects.get(slug=slug)
-        products = category.products_category.filter(draft=False)
+        products = category.products_category.filter(draft=False, archive=False)
         context = {
             'category': category,
             'products': products
@@ -98,7 +98,7 @@ def subcategory(request, category, subcategory):
     try:
         sub_category = SubCategories.objects.get(slug=subcategory)
         category = Categories.objects.get(slug=category)
-        products = sub_category.products_subcategory.filter(draft=False)
+        products = sub_category.products_subcategory.filter(draft=False, archive=False)
         context = {
             'category': category,
             'sub_category': sub_category,
@@ -285,9 +285,6 @@ def send_new_password(request):
 
 
 def create_order(request):
-    print(request)
-    print(request.POST)
-    print(request.GET)
     if request.method == 'POST':
         sing = '€' if request.POST['currency'] == 'eu' else '$'
         order = Order()
@@ -338,9 +335,6 @@ def create_order(request):
             'order_id': order_id,
             'signature': generate_signature(str(int(amount)), currency, order_desc, order_id),
         })
-    print(request)
-    print(request.POST)
-    print(request.GET)
     return redirect(reverse('index'))
 
 

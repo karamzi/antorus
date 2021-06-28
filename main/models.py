@@ -86,7 +86,7 @@ class Products(models.Model):
     image = models.ImageField(verbose_name='Изображение', upload_to=get_img_path)
     thumb = ThumbnailerImageField(upload_to=get_thumbs_path, verbose_name='Миниатюра',
                                   resize_source={'size': (120, 120), 'crop': True})
-    slug = models.SlugField(verbose_name='Ссылка', blank=True, null=True)
+    slug = models.SlugField(verbose_name='Ссылка', blank=True, null=True, unique=True)
     length = models.CharField(max_length=255, verbose_name='Длительность')
     char_req = models.CharField(max_length=255, verbose_name='Требования')
     price_dollar = models.DecimalField(verbose_name='Цена в долларах', decimal_places=3, max_digits=8, default=0)
@@ -104,6 +104,7 @@ class Products(models.Model):
     child_required = models.BooleanField(verbose_name='Дочернии обязательны', default=False)
     draft = models.BooleanField(default=False, verbose_name='Черновик')
     alt = models.CharField(max_length=255, blank=True, null=True)
+    archive = models.BooleanField(default=False, verbose_name='Архив')
 
     def __str__(self):
         return self.name

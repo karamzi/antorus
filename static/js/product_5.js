@@ -12,9 +12,9 @@ let additionChecked = []
 let priceUs = 0
 let priceEu = 0
 
-minus.addEventListener('click', setPrice)
-plus.addEventListener('click', setPrice)
-addToCartButton.addEventListener('click', addToCart)
+minus && minus.addEventListener('click', setPrice)
+plus && plus.addEventListener('click', setPrice)
+addToCartButton && addToCartButton.addEventListener('click', addToCart)
 
 if (requiredInputs) {
     checkInputs(requiredInputs, quantityRequiredOptions, requiredChecked)

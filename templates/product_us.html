@@ -172,15 +172,18 @@
                             <p id="price">Choose options to continue</p>
                         {% endif %}
                     </div>
+
                     <div class="product_buttons">
                         <div class="quantity">
                             <div class="minus"></div>
                             <div class="count">1</div>
                             <div class="plus">+</div>
                         </div>
-                        <div class="add_to_cart">
-                            <p>add to cart</p>
-                        </div>
+                        {% if not product.archive %}
+                            <div class="add_to_cart">
+                                <p>add to cart</p>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -260,7 +263,7 @@
         {% endif %}
         const url = '{{ product.get_absolute_url }}'
     </script>
-    <script src="{% static 'js/product_4.js' %}"></script>
+    <script src="{% static 'js/product_5.js' %}"></script>
     <script>const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true}</script>
     <script src="https://wow.zamimg.com/widgets/power.js"></script>
 {% endblock %}

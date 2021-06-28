@@ -2,6 +2,7 @@ from django.contrib import admin
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 from django.utils.safestring import mark_safe
+from main.utils.customAdminFilters import ProductArchiveFilter
 
 from .utils.email import Email
 from . import models
@@ -50,6 +51,7 @@ class ProductsAdmin(admin.ModelAdmin):
     form = ProductAdminForm
     list_display = ('name', 'category', 'price_dollar', 'price_euro')
     list_display_links = ('name', 'category', 'price_dollar', 'price_euro')
+    list_filter = (ProductArchiveFilter,)
 
 
 class CartAdmin(admin.TabularInline):
