@@ -28,6 +28,7 @@ class Categories(models.Model):
     slug = models.SlugField(verbose_name='Слаг', blank=True)
     text_above_products = models.TextField(verbose_name='Текст над продуктами', blank=True, null=True)
     text_below_products = models.TextField(verbose_name='Текст под продуктами', blank=True, null=True)
+    number = models.SmallIntegerField(verbose_name='Номер', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -44,6 +45,7 @@ class Categories(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
+        ordering = ['number']
         verbose_name = 'Категория'
         verbose_name_plural = '6. Категории'
 
@@ -55,6 +57,7 @@ class SubCategories(models.Model):
     slug = models.SlugField(verbose_name='Слаг', blank=True)
     text_above_products = models.TextField(verbose_name='Текст над продуктами', blank=True, null=True)
     text_below_products = models.TextField(verbose_name='Текст под продуктами', blank=True, null=True)
+    number = models.SmallIntegerField(verbose_name='Номер', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -71,6 +74,7 @@ class SubCategories(models.Model):
         return reverse('subcategory', kwargs={'category': self.category.slug, 'subcategory': self.slug})
 
     class Meta:
+        ordering = ['number']
         verbose_name = 'Подкатегория'
         verbose_name_plural = '7. Подкатегории'
 
