@@ -9,12 +9,20 @@
     {% block title %}{{ seo.title }}{% endblock %}
 {% endif %}
 
+{% block styles %}
+    <style>
+        body {
+            background-image: none;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
     <section class="intro_section">
         <div class="container">
             <div class="intro_content">
                 <p>WELCOME TO ANTORUS</p>
-                <h2>CASTLE NATHRIA</h2>
+                <h2>SANCTUM OF DOMINATION</h2>
                 <div class="intro_buttons">
                     <a href="{% url 'result' search='all' %}">BROWSE PRODUCTS</a>
                     <p id="chatButton">CHAT WITH US</p>

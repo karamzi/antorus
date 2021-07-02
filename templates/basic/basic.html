@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'style/bundle1624300805899.css' %}">
+    <link rel="stylesheet" href="{% static 'style/bundle1625244332559.css' %}">
     <link rel="icon" href="{% static 'img/logo.png' %}">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
@@ -50,6 +50,8 @@
         <div><img src="https://mc.yandex.ru/watch/67968427" style="position:absolute; left:-9999px;" alt=""/></div>
     </noscript>
     <!-- End Yandex.Metrika counter -->
+    {% block styles %}
+    {% endblock %}
 </head>
 <body>
 <div class="top_bar">
@@ -190,7 +192,7 @@
                     {% endif %}
                 </div>
                 {% if item.categories_subcategories.all %}
-                    <div {% if category.name == item.name %}style="display: flex"
+                    <div {% if category.name == item.name %}style="display: flex; height: 100%"
                          {% else %}style="display: none"{% endif %} class="accordion">
                         {% for subcategory in item.categories_subcategories.all %}
                             <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
