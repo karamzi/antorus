@@ -22,7 +22,9 @@
                                 <div {% if category.name == item.name %}style="display: flex; height: 100%"
                                      {% else %}style="display: none"{% endif %} class="accordion">
                                     {% for subcategory in item.categories_subcategories.all %}
-                                        <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                                        {% if not subcategory.archive %}
+                                            <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             {% endif %}
@@ -31,8 +33,9 @@
                 </div>
                 <div class="products_block">
                     <h1>{% if sub_category %}{{ sub_category.name }}{% else %}{{ category }}{% endif %}</h1>
-                    <div class="category_description">{% if sub_category %}{{ sub_category.text_above_products|safe }}{% else %}
-                        {{ category.text_above_products|safe }}{% endif %}</div>
+                    <div class="category_description">
+                        {% if sub_category %}{{ sub_category.text_above_products|safe }}{% else %}
+                            {{ category.text_above_products|safe }}{% endif %}</div>
                     <div class="products">
                         {% for product in products %}
                             <a class="product_item" href="{{ product.get_absolute_url }}">
@@ -61,8 +64,9 @@
                             </a>
                         {% endfor %}
                     </div>
-                    <div class="category_description">{% if sub_category %}{{ sub_category.text_below_products|safe }}{% else %}
-                        {{ category.text_below_products|safe }}{% endif %}</div>
+                    <div class="category_description">
+                        {% if sub_category %}{{ sub_category.text_below_products|safe }}{% else %}
+                            {{ category.text_below_products|safe }}{% endif %}</div>
                 </div>
             </div>
         </div>

@@ -19,7 +19,7 @@ from .utils.email import Email
 
 
 def global_var(request):
-    categories = Categories.objects.all()
+    categories = Categories.objects.filter(archive=False)
     currency = request.COOKIES.get('currency', 'us')
     path = request.path
     try:
@@ -84,7 +84,7 @@ def product(request, slug):
 def category(request, slug):
     try:
         category = Categories.objects.get(slug=slug)
-        products = category.products_category.filter(draft=False, archive=False)
+        products = category.products_category.filter(draft=False)
         context = {
             'category': category,
             'products': products
@@ -98,7 +98,7 @@ def subcategory(request, category, subcategory):
     try:
         sub_category = SubCategories.objects.get(slug=subcategory)
         category = Categories.objects.get(slug=category)
-        products = sub_category.products_subcategory.filter(draft=False, archive=False)
+        products = sub_category.products_subcategory.filter(draft=False)
         context = {
             'category': category,
             'sub_category': sub_category,

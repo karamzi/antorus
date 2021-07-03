@@ -29,6 +29,7 @@ class Categories(models.Model):
     text_above_products = models.TextField(verbose_name='Текст над продуктами', blank=True, null=True)
     text_below_products = models.TextField(verbose_name='Текст под продуктами', blank=True, null=True)
     number = models.SmallIntegerField(verbose_name='Номер', blank=True, null=True)
+    archive = models.BooleanField(default=False, verbose_name='Архив')
 
     def __str__(self):
         return self.name
@@ -58,6 +59,7 @@ class SubCategories(models.Model):
     text_above_products = models.TextField(verbose_name='Текст над продуктами', blank=True, null=True)
     text_below_products = models.TextField(verbose_name='Текст под продуктами', blank=True, null=True)
     number = models.SmallIntegerField(verbose_name='Номер', blank=True, null=True)
+    archive = models.BooleanField(default=False, verbose_name='Архив')
 
     def __str__(self):
         return self.name

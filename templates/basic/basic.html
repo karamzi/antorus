@@ -195,7 +195,9 @@
                     <div {% if category.name == item.name %}style="display: flex; height: 100%"
                          {% else %}style="display: none"{% endif %} class="accordion">
                         {% for subcategory in item.categories_subcategories.all %}
-                            <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                            {% if not subcategory.archive %}
+                                <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 {% endif %}
