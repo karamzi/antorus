@@ -70,8 +70,10 @@ def product(request, slug):
         product = Products.objects.get(slug=slug)
         if product.draft and not request.user.is_superuser:
             return redirect(reverse('index'))
+        products = product.category.products_category.all()[:4]
         context = {
             'product': product,
+            'products': products,
         }
         if currency == 'us':
             return render(request, 'product_us.html', context)

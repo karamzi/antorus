@@ -233,6 +233,30 @@
             <p>Please choose requirement option</p>
         </div>
     </section>
+    <section class="suggestions_section">
+        <div class="container">
+            <p class="suggestions_title">You may also like</p>
+            <div class="suggestions_products">
+                {% for product in products %}
+                    <a class="suggestions_product_item" href="{{ product.get_absolute_url }}">
+                        <img src="{{ product.image.url }}" alt="{{ product.alt }}">
+                        <h4 class="suggestions_product_name">{{ product.name }}</h4>
+                        {% if product.new_price_dollar %}
+                            <div class="price">
+                                <p class="suggestions_product_price" style="text-decoration: line-through;">
+                                    $ {{ product.get_price_dollar }}</p>
+                                <p class="suggestions_product_price" style="color: rgb(40, 168, 5);">
+                                    $ {{ product.get_price_new_dollar }}</p>
+                            </div>
+                        {% else %}
+                            <p class="suggestions_product_price">{{ product.get_price_us }}</p>
+                        {% endif %}
+                    </a>
+                {% endfor %}
+            </div>
+            <div class="suggestions_switch_buttons"></div>
+        </div>
+    </section>
     <section class="reviews_section">
         <div class="container">
             <!-- TrustBox widget - Carousel -->
@@ -266,4 +290,5 @@
     <script src="{% static 'js/product_5.js' %}"></script>
     <script>const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true}</script>
     <script src="https://wow.zamimg.com/widgets/power.js"></script>
+    <script src="{% static 'js/slider.js' %}"></script>
 {% endblock %}

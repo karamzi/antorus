@@ -8,7 +8,7 @@
 .products_block h1 {
     font-size: 24px;
     width: 100%;
-    font-weight: 400;
+    font-weight: 700;
     text-align: center;
     color: white;
     padding-bottom: 20px;
@@ -29,6 +29,7 @@
     text-align: justify;
     color: #8e8e8e;
     white-space: pre-line;
+    padding: 0 20px;
 }
 
 
