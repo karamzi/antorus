@@ -79,6 +79,7 @@ function createOrder() {
             document.getElementById('order_id').value = data['order_id']
             document.getElementById('signature').value = data['signature']
             document.getElementById('fondy').submit()
+            ym(67968427,'reachGoal','order')
         }
         button.querySelector('button').removeAttribute('disabled')
     })
