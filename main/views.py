@@ -70,7 +70,7 @@ def product(request, slug):
         product = Products.objects.get(slug=slug)
         if product.draft and not request.user.is_superuser:
             return redirect(reverse('index'))
-        products = product.category.products_category.all()[:4]
+        products = product.category.products_category.filter(archive=False, draft=False)[:4]
         context = {
             'product': product,
             'products': products,
