@@ -191,7 +191,11 @@
 
 
                 <div class="product_right">
-                    <h1 class="product_name">{{ product.name }}</h1>
+                    {% if seo.h1 %}
+                        <h1 class="product_name">{{ seo.h1 }}</h1>
+                    {% else %}
+                        <h1 class="product_name">{{ product.name }}</h1>
+                    {% endif %}
                     <div class="service">
                         <div style="background: #00ad4e;" class="service_item">
                             <img src="{% static 'img/safeboost.png' %}" alt="">

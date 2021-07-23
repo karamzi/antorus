@@ -480,6 +480,7 @@ class SEO(models.Model):
     title = models.CharField(max_length=500)
     meta = models.TextField(blank=True, null=True)
     url = models.CharField(max_length=250, verbose_name='адрес страницы', unique=True)
+    h1 = models.CharField(max_length=250, verbose_name='Заголовок H1', blank=True, null=True)
 
     class Meta:
         verbose_name = 'SEO'

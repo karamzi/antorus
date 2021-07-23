@@ -35,7 +35,11 @@
                     </nav>
                 </div>
                 <div class="products_block">
-                    <h1>{% if sub_category %}{{ sub_category.name }}{% else %}{{ category }}{% endif %}</h1>
+                    {% if seo.h1 %}
+                        <h1>{{ seo.h1 }}</h1>
+                    {% else %}
+                        <h1>{% if sub_category %}{{ sub_category.name }}{% else %}{{ category }}{% endif %}</h1>
+                    {% endif %}
                     <div class="category_description">
                         {% if sub_category %}{{ sub_category.text_above_products|safe }}{% else %}
                             {{ category.text_above_products|safe }}{% endif %}</div>
