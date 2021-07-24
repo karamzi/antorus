@@ -205,7 +205,7 @@ def change_account_details(request):
 
 @login_required(login_url='/myAccount/')
 def orders(request):
-    orders = Order.objects.filter(user=request.user).order_by('-date', '-id')
+    orders = Order.objects.filter(user=request.user).exclude(status='3').order_by('-date', '-id')
     context = {
         'orders': orders
     }

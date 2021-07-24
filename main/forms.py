@@ -28,7 +28,7 @@ class RegisterUserForm(forms.ModelForm):
             pass
         try:
             user = User.objects.get(username=self.cleaned_data['username'])
-            messages.error(self.request, 'th same username already exists')
+            messages.error(self.request, 'the same username already exists')
             raise ValidationError('')
         except ObjectDoesNotExist:
             pass
