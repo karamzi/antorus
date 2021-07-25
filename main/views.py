@@ -86,7 +86,7 @@ def product(request, slug):
 def category(request, slug):
     try:
         category = Categories.objects.get(slug=slug)
-        products = category.products_category.filter(draft=False)
+        products = category.products_category.filter(draft=False, archive=False)
         context = {
             'category': category,
             'products': products
