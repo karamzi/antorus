@@ -9,6 +9,13 @@
     {% block title %}{{ seo.title }}{% endblock %}
 {% endif %}
 
+{% block styles %}
+    <style>
+        body {
+            background-image: none;
+        }
+    </style>
+{% endblock %}
 
 {% block content %}
     <div class="intro_section">
