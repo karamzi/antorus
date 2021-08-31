@@ -2,14 +2,14 @@
 {% load static %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'style/bundle1625926732464.css' %}">
-    <link rel="icon" href="{% static 'img/logo.png' %}">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'style/bundle1625926732464.css' %}" />
+    <link rel="icon" href="{% static 'img/logo.png' %}" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
     <!-- TrustBox script -->
-    <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+    <script src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
     <!-- End TrustBox script -->
     <title>{{ seo.title }}</title>
     {{ seo.meta|safe }}
@@ -29,7 +29,7 @@
     <!-- EndGlobal site tag (gtag.js) - Google Analytics -->
 
     <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
+    <script>
         (function (m, e, t, r, i, k, a) {
             m[i] = m[i] || function () {
                 (m[i].a = m[i].a || []).push(arguments)
@@ -47,7 +47,7 @@
         });
     </script>
     <noscript>
-        <div><img src="https://mc.yandex.ru/watch/67968427" style="position:absolute; left:-9999px;" alt=""/></div>
+        <div><img src="https://mc.yandex.ru/watch/67968427" style="position:absolute; left:-9999px;" alt="" /></div>
     </noscript>
     <!-- End Yandex.Metrika counter -->
     {% block styles %}
