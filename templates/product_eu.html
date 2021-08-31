@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-    <section class="product_section" data-name="{{ product.name }}">
+    <div class="product_section" data-name="{{ product.name }}">
         <div class="container">
             <div class="product_nav">
                 <a href="/">HOME</a>
@@ -34,9 +34,9 @@
                                          data-id="{{ option.pk }}">
                                         <div class="checkbox">
                                             <input class="required parent" type="checkbox"
-                                                   id="cd{{ option.name }}{{ option.pk }}">
-                                            <label class="custom" for="cd{{ option.name }}{{ option.pk }}">
-                                                <div class="tick"></div>
+                                                   id="cd{{ option.pk }}P">
+                                            <label class="custom" for="cd{{ option.pk }}P">
+                                                <span class="tick"></span>
                                             </label>
                                         </div>
                                         <div class="option_name">{{ option.name }}</div>
@@ -83,10 +83,10 @@
                                                  data-parent-id="{{ option.pk }}">
                                                 <div class="checkbox">
                                                     <input class="required child" type="checkbox"
-                                                           id="cd{{ child_option.name }}{{ child_option.pk }}">
+                                                           id="cd{{ child_option.pk }}CO">
                                                     <label class="custom"
-                                                           for="cd{{ child_option.name }}{{ child_option.pk }}">
-                                                        <div class="tick"></div>
+                                                           for="cd{{ child_option.pk }}CO">
+                                                        <span class="tick"></span>
                                                     </label>
                                                 </div>
                                                 <div class="option_name">{{ child_option.name }}</div>
@@ -129,9 +129,9 @@
                                          data-name="{{ option.name }}">
                                         <div class="checkbox">
                                             <input {% if option.default %}checked="checked"{% endif %} class="addition"
-                                                   type="checkbox" id="cd{{ option.name }}{{ option.pk }}">
-                                            <label class="custom" for="cd{{ option.name }}{{ option.pk }}">
-                                                <div class="tick"></div>
+                                                   type="checkbox" id="cd{{ option.pk }}A">
+                                            <label class="custom" for="cd{{ option.pk }}A">
+                                                <span class="tick"></span>
                                             </label>
                                         </div>
                                         <div class="option_name">{{ option.name }}</div>
@@ -238,8 +238,8 @@
         <div style="display: none" class="error">
             <p>Please choose requirement option</p>
         </div>
-    </section>
-    <section class="suggestions_section">
+    </div>
+    <div class="suggestions_section">
         <div class="container">
             <p class="suggestions_title">You may also like</p>
             <div class="suggestions_products">
@@ -262,8 +262,8 @@
             </div>
             <div class="suggestions_switch_buttons"></div>
         </div>
-    </section>
-    <section class="reviews_section">
+    </div>
+    <div class="reviews_section">
         <div class="container">
             <!-- TrustBox widget - Carousel -->
             <div class="trustpilot-widget" data-locale="en-US" data-template-id="53aa8912dec7e10d38f59f36"
@@ -274,7 +274,7 @@
             </div>
             <!-- End TrustBox widget -->
         </div>
-    </section>
+    </div>
 {% endblock %}
 
 {% block scripts %}
