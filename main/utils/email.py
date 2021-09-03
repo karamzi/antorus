@@ -12,8 +12,10 @@ class Email:
         html_message = render_to_string(template, {'order': order})
         plain_message = strip_tags(html_message)
         to = order.email.lower()
-        msg = EmailMultiAlternatives(subject, html_message, 'shop@antorus.com', [to],
-                                     bcc=['antorus.com+2860455185@invite.trustpilot.com'])
+        msg = EmailMultiAlternatives(subject, html_message, 'shop@antorus.com', [to])
+        if order.status == '5':
+            msg = EmailMultiAlternatives(subject, html_message, 'shop@antorus.com', [to],
+                                         bcc=['antorus.com+2860455185@invite.trustpilot.com'])
         msg.content_subtype = "html"
         msg.send()
         if order.status == '1':
