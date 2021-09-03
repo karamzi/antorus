@@ -108,7 +108,7 @@ class OrderAdmin(admin.ModelAdmin):
         if obj.status == '4' and order != '4':
             Email().send_order(order, 'email/refund.html')
         if obj.status == '5' and order != '5':
-            Email().send_order(order, 'email/completed.html')
+            Email().send_order(order, 'email/completed.html', True)
         super().save_model(request, obj, form, change)
 
     get_status_html.short_description = 'Статус заказа'
