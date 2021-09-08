@@ -5,9 +5,11 @@ django-ckeditor==6.0.0
 django-cleanup==5.1.0
 django-imagekit==4.0.2
 django-js-asset==1.2.2
+django-nested-admin==3.3.3
 easy-thumbnails==2.7.1
 mysqlclient==2.0.3
 Pillow==8.1.0
+python-monkey-business==1.0.0
 pytz==2021.1
 six==1.15.0
 sqlparse==0.4.1
