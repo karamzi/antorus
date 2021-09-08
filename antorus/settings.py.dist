@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'ckeditor',
     'easy_thumbnails',
+    'nested_admin',
     'django_cleanup.apps.CleanupConfig',
     'main.apps.MainConfig',
     'django.contrib.admin',

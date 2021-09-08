@@ -97,9 +97,9 @@ class Products(models.Model):
     char_req = models.CharField(max_length=255, verbose_name='Требования')
     price_dollar = models.DecimalField(verbose_name='Цена в долларах', decimal_places=3, max_digits=8, default=0)
     price_euro = models.DecimalField(verbose_name='Цена в евро', decimal_places=3, max_digits=8, default=0)
-    new_price_dollar = models.DecimalField(verbose_name='Цена со скдкой(доллар)', decimal_places=3, max_digits=8,
+    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой', decimal_places=3, max_digits=8,
                                            blank=True, null=True)
-    new_price_euro = models.DecimalField(verbose_name='Цена со скдкой(евро)', decimal_places=3, max_digits=8,
+    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой', decimal_places=3, max_digits=8,
                                          blank=True, null=True)
     quantity_required_options = models.IntegerField(verbose_name='max количество обязательных опций', blank=True,
                                                     null=True)
@@ -216,9 +216,9 @@ class RequiredOption(models.Model):
     description = models.CharField(verbose_name='Описание', blank=True, max_length=255)
     price_dollar = models.DecimalField(default=0, verbose_name='Цена в долларах', decimal_places=3, max_digits=8)
     price_euro = models.DecimalField(default=0, verbose_name='Цена в евро', decimal_places=3, max_digits=8)
-    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=3, max_digits=8,
+    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой', decimal_places=3, max_digits=8,
                                            blank=True, null=True)
-    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=3, max_digits=8,
+    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой', decimal_places=3, max_digits=8,
                                          blank=True, null=True)
     us = models.BooleanField(verbose_name='us', default=True)
     eu = models.BooleanField(verbose_name='eu', default=True)

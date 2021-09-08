@@ -5,3 +5,32 @@
 .module h2, .module caption, .inline-group h2 {
     background-color: #00ad4e;
 }
+
+.sub_category {
+    padding-left: 30px !important;
+    width: auto !important;
+}
+
+.sub_category h2 {
+    background-color: #0E2231;
+}
+
+.djn-group .djn-group-nested {
+    padding-top: 20px;
+    padding-left: 30px;
+    margin: unset !important;
+}
+
+.inline-related fieldset.module h3 {
+    font-size: 14px !important;
+    background: #1678a1 !important;
+}
+
+.djn-item.djn-module.djn-inline-form.has_original.inline-related.dynamic-form.grp-dynamic-form {
+    padding-top: 20px;
+}
+
+.djn-item.djn-module.djn-inline-form.has_original.inline-related.dynamic-form.grp-dynamic-form h3 {
+    background-color: #00bcd4;
+    color: white;
+}

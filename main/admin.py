@@ -3,10 +3,10 @@ from django import forms
 from ckeditor.widgets import CKEditorWidget
 from django.utils.safestring import mark_safe
 from main.utils.customAdminFilters import ProductArchiveFilter
+import nested_admin
 
 from .utils.email import Email
 from . import models
-import re
 
 
 class ProductAdminForm(forms.ModelForm):
@@ -17,57 +17,135 @@ class ProductAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
-class RequiredOptionAdmin(admin.TabularInline):
-    model = models.RequiredOption
-    extra = 0
-
-
-class RequiredOptionChildAdmin(admin.TabularInline):
+class RequiredOptionChildAdmin(nested_admin.NestedStackedInline):
     model = models.RequiredOptionChild
-    extra = 0
+    extra = 1
+    fieldsets = (
+        (None, {
+            'fields': (('name', 'description'),),
+        }),
+        ('Цены в долларах', {
+            'fields': (('price_dollar', 'new_price_dollar'),),
+            'classes': ('sub_category',),
+        }),
+        ('Цены в евро', {
+            'fields': (('price_euro', 'new_price_euro'),),
+            'classes': ('sub_category',),
+        }),
+        ('Регион', {
+            'fields': (('us', 'eu'),),
+            'classes': ('sub_category',),
+        }),
+    )
 
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        path = request.path
-        if len(re.findall(r'/add/$', path)) > 0:
-            return super().formfield_for_foreignkey(db_field, request, **kwargs)
-        digit = re.findall(r'\d+', path)
-        if db_field.name == 'required_option':
-            kwargs['queryset'] = models.RequiredOption.objects.filter(product_id=int(digit[0]))
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+class RequiredOptionAdmin(nested_admin.NestedStackedInline):
+    model = models.RequiredOption
+    inlines = [RequiredOptionChildAdmin]
+    extra = 1
+    fieldsets = (
+        (None, {
+            'fields': (('name', 'description'),)
+        }),
+        ('Цены в долларах', {
+            'fields': (('price_dollar', 'new_price_dollar'),),
+            'classes': ('sub_category',),
+        }),
+        ('Цены в евро', {
+            'fields': (('price_euro', 'new_price_euro'),),
+            'classes': ('sub_category',),
+        }),
+        ('Регион', {
+            'fields': (('us', 'eu'),),
+            'classes': ('sub_category',),
+        }),
+    )
 
 
-class AdditionsOptionAdmin(admin.TabularInline):
+class AdditionsOptionAdmin(nested_admin.NestedStackedInline):
     model = models.AdditionOptions
     extra = 0
 
 
-class OrderImagesAdmin(admin.TabularInline):
+class OrderImagesAdmin(nested_admin.NestedStackedInline):
     model = models.OrderImages
     extra = 0
 
 
-class ProductsAdmin(admin.ModelAdmin):
-    inlines = [RequiredOptionAdmin, RequiredOptionChildAdmin, AdditionsOptionAdmin]
+class ProductsAdmin(nested_admin.NestedModelAdmin):
+    inlines = [RequiredOptionAdmin, AdditionsOptionAdmin]
     form = ProductAdminForm
     list_display = ('name', 'category', 'price_dollar', 'price_euro')
     list_display_links = ('name', 'category', 'price_dollar', 'price_euro')
     list_filter = (ProductArchiveFilter,)
+    fieldsets = (
+        (None, {
+            'fields': (('name', 'slug',),)
+        }),
+        ('Категория', {
+            'fields': (('category', 'subcategory',),),
+            'classes': ('sub_category',),
+        }),
+        (None, {
+            'fields': ('description',)
+        }),
+        ('Изображения', {
+            'fields': (('image', 'thumb'),),
+            'classes': ('sub_category',),
+        }),
+        ('Общие требования', {
+            'fields': (('length', 'char_req'),),
+            'classes': ('sub_category',),
+        }),
+        ('Цены в долларах', {
+            'fields': (('price_dollar', 'new_price_dollar'),),
+            'classes': ('sub_category',),
+        }),
+        ('Цены в евро', {
+            'fields': (('price_euro', 'new_price_euro'),),
+            'classes': ('sub_category',),
+        }),
+        ('Настройки опций', {
+            'fields': (('quantity_required_options', 'quantity_required_child_options', 'quantity_addition_options',
+                        'child_required'),),
+            'classes': ('sub_category',),
+        }),
+        ('Архив', {
+            'fields': ('archive',),
+            'classes': ('sub_category',),
+        }),
+        ('Seo', {
+            'fields': ('alt',),
+            'classes': ('collapse', 'sub_category'),
+        }),
+    )
 
 
-class CartAdmin(admin.TabularInline):
-    readonly_fields = ('product', 'price', 'quantity', 'total')
-    model = models.Cart
-    extra = 0
-
-
-class CartOptionsAdmin(admin.TabularInline):
-    readonly_fields = ('product', 'name', 'price')
+class CartOptionsAdmin(nested_admin.NestedStackedInline):
+    readonly_fields = ('name', 'price')
     model = models.CartOptions
     extra = 0
+    fieldsets = (
+        (None, {
+            'fields': (('name', 'price'),)
+        }),
+    )
 
 
-class OrderAdmin(admin.ModelAdmin):
-    inlines = [CartAdmin, CartOptionsAdmin, OrderImagesAdmin]
+class CartAdmin(nested_admin.NestedStackedInline):
+    readonly_fields = ('product', 'price', 'quantity', 'total')
+    model = models.Cart
+    inlines = [CartOptionsAdmin]
+    extra = 0
+    fieldsets = (
+        (None, {
+            'fields': (('product', 'price', 'quantity', 'total'),)
+        }),
+    )
+
+
+class OrderAdmin(nested_admin.NestedModelAdmin):
+    inlines = [CartAdmin, OrderImagesAdmin]
     list_display = ('__str__', 'date', 'get_status_html', 'total')
     list_display_links = ('__str__', 'date', 'total')
     readonly_fields = (

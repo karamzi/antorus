@@ -38,7 +38,6 @@ def index(request):
     context = {
         'products': products,
     }
-    print(render(request, 'index.html', context).content)
     return render(request, 'index.html', context)
 
 
