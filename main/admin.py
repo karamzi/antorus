@@ -3,6 +3,7 @@ from django import forms
 from ckeditor.widgets import CKEditorWidget
 from django.utils.safestring import mark_safe
 from main.utils.customAdminFilters import ProductArchiveFilter
+import re
 import nested_admin
 
 from .utils.email import Email
@@ -17,54 +18,61 @@ class ProductAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
-class RequiredOptionChildAdmin(nested_admin.NestedStackedInline):
-    model = models.RequiredOptionChild
-    extra = 1
-    fieldsets = (
-        (None, {
-            'fields': (('name', 'description'),),
-        }),
-        ('Цены в долларах', {
-            'fields': (('price_dollar', 'new_price_dollar'),),
-            'classes': ('sub_category',),
-        }),
-        ('Цены в евро', {
-            'fields': (('price_euro', 'new_price_euro'),),
-            'classes': ('sub_category',),
-        }),
-        ('Регион', {
-            'fields': (('us', 'eu'),),
-            'classes': ('sub_category',),
-        }),
-    )
-
-
-class RequiredOptionAdmin(nested_admin.NestedStackedInline):
-    model = models.RequiredOption
-    inlines = [RequiredOptionChildAdmin]
-    extra = 1
+class BaseOptions(admin.StackedInline):
+    extra = 0
     fieldsets = (
         (None, {
             'fields': (('name', 'description'),)
         }),
-        ('Цены в долларах', {
-            'fields': (('price_dollar', 'new_price_dollar'),),
-            'classes': ('sub_category',),
+        (None, {
+            'fields': (('price_dollar', 'new_price_dollar'),)
         }),
-        ('Цены в евро', {
-            'fields': (('price_euro', 'new_price_euro'),),
-            'classes': ('sub_category',),
+        (None, {
+            'fields': (('price_euro', 'new_price_euro'),)
         }),
-        ('Регион', {
-            'fields': (('us', 'eu'),),
-            'classes': ('sub_category',),
+        (None, {
+            'fields': (('us', 'eu'),)
         }),
     )
 
 
-class AdditionsOptionAdmin(nested_admin.NestedStackedInline):
-    model = models.AdditionOptions
+class RequiredOptionChildAdmin(admin.StackedInline):
+    model = models.RequiredOptionChild
     extra = 0
+    fieldsets = (
+        (None, {
+            'fields': ('required_option',)
+        }),
+        (None, {
+            'fields': (('name', 'description'),)
+        }),
+        (None, {
+            'fields': (('price_dollar', 'new_price_dollar'),)
+        }),
+        (None, {
+            'fields': (('price_euro', 'new_price_euro'),)
+        }),
+        (None, {
+            'fields': (('us', 'eu'),)
+        }),
+    )
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        path = request.path
+        if len(re.findall(r'/add/$', path)) > 0:
+            return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        digit = re.findall(r'\d+', path)
+        if db_field.name == 'required_option':
+            kwargs['queryset'] = models.RequiredOption.objects.filter(product_id=int(digit[0]))
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
+class RequiredOptionAdmin(BaseOptions):
+    model = models.RequiredOption
+
+
+class AdditionsOptionAdmin(BaseOptions):
+    model = models.AdditionOptions
 
 
 class OrderImagesAdmin(nested_admin.NestedStackedInline):
@@ -72,8 +80,8 @@ class OrderImagesAdmin(nested_admin.NestedStackedInline):
     extra = 0
 
 
-class ProductsAdmin(nested_admin.NestedModelAdmin):
-    inlines = [RequiredOptionAdmin, AdditionsOptionAdmin]
+class ProductsAdmin(admin.ModelAdmin):
+    inlines = [RequiredOptionAdmin, RequiredOptionChildAdmin, AdditionsOptionAdmin]
     form = ProductAdminForm
     list_display = ('name', 'category', 'price_dollar', 'price_euro')
     list_display_links = ('name', 'category', 'price_dollar', 'price_euro')

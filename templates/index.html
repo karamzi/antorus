@@ -13,21 +13,50 @@
     <style>
         body {
             background-image: none;
+            display: block;
         }
     </style>
 {% endblock %}
 
 {% block content %}
-    <div class="intro_section">
-        <div class="container">
-            <div class="intro_content">
-                <p>WELCOME TO ANTORUS</p>
-                <h2>SANCTUM OF DOMINATION</h2>
-                <div class="intro_buttons">
-                    <a href="/category/raids/sanctum-of-domination/">BROWSE PRODUCTS</a>
-                    <p id="chatButton">CHAT WITH US</p>
+    <div class="slider">
+        <div class="sliders">
+            <div data-id="0" class="intro_section slide_two">
+                <div class="container">
+                    <div class="intro_content content_one">
+                        <p>Antorus</p>
+                        <h2>World of Warcraft Boosting Service</h2>
+                        <p>Professional service that connects World of Warcraft players and boosters. our task is to
+                            make cooperation convenient and safe</p>
+                        <div class="intro_links">
+                            <a href="{% url 'category' slug='raids' %}">Raid</a>
+                            <a href="{% url 'category' slug='powerleveling' %}">Leveling</a>
+                            <a href="{% url 'category' slug='dungeons' %}">Dungeons</a>
+                            <a href="{% url 'category' slug='wow-the-burning-crusade' %}">WoW TBC</a>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div data-id="1" class="intro_section slide_one">
+                <div class="container">
+                    <div class="intro_content content_one">
+                        <p>New Raid</p>
+                        <h2>Sanctum of Domination Boost</h2>
+                        <p>Sanctum of Domination raid boost lets players open new location in Maw and fight jailer's
+                            forces. Take advantages of our professional team services and you'll defeat all the
+                            powerful
+                            underworld bosses</p>
+                        <div class="intro_buttons">
+                            <a href="/category/raids/sanctum-of-domination/">BROWSE PRODUCTS</a>
+                            <p id="chatButton">CHAT WITH US</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="switch_buttons">
+            <button data-id="0" class="switch_buttons_item switch_buttons_item_active"></button>
+            <button data-id="1" class="switch_buttons_item"></button>
         </div>
     </div>
     <div class="products_sections">
@@ -286,4 +315,6 @@
         </div>
     </div>
 {% endblock %}
-
+{% block scripts %}
+    <script src="{% static 'js/main_slider.js' %}"></script>
+{% endblock %}
