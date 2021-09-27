@@ -37,6 +37,7 @@ def index(request):
     products = BestOffersToday.objects.all()
     context = {
         'products': products,
+        'special_offers': products[:4],
     }
     return render(request, 'index.html', context)
 

@@ -61,6 +61,50 @@
     </div>
     <div class="products_sections">
         <div class="container">
+            <div class="special_offers">
+                <div class="slider_arrow left">
+                    <div class="arrow-top"></div>
+                    <div class="arrow-bottom"></div>
+                </div>
+                <div class="slider_arrow right">
+                    <div class="arrow-top"></div>
+                    <div class="arrow-bottom"></div>
+                </div>
+                <div class="special_offers_slider">
+                    <div class="special_offers_items">
+                        {% for product in special_offers %}
+                            <a data-id="{{ forloop.counter0 }}" class="product_item" href="{{ product.product.get_absolute_url }}">
+                                <img src="{{ product.product.image.url }}" alt="{{ product.product.alt }}">
+                                <h4 class="name">{{ product.product.name }}</h4>
+                                {% if currency == 'us' %}
+                                    {% if product.product.new_price_dollar %}
+                                        <div class="price">
+                                            <p style="text-decoration: line-through;">
+                                                $ {{ product.product.get_price_dollar }}</p>
+                                            <p style="color: rgb(40, 168, 5);">
+                                                $ {{ product.product.get_price_new_dollar }}</p>
+                                        </div>
+                                    {% else %}
+                                        <p>{{ product.product.get_price_us }}</p>
+                                    {% endif %}
+                                {% else %}
+                                    {% if product.product.new_price_euro %}
+                                        <div class="price">
+                                            <p style="text-decoration: line-through;">
+                                                € {{ product.product.get_price_euro }}</p>
+                                            <p style="color: rgb(40, 168, 5);">
+                                                € {{ product.product.get_price_new_euro }}</p>
+                                        </div>
+                                    {% else %}
+                                        <p>{{ product.product.get_price_eu }}</p>
+                                    {% endif %}
+                                {% endif %}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
             <div class="products_content">
                 <div id="nav_bar" class="nav_bar">
                     <nav>
@@ -317,4 +361,5 @@
 {% endblock %}
 {% block scripts %}
     <script src="{% static 'js/main_slider.js' %}"></script>
+    <script src="{% static 'js/special_offers_slider.js' %}"></script>
 {% endblock %}
