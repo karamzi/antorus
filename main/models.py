@@ -485,3 +485,16 @@ class SEO(models.Model):
     class Meta:
         verbose_name = 'SEO'
         verbose_name_plural = '8. SEO'
+
+
+class SpecialOffers(models.Model):
+    title = models.CharField(max_length=100, verbose_name='Название для главной страницы')
+    description = models.TextField(max_length=100, verbose_name='Описание для главной страницы')
+    product = models.OneToOneField(Products, on_delete=models.CASCADE, verbose_name='Продукт')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Специальное предложение'
+        verbose_name_plural = '9. Специальные предложения'

@@ -8,7 +8,7 @@ from main.utils.customAuth import CustomAuth
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday, AuthToken, \
-    Transactions, SEO
+    Transactions, SEO, SpecialOffers
 from .forms import RegisterUserForm
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
@@ -35,9 +35,10 @@ def global_var(request):
 
 def index(request):
     products = BestOffersToday.objects.all()
+    special_offers = SpecialOffers.objects.all()
     context = {
         'products': products,
-        'special_offers': products[:4],
+        'special_offers': special_offers,
     }
     return render(request, 'index.html', context)
 
