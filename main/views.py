@@ -45,7 +45,9 @@ def index(request):
 
 def search_products(request):
     if request.method == 'POST':
-        products = Products.objects.filter(name__icontains=request.POST['value'], draft=False, archive=False)[:10]
+        print(Products.objects.filter(specialoffers__isnull=False).count())
+        products = Products.objects.filter(name__icontains=request.POST['value'], draft=False, archive=False,
+                                           specialoffers__isnull=True)[:10]
         context = {
             'products': products,
             'search_value': request.POST['value']
@@ -56,9 +58,10 @@ def search_products(request):
 
 def search_result(request, search):
     if search == 'all':
-        products = Products.objects.filter(draft=False, archive=False)
+        products = Products.objects.filter(draft=False, archive=False, specialoffers__isnull=True)
     else:
-        products = Products.objects.filter(name__icontains=search, draft=False, archive=False)
+        products = Products.objects.filter(name__icontains=search, draft=False, archive=False,
+                                           specialoffers__isnull=True)
     context = {
         'products': products,
         'search': search,
@@ -72,7 +75,7 @@ def product(request, slug):
         product = Products.objects.get(slug=slug)
         if product.draft and not request.user.is_superuser:
             return redirect(reverse('index'))
-        products = product.category.products_category.filter(archive=False, draft=False)[:4]
+        products = product.category.products_category.filter(archive=False, draft=False, specialoffers__isnull=True)[:4]
         context = {
             'product': product,
             'products': products,
@@ -88,7 +91,7 @@ def product(request, slug):
 def category(request, slug):
     try:
         category = Categories.objects.get(slug=slug)
-        products = category.products_category.filter(draft=False, archive=False)
+        products = category.products_category.filter(draft=False, archive=False, specialoffers__isnull=True)
         context = {
             'category': category,
             'products': products
@@ -102,7 +105,7 @@ def subcategory(request, category, subcategory):
     try:
         sub_category = SubCategories.objects.get(slug=subcategory)
         category = Categories.objects.get(slug=category)
-        products = sub_category.products_subcategory.filter(draft=False)
+        products = sub_category.products_subcategory.filter(draft=False, archive=False, specialoffers__isnull=True)
         context = {
             'category': category,
             'sub_category': sub_category,
