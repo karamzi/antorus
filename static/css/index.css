@@ -300,6 +300,7 @@ body {
 .products_content {
     display: flex;
     justify-content: space-between;
+    margin-top: 20px;
 }
 
 .products_block {
@@ -322,7 +323,7 @@ body {
     flex-direction: column;
     margin-bottom: 50px;
     text-decoration: none;
-    min-width: 33.333333%;
+    width: 33.333333%;
     padding: 0 20px;
 }
 
