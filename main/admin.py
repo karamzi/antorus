@@ -18,44 +18,9 @@ class ProductAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
-class BaseOptions(admin.StackedInline):
-    extra = 0
-    fieldsets = (
-        (None, {
-            'fields': (('name', 'description'),)
-        }),
-        (None, {
-            'fields': (('price_dollar', 'new_price_dollar'),)
-        }),
-        (None, {
-            'fields': (('price_euro', 'new_price_euro'),)
-        }),
-        (None, {
-            'fields': (('us', 'eu'),)
-        }),
-    )
-
-
-class RequiredOptionChildAdmin(admin.StackedInline):
+class RequiredOptionChildAdmin(admin.TabularInline):
     model = models.RequiredOptionChild
     extra = 0
-    fieldsets = (
-        (None, {
-            'fields': ('required_option',)
-        }),
-        (None, {
-            'fields': (('name', 'description'),)
-        }),
-        (None, {
-            'fields': (('price_dollar', 'new_price_dollar'),)
-        }),
-        (None, {
-            'fields': (('price_euro', 'new_price_euro'),)
-        }),
-        (None, {
-            'fields': (('us', 'eu'),)
-        }),
-    )
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         path = request.path
@@ -67,11 +32,11 @@ class RequiredOptionChildAdmin(admin.StackedInline):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
-class RequiredOptionAdmin(BaseOptions):
+class RequiredOptionAdmin(admin.TabularInline):
     model = models.RequiredOption
 
 
-class AdditionsOptionAdmin(BaseOptions):
+class AdditionsOptionAdmin(admin.TabularInline):
     model = models.AdditionOptions
 
 
@@ -118,8 +83,8 @@ class ProductsAdmin(admin.ModelAdmin):
                         'child_required'),),
             'classes': ('sub_category',),
         }),
-        ('Архив', {
-            'fields': ('archive',),
+        ('Архив/Черновик', {
+            'fields': (('archive', 'draft'),),
             'classes': ('sub_category',),
         }),
         ('Seo', {

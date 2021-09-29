@@ -105,7 +105,7 @@ def subcategory(request, category, subcategory):
     try:
         sub_category = SubCategories.objects.get(slug=subcategory)
         category = Categories.objects.get(slug=category)
-        products = sub_category.products_subcategory.filter(draft=False, archive=False, specialoffers__isnull=True)
+        products = sub_category.products_subcategory.filter(draft=False, specialoffers__isnull=True)
         context = {
             'category': category,
             'sub_category': sub_category,
