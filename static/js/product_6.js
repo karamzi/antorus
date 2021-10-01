@@ -123,8 +123,13 @@ function hideChildOptions(option) {
                 Array.prototype.slice.call(array).splice(index, 1)
             }
         })
-        requiredChildChecked.splice(0, requiredChildChecked.length)
+
+        requiredChildChecked = requiredChildChecked.filter((item, index, array) => {
+            const parentId = item.closest('.option').getAttribute('data-parent-id')
+            return parentId !== option_id
+        })
     }
+     checkInputs(requiredChildInputs, quantityRequiredChildOptions, requiredChildChecked)
 }
 
 function setPrice() {

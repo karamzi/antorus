@@ -87,6 +87,10 @@ class ProductsAdmin(admin.ModelAdmin):
             'fields': (('archive', 'draft'),),
             'classes': ('sub_category',),
         }),
+        ('Порядок лота', {
+            'fields': ('product_order',),
+            'classes': ('sub_category',),
+        }),
         ('Seo', {
             'fields': ('alt',),
             'classes': ('collapse', 'sub_category'),
