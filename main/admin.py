@@ -34,10 +34,12 @@ class RequiredOptionChildAdmin(admin.TabularInline):
 
 class RequiredOptionAdmin(admin.TabularInline):
     model = models.RequiredOption
+    extra = 0
 
 
 class AdditionsOptionAdmin(admin.TabularInline):
     model = models.AdditionOptions
+    extra = 0
 
 
 class OrderImagesAdmin(nested_admin.NestedStackedInline):
