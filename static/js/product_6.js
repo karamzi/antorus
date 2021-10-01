@@ -120,16 +120,16 @@ function hideChildOptions(option) {
             if (parentId === option_id) {
                 item.closest('.child_option').style.display = 'none'
                 item.checked = false
-                Array.prototype.slice.call(array).splice(index, 1)
             }
         })
 
-        requiredChildChecked = requiredChildChecked.filter((item, index, array) => {
-            const parentId = item.closest('.option').getAttribute('data-parent-id')
-            return parentId !== option_id
-        })
+        for (let i = requiredChildChecked.length - 1; i >= 0; i--) {
+            const parentId = requiredChildChecked[i].closest('.option').getAttribute('data-parent-id')
+            if (parentId === option_id) {
+                requiredChildChecked.splice(i, 1)
+            }
+        }
     }
-     checkInputs(requiredChildInputs, quantityRequiredChildOptions, requiredChildChecked)
 }
 
 function setPrice() {
@@ -183,7 +183,7 @@ function setPrice() {
         priceEu = priceEu * quantity
         if (priceEu > 0) {
             priceHtml.innerText = '€ ' + ' ' + priceEu.toFixed(2)
-        } else if ( priceEu === 0) {
+        } else if (priceEu === 0) {
             priceHtml.innerHTML = '<p>Choose options to continue</p>'
         }
     }
