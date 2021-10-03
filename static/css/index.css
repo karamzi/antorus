@@ -67,7 +67,8 @@ body {
     padding-left: 0;
 }
 
-.content_one > h1 {
+.content_one > h2, .content_one > h1 {
+    text-align: center;
     color: white;
     font-weight: 900;
     user-select: none;
@@ -539,7 +540,7 @@ body {
         transition: all 1s ease-in;
     }
 
-    .content_one > h2 {
+    .content_one > h2, .content_one > h1 {
         font-size: 50px;
     }
 
@@ -606,7 +607,7 @@ body {
 }
 
 @media (max-width: 500px) {
-    .content_one > h2 {
+    .content_one > h2, .content_one > h1 {
         font-size: 30px;
     }
 
@@ -653,7 +654,7 @@ body {
 }
 
 @media (max-width: 450px) {
-    .content_one > h2 {
+    .content_one > h2, .content_one > h1 {
         font-size: 30px;
     }
 
