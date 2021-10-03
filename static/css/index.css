@@ -67,7 +67,7 @@ body {
     padding-left: 0;
 }
 
-.content_one > h2 {
+.content_one > h1 {
     color: white;
     font-weight: 900;
     user-select: none;
@@ -255,7 +255,7 @@ body {
 .special_offers_item > h4 {
     position: absolute;
     left: 15%;
-    top: 15%;
+    top: 19%;
     color: white;
     font-size: 20px;
     font-weight: 900;
@@ -267,33 +267,23 @@ body {
     top: 35%;
     font-size: 14px;
     color: white;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 .special_offers_item > a {
+    font-family: 'Lato', sans-serif;
     position: absolute;
     left: 15%;
-    top: 70%;
-    font-size: 14px;
+    top: 65%;
+    font-size: 10px;
     color: white;
     text-decoration: none;
-    padding: 5px 10px;
-    background-color: #00ad4e;
-}
-
-.special_offers_item > a {
-    position: absolute;
-    left: 15%;
-    top: 70%;
-    font-size: 15px;
-    color: white;
-    text-decoration: none;
-    padding: 5px 10px;
-    background-color: #00cc66;
+    padding: 10px 30px;
+    background-color: rgb(116, 184, 90);
 }
 
 .special_offers_item > a:hover {
-    background-color: #00FF00;
+    background-color: rgba(116, 184, 90, 0.8);
     transition: background-color 0.2s ease;
 }
 
@@ -657,7 +647,7 @@ body {
         font-size: 16px;
     }
 
-    .special_offers_item > a {
+    .special_offers_item > p {
         font-size: 12px;
     }
 }

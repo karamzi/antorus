@@ -5,7 +5,7 @@
     flex-grow: 1;
 }
 
-.products_block h1 {
+.products_block > h1 {
     font-size: 24px;
     width: 100%;
     font-weight: 700;
@@ -28,10 +28,16 @@
     line-height: 30px;
     text-align: justify;
     color: #8e8e8e;
-    white-space: pre-line;
     padding: 0 20px;
 }
 
+.category_description > h2 {
+    margin-bottom: 15px !important;
+}
+
+.category_description > p {
+    margin-bottom: 15px !important;
+}
 
 @media (max-width: 900px) {
     .products_block {

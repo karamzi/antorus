@@ -6,10 +6,16 @@ class SpecialOffersSlider {
     max_slides = 0
     id = 0
     move = 0
+    touchStartPosition = 0
 
     constructor() {
         this.right_button.addEventListener('click', () => this.switch_slide_right())
         this.left_button.addEventListener('click', () => this.switch_slide_left())
+        this.moveHendler = this.moveSlider.bind(this)
+        this.sections.forEach(item => item.addEventListener('touchstart', event => {
+            this.touchStartPosition = event.touches[0].clientX
+            window.addEventListener('touchmove', this.moveHendler)
+        }))
         window.addEventListener('resize', () => this.set_slider())
         this.set_slider()
     }
@@ -42,6 +48,19 @@ class SpecialOffersSlider {
     switch_slide_right() {
         this.increase_id()
         this.slider.style.transform = 'translateX(' + -this.move * this.id + '%)'
+    }
+
+    moveSlider(event) {
+        let difference = event.touches[0].clientX - this.touchStartPosition
+        if (difference < -70) {
+            window.removeEventListener('touchmove', this.moveHendler)
+            this.switch_slide_right()
+        }
+
+        if (difference > 70) {
+            window.removeEventListener('touchmove', this.moveHendler)
+            this.switch_slide_left()
+        }
     }
 
     increase_id() {
