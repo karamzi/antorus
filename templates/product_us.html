@@ -14,7 +14,73 @@
                 {% endif %}
             </div>
             <div class="product_content">
-                <div class="product_left">
+                <div id="nav_bar" class="nav_bar">
+                    <nav>
+                        {% for category in categories %}
+                            <div class="nav_link">
+                                <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                                {% if category.categories_subcategories.all %}
+                                    <span></span>
+                                {% endif %}
+                            </div>
+                            {% if category.categories_subcategories.all %}
+                                <div style="display: none" class="accordion">
+                                    {% for subcategory in category.categories_subcategories.all %}
+                                        {% if not subcategory.archive %}
+                                            <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="nav_link">
+                            <a href="/result/all/">All products</a>
+                        </div>
+                    </nav>
+                </div>
+
+                <div class="product_centre">
+                    {% if seo.h1 %}
+                        <h1 class="product_name">{{ seo.h1 }}</h1>
+                    {% else %}
+                        <h1 class="product_name">{{ product.name }}</h1>
+                    {% endif %}
+                    <div class="service">
+                        <div style="background: #00ad4e;" class="service_item">
+                            <img src="{% static 'img/safeboost.png' %}" alt="">
+                            <p>Safe Service</p>
+                            <span class="service_info">While working on accounts, we comply with all security measures. We do not use bots and scripts. We do not use in-game chat.</span>
+                        </div>
+                        <div style="background: #84ccdf;" class="service_item">
+                            <img src="{% static 'img/support_(1).png' %}" alt="">
+                            <p>24/7 Support</p>
+                            <span class="service_info">Our team works 24 hours per day.</span>
+                        </div>
+                        <div style="background: #6c47c6;" class="service_item">
+                            <img src="{% static 'img/ssl.png' %}" alt="">
+                            <p>SSL Secure</p>
+                            <span class="service_info">The site uses SSL protocol, it fully protects input data and information. We also use the HTTPS protocol to encrypt data.</span>
+                        </div>
+                        <div style="background: #006fff;" class="service_item">
+                            <img src="{% static 'img/vpn.png' %}" alt="">
+                            <p>VPN</p>
+                            <span class="service_info">We can use the VPN of your country.</span>
+                        </div>
+                        <div style="background: #ff9100;" class="service_item">
+                            <img src="{% static 'img/money-refund.png' %}" alt="">
+                            <p>Money refunds</p>
+                            <span class="service_info">We provide a full or partial refund if you change your mind or if there is an accident. You can learn more about this from the operator.</span>
+                        </div>
+                    </div>
+                    <h3>DESCRIPTION</h3>
+                    <div class="length">⏱️ Length: <span>{{ product.length }}</span></div>
+                    <div class="requirements">⚠️ Character Requirements: <span>{{ product.char_req }}</span></div>
+                    <div class="description">{{ product.description|safe }}</div>
+                    <h3>FEEL FREE TO CONTACT OUR OPERATORS ANY TIME FOR ANY FURTHER INFORMATION. WE ARE ALWAYS FOR YOUR
+                        SERVICE!</h3>
+                </div>
+
+                <div class="product_right">
                     <div class="product_img">
                         <img src="{{ product.image.url }}" alt="{{ product.alt }}">
                     </div>
@@ -185,48 +251,6 @@
                             </div>
                         {% endif %}
                     </div>
-                </div>
-
-
-                <div class="product_right">
-                    {% if seo.h1 %}
-                        <h1 class="product_name">{{ seo.h1 }}</h1>
-                    {% else %}
-                        <h1 class="product_name">{{ product.name }}</h1>
-                    {% endif %}
-                    <div class="service">
-                        <div style="background: #00ad4e;" class="service_item">
-                            <img src="{% static 'img/safeboost.png' %}" alt="">
-                            <p>Safe Service</p>
-                            <span class="service_info">While working on accounts, we comply with all security measures. We do not use bots and scripts. We do not use in-game chat.</span>
-                        </div>
-                        <div style="background: #84ccdf;" class="service_item">
-                            <img src="{% static 'img/support_(1).png' %}" alt="">
-                            <p>24/7 Support</p>
-                            <span class="service_info">Our team works 24 hours per day.</span>
-                        </div>
-                        <div style="background: #6c47c6;" class="service_item">
-                            <img src="{% static 'img/ssl.png' %}" alt="">
-                            <p>SSL Secure</p>
-                            <span class="service_info">The site uses SSL protocol, it fully protects input data and information. We also use the HTTPS protocol to encrypt data.</span>
-                        </div>
-                        <div style="background: #006fff;" class="service_item">
-                            <img src="{% static 'img/vpn.png' %}" alt="">
-                            <p>VPN</p>
-                            <span class="service_info">We can use the VPN of your country.</span>
-                        </div>
-                        <div style="background: #ff9100;" class="service_item">
-                            <img src="{% static 'img/money-refund.png' %}" alt="">
-                            <p>Money refunds</p>
-                            <span class="service_info">We provide a full or partial refund if you change your mind or if there is an accident. You can learn more about this from the operator.</span>
-                        </div>
-                    </div>
-                    <h3>DESCRIPTION</h3>
-                    <div class="length">⏱️ Length: <span>{{ product.length }}</span></div>
-                    <div class="requirements">⚠️ Character Requirements: <span>{{ product.char_req }}</span></div>
-                    <div class="description">{{ product.description|safe }}</div>
-                    <h3>FEEL FREE TO CONTACT OUR OPERATORS ANY TIME FOR ANY FURTHER INFORMATION. WE ARE ALWAYS FOR YOUR
-                        SERVICE!</h3>
                 </div>
             </div>
         </div>

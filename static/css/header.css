@@ -481,6 +481,35 @@ ______________________________________________ */
     }
 }
 
+@media (max-width: 1000px) {
+    .nav_bar {
+        display: none;
+    }
+
+    .logo {
+        justify-content: center;
+        width: 51%;
+    }
+
+    .burger_button {
+        width: 25%;
+    }
+
+    .search_bar {
+        display: none;
+    }
+
+    .logo {
+        justify-content: center;
+        width: 51%;
+    }
+
+    .burger_button {
+        display: flex;
+    }
+
+}
+
 @media (max-width: 830px) {
     .cart {
         width: 10%;
@@ -492,21 +521,6 @@ ______________________________________________ */
 
     .nav_bar {
         width: 30%;
-    }
-}
-
-@media (max-width: 750px) {
-    .search_bar {
-        display: none;
-    }
-
-    .logo {
-        justify-content: center;
-        width: 51%;
-    }
-
-    .burger_button {
-        width: 25%;
     }
 }
 

@@ -509,23 +509,14 @@ body {
 
 @media (max-width: 1100px) {
     .accordion a, .nav_link>a {
-        font-size: 14px;
+        font-size: 12px;
     }
 }
 
-@media (max-width: 900px) {
-    .product_item {
-        width: 50%;
-    }
-
+@media (max-width: 1000px) {
     .products_block {
-        width: 68%;
+        width: 100%;
     }
-
-    .products_content>.nav_bar {
-        width: 32%;
-    }
-
 }
 
 @media (max-width: 830px) {
@@ -533,6 +524,9 @@ body {
         padding: 60px 10px 40px;
     }
 
+    .product_item {
+        width: 50%;
+    }
 }
 
 @media (max-width: 750px) {

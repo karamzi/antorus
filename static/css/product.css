@@ -8,6 +8,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 15px;
+    padding: 0 15px;
 }
 
 .product_nav a {
@@ -38,8 +39,13 @@
     justify-content: space-between;
 }
 
-.product_left {
-    width: 35%;
+.product_content > .nav_bar {
+    width: 22%;
+    padding-right: 15px;
+}
+
+.product_right {
+    width: 28%;
 }
 
 .product_img img {
@@ -226,11 +232,12 @@
     transition: all 0.3s ease;
 }
 
-.product_right {
-    width: 60%;
+.product_centre {
+    width: 50%;
+    padding: 0 15px;
 }
 
-.product_right .product_name {
+.product_centre .product_name {
     color: white;
     text-transform: uppercase;
     font-size: 24px;
@@ -280,7 +287,7 @@
     left: -50%;
 }
 
-.product_right h3 {
+.product_centre h3 {
     color: rgb(40, 168, 5);
     font-size: 18px;
     font-weight: 700;
@@ -301,7 +308,7 @@
     color: rgb(142, 142, 142);
 }
 
-.product_right .description {
+.product_centre .description {
     margin-top: 20px;
     color: rgb(142, 142, 142);
     font-size: 16px;
@@ -310,20 +317,20 @@
     text-align: justify;
 }
 
-.product_right .description p, .product_right .description li {
+.product_centre .description p, .product_centre .description li {
     margin-bottom: 10px;
 }
 
-.product_right .description a {
+.product_centre .description a {
     text-decoration: none;
     color: white;
 }
 
-.product_right .description strong {
+.product_centre .description strong {
     font-weight: 900;
 }
 
-.product_right .description span {
+.product_centre .description span {
     color: white;
 }
 
@@ -421,6 +428,22 @@
 }
 
 
+@media (max-width: 1000px) {
+
+    .product_centre {
+        width: 65%;
+    }
+
+    .product_right {
+        width: 35%;
+    }
+
+    .product_nav a {
+        font-size: 12px;
+    }
+}
+
+
 @media (max-width: 900px) {
     .suggestions_switch_buttons {
         display: flex;
@@ -429,24 +452,24 @@
 }
 
 @media (max-width: 850px) {
-    .product_right .description {
+    .product_centre .description {
         font-size: 14px;
     }
 }
 
 @media (max-width: 700px) {
     .product_content {
-        flex-direction: column;
+        flex-direction: column-reverse;
         flex-wrap: wrap;
         align-items: center;
     }
 
-    .product_left {
-        width: 60%;
+    .product_right {
+        width: 100%;
         margin-bottom: 30px;
     }
 
-    .product_right {
+    .product_centre {
         width: 100%;
     }
 
@@ -464,7 +487,7 @@
 }
 
 @media (max-width: 500px) {
-    .product_left {
+    .product_right {
         width: 95%;
     }
 

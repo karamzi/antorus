@@ -54,7 +54,7 @@ form input {
 }
 
 .container {
-    max-width: 1170px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 0 10px;
 }
@@ -242,10 +242,6 @@ form input {
 }
 
 @media (max-width: 750px) {
-    .nav_bar {
-        width: 100%;
-    }
-
     #nav_bar {
         display: none;
     }
