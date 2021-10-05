@@ -482,7 +482,7 @@ ______________________________________________ */
 }
 
 @media (max-width: 1000px) {
-    .nav_bar {
+    .container .nav_bar {
         display: none;
     }
 
