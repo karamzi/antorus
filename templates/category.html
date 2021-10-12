@@ -7,33 +7,35 @@
     <div class="products_sections">
         <div class="container">
             <div class="products_content">
-                <div id="nav_bar" class="nav_bar">
-                    <p>CATEGORIES</p>
-                    <nav>
-                        {% for item in categories %}
-                            <div {% if category.name == item.name %}class="nav_link active open"
-                                 {% else %}class="nav_link"{% endif %}>
-                                <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>
-                                {% if item.categories_subcategories.all %}
-                                    <span></span>
-                                {% endif %}
-                            </div>
-                            {% if item.categories_subcategories.all %}
-                                <div {% if category.name == item.name %}style="display: flex; height: 100%"
-                                     {% else %}style="display: none"{% endif %} class="accordion">
-                                    {% for subcategory in item.categories_subcategories.all %}
-                                        {% if not subcategory.archive %}
-                                            <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
-                                        {% endif %}
-                                    {% endfor %}
+                <noindex>
+                    <div id="nav_bar" class="nav_bar">
+                        <p>CATEGORIES</p>
+                        <nav>
+                            {% for item in categories %}
+                                <div {% if category.name == item.name %}class="nav_link active open"
+                                     {% else %}class="nav_link"{% endif %}>
+                                    <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>
+                                    {% if item.categories_subcategories.all %}
+                                        <span></span>
+                                    {% endif %}
                                 </div>
-                            {% endif %}
-                        {% endfor %}
-                        <div class="nav_link">
-                            <a href="/result/all/">All products</a>
-                        </div>
-                    </nav>
-                </div>
+                                {% if item.categories_subcategories.all %}
+                                    <div {% if category.name == item.name %}style="display: flex; height: 100%"
+                                         {% else %}style="display: none"{% endif %} class="accordion">
+                                        {% for subcategory in item.categories_subcategories.all %}
+                                            {% if not subcategory.archive %}
+                                                <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="nav_link">
+                                <a href="/result/all/">All products</a>
+                            </div>
+                        </nav>
+                    </div>
+                </noindex>
                 <div class="products_block">
                     {% if seo.h1 %}
                         <h1>{{ seo.h1 }}</h1>
