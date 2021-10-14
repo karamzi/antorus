@@ -4,7 +4,7 @@ body {
     display: block;
 }
 
-/* intro_section
+/* main slider
 ========================= */
 
 .slider {
@@ -26,8 +26,8 @@ body {
 }
 
 .switch_buttons_item {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     background: #fff;
     border-radius: 50%;
     margin: 0 5px;
@@ -153,7 +153,10 @@ body {
     transition: color .3s ease-in;
 }
 
-/* slider arrow
+/* END main slider
+========================= */
+
+/* special offer slider arrow
 =========================== */
 .slider_arrow {
     display: none;
@@ -224,14 +227,25 @@ body {
     transition-delay: 0s;
 }
 
-/* products_section
+/* END special offer slider arrow
+=========================== */
+
+/* special offers section
 ========================= */
+
+.special_offers_title {
+    font-size: 25px;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 80px;
+}
 
 .special_offers {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 35px;
+    margin-bottom: 75px;
 }
 
 .special_offers_slider {
@@ -288,67 +302,129 @@ body {
     transition: background-color 0.2s ease;
 }
 
+/* END special offers section
+========================= */
+
+/* products section
+========================= */
+
 .products_content {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
 
-.products_block {
-    width: 75%;
+
+.nav_bar > p {
+    font-size: 25px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 40px;
 }
 
-.products_block h2 {
-    font-size: 24px;
-    width: 100%;
-    font-weight: 400;
-    text-align: center;
-    color: white;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgb(47, 47, 47);
-    user-select: none;
+.products_block {
+    max-width: 945px;
+}
+
+.products_block > .products {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.products_block h2, .products_block h1 {
+    font-size: 25px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 40px;
+    padding: 0 20px;
 }
 
 .product_item {
     display: flex;
     flex-direction: column;
-    margin-bottom: 50px;
-    text-decoration: none;
-    width: 33.333333%;
+    justify-content: space-between;
+    margin-bottom: 65px;
+    width: 33.33333%;
+    min-width: 300px;
     padding: 0 20px;
 }
 
 .product_item img {
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
 }
 
-.product_item h4 {
+.product_item > a {
+    font-size: 17px;
     text-decoration: none;
     color: white;
-    text-align: center;
-    line-height: 30px;
-    margin-bottom: 5px;
+    line-height: 24px;
+    margin-bottom: 10px;
     width: 100%;
+    font-weight: 700;
 }
 
-.product_item h4:hover {
-    color: rgb(189, 189, 189);
+.product_item > a:hover {
+    color: #b9b9b9;
     transition: color 0.3s ease;
 }
 
-.product_item p {
+.product_item h5 {
+    font-weight: 400;
+    color: #b9b9b9;
+    font-size: 14px;
+    line-height: 24px;
+    margin-bottom: 15px;
+}
+
+.product_item > p {
     color: rgb(189, 189, 189);
     text-align: center;
 }
 
-.price {
+.item_footer {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }
 
-.price p {
-    margin-right: 5px;
+.item_price {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.item_price > p:first-child {
+    color: #b9b9b9;
+    font-size: 14px;
+}
+
+.item_price > p:last-child {
+    color: #fff;
+    font-size: 21px;
+}
+
+.discount_price > p:first-child {
+    font-size: 16px;
+    text-decoration: line-through;
+}
+
+.item_footer > .buy_button {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    background-color: #00ad4e;
+    width: 130px;
+    padding: 14px 0;
+}
+
+.item_footer > .buy_button:hover {
+    transition: background-color 0.3s ease;
+    background-color: #00cc66;
 }
 
 .show_all {
@@ -361,6 +437,9 @@ body {
     width: 200px;
     text-align: center;
 }
+
+/* END products section
+========================= */
 
 /* copywriting_section
 ========================= */
@@ -410,6 +489,9 @@ body {
     margin-bottom: 10px;
 }
 
+/* END copywriting_section
+========================= */
+
 /* about_section
 ========================= */
 
@@ -457,16 +539,22 @@ body {
     line-height: 25px;
 }
 
-/* reviews_section
+/* END about_section
 ========================= */
 
-.container > h2 {
+/* trustpilot section
+========================= */
+
+.reviews_section h2 {
     color: white;
     text-align: center;
     font-size: 30px;
     font-weight: 400;
     margin-bottom: 30px;
 }
+
+/* END trustpilot section
+========================= */
 
 /* reviews_section
 ========================= */
@@ -507,11 +595,8 @@ body {
     transition: color 0.3s ease;
 }
 
-@media (max-width: 1100px) {
-    .accordion a, .nav_link>a {
-        font-size: 12px;
-    }
-}
+/* END reviews_section
+========================= */
 
 @media (max-width: 1000px) {
     .products_block {

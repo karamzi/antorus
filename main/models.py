@@ -183,7 +183,7 @@ class Products(models.Model):
                     min_price = item.new_price_dollar
                 elif min_price > item.price_dollar > 1:
                     min_price = item.price_dollar
-            return 'from $ ' + str(to_fixed(min_price, 2))
+            return '$ ' + str(to_fixed(min_price, 2))
 
     def get_price_eu(self):
         if self.price_euro:
@@ -201,7 +201,7 @@ class Products(models.Model):
                     min_price = item.new_price_euro
                 elif min_price > item.price_euro > 1:
                     min_price = item.price_euro
-            return 'from € ' + str(to_fixed(min_price, 2))
+            return '€ ' + str(to_fixed(min_price, 2))
 
     class Meta:
         verbose_name = 'Товар'

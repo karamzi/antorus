@@ -9,7 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com"/>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet"/>
     <!-- End Fonts -->
-    <link rel="stylesheet" href="{% static 'style/bundle1633429342059.css' %}"/>
+    <link rel="stylesheet" href="{% static 'style/bundle1634249868060.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="icon" href="{% static 'img/logo.png' %}"/>
     <!-- TrustBox script -->
     <script src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
@@ -177,37 +179,39 @@
         </div>
     </div>
 </div>
-<div class="mobile_menu">
-    <div class="mobile_menu_header">
-        <span class="close_button"></span>
-    </div>
-    <div class="nav_bar">
-        <nav>
-            {% for item in categories %}
-                <div {% if category.name == item.name %}class="nav_link active open"
-                     {% else %}class="nav_link"{% endif %}>
-                    <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>
-                    {% if item.categories_subcategories.all %}
-                        <span></span>
-                    {% endif %}
-                </div>
-                {% if item.categories_subcategories.all %}
-                    <div {% if category.name == item.name %}style="display: flex; height: 100%"
-                         {% else %}style="display: none"{% endif %} class="accordion">
-                        {% for subcategory in item.categories_subcategories.all %}
-                            {% if not subcategory.archive %}
-                                <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
-                            {% endif %}
-                        {% endfor %}
+<noindex>
+    <div class="mobile_menu">
+        <div class="mobile_menu_header">
+            <span class="close_button"></span>
+        </div>
+        <div class="nav_bar">
+            <nav>
+                {% for item in categories %}
+                    <div {% if category.name == item.name %}class="nav_link active open"
+                         {% else %}class="nav_link"{% endif %}>
+                        <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>
+                        {% if item.categories_subcategories.all %}
+                            <span></span>
+                        {% endif %}
                     </div>
-                {% endif %}
-            {% endfor %}
-            <div class="nav_link">
-                <a href="/result/all/">All products</a>
-            </div>
-        </nav>
+                    {% if item.categories_subcategories.all %}
+                        <div {% if category.name == item.name %}style="display: flex; height: 100%"
+                             {% else %}style="display: none"{% endif %} class="accordion">
+                            {% for subcategory in item.categories_subcategories.all %}
+                                {% if not subcategory.archive %}
+                                    <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <div class="nav_link">
+                    <a href="/result/all/">All products</a>
+                </div>
+            </nav>
+        </div>
     </div>
-</div>
+</noindex>
 <div id="cookie" class="section_cookie">
     <div class="container">
         <div class="cookie_info">

@@ -7,12 +7,6 @@
 	--tick-color: rgb(46, 157, 16);
 }
 
-h1 {
-	color: var(--checkbox-color);
-	font-size: 3rem;
-	margin: 50px 0;
-}
-
 .custom {
 	display: inline-block;
 	width: var(--checkbox-size);

@@ -59,16 +59,13 @@ form input {
     padding: 0 10px;
 }
 
-.products_content  > .nav_bar {
-    width: 23%;
-}
+/* nav bar
+========================= */
 
-.nav_bar p {
-    color: white;
-    font-size: 14px;
-    border-bottom: 1px solid rgb(47, 47, 47);
-    padding-bottom: 26px;
-    margin-bottom: 26px;
+.nav_bar {
+    width: 295px;
+    min-width: 295px;
+    margin-right: 40px;
 }
 
 .nav_link {
@@ -163,6 +160,12 @@ form input {
     transform: rotate(0deg);
 }
 
+/* END nav bar
+========================= */
+
+/* cookie section
+========================= */
+
 .section_cookie {
     position: fixed;
     bottom: 0;
@@ -197,6 +200,12 @@ form input {
     cursor: pointer;
     white-space: nowrap;
 }
+
+/* END cookie section
+========================= */
+
+/* mobile menu
+========================= */
 
 .mobile_menu_header {
     height: 50px;
@@ -241,6 +250,15 @@ form input {
     transition: left 0.3s ease;
 }
 
+/* END mobile menu
+========================= */
+
+@media (max-width: 1200px) {
+    .products_block > .products {
+        justify-content: space-around;
+    }
+}
+
 @media (max-width: 750px) {
     #nav_bar {
         display: none;
@@ -265,6 +283,12 @@ form input {
     .cookie_accept {
         margin-bottom: 20px;
         padding: 10px 80px;
+    }
+}
+
+@media (max-width: 450px) {
+    .products_block h2, .products_block h1 {
+        text-align: center;
     }
 }
 
