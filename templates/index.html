@@ -25,7 +25,7 @@
                 <div class="container">
                     <div class="intro_content content_one">
                         <p>Antorus</p>
-                        <h1>World of Warcraft Boosting Service</h1>
+                        <h1>World of Warcraft Boosting Services</h1>
                         <p>Professional service that connects World of Warcraft players and boosters. our task is to
                             make cooperation convenient and safe</p>
                         <div class="intro_links">
@@ -48,7 +48,7 @@
                             underworld bosses</p>
                         <div class="intro_buttons">
                             <a href="/category/raids/sanctum-of-domination/">BROWSE PRODUCTS</a>
-                            <p id="chatButton">CHAT WITH US</p>
+                            <p class="chatButton">CHAT WITH US</p>
                         </div>
                     </div>
                 </div>
@@ -118,10 +118,12 @@
                     <div class="products">
                         {% for product in products %}
                             <div class="product_item">
-                                <img src="{{ product.product.image.url }}" alt="{{ product.product.alt }}">
+                                <a href="{{ product.product.get_absolute_url }}">
+                                    <img src="{{ product.product.image.url }}" alt="{{ product.product.alt }}">
+                                </a>
                                 <a href="{{ product.product.get_absolute_url }}"
                                    class="name">{{ product.product.name }}</a>
-                                <h5>10/10 bosses killed in Normal difficulty.<br> 226-233 ilvl gear loot</h5>
+                                <h5>{{ product.product.short_description|safe }}</h5>
                                 <div class="item_footer">
                                     {% if currency == 'us' %}
                                         <div class="item_price">
@@ -148,9 +150,18 @@
                                             {% endif %}
                                         </div>
                                     {% endif %}
-                                    <a href="" class="buy_button">BUY NOW</a>
+                                    <a href="{{ product.product.get_absolute_url }}" class="buy_button">BUY NOW</a>
                                 </div>
                             </div>
+                            {% if forloop.counter == 6 %}
+                                <div class="custom_order_banner">
+                                    <h5>Need Help?<br> Build your custom order</h5>
+                                    <p class="custom_order_banner_content">Message us and get help from a PRO player.<br>
+                                        We will find the best offer for you or build<br>
+                                        a personal order at a lower price. </p>
+                                    <p class="create_custom_order_button chatButton">CREATE CUSTOM ORDER</p>
+                                </div>
+                            {% endif %}
                         {% endfor %}
                     </div>
                     <div class="show_all">

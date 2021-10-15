@@ -189,11 +189,13 @@ document.body.addEventListener('click', function (e) {
     }
 })
 
-const chatButton = document.getElementById('chatButton')
+const chatButtons = document.querySelectorAll('.chatButton')
 
-if (chatButton) {
-    chatButton.addEventListener('click', () => {
-        tidioChatApi.open()
+if (chatButtons) {
+    chatButtons.forEach(item => {
+        item.addEventListener('click', () => {
+            tidioChatApi.open()
+        })
     })
 }
 
@@ -238,3 +240,9 @@ burgerButton.addEventListener('click', () => {
 closeButton.addEventListener('click', () => {
     mobileMenu.classList.remove('in')
 })
+
+const customOrderButton = document.getElementById('custom_order_button')
+
+if (customOrderButton) {
+    document.getElementById('chatButton').click()
+}

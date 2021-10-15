@@ -62,7 +62,7 @@ class ProductsAdmin(admin.ModelAdmin):
             'classes': ('sub_category',),
         }),
         (None, {
-            'fields': ('description',)
+            'fields': ('short_description', 'description')
         }),
         ('Изображения', {
             'fields': (('image', 'thumb'),),

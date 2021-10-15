@@ -46,9 +46,11 @@
                     <div class="products">
                         {% for product in products %}
                             <div class="product_item">
-                                <img src="{{ product.image.url }}" alt="{{ product.alt }}">
+                                <a href="{{ product.get_absolute_url }}">
+                                    <img src="{{ product.image.url }}" alt="{{ product.alt }}">
+                                </a>
                                 <a href="{{ product.get_absolute_url }}" class="name">{{ product.name }}</a>
-                                <h5>10/10 bosses killed in Normal difficulty.<br> 226-233 ilvl gear loot</h5>
+                                <h5>{{ product.short_description|safe }}</h5>
                                 <div class="item_footer">
                                     {% if currency == 'us' %}
                                         <div class="item_price">
@@ -75,7 +77,7 @@
                                             {% endif %}
                                         </div>
                                     {% endif %}
-                                    <a href="" class="buy_button">BUY NOW</a>
+                                    <a href="{{ product.get_absolute_url }}" class="buy_button">BUY NOW</a>
                                 </div>
                             </div>
                         {% endfor %}

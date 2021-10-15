@@ -86,7 +86,9 @@ class Products(models.Model):
                                  on_delete=models.PROTECT)
     subcategory = models.ForeignKey(SubCategories, related_name='products_subcategory', blank=True, null=True,
                                     verbose_name='Подкатегория', on_delete=models.PROTECT)
+    # TODO убрать blank=True
     name = models.CharField(max_length=255, verbose_name='Название товара', unique=True)
+    short_description = models.TextField(verbose_name='Короткое описание', blank=True)
     description = models.TextField(verbose_name='Описание')
     product_order = models.SmallIntegerField(verbose_name='Порядок лота', default=0)
     image = models.ImageField(verbose_name='Изображение', upload_to=get_img_path)

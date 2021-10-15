@@ -427,6 +427,74 @@ body {
     background-color: #00cc66;
 }
 
+.custom_order_banner {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    background-image: url("../img/custom_order_banner.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-items: center;
+    width: 100%;
+    min-height: 120px;
+    margin-bottom: 65px;
+    border: 3px solid #007233;
+    box-shadow: 0 0 15px 5px rgba(0, 114, 51, 0.4);
+    padding: 15px;
+}
+
+.custom_order_banner:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.34);
+    z-index: 1;
+}
+
+.custom_order_banner > h5 {
+    position: relative;
+    color: #fff;
+    font-size: 23px;
+    line-height: 30px;
+    width: 250px;
+    min-width: 250px;
+    z-index: 2;
+    padding: 5px 0;
+}
+
+.custom_order_banner_content {
+    color: #fff;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 400;
+    width: 270px;
+    min-width: 270px;
+    padding: 15px 0;
+}
+
+.create_custom_order_button {
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+    font-size: 11px;
+    color: #fff;
+    font-weight: 700;
+    background-color: #00ad4e;
+    width: 170px;
+    min-width: 170px;
+    padding: 15px 0;
+    z-index: 2;
+}
+
+.create_custom_order_button:hover {
+    background-color: #00cc66;
+    transition: background-color 0.3s ease;
+}
+
 .show_all {
     display: flex;
     justify-content: center;
