@@ -103,12 +103,12 @@ body {
     text-decoration: none;
     letter-spacing: 2px;
     color: white;
-    background-color: rgba(4, 211, 56, 0.9);
+    background-color: #00ad4e;
     padding: 20px 25px;
 }
 
 .intro_buttons a:hover, .show_all a:hover {
-    background-color: rgb(117, 244, 78);
+    background-color: #00cc66;
     transition: background-color 0.3s ease;
 }
 
@@ -149,7 +149,7 @@ body {
 }
 
 .intro_links a:hover {
-    color: #00ad4e;
+    color: #00cc66;
     transition: color .3s ease-in;
 }
 
@@ -238,6 +238,7 @@ body {
     font-weight: 700;
     color: #fff;
     margin-top: 80px;
+    padding: 0 10px;
 }
 
 .special_offers {
@@ -294,11 +295,11 @@ body {
     color: white;
     text-decoration: none;
     padding: 10px 30px;
-    background-color: rgb(116, 184, 90);
+    background-color: #00ad4e;
 }
 
 .special_offers_item > a:hover {
-    background-color: rgba(116, 184, 90, 0.8);
+    background-color: #00cc66;
     transition: background-color 0.2s ease;
 }
 
@@ -312,6 +313,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    padding: 0 10px;
 }
 
 
@@ -329,7 +331,6 @@ body {
 .products_block > .products {
     margin-top: 20px;
     display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
 }
 

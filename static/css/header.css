@@ -85,7 +85,7 @@ ______________________________________________ */
 }
 
 .lost_password_link a {
-    color: rgb(46, 157, 16);
+    color: #00ad4e;
     text-decoration: none;
     font-size: 16px;
     font-weight: 400;
@@ -110,7 +110,7 @@ ______________________________________________ */
 
 .new_client a {
     text-decoration: none;
-    color: rgb(46, 157, 16);
+    color: #00ad4e;
     font-weight: 400;
     font-size: 16px;
 }
@@ -208,7 +208,7 @@ ______________________________________________ */
 }
 
 #us.active_currency, #eu.active_currency {
-    background-color: #45db428c;
+    background-color: #00ad4e;
 }
 
 .cart {
@@ -226,7 +226,7 @@ ______________________________________________ */
     height: 20px;
     width: 20px;
     border-radius: 50%;
-    background-color: #45db428c;
+    background-color: #00ad4e;
     top: -2px;
     right: -8px;
 }
@@ -269,7 +269,7 @@ ______________________________________________ */
 }
 
 .search_title a:hover, .product_info a:hover {
-    color: #45db428c;
+    color: #00cc66;
     transition: color 0.3s ease;
 }
 

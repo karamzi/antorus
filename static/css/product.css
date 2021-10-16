@@ -18,7 +18,7 @@
 }
 
 .product_nav a:hover {
-    color: #00ad4e;
+    color: #00cc66;
     transition: color 0.3s ease;
 }
 
@@ -98,7 +98,7 @@
 }
 
 .option_new_price {
-    color: rgb(40, 168, 5);
+    color: #00ad4e;
     font-size: 16px;
     margin-left: 10px;
     font-weight: 400;
@@ -210,7 +210,7 @@
     align-items: center;
     height: 40px;
     width: 180px;
-    background-color: rgb(107, 216, 41);
+    background-color: #00ad4e;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -223,13 +223,14 @@
 }
 
 .add_to_cart:hover {
-    background-color: rgb(142, 142, 142);
+    background-color: #00cc66;
     transition: all 0.3s ease;
 }
 
 .product_centre {
     width: 50%;
     padding: 0 15px;
+    margin-right: 40px;
 }
 
 .product_centre .product_name {
