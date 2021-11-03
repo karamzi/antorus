@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import datetime
 from os.path import splitext
+
+from django.db.models import Min
 from django.shortcuts import reverse
 from easy_thumbnails.fields import ThumbnailerImageField
 from django.contrib.auth.models import User
@@ -114,6 +116,13 @@ class Products(models.Model):
     alt = models.CharField(max_length=255, blank=True, null=True)
     archive = models.BooleanField(default=False, verbose_name='Архив')
 
+    annotate_dict = {
+        'price_dollar_min': Min('product_required_option__price_dollar'),
+        'new_price_dollar_min': Min('product_required_option__new_price_dollar'),
+        'price_euro_min': Min('product_required_option__price_euro'),
+        'new_price_euro_min': Min('product_required_option__new_price_euro'),
+    }
+
     def __str__(self):
         return self.name
 
@@ -124,11 +133,13 @@ class Products(models.Model):
         return self.product_required_option.filter(eu=True).count()
 
     def save(self, *args, **kwargs):
+        # add slug
         if not self.slug:
             slug = self.name.strip()
             slug = slug.lower()
             slug = slug.replace(' ', '-')
             self.slug = slug
+        # add HTML tag in description for SEO
         description = self.description
         pattern = r'(<a([^<]*)</a>)'
         find = re.findall(pattern, description)
@@ -173,37 +184,19 @@ class Products(models.Model):
         if self.price_dollar:
             return '$ ' + str(to_fixed(self.price_dollar, 2))
         else:
-            req_options = self.product_required_option.all()
-            min_price = 100000
-            for item in req_options:
-                if item.new_price_dollar and item.new_price_dollar < min_price:
-                    min_price = item.new_price_dollar
-                elif item.price_dollar < min_price and item.price_dollar != 0:
-                    min_price = item.price_dollar
-            for item in self.product_required_option_child.all():
-                if item.new_price_dollar and item.new_price_dollar < min_price:
-                    min_price = item.new_price_dollar
-                elif min_price > item.price_dollar > 1:
-                    min_price = item.price_dollar
-            return '$ ' + str(to_fixed(min_price, 2))
+            # this attrs have been added by function annotate. Look at line 119
+            if self.new_price_dollar_min and self.new_price_dollar_min < self.price_dollar_min:
+                return '$ ' + str(to_fixed(self.new_price_dollar_min, 2))
+            return '$ ' + str(to_fixed(self.price_dollar_min, 2))
 
     def get_price_eu(self):
         if self.price_euro:
             return '€ ' + str(to_fixed(self.price_euro, 2))
         else:
-            req_options = self.product_required_option.all()
-            min_price = 100000
-            for item in req_options:
-                if item.new_price_euro and item.new_price_euro < min_price:
-                    min_price = item.new_price_euro
-                elif item.price_euro < min_price and item.price_euro != 0:
-                    min_price = item.price_euro
-            for item in self.product_required_option_child.all():
-                if item.new_price_euro and item.new_price_euro < min_price:
-                    min_price = item.new_price_euro
-                elif min_price > item.price_euro > 1:
-                    min_price = item.price_euro
-            return '€ ' + str(to_fixed(min_price, 2))
+            # this attrs have been added in views.py index function by function aggregate
+            if self.new_price_euro_min and self.new_price_euro_min < self.price_euro_min:
+                return '€ ' + str(to_fixed(self.new_price_euro_min, 2))
+            return '€ ' + str(to_fixed(self.price_euro_min, 2))
 
     class Meta:
         verbose_name = 'Товар'

@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday, AuthToken, \
     Transactions, SEO, SpecialOffers
 from .forms import RegisterUserForm
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 from django.views.decorators.csrf import csrf_exempt
 import base64
 import json
@@ -19,7 +19,7 @@ from .utils.email import Email
 
 
 def global_var(request):
-    categories = Categories.objects.filter(archive=False)
+    categories = Categories.objects.prefetch_related('categories_subcategories').filter(archive=False)
     currency = request.COOKIES.get('currency', 'us')
     path = request.path
     try:
@@ -34,8 +34,11 @@ def global_var(request):
 
 
 def index(request):
-    products = BestOffersToday.objects.all()
-    special_offers = SpecialOffers.objects.all()
+    products = BestOffersToday.objects.prefetch_related(Prefetch(
+        'product',
+        queryset=Products.objects.annotate(**Products.annotate_dict),
+    )).all()
+    special_offers = SpecialOffers.objects.select_related('product').all()
     context = {
         'products': products,
         'special_offers': special_offers,
@@ -45,7 +48,6 @@ def index(request):
 
 def search_products(request):
     if request.method == 'POST':
-        print(Products.objects.filter(specialoffers__isnull=False).count())
         products = Products.objects.filter(name__icontains=request.POST['value'], draft=False, archive=False,
                                            specialoffers__isnull=True)[:10]
         context = {
@@ -72,10 +74,13 @@ def search_result(request, search):
 def product(request, slug):
     currency = request.COOKIES.get('currency', 'us')
     try:
-        product = Products.objects.get(slug=slug)
+        prefetch_options = ['category', 'subcategory', 'product_required_option', 'product_addition_option',
+                            'product_required_option__required_option_child__product']
+        product = Products.objects.prefetch_related(*prefetch_options).get(slug=slug)
         if product.draft and not request.user.is_superuser:
             return redirect(reverse('index'))
-        products = product.category.products_category.filter(archive=False, draft=False, specialoffers__isnull=True)[:4]
+        products = product.category.products_category.annotate(
+            **Products.annotate_dict).filter(archive=False, draft=False, specialoffers__isnull=True)[:4]
         context = {
             'product': product,
             'products': products,
@@ -91,7 +96,8 @@ def product(request, slug):
 def category(request, slug):
     try:
         category = Categories.objects.get(slug=slug)
-        products = category.products_category.filter(draft=False, archive=False, specialoffers__isnull=True)
+        products = category.products_category.annotate(
+            **Products.annotate_dict).filter(draft=False, archive=False, specialoffers__isnull=True)
         context = {
             'category': category,
             'products': products
@@ -105,7 +111,8 @@ def subcategory(request, category, subcategory):
     try:
         sub_category = SubCategories.objects.get(slug=subcategory)
         category = Categories.objects.get(slug=category)
-        products = sub_category.products_subcategory.filter(draft=False, specialoffers__isnull=True)
+        products = sub_category.products_subcategory.annotate(
+            **Products.annotate_dict).filter(draft=False, specialoffers__isnull=True)
         context = {
             'category': category,
             'sub_category': sub_category,

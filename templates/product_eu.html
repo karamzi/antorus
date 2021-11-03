@@ -16,22 +16,8 @@
             <div class="product_content">
                 <div id="nav_bar" class="nav_bar">
                     <nav>
-                        {% for category in categories %}
-                            <div class="nav_link">
-                                <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
-                                {% if category.categories_subcategories.all %}
-                                    <span></span>
-                                {% endif %}
-                            </div>
-                            {% if category.categories_subcategories.all %}
-                                <div style="display: none" class="accordion">
-                                    {% for subcategory in category.categories_subcategories.all %}
-                                        {% if not subcategory.archive %}
-                                            <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
+                        {% for item in categories %}
+                            {% include 'basic/category_item.html' %}
                         {% endfor %}
                         <div class="nav_link">
                             <a href="/result/all/">All products</a>
