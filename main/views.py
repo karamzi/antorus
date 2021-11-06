@@ -34,9 +34,11 @@ def global_var(request):
 
 
 def index(request):
+    only_options = ['name', 'slug', 'image', 'alt', 'short_description', 'new_price_dollar', 'price_dollar',
+                    'new_price_euro', 'price_euro']
     products = BestOffersToday.objects.prefetch_related(Prefetch(
         'product',
-        queryset=Products.objects.annotate(**Products.annotate_dict),
+        queryset=Products.objects.annotate(**Products.annotate_dict).only(*only_options),
     )).all()
     special_offers = SpecialOffers.objects.select_related('product').all()
     context = {
@@ -59,11 +61,18 @@ def search_products(request):
 
 
 def search_result(request, search):
+    only_options = ['name', 'slug', 'image', 'alt', 'short_description', 'new_price_dollar', 'price_dollar',
+                    'new_price_euro', 'price_euro']
+    filter_options = {
+        'draft': False,
+        'archive': False,
+        'specialoffers__isnull': True,
+    }
     if search == 'all':
-        products = Products.objects.filter(draft=False, archive=False, specialoffers__isnull=True)
+        products = Products.objects.annotate(**Products.annotate_dict).only(*only_options).filter(**filter_options)
     else:
-        products = Products.objects.filter(name__icontains=search, draft=False, archive=False,
-                                           specialoffers__isnull=True)
+        filter_options['name__icontains'] = search
+        products = Products.objects.annotate(**Products.annotate_dict).only(*only_options).filter(**filter_options)
     context = {
         'products': products,
         'search': search,
