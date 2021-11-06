@@ -50,8 +50,9 @@ def index(request):
 
 def search_products(request):
     if request.method == 'POST':
-        products = Products.objects.filter(name__icontains=request.POST['value'], draft=False, archive=False,
-                                           specialoffers__isnull=True)[:10]
+        products = Products.objects.annotate(**Products.annotate_dict).filter(name__icontains=request.POST['value'],
+                                                                              draft=False, archive=False,
+                                                                              specialoffers__isnull=True)[:10]
         context = {
             'products': products,
             'search_value': request.POST['value']
