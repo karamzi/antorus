@@ -234,9 +234,10 @@ def orders(request):
     return render(request, 'orders.html', context)
 
 
+@login_required(login_url='/myAccount/')
 def order(request, pk):
     try:
-        order = Order.objects.get(pk=pk)
+        order = request.user.user_order.get(pk=pk)
         context = {
             'order': order
         }
