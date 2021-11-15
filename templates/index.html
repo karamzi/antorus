@@ -117,42 +117,9 @@
                     <h2>OUR BEST OFFERS TODAY</h2>
                     <div class="products">
                         {% for product in products %}
-                            <div class="product_item">
-                                <a href="{{ product.product.get_absolute_url }}">
-                                    <img src="{{ product.product.image.url }}" alt="{{ product.product.alt }}">
-                                </a>
-                                <a href="{{ product.product.get_absolute_url }}"
-                                   class="name">{{ product.product.name }}</a>
-                                <h5>{{ product.product.short_description|safe }}</h5>
-                                <div class="item_footer">
-                                    {% if currency == 'us' %}
-                                        <div class="item_price">
-                                            <p>from</p>
-                                            {% if product.product.new_price_dollar %}
-                                                <div class="discount_price">
-                                                    <p>$ {{ product.product.get_price_dollar }}</p>
-                                                    <p>$ {{ product.product.get_price_new_dollar }}</p>
-                                                </div>
-                                            {% else %}
-                                                <p>{{ product.product.get_price_us }}</p>
-                                            {% endif %}
-                                        </div>
-                                    {% else %}
-                                        <div class="item_price">
-                                            <p>from</p>
-                                            {% if product.product.new_price_euro %}
-                                                <div class="discount_price">
-                                                    <p>€ {{ product.product.get_price_euro }}</p>
-                                                    <p>€ {{ product.product.get_price_new_euro }}</p>
-                                                </div>
-                                            {% else %}
-                                                <p>{{ product.product.get_price_eu }}</p>
-                                            {% endif %}
-                                        </div>
-                                    {% endif %}
-                                    <a href="{{ product.product.get_absolute_url }}" class="buy_button">BUY NOW</a>
-                                </div>
-                            </div>
+                            {% with product=product.product %}
+                                {% include 'basic/product_item.html' %}
+                            {% endwith %}
                             {% if forloop.counter == 6 %}
                                 <div class="custom_order_banner">
                                     <h5>Need Help?<br> Build your custom order</h5>

@@ -21,6 +21,7 @@ if (requiredInputs) {
 }
 
 if (additionInputs) {
+    // search for default checked inputs
     additionInputs.forEach(item => {
         if (item.checked) {
             additionChecked.push(item)

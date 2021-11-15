@@ -81,8 +81,9 @@ class ProductsAdmin(admin.ModelAdmin):
             'classes': ('sub_category',),
         }),
         ('Настройки опций', {
-            'fields': (('quantity_required_options', 'quantity_required_child_options', 'quantity_addition_options',
-                        'child_required'),),
+            'fields': (
+                ('max_number_required_options', 'max_number_required_child_options', 'max_number_addition_options',
+                 'child_required'),),
             'classes': ('sub_category',),
         }),
         ('Архив/Черновик', {
