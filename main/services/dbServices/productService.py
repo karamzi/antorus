@@ -6,12 +6,11 @@ class ProductService:
     def get_min_price(product, region):
         from main.models import Products
         currency = 'dollar' if region == 'us' else 'euro'
-        if getattr(product, f'price_{currency}'):
-            return getattr(product, f'price_{currency}')
+        if getattr(product, f'price_{currency}', 0):
+            return getattr(product, f'price_{currency}', 0)
         else:
-            # this attrs have been added by function annotate.
-            price_min = getattr(product, f'price_{currency}_min')
-            discount_price_min = getattr(product, f'discount_price_{currency}_min')
+            price_min = getattr(product, f'price_{currency}_min', 0)
+            discount_price_min = getattr(product, f'discount_price_{currency}_min', 0)
             # if min price of required options equals to 0 or None,
             # we are looking for min price of child required options
             if not discount_price_min and not price_min:
