@@ -8,24 +8,24 @@ from main.utils.customAuth import CustomAuth
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday, AuthToken, \
-    Transactions, SEO, SpecialOffers
+    Transactions, SpecialOffers
 from .forms import RegisterUserForm
 from django.db.models import Q, Prefetch
 from django.views.decorators.csrf import csrf_exempt
 import base64
 import json
 from datetime import datetime, timedelta
+
+from .services.dbServices.categoriesDbService import CategoriesDbService
+from .services.dbServices.prodcutDbService import ProductDbService
+from .services.dbServices.seoDbService import SeoDbService
 from .utils.email import Email
 
 
 def global_var(request):
-    categories = Categories.objects.prefetch_related('categories_subcategories').filter(archive=False)
+    categories = CategoriesDbService.get_categories_with_subcategories()
     currency = request.COOKIES.get('currency', 'us')
-    path = request.path
-    try:
-        seo = SEO.objects.get(url=path)
-    except ObjectDoesNotExist:
-        seo = False
+    seo = SeoDbService.find(request)
     return {
         'currency': currency,
         'seo': seo,
@@ -34,11 +34,9 @@ def global_var(request):
 
 
 def index(request):
-    only_options = ['name', 'slug', 'image', 'alt', 'short_description', 'new_price_dollar', 'price_dollar',
-                    'new_price_euro', 'price_euro']
     products = BestOffersToday.objects.prefetch_related(Prefetch(
         'product',
-        queryset=Products.objects.annotate(**Products.annotate_dict).only(*only_options),
+        queryset=ProductDbService.get_all_products(),
     )).all()
     special_offers = SpecialOffers.objects.select_related('product').all()
     context = {
@@ -50,9 +48,7 @@ def index(request):
 
 def search_products(request):
     if request.method == 'POST':
-        products = Products.objects.annotate(**Products.annotate_dict).filter(name__icontains=request.POST['value'],
-                                                                              draft=False, archive=False,
-                                                                              specialoffers__isnull=True)[:10]
+        products = ProductDbService.search_filter(request.POST['value'])
         context = {
             'products': products,
             'search_value': request.POST['value']
@@ -62,18 +58,10 @@ def search_products(request):
 
 
 def search_result(request, search):
-    only_options = ['name', 'slug', 'image', 'alt', 'short_description', 'new_price_dollar', 'price_dollar',
-                    'new_price_euro', 'price_euro']
-    filter_options = {
-        'draft': False,
-        'archive': False,
-        'specialoffers__isnull': True,
-    }
     if search == 'all':
-        products = Products.objects.annotate(**Products.annotate_dict).only(*only_options).filter(**filter_options)
+        products = ProductDbService.get_all_products()
     else:
-        filter_options['name__icontains'] = search
-        products = Products.objects.annotate(**Products.annotate_dict).only(*only_options).filter(**filter_options)
+        products = ProductDbService.search_filter(search)
     context = {
         'products': products,
         'search': search,
@@ -83,14 +71,11 @@ def search_result(request, search):
 
 def product(request, slug):
     currency = request.COOKIES.get('currency', 'us')
-    try:
-        prefetch_options = ['category', 'subcategory', 'product_required_option', 'product_addition_option',
-                            'product_required_option__required_option_child__product']
-        product = Products.objects.prefetch_related(*prefetch_options).get(slug=slug)
-        if product.draft and not request.user.is_superuser:
-            return redirect(reverse('index'))
-        products = product.category.products_category.annotate(
-            **Products.annotate_dict).filter(archive=False, draft=False, specialoffers__isnull=True)[:4]
+    product = ProductDbService.get_product(slug)
+    if product and product.draft and not request.user.is_superuser:
+        return redirect(reverse('index'))
+    else:
+        products = ProductDbService.get_products_by_category(product.category)[:4]
         context = {
             'product': product,
             'products': products,
@@ -99,37 +84,33 @@ def product(request, slug):
             return render(request, 'product_us.html', context)
         if currency == 'eu':
             return render(request, 'product_eu.html', context)
-    except ObjectDoesNotExist:
-        return redirect(reverse('index'))
 
 
 def category(request, slug):
-    try:
-        category = Categories.objects.get(slug=slug)
-        products = category.products_category.annotate(
-            **Products.annotate_dict).filter(draft=False, archive=False, specialoffers__isnull=True)
+    category = CategoriesDbService.get_category(slug)
+    if category:
+        products = ProductDbService.get_products_by_category(category)
         context = {
             'category': category,
             'products': products
         }
         return render(request, 'category.html', context)
-    except ObjectDoesNotExist:
+    else:
         return redirect(reverse('index'))
 
 
 def subcategory(request, category, subcategory):
-    try:
-        sub_category = SubCategories.objects.get(slug=subcategory)
-        category = Categories.objects.get(slug=category)
-        products = sub_category.products_subcategory.annotate(
-            **Products.annotate_dict).filter(draft=False, specialoffers__isnull=True)
+    category = CategoriesDbService.get_category(category)
+    sub_category = CategoriesDbService.get_subcategory(subcategory)
+    if category and sub_category:
+        products = ProductDbService.get_products_by_subcategory(sub_category)
         context = {
             'category': category,
             'sub_category': sub_category,
             'products': products
         }
         return render(request, 'category.html', context)
-    except ObjectDoesNotExist:
+    else:
         return redirect(reverse('index'))
 
 

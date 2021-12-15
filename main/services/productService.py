@@ -1,4 +1,5 @@
 from django.db.models import Min
+import re
 
 
 class ProductService:
@@ -25,3 +26,14 @@ class ProductService:
             if discount_price_min and discount_price_min < price_min:
                 return discount_price_min
             return price_min
+
+    @staticmethod
+    def add_seo_html_tag(product):
+        description = product.description
+        pattern = r'(<a([^<]*)</a>)'
+        find = re.findall(pattern, description)
+        for index in range(len(find)):
+            if 'rel="nofollow"' in find[index][0]:
+                continue
+            description = description.replace(find[index][0], f'<a rel="nofollow"{find[index][1]}</a>')
+        return description

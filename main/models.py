@@ -2,13 +2,13 @@ from django.db import models
 from datetime import datetime
 from os.path import splitext
 
-from django.db.models import Min
 from django.shortcuts import reverse
 from easy_thumbnails.fields import ThumbnailerImageField
 from django.contrib.auth.models import User
 import re
 
-from main.services.dbServices.productService import ProductService
+from main.services.commonServices import CommonServices
+from main.services.productService import ProductService
 
 
 def get_img_path(instance, filename):
@@ -43,10 +43,7 @@ class Categories(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            slug = self.name.strip()
-            slug = slug.lower()
-            slug = slug.replace(' ', '-')
-            self.slug = slug
+            self.slug = CommonServices.create_slag(self)
         super().save(*args, **kwargs)
 
     class Meta:
@@ -70,10 +67,7 @@ class SubCategories(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            slug = self.name.strip()
-            slug = slug.lower()
-            slug = slug.replace(' ', '-')
-            self.slug = slug
+            self.slug = CommonServices.create_slag(self)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -117,32 +111,15 @@ class Products(models.Model):
     alt = models.CharField(max_length=255, blank=True, null=True)
     archive = models.BooleanField(default=False, verbose_name='Архив')
 
-    annotate_dict = {
-        'price_dollar_min': Min('product_required_option__price_dollar'),
-        'discount_price_dollar_min': Min('product_required_option__new_price_dollar'),
-        'price_euro_min': Min('product_required_option__price_euro'),
-        'discount_price_euro_min': Min('product_required_option__new_price_euro'),
-    }
-
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
         # add slug
         if not self.slug:
-            slug = self.name.strip()
-            slug = slug.lower()
-            slug = slug.replace(' ', '-')
-            self.slug = slug
+            self.slug = CommonServices.create_slag(self)
         # add HTML tag in description for SEO
-        description = self.description
-        pattern = r'(<a([^<]*)</a>)'
-        find = re.findall(pattern, description)
-        for index in range(len(find)):
-            if 'rel="nofollow"' in find[index][0]:
-                continue
-            description = description.replace(find[index][0], f'<a rel="nofollow"{find[index][1]}</a>')
-        self.description = description
+        self.description = ProductService.add_seo_html_tag(self)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
