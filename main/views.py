@@ -295,12 +295,12 @@ def send_new_password(request):
 def create_order(request):
     if request.method == 'POST':
         currency = 'EUR' if request.POST.get('currency', 'us') == 'eu' else 'USD'
-        order = OrderService(request)
+        order_service = OrderService(request)
         # check post data for creating order
-        if not order.check_required_fields():
-            return ErrorServices.data_error(order.errors)
+        if not order_service.check_required_fields():
+            return ErrorServices.data_error(order_service.errors)
         # creating order
-        order = order.create_order()
+        order = order_service.create_order()
         # creating json response with payment data for frontend
         response = FondyService(order, currency).json_response()
         return response
