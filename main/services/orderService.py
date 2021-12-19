@@ -13,20 +13,11 @@ class OrderService:
         self.sing = '€' if request.POST.get('currency', 'us') == 'eu' else '$'
 
     def create_order(self) -> Order:
-        self.order_from_json_to_obj()
-        self.check_coupon()
+        self._order_from_json_to_obj()
+        self._check_coupon()
         self.order.save()
-        self.create_cart()
+        self._create_cart()
         return self.order
-
-    def check_coupon(self):
-        coupon = self.request.POST.get('coupon', None)
-        old_price = self.request.POST.get('oldPrice', None)
-        if coupon:
-            self.order.coupon = coupon
-            CouponDbService(coupon).increase_coupon_count()
-        if old_price:
-            self.order.price = self.sing + ' ' + old_price
 
     def check_required_fields(self) -> bool:
         required_fields = {
@@ -45,7 +36,16 @@ class OrderService:
             return False
         return True
 
-    def order_from_json_to_obj(self):
+    def _check_coupon(self):
+        coupon = self.request.POST.get('coupon', None)
+        old_price = self.request.POST.get('oldPrice', None)
+        if coupon:
+            self.order.coupon = coupon
+            CouponDbService(coupon).increase_coupon_count()
+        if old_price:
+            self.order.price = self.sing + ' ' + old_price
+
+    def _order_from_json_to_obj(self):
         self.order = Order()
         self.order.user_id = self.request.user.pk if self.request.user.is_authenticated else None
         self.order.connection = self.request.POST['connection']
@@ -55,7 +55,7 @@ class OrderService:
         self.order.total = self.sing + ' ' + self.request.POST['total']
         self.order.price = self.order.total
 
-    def create_cart(self):
+    def _create_cart(self):
         cart_json = json.loads(self.request.POST['cart'])
         for item in cart_json:
             product = Cart()
