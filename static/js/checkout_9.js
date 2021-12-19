@@ -88,8 +88,8 @@ function createOrder() {
 function checkForm(connection, email) {
     connection.classList.remove('input_error')
     email.classList.remove('input_error')
-    if (checkInput(connection)) return false
-    if (checkInput(email)) return false
+    if (!checkInput(connection)) return false
+    if (!checkInput(email)) return false
     const agreeInput = document.getElementById('cd2')
     const label = document.getElementById('cd2_label')
     label.style.color = 'rgb(136, 136, 136)'
@@ -105,6 +105,7 @@ function checkInput(input) {
         input.classList.add('input_error')
         return false
     }
+    return true
 }
 
 renderCart()

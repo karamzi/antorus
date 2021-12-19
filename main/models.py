@@ -307,7 +307,7 @@ class Order(models.Model):
         ('4', 'REFUND'),
         ('5', 'COMPLETED'),
     )
-    status = models.CharField(verbose_name='Статус заказа', choices=STATUS, max_length=100)
+    status = models.CharField(verbose_name='Статус заказа', choices=STATUS, max_length=100, default='1')
     price = models.CharField(verbose_name='Без купона', max_length=50)
     coupon = models.CharField(verbose_name='Купон', max_length=50, blank=True)
     total = models.CharField(verbose_name='Итого', max_length=50)
@@ -322,10 +322,15 @@ class Order(models.Model):
         price = re.findall(reg, self.price)[0]
         total = re.findall(reg, self.total)[0]
         sing = re.findall(reg2, self.price)[0]
-        coupon = float(price) - float(total)
-        return '{} {:.2f}'.format(sing, coupon)
+        coupon_discount = float(price) - float(total)
+        return '{} {:.2f}'.format(sing, coupon_discount)
 
-    def get_order_number(self):
+    def get_total(self) -> float:
+        reg = r'[0-9.]+'
+        total = re.findall(reg, self.total)[0]
+        return float(total)
+
+    def get_order_number(self) -> str:
         return str(self.id + 1000)
 
     class Meta:

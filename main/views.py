@@ -7,8 +7,7 @@ from django.contrib.auth.hashers import check_password
 from main.utils.customAuth import CustomAuth
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday, AuthToken, \
-    Transactions, SpecialOffers
+from .models import Order, Coupon, BestOffersToday, AuthToken, Transactions, SpecialOffers
 from .forms import RegisterUserForm
 from django.db.models import Q, Prefetch
 from django.views.decorators.csrf import csrf_exempt
@@ -19,6 +18,9 @@ from datetime import datetime, timedelta
 from .services.dbServices.categoriesDbService import CategoriesDbService
 from .services.dbServices.prodcutDbService import ProductDbService
 from .services.dbServices.seoDbService import SeoDbService
+from .services.errorServices import ErrorServices
+from .services.fondyService import FondyService
+from .services.orderService import OrderService
 from .utils.email import Email
 
 
@@ -292,55 +294,13 @@ def send_new_password(request):
 
 def create_order(request):
     if request.method == 'POST':
-        sing = '€' if request.POST['currency'] == 'eu' else '$'
-        order = Order()
-        order.user_id = request.user.pk if request.user.is_authenticated else None
-        order.connection = request.POST['connection']
-        order.email = request.POST['email']
-        order.comment = request.POST['comment']
-        order.status = 1
-        order.total = sing + ' ' + request.POST['total']
-        coupon = request.POST.get('coupon', '')
-        old_price = request.POST.get('oldPrice', '')
-        if coupon:
-            order.coupon = coupon
-            coupon = Coupon.objects.get(name=coupon)
-            coupon.count = coupon.count + 1
-            coupon.save()
-        if old_price:
-            order.price = sing + ' ' + old_price
-        else:
-            order.price = order.total
-        order.save()
-        cart = json.loads(request.POST['cart'])
-        for item in cart:
-            product = Cart()
-            product.product = item['name']
-            product.quantity = item['quantity']
-            product.price = sing + ' ' + item['price']
-            product.total = sing + ' ' + item['total']
-            product.order = order
-            product.save()
-            for item_option in item['options']:
-                option = CartOptions()
-                option.name = item_option['name']
-                option.price = sing + ' ' + item_option['price']
-                option.order = order
-                option.product = product
-                option.save()
-        from main.utils.generateSignature import generate_signature
-        amount = float(request.POST['total']) * 100
-        currency = 'EUR' if request.POST['currency'] == 'eu' else 'USD'
-        order_desc = 'payment for order ' + order.get_order_number()
-        order_id = order.get_order_number()
-        return JsonResponse({
-            'status': 'created',
-            'amount': str(int(amount)),
-            'currency': currency,
-            'order_desc': order_desc,
-            'order_id': order_id,
-            'signature': generate_signature(str(int(amount)), currency, order_desc, order_id),
-        })
+        currency = 'EUR' if request.POST.get('currency', 'us') == 'eu' else 'USD'
+        order = OrderService(request)
+        if not order.check_required_fields():
+            return ErrorServices.data_error(order.errors)
+        order = order.create_order()
+        response = FondyService(order, currency).json_response()
+        return response
     return redirect(reverse('index'))
 
 
