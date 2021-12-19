@@ -190,40 +190,6 @@ function setPrice() {
     }
 }
 
-function generateProductObject(price, region) {
-    let product = {}
-    product['name'] = name
-    product['url'] = url
-    product['total'] = price.toFixed(2)
-    product['quantity'] = count.innerText
-    product['price'] = product.total / product.quantity
-    product.price = product.price.toFixed(2)
-    product['image'] = imgURL
-    product['id'] = productId
-    product['options'] = []
-    requiredChecked.forEach(input => {
-        product.options.push(generateOptionObject(input, region))
-    })
-    additionChecked.forEach(input => {
-        product.options.push(generateOptionObject(input, region))
-    })
-    requiredChildChecked.forEach(input => {
-        product.options.push(generateOptionObject(input, region))
-    })
-    return product
-}
-
-function generateOptionObject(input, region) {
-    let item = {}
-    item['name'] = input.closest('.option').getAttribute('data-name')
-    if (region === 'us') {
-        item['price'] = input.closest('.option').getAttribute('data-price-us')
-    } else {
-        item['price'] = input.closest('.option').getAttribute('data-price-eu')
-    }
-    return item
-}
-
 function addToCart() {
     const notificationSuccess = document.querySelector('.success')
     const notificationError = document.querySelector('.error')
@@ -241,36 +207,43 @@ function addToCart() {
         }, 2500)
         return
     }
-    if (currency === 'us') {
-        let productUs = generateProductObject(priceUs, 'us')
-        let cartUs = getCookie('cartUs')
 
-        cartUs.forEach((item, index, array) => {
-            if (item.id === productUs.id) {
-                array.splice(index, 1)
-            }
-        })
-        cartUs.push(productUs)
-        cartUs = JSON.stringify(cartUs)
-        setCookie(cartUs, 'cartUs')
+    let data = {
+        'action': 'add',
+        'productId': productId,
+        'optionsId': [],
+        'quantity': count.innerText,
     }
+    requiredChecked.forEach(input => {
+        let option = {
+            'optionId': input.closest('.option').getAttribute('data-option-id'),
+            'type': 'RequiredOption'
+        }
+        data['optionsId'].push(option)
+    })
+    requiredChildChecked.forEach(input => {
+        let option = {
+            'optionId': input.closest('.option').getAttribute('data-option-id'),
+            'type': 'RequiredOptionChild'
+        }
+        data['optionsId'].push(option)
+    })
+    additionChecked.forEach(input => {
+        let option = {
+            'optionId': input.closest('.option').getAttribute('data-option-id'),
+            'type': 'AdditionOptions'
+        }
+        data['optionsId'].push(option)
+    })
+    instance.post('cartService/', data, {
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    }).then(response => {
+        console.log(response.data.products.length)
+        product_quantity(response.data.products.length)
+    })
 
-    if (currency === 'eu') {
-        let productEu = generateProductObject(priceEu, 'eu')
-        let cartEu = getCookie('cartEu')
-
-        cartEu.forEach((item, index, array) => {
-            if (item.id === productEu.id) {
-                array.splice(index, 1)
-            }
-        })
-        cartEu.push(productEu)
-        cartEu = JSON.stringify(cartEu)
-        setCookie(cartEu, 'cartEu')
-    }
-
-
-    product_quantity()
     notificationSuccess.style.display = 'block'
     setTimeout(function () {
         notificationSuccess.style.display = 'none'

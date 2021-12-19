@@ -26,44 +26,19 @@ const instance = axios.create({
     //baseURL: 'https://antorus.com/',
 })
 
-function countCart() {
-    let cart
-    let currencyTotal
-    if (currency === 'us') {
-        cart = getCookie('cartUs')
-        currencyTotal = '$'
-    } else {
-        cart = getCookie('cartEu')
-        currencyTotal = '€'
-    }
-    let subtotal = cart.reduce((sum, item) => sum + +item.total, 0)
-    let total
-    let coupon = getCookie('coupon')
-    if (coupon && cart.length > 0) {
-        let discount
-        document.getElementById('coupon_name').innerText = 'Coupon: ' + coupon.name
+function countCart(cart) {
+    if (cart.coupon !== '' && cart.products.length > 0) {
+        document.getElementById('coupon_name').innerText = 'Coupon: ' + cart.coupon
         document.querySelector('.coupon').style.display = 'flex'
-        discount = +coupon.discount / 100 * subtotal
-        document.getElementById('coupon_price').innerHTML = '- ' + discount.toFixed(2)
-        total = subtotal - discount
-    } else {
-        total = subtotal
+        document.getElementById('coupon_price').innerHTML = cart.sign + ' - ' + cart.discount
     }
-    total = total.toFixed(2)
-    subtotal = subtotal.toFixed(2)
-    document.getElementById('subtotal').innerText = currencyTotal + ' ' + subtotal
-    document.getElementById('cart_total').innerText = currencyTotal + ' ' + total
+    document.getElementById('subtotal').innerText = cart.sign +  cart.subtotal
+    document.getElementById('cart_total').innerText = cart.sign +  cart.total
 }
 
-function product_quantity() {
-    if (currency === 'us') {
-        document.getElementById('cart_count').innerText = getCookie('cartUs').length
-    } else {
-        document.getElementById('cart_count').innerText = getCookie('cartEu').length
-    }
+function product_quantity(quantity) {
+    document.getElementById('cart_count').innerText = quantity
 }
-
-product_quantity()
 
 if (navLink) {
     navLink.forEach(item => {

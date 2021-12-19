@@ -34,18 +34,33 @@
                 </div>
                 <div class="checkout_right">
                     <h3>YOUR ORDER</h3>
-                    <div class="products"></div>
+                    <div class="products">
+                        {% for product in cart.products %}
+                            <div class="product">
+                                <div class="product_head">
+                                    <div class="product_name">{{ product.name }} x {{ product.quantity }}</div>
+                                    <div class="product_price">{{ cart.sign }} {{ product.total }}</div>
+                                </div>
+                                <div class="product_options">
+                                    {% for option in product.options %}
+                                        <div class="options">Select options: {{ option.name }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
                     <div class="subtotal">
                         <p>Subtotal</p>
-                        <p id="subtotal"></p>
+                        <p id="subtotal">{{ cart.sign }} {{ cart.subtotal }}</p>
                     </div>
-                    <div style="display: none" class="coupon">
-                        <p id="coupon_name">Coupon: </p>
-                        <p id="coupon_price" style="color: #45db428c"><span class="coupon_remove">Remove</span></p>
+                    <div {% if cart.coupon %}style="display: flex"{% else %}style="display: none"{% endif %}
+                         class="coupon">
+                        <p id="coupon_name">Coupon: {{ cart.coupon }}</p>
+                        <p id="coupon_price" style="color: #45db428c">{{ cart.sign }} -{{ cart.discount }}</p>
                     </div>
                     <div class="total">
-                        <p>total</p>
-                        <p id="cart_total"></p>
+                        <p>Total</p>
+                        <p id="cart_total">{{ cart.sign }} {{ cart.total }}</p>
                     </div>
                     <div class="agree">
                         <label id="cd2_label">I have read and agree to the website terms and conditions</label>
@@ -56,15 +71,18 @@
                             </label>
                         </div>
                     </div>
-                    <form onsubmit="ym(67968427,'reachGoal','order')" id="fondy" action="https://pay.fondy.eu/api/checkout/redirect/" method="post">
+                    <form onsubmit="ym(67968427,'reachGoal','order')" id="fondy"
+                          action="https://pay.fondy.eu/api/checkout/redirect/" method="post">
                         <input id="amount" type="hidden" name="amount" value="">
                         <input id="currency" type="hidden" name="currency" value="">
                         <input type="hidden" name="lifetime" value="1200">
                         <input type="hidden" name="merchant_id" value="1470496">
                         <input id="order_desc" type="hidden" name="order_desc" value="">
                         <input id="order_id" type="hidden" name="order_id" value="">
-                        <input type="hidden" name="response_url" value="https://antorus.com{% url 'success_order' %}">
-                        <input type="hidden" name="server_callback_url" value="https://antorus.com{% url 'fondy' %}">
+                        <input type="hidden" name="response_url"
+                               value="https://antorus.com{% url 'success_order' %}">
+                        <input type="hidden" name="server_callback_url"
+                               value="https://antorus.com{% url 'fondy' %}">
                         <input id="signature" type="hidden" name="signature" value="">
                     </form>
                     <div class="button">

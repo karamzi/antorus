@@ -2,15 +2,18 @@ import json
 
 from main.models import Order, Cart, CartOptions
 from main.services.dbServices.couponDbService import CouponDbService
+from main.services.cartService import CartServices
 
 
 class OrderService:
     order: Order
     errors: [dict]
+    cart: dict
 
     def __init__(self, request):
         self.request = request
         self.sing = '€' if request.POST.get('currency', 'us') == 'eu' else '$'
+        self.cart = CartServices(request).cart
 
     def create_order(self) -> Order:
         self._order_from_json_to_obj()
@@ -23,8 +26,6 @@ class OrderService:
         required_fields = {
             'connection': self.request.POST.get('connection', None),
             'email': self.request.POST.get('email', None),
-            'total': self.request.POST.get('total', None),
-            'cart': self.request.POST.get('cart', None),
         }
         self.errors = []
         for key, value in required_fields.items():
@@ -37,13 +38,11 @@ class OrderService:
         return True
 
     def _check_coupon(self):
-        coupon = self.request.POST.get('coupon', None)
-        old_price = self.request.POST.get('oldPrice', None)
+        coupon = self.cart['coupon']
         if coupon:
             self.order.coupon = coupon
             CouponDbService(coupon).increase_coupon_count()
-        if old_price:
-            self.order.price = self.sing + ' ' + old_price
+            self.order.price = self.cart['subtotal']
 
     def _order_from_json_to_obj(self):
         self.order = Order()
@@ -52,23 +51,22 @@ class OrderService:
         self.order.email = self.request.POST['email']
         self.order.comment = self.request.POST.get('comment', '')
         self.order.status = 1
-        self.order.total = self.sing + ' ' + self.request.POST['total']
+        self.order.total = self.sing + ' ' + self.cart['total']
         self.order.price = self.order.total
 
     def _create_cart(self):
-        cart_json = json.loads(self.request.POST['cart'])
-        for item in cart_json:
+        for item in self.cart['products']:
             product = Cart()
             product.product = item['name']
             product.quantity = item['quantity']
-            product.price = self.sing + ' ' + item['price']
-            product.total = self.sing + ' ' + item['total']
+            product.price = self.sing + ' ' + str(item['price'])
+            product.total = self.sing + ' ' + str(item['total'])
             product.order = self.order
             product.save()
             for item_option in item['options']:
                 option = CartOptions()
                 option.name = item_option['name']
-                option.price = self.sing + ' ' + item_option['price']
+                option.price = self.sing + ' ' + str(item_option['price'])
                 option.order = self.order
                 option.product = product
                 option.save()

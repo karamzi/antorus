@@ -81,6 +81,7 @@
                                             {% else %}
                                          data-price-eu="{{ option.get_option_price_euro }}"
                                             {% endif %}
+                                         data-option-id="{{ option.pk }}"
                                          data-name="{{ option.name }}"
                                          data-id="{{ option.pk }}">
                                         <div class="checkbox">
@@ -130,6 +131,7 @@
                                                     {% else %}
                                                  data-price-eu="{{ child_option.get_option_price_euro }}"
                                                     {% endif %}
+                                                 data-option-id="{{ child_option.pk }}"
                                                  data-name="{{ child_option.name }}"
                                                  data-parent-id="{{ option.pk }}">
                                                 <div class="checkbox">
@@ -177,6 +179,7 @@
                                             {% if option.price_euro < 1 and option.price_euro > 0 %}
                                          data-percent-eu="{{ option.price_euro }}"
                                             {% endif %}
+                                         data-option-id="{{ option.pk }}"
                                          data-name="{{ option.name }}">
                                         <div class="checkbox">
                                             <input {% if option.default %}checked="checked"{% endif %} class="addition"
@@ -302,7 +305,7 @@
         {% endif %}
         const url = '{{ product.get_absolute_url }}'
     </script>
-    <script src="{% static 'js/product_6.js' %}"></script>
+    <script src="{% static 'js/product_7.js' %}"></script>
     <script>const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true}</script>
     <script src="https://wow.zamimg.com/widgets/power.js"></script>
     <script src="{% static 'js/slider.js' %}"></script>

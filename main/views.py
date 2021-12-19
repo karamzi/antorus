@@ -15,6 +15,7 @@ import base64
 import json
 from datetime import datetime, timedelta
 
+from .services.cartService import CartServices
 from .services.dbServices.categoriesDbService import CategoriesDbService
 from .services.dbServices.prodcutDbService import ProductDbService
 from .services.dbServices.seoDbService import SeoDbService
@@ -25,13 +26,15 @@ from .utils.email import Email
 
 
 def global_var(request):
-    categories = CategoriesDbService.get_categories_with_subcategories()
     currency = request.COOKIES.get('currency', 'us')
+    cart_service = CartServices(request)
+    categories = CategoriesDbService.get_categories_with_subcategories()
     seo = SeoDbService.find(request)
     return {
         'currency': currency,
         'seo': seo,
         'categories': categories,
+        'cart': cart_service.cart,
     }
 
 
@@ -125,12 +128,8 @@ def faq(request):
 
 
 def checkout(request):
-    cart_us = request.COOKIES.get('cartUs', '[]')
-    cart_eu = request.COOKIES.get('cartEu', '[]')
-    currency = request.COOKIES.get('currency', 'us')
-    if currency == 'us' and cart_us == '[]':
-        return redirect(reverse('cart'))
-    if currency == 'eu' and cart_eu == '[]':
+    cart_service = CartServices(request)
+    if cart_service.count_products() == 0:
         return redirect(reverse('cart'))
     return render(request, 'checkout.html')
 
@@ -292,6 +291,19 @@ def send_new_password(request):
     return redirect(reverse('index'))
 
 
+def cart_service(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        cart_service = CartServices(request)
+        if data['action'] == 'add':
+            cart_service.add(data['productId'], data['optionsId'], data['quantity'])
+        elif data['action'] == 'change':
+            cart_service.change_quantity(data['productId'], data['quantity'])
+        elif data['action'] == 'remove':
+            cart_service.remove(data['productId'])
+        return JsonResponse(cart_service.cart)
+
+
 def create_order(request):
     if request.method == 'POST':
         currency = 'EUR' if request.POST.get('currency', 'us') == 'eu' else 'USD'
@@ -311,11 +323,21 @@ def check_coupon(request):
     if request.method == 'POST':
         try:
             coupon = Coupon.objects.get(name=request.POST['coupon'])
-            return JsonResponse({
+            coupon_json = {
+                'name': coupon.name,
+                'discount': coupon.discount
+            }
+            coupon_json = json.dumps(coupon_json)
+            request.COOKIES['coupon'] = coupon_json
+            cart_service = CartServices(request)
+            response = JsonResponse({
                 'status': 'True',
                 'discount': coupon.discount,
-                'name': coupon.name
+                'name': coupon.name,
+                'cart': cart_service.cart
             })
+            response.set_cookie('coupon', coupon_json)
+            return response
         except ObjectDoesNotExist:
             return JsonResponse({
                 'status': 'False'
@@ -360,8 +382,8 @@ def success_order(request):
                 'order': order,
             }
             response = render(request, 'success_order.html', context)
-            response.delete_cookie('cartUs')
-            response.delete_cookie('cartEu')
+            cart_service = CartServices(request)
+            cart_service.clear()
             response.delete_cookie('coupon')
             return response
         except ObjectDoesNotExist:

@@ -120,7 +120,7 @@
             </div>
             <div class="cart">
                 <a href="{% url 'cart' %}"><img src="{% static 'img/cart.png' %}" alt="cart"></a>
-                <div class="cart_count"><p id="cart_count"></p></div>
+                <div class="cart_count"><p id="cart_count">{{ cart.products|length }}</p></div>
             </div>
             <div class="search_accordion"></div>
         </div>
@@ -208,7 +208,7 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="//code.tidio.co/qtfccqsgrgx4usthk3x1dxkxtllrlcx1.js" async></script>
-<script src="{% static 'js/main_7.js' %}"></script>
+<script src="{% static 'js/main_8.js' %}"></script>
 {% block scripts %}
 {% endblock %}
 </body>

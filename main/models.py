@@ -125,6 +125,16 @@ class Products(models.Model):
     def get_absolute_url(self):
         return reverse('product', kwargs={'slug': self.slug})
 
+    def get_price_dollar(self):
+        if self.new_price_dollar:
+            return float(self.new_price_dollar)
+        return float(self.price_dollar)
+
+    def get_price_euro(self):
+        if self.new_price_euro:
+            return float(self.new_price_euro)
+        return float(self.price_euro)
+
     def get_min_price_us(self):
         return '$ ' + str(ProductService.get_min_price(self, 'us'))
 
@@ -153,6 +163,16 @@ class RequiredOption(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_price_dollar(self):
+        if self.new_price_dollar:
+            return float(self.new_price_dollar)
+        return float(self.price_dollar)
+
+    def get_price_euro(self):
+        if self.new_price_euro:
+            return float(self.new_price_euro)
+        return float(self.price_euro)
 
     def get_option_new_price_euro(self):
         return to_fixed(self.new_price_euro, 2)
@@ -189,6 +209,16 @@ class RequiredOptionChild(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_price_dollar(self):
+        if self.new_price_dollar:
+            return float(self.new_price_dollar)
+        return float(self.price_dollar)
+
+    def get_price_euro(self):
+        if self.new_price_euro:
+            return float(self.new_price_euro)
+        return float(self.price_euro)
 
     def get_option_new_price_euro(self):
         return to_fixed(self.new_price_euro, 2)
@@ -239,6 +269,16 @@ class AdditionOptions(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_price_dollar(self):
+        if self.new_price_dollar:
+            return float(self.new_price_dollar)
+        return float(self.price_dollar)
+
+    def get_price_euro(self):
+        if self.new_price_euro:
+            return float(self.new_price_euro)
+        return float(self.price_euro)
 
     def get_option_price_euro(self):
         if self.price_euro < 1:
