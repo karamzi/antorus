@@ -72,11 +72,20 @@ class CartServices:
                 self.cart['products'][index] = cart_product
         self.count_cart()
 
+    def remove(self, product_id):
+        del_product_index = 0
+        for index in range(self.count_products()):
+            cart_product = self.cart['products'][index]
+            if cart_product['id'] == int(product_id):
+                del_product_index = index
+        self.cart['products'].pop(del_product_index)
+        self.count_cart()
+
     def save(self):
         self.session['cart'] = self.cart
         self.session.modified = True
 
-    def count_price(self, product_json):
+    def count_price(self, product_json) -> float:
         total = 0
         total += getattr(self.product, f'get_price_{self.currency}')()
         for option in product_json['options']:
@@ -105,16 +114,6 @@ class CartServices:
         self.cart['total'] = to_fixed(total, 2)
         self.save()
 
-    def remove(self, product_id):
-        del_product_index = 0
-        for index in range(self.count_products()):
-            cart_product = self.cart['products'][index]
-            if cart_product['id'] == int(product_id):
-                del_product_index = index
-        self.cart['products'].pop(del_product_index)
-        self.count_cart()
-
     def clear(self):
         del self.session['cart_us']
         del self.session['cart_eu']
-

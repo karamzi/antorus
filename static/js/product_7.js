@@ -240,7 +240,6 @@ function addToCart() {
             'X-CSRFToken': getCookie('csrftoken')
         }
     }).then(response => {
-        console.log(response.data.products.length)
         product_quantity(response.data.products.length)
     })
 

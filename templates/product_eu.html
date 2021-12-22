@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-    <div class="product_section" data-name="{{ product.name }}">
+    <div class="product_section">
         <div class="container">
             <div class="product_nav">
                 <a href="/">HOME</a>
@@ -294,16 +294,13 @@
         const quantityRequiredOptions = '{% if product.max_number_required_options %}{{ product.max_number_required_options }}{% endif %}'
         const quantityRequiredChildOptions = '{% if product.max_number_required_child_options %}{{ product.max_number_required_child_options }}{% endif %}'
         const quantityAdditionOptions = '{% if product.max_number_addition_options %}{{ product.max_number_addition_options }}{% endif %}'
-        const name = document.querySelector('.product_section').getAttribute('data-name')
         const childIsRequired = '{{ product.child_required }}'
-        const imgURL = '{{ product.thumb.url }}'
         const productId = '{{ product.pk }}'
         {% if product.new_price_euro %}
             const productPriceEu = '{{ product.new_price_euro }}'
         {% else %}
             const productPriceEu = '{{ product.price_euro }}'
         {% endif %}
-        const url = '{{ product.get_absolute_url }}'
     </script>
     <script src="{% static 'js/product_7.js' %}"></script>
     <script>const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true}</script>
