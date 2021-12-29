@@ -363,9 +363,9 @@ def fondy_callback(request):
         transaction.save()
         if request.POST['order_status'] == 'approved':
             Email().send_order(order, 'email/emails.html')
-            order.status = 2
+            order.status = '2'
         if request.POST['order_status'] == 'declined' or request.POST['order_status'] == 'expired':
-            order.status = 3
+            order.status = '3'
             Email().send_order(order, 'email/error.html')
         order.save()
         return HttpResponse(status=200)
@@ -378,6 +378,8 @@ def success_order(request):
         order_id = int(request.POST['order_id']) - 1000
         try:
             order = Order.objects.get(pk=order_id)
+            order.status = '2'
+            order.save()
             context = {
                 'order': order,
             }
