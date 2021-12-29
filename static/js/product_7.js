@@ -217,21 +217,24 @@ function addToCart() {
     requiredChecked.forEach(input => {
         let option = {
             'optionId': input.closest('.option').getAttribute('data-option-id'),
-            'type': 'RequiredOption'
+            'name': input.closest('.option').getAttribute('data-name'),
+            'price': input.closest('.option').getAttribute('data-price-'+ currency),
         }
         data['optionsId'].push(option)
     })
     requiredChildChecked.forEach(input => {
         let option = {
             'optionId': input.closest('.option').getAttribute('data-option-id'),
-            'type': 'RequiredOptionChild'
+            'name': input.closest('.option').getAttribute('data-name'),
+            'price': input.closest('.option').getAttribute('data-price-'+ currency),
         }
         data['optionsId'].push(option)
     })
     additionChecked.forEach(input => {
         let option = {
             'optionId': input.closest('.option').getAttribute('data-option-id'),
-            'type': 'AdditionOptions'
+            'name': input.closest('.option').getAttribute('data-name'),
+            'price': input.closest('.option').getAttribute('data-price-'+ currency),
         }
         data['optionsId'].push(option)
     })

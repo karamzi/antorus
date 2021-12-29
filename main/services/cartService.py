@@ -42,18 +42,13 @@ class CartServices:
             'options': [],
         }
         for option in options:
-            if option['type'] == 'RequiredOption':
-                option = RequiredOption.objects.get(pk=int(option['optionId']))
-            elif option['type'] == 'RequiredOptionChild':
-                option = RequiredOptionChild.objects.get(pk=int(option['optionId']))
-            elif option['type'] == 'AdditionOptions':
-                option = AdditionOptions.objects.get(pk=int(option['optionId']))
             product_json['options'].append({
-                'name': option.name,
-                'price': getattr(option, f'get_price_{self.currency}')()
+                'name': option['name'],
+                'price': float(option['price'])
             })
         product_json['price'] = self.count_price(product_json)
         product_json['total'] = product_json['price'] * int(quantity)
+        # check if the product is already in the cart or not
         for index in range(self.count_products()):
             cart_product = self.cart['products'][index]
             if int(cart_product['id']) == self.product.pk:

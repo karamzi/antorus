@@ -43,7 +43,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="price">{{ product.price }}</div>
+                                <div class="price">{{ cart.sign }} {{ product.price }}</div>
                                 <div class="product_quantity">
                                     <div class="quantity">
                                         <div class="minus"></div>
@@ -51,7 +51,7 @@
                                         <div class="plus">+</div>
                                     </div>
                                 </div>
-                                <div class="total">{{ product.total }}</div>
+                                <div class="total">{{ cart.sign }} {{ product.total }}</div>
                             </div>
                         {% endfor %}
                     </div>
