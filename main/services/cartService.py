@@ -17,7 +17,7 @@ class CartServices:
         self.session = request.session
         self.request = request
         self.region = request.COOKIES.get('currency', 'us')
-        self.coupon = CouponDbService(request.COOKIES.get('coupon', '')).coupon
+        self.coupon = CouponDbService(name=request.COOKIES.get('coupon', '')).coupon
         self.currency = 'dollar' if self.region == 'us' else 'euro'
         self.sign = '$' if self.region == 'us' else '€'
         cart = self.session.get(f'cart_{self.region}')
@@ -33,8 +33,11 @@ class CartServices:
         self.cart = cart
 
     def get_cart(self):
-        self.count_cart()
+        self._count_cart()
         return self.cart
+
+    def set_new_coupon(self, coupon):
+        self.coupon = coupon
 
     def add(self, product_id, options: [str], quantity):
         self.product = Products.objects.get(pk=int(product_id))
@@ -51,10 +54,10 @@ class CartServices:
                 'name': option['name'],
                 'price': float(option['price'])
             })
-        product_json['price'] = self.count_price(product_json)
+        product_json['price'] = self._count_price(product_json)
         product_json['total'] = product_json['price'] * int(quantity)
         # check if the product is already in the cart or not
-        for index in range(self.count_products()):
+        for index in range(self._count_products()):
             cart_product = self.cart['products'][index]
             if int(cart_product['id']) == self.product.pk:
                 self.cart['products'][index] = product_json
@@ -63,7 +66,7 @@ class CartServices:
             self.cart['products'].append(product_json)
 
     def change_quantity(self, product_id, quantity):
-        for index in range(self.count_products()):
+        for index in range(self._count_products()):
             cart_product = self.cart['products'][index]
             if cart_product['id'] == int(product_id):
                 cart_product['quantity'] = quantity
@@ -72,27 +75,27 @@ class CartServices:
 
     def remove(self, product_id):
         del_product_index = 0
-        for index in range(self.count_products()):
+        for index in range(self._count_products()):
             cart_product = self.cart['products'][index]
             if cart_product['id'] == int(product_id):
                 del_product_index = index
         self.cart['products'].pop(del_product_index)
 
-    def save(self):
+    def _save(self):
         self.session['cart'] = self.cart
         self.session.modified = True
 
-    def count_price(self, product_json) -> float:
+    def _count_price(self, product_json) -> float:
         total = 0
         total += getattr(self.product, f'get_price_{self.currency}')()
         for option in product_json['options']:
             total += option['price']
         return float(total)
 
-    def count_products(self) -> int:
+    def _count_products(self) -> int:
         return len(self.session[f'cart_{self.region}']['products'])
 
-    def count_cart(self):
+    def _count_cart(self):
         subtotal = 0
         discount = 0
         for cart_product in self.cart['products']:
@@ -107,10 +110,7 @@ class CartServices:
         self.cart['subtotal'] = to_fixed(subtotal, 2)
         self.cart['discount'] = to_fixed(discount, 2)
         self.cart['total'] = to_fixed(total, 2)
-        self.save()
-
-    def set_new_coupon(self, coupon):
-        self.coupon = coupon
+        self._save()
 
     def clear(self):
         del self.session['cart_us']

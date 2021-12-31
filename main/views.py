@@ -319,10 +319,10 @@ def create_order(request):
 
 def check_coupon(request):
     if request.method == 'POST':
-        coupon_service = CouponDbService(request.POST['coupon'])
+        coupon_service = CouponDbService(name=request.POST['coupon'])
         coupon = coupon_service.coupon
         if coupon is None:
-            raise CommonApiError('coupon have not been found')
+            raise CommonApiError('Coupon have not been found')
         # update coupon in the cart and get it
         cart_service = CartServices(request)
         cart_service.set_new_coupon(coupon)
