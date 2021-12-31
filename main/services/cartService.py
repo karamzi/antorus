@@ -1,5 +1,4 @@
 from main.models import Products
-import json
 
 from main.services.dbServices.couponDbService import CouponDbService
 

@@ -1,4 +1,3 @@
-from main.errors.apiErrors import CommonApiError
 from main.models import Coupon
 from django.core.exceptions import ObjectDoesNotExist
 

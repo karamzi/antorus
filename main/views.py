@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 
 from .errors.apiErrors import CommonApiError
-from .models import Order, Coupon, BestOffersToday, AuthToken, Transactions, SpecialOffers
+from .models import Order, BestOffersToday, AuthToken, Transactions, SpecialOffers
 from .forms import RegisterUserForm
 from django.db.models import Q, Prefetch
 from django.views.decorators.csrf import csrf_exempt
