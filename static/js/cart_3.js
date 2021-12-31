@@ -121,7 +121,6 @@ function checkCoupon() {
             'X-CSRFToken': getCookie('csrftoken')
         }
     }).then(response => {
-        console.log(response.data.status)
         if (response.data.status) {
             countCart(response.data.cart)
         } else {
