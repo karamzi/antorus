@@ -1,5 +1,7 @@
-from main.models import Products, RequiredOption, RequiredOptionChild, AdditionOptions
+from main.models import Products
 import json
+
+from main.services.dbServices.couponDbService import CouponDbService
 
 
 def to_fixed(numObj, digits=0):
@@ -16,6 +18,7 @@ class CartServices:
         self.session = request.session
         self.request = request
         self.region = request.COOKIES.get('currency', 'us')
+        self.coupon = CouponDbService(request.COOKIES.get('coupon', '')).coupon
         self.currency = 'dollar' if self.region == 'us' else 'euro'
         self.sign = '$' if self.region == 'us' else '€'
         cart = self.session.get(f'cart_{self.region}')
@@ -29,7 +32,10 @@ class CartServices:
                 'sign': self.sign,
             }
         self.cart = cart
+
+    def get_cart(self):
         self.count_cart()
+        return self.cart
 
     def add(self, product_id, options: [str], quantity):
         self.product = Products.objects.get(pk=int(product_id))
@@ -56,7 +62,6 @@ class CartServices:
                 break
         else:
             self.cart['products'].append(product_json)
-        self.count_cart()
 
     def change_quantity(self, product_id, quantity):
         for index in range(self.count_products()):
@@ -65,7 +70,6 @@ class CartServices:
                 cart_product['quantity'] = quantity
                 cart_product['total'] = cart_product['price'] * quantity
                 self.cart['products'][index] = cart_product
-        self.count_cart()
 
     def remove(self, product_id):
         del_product_index = 0
@@ -74,7 +78,6 @@ class CartServices:
             if cart_product['id'] == int(product_id):
                 del_product_index = index
         self.cart['products'].pop(del_product_index)
-        self.count_cart()
 
     def save(self):
         self.session['cart'] = self.cart
@@ -91,15 +94,13 @@ class CartServices:
         return len(self.session[f'cart_{self.region}']['products'])
 
     def count_cart(self):
-        coupon = self.request.COOKIES.get('coupon', False)
         subtotal = 0
         discount = 0
         for cart_product in self.cart['products']:
             subtotal += float(cart_product['total'])
-        if coupon:
-            coupon = json.loads(coupon)
-            self.cart['coupon'] = coupon['name']
-            discount = subtotal * coupon['discount'] / 100
+        if self.coupon:
+            self.cart['coupon'] = self.coupon.name
+            discount = subtotal * self.coupon.discount / 100
             total = subtotal - discount
         else:
             total = subtotal
@@ -108,6 +109,9 @@ class CartServices:
         self.cart['discount'] = to_fixed(discount, 2)
         self.cart['total'] = to_fixed(total, 2)
         self.save()
+
+    def set_new_coupon(self, coupon):
+        self.coupon = coupon
 
     def clear(self):
         del self.session['cart_us']

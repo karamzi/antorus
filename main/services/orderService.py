@@ -1,5 +1,4 @@
-import json
-
+from main.errors.apiErrors import OrderApiError
 from main.models import Order, Cart, CartOptions
 from main.services.dbServices.couponDbService import CouponDbService
 from main.services.cartService import CartServices
@@ -7,7 +6,6 @@ from main.services.cartService import CartServices
 
 class OrderService:
     order: Order
-    errors: [dict]
     cart: dict
 
     def __init__(self, request):
@@ -16,26 +14,26 @@ class OrderService:
         self.cart = CartServices(request).cart
 
     def create_order(self) -> Order:
+        self._check_required_fields()
         self._order_from_json_to_obj()
         self._check_coupon()
         self.order.save()
         self._create_cart()
         return self.order
 
-    def check_required_fields(self) -> bool:
+    def _check_required_fields(self):
         required_fields = {
             'connection': self.request.POST.get('connection', None),
             'email': self.request.POST.get('email', None),
         }
-        self.errors = []
+        errors = []
         for key, value in required_fields.items():
             if value is None:
-                self.errors.append({
-                    'message': f'The required field - {key} was not found'
+                errors.append({
+                    'message': f'The required field - {key} was not found! '
                 })
-        if self.errors:
-            return False
-        return True
+        if errors:
+            raise OrderApiError(errors)
 
     def _check_coupon(self):
         coupon = self.cart['coupon']

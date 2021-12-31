@@ -7,6 +7,8 @@ from django.contrib.auth.hashers import check_password
 from main.utils.customAuth import CustomAuth
 from django.contrib import messages
 from django.contrib.auth.models import User
+
+from .errors.apiErrors import CommonApiError
 from .models import Order, Coupon, BestOffersToday, AuthToken, Transactions, SpecialOffers
 from .forms import RegisterUserForm
 from django.db.models import Q, Prefetch
@@ -17,9 +19,9 @@ from datetime import datetime, timedelta
 
 from .services.cartService import CartServices
 from .services.dbServices.categoriesDbService import CategoriesDbService
+from .services.dbServices.couponDbService import CouponDbService
 from .services.dbServices.prodcutDbService import ProductDbService
 from .services.dbServices.seoDbService import SeoDbService
-from .services.errorServices import ErrorServices
 from .services.fondyService import FondyService
 from .services.orderService import OrderService
 from .utils.email import Email
@@ -34,7 +36,7 @@ def global_var(request):
         'currency': currency,
         'seo': seo,
         'categories': categories,
-        'cart': cart_service.cart,
+        'cart': cart_service.get_cart(),
     }
 
 
@@ -301,18 +303,14 @@ def cart_service(request):
             cart_service.change_quantity(data['productId'], data['quantity'])
         elif data['action'] == 'remove':
             cart_service.remove(data['productId'])
-        return JsonResponse(cart_service.cart)
+        return JsonResponse(cart_service.get_cart())
 
 
 def create_order(request):
     if request.method == 'POST':
         currency = 'EUR' if request.POST.get('currency', 'us') == 'eu' else 'USD'
-        order_service = OrderService(request)
-        # check post data for creating order
-        if not order_service.check_required_fields():
-            return ErrorServices.data_error(order_service.errors)
         # creating order
-        order = order_service.create_order()
+        order = OrderService(request).create_order()
         # creating json response with payment data for frontend
         response = FondyService(order, currency).json_response()
         return response
@@ -321,27 +319,22 @@ def create_order(request):
 
 def check_coupon(request):
     if request.method == 'POST':
-        try:
-            coupon = Coupon.objects.get(name=request.POST['coupon'])
-            coupon_json = {
-                'name': coupon.name,
-                'discount': coupon.discount
-            }
-            coupon_json = json.dumps(coupon_json)
-            request.COOKIES['coupon'] = coupon_json
-            cart_service = CartServices(request)
-            response = JsonResponse({
-                'status': 'True',
-                'discount': coupon.discount,
-                'name': coupon.name,
-                'cart': cart_service.cart
-            })
-            response.set_cookie('coupon', coupon_json)
-            return response
-        except ObjectDoesNotExist:
-            return JsonResponse({
-                'status': 'False'
-            })
+        coupon_service = CouponDbService(request.POST['coupon'])
+        coupon = coupon_service.coupon
+        if coupon is None:
+            raise CommonApiError('coupon have not been found')
+        # update coupon in the cart and get it
+        cart_service = CartServices(request)
+        cart_service.set_new_coupon(coupon)
+        cart = cart_service.get_cart()
+        response = JsonResponse({
+            'status': True,
+            'discount': coupon.discount,
+            'name': coupon.name,
+            'cart': cart
+        })
+        response.set_cookie('coupon', coupon.name)
+        return response
     return redirect(reverse('index'))
 
 

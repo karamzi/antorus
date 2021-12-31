@@ -1,22 +1,3 @@
-.order_section {
-    flex-grow: 1;
-}
-
-.order_section h2 {
-    margin-top: 40px;
-    margin-bottom: 40px;
-    color: white;
-    font-size: 24px;
-    text-align: center;
-    font-weight: 400;
-}
-
-.order_content{
-    display: flex;
-    justify-content: space-between;
-}
-
-
 .order_left {
     width: 20%;
 }
