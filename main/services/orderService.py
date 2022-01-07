@@ -40,7 +40,7 @@ class OrderService:
         if coupon:
             self.order.coupon = coupon
             CouponDbService(coupon).increase_coupon_count()
-            self.order.price = self.cart['subtotal']
+            self.order.price = self.sing + ' ' + self.cart['subtotal']
 
     def _order_from_json_to_obj(self):
         self.order = Order()

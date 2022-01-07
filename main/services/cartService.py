@@ -57,7 +57,7 @@ class CartServices:
         product_json['price'] = self._count_price(product_json)
         product_json['total'] = product_json['price'] * int(quantity)
         # check if the product is already in the cart or not
-        for index in range(self._count_products()):
+        for index in range(self.count_products()):
             cart_product = self.cart['products'][index]
             if int(cart_product['id']) == self.product.pk:
                 self.cart['products'][index] = product_json
@@ -66,7 +66,7 @@ class CartServices:
             self.cart['products'].append(product_json)
 
     def change_quantity(self, product_id, quantity):
-        for index in range(self._count_products()):
+        for index in range(self.count_products()):
             cart_product = self.cart['products'][index]
             if cart_product['id'] == int(product_id):
                 cart_product['quantity'] = quantity
@@ -75,7 +75,7 @@ class CartServices:
 
     def remove(self, product_id):
         del_product_index = 0
-        for index in range(self._count_products()):
+        for index in range(self.count_products()):
             cart_product = self.cart['products'][index]
             if cart_product['id'] == int(product_id):
                 del_product_index = index
@@ -92,7 +92,7 @@ class CartServices:
             total += option['price']
         return float(total)
 
-    def _count_products(self) -> int:
+    def count_products(self) -> int:
         return len(self.session[f'cart_{self.region}']['products'])
 
     def _count_cart(self):
