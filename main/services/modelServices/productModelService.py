@@ -2,7 +2,7 @@ from django.db.models import Min
 import re
 
 
-class ProductService:
+class ProductModelService:
     @staticmethod
     def get_min_price(product, region):
         from main.models import Products

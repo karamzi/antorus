@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 import re
 
 from main.services.commonServices import CommonServices
-from main.services.productService import ProductService
+from main.services.modelServices.productModelService import ProductModelService
 
 
 def get_img_path(instance, filename):
@@ -119,7 +119,7 @@ class Products(models.Model):
         if not self.slug:
             self.slug = CommonServices.create_slag(self)
         # add HTML tag in description for SEO
-        self.description = ProductService.add_seo_html_tag(self)
+        self.description = ProductModelService.add_seo_html_tag(self)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -136,10 +136,10 @@ class Products(models.Model):
         return float(self.price_euro)
 
     def get_min_price_us(self):
-        return '$ ' + str(ProductService.get_min_price(self, 'us'))
+        return '$ ' + str(ProductModelService.get_min_price(self, 'us'))
 
     def get_min_price_eu(self):
-        return '€ ' + str(ProductService.get_min_price(self, 'eu'))
+        return '€ ' + str(ProductModelService.get_min_price(self, 'eu'))
 
     class Meta:
         verbose_name = 'Товар'
