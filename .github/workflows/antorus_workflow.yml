@@ -1,4 +1,4 @@
-name: Deploment Workflow
+name: Deploment WorkflowV2
 on:
   push:
     branches: [ main ]
