@@ -16,6 +16,7 @@ services:
     volumes:
     - ./mysql/conf:/etc/mysql/conf.d
     - ./mysql/logs:/var/log/mysql
+    mem_limit: 300m
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8080
@@ -26,3 +27,4 @@ services:
       - "8080:8080"
     depends_on:
       - db
+    mem_limit: 100m
