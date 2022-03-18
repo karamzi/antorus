@@ -5,10 +5,11 @@ services:
   postgres:
     image: postgres:13.3
     environment:
-       MYSQL_DATABASE: 'antorus'
-       MYSQL_USER: 'root'
-       MYSQL_PASSWORD: 'password'
-       MYSQL_ROOT_PASSWORD: 'password'
+      POSTGRES_DB: "antorus"
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+    ports:
+      - "5432:5432"
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8080
