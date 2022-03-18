@@ -7,37 +7,55 @@ from django.contrib.auth.hashers import check_password
 from main.utils.customAuth import CustomAuth
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Products, Categories, SubCategories, Order, Cart, CartOptions, Coupon, BestOffersToday, AuthToken, \
-    Transactions
+
+from .errors.apiErrors import CommonApiError
+from .models import Order, BestOffersToday, AuthToken, Transactions, SpecialOffers
 from .forms import RegisterUserForm
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 from django.views.decorators.csrf import csrf_exempt
 import base64
 import json
 from datetime import datetime, timedelta
+
+from .services.cartService import CartServices
+from .services.dbServices.categoriesDbService import CategoriesDbService
+from .services.dbServices.couponDbService import CouponDbService
+from .services.dbServices.prodcutDbService import ProductDbService
+from .services.dbServices.seoDbService import SeoDbService
+from .services.fondyService import FondyService
+from .services.orderService import OrderService
 from .utils.email import Email
 
 
 def global_var(request):
     currency = request.COOKIES.get('currency', 'us')
+    cart_service = CartServices(request)
+    categories = CategoriesDbService.get_categories_with_subcategories()
+    seo = SeoDbService.find(request)
     return {
-        'currency': currency
+        'currency': currency,
+        'seo': seo,
+        'categories': categories,
+        'cart': cart_service.get_cart(),
     }
 
 
 def index(request):
-    categories = Categories.objects.all()
-    products = BestOffersToday.objects.all()
+    products = BestOffersToday.objects.prefetch_related(Prefetch(
+        'product',
+        queryset=ProductDbService.get_all_products(),
+    )).all()
+    special_offers = SpecialOffers.objects.select_related('product').all()
     context = {
-        'categories': categories,
         'products': products,
+        'special_offers': special_offers,
     }
     return render(request, 'index.html', context)
 
 
 def search_products(request):
     if request.method == 'POST':
-        products = Products.objects.filter(name__icontains=request.POST['value'], draft=False)[:10]
+        products = ProductDbService.search_filter(request.POST['value'])
         context = {
             'products': products,
             'search_value': request.POST['value']
@@ -48,12 +66,10 @@ def search_products(request):
 
 def search_result(request, search):
     if search == 'all':
-        products = Products.objects.filter(draft=False)
+        products = ProductDbService.get_all_products()
     else:
-        products = Products.objects.filter(name__icontains=search, draft=False)
-    categories = Categories.objects.all()
+        products = ProductDbService.search_filter(search)
     context = {
-        'categories': categories,
         'products': products,
         'search': search,
     }
@@ -61,47 +77,47 @@ def search_result(request, search):
 
 
 def product(request, slug):
-    try:
-        product = Products.objects.get(slug=slug)
-        if product.draft and not request.user.is_superuser:
-            return redirect(reverse('index'))
-        context = {
-            'product': product
-        }
-        return render(request, 'product.html', context)
-    except ObjectDoesNotExist:
+    currency = request.COOKIES.get('currency', 'us')
+    product = ProductDbService.get_product(slug)
+    if product and product.draft and not request.user.is_superuser:
         return redirect(reverse('index'))
+    else:
+        products = ProductDbService.get_products_by_category(product.category)[:4]
+        context = {
+            'product': product,
+            'products': products,
+        }
+        if currency == 'us':
+            return render(request, 'product_us.html', context)
+        if currency == 'eu':
+            return render(request, 'product_eu.html', context)
 
 
 def category(request, slug):
-    try:
-        category = Categories.objects.get(slug=slug)
-        categories = Categories.objects.all()
-        products = category.products_category.filter(draft=False)
+    category = CategoriesDbService.get_category(slug)
+    if category:
+        products = ProductDbService.get_products_by_category(category)
         context = {
-            'categories': categories,
             'category': category,
             'products': products
         }
         return render(request, 'category.html', context)
-    except ObjectDoesNotExist:
+    else:
         return redirect(reverse('index'))
 
 
 def subcategory(request, category, subcategory):
-    try:
-        sub_category = SubCategories.objects.get(slug=subcategory)
-        category = Categories.objects.get(slug=category)
-        categories = Categories.objects.all()
-        products = sub_category.products_subcategory.filter(draft=False)
+    category = CategoriesDbService.get_category(category)
+    sub_category = CategoriesDbService.get_subcategory(subcategory)
+    if category and sub_category:
+        products = ProductDbService.get_products_by_subcategory(sub_category)
         context = {
-            'categories': categories,
             'category': category,
             'sub_category': sub_category,
             'products': products
         }
         return render(request, 'category.html', context)
-    except ObjectDoesNotExist:
+    else:
         return redirect(reverse('index'))
 
 
@@ -114,6 +130,9 @@ def faq(request):
 
 
 def checkout(request):
+    cart_service = CartServices(request)
+    if cart_service.count_products() == 0:
+        return redirect(reverse('cart'))
     return render(request, 'checkout.html')
 
 
@@ -192,16 +211,17 @@ def change_account_details(request):
 
 @login_required(login_url='/myAccount/')
 def orders(request):
-    orders = Order.objects.filter(user=request.user).order_by('-date', '-id')
+    orders = Order.objects.filter(user=request.user).exclude(status='3').order_by('-date', '-id')
     context = {
         'orders': orders
     }
     return render(request, 'orders.html', context)
 
 
+@login_required(login_url='/myAccount/')
 def order(request, pk):
     try:
-        order = Order.objects.get(pk=pk)
+        order = request.user.user_order.get(pk=pk)
         context = {
             'order': order
         }
@@ -273,76 +293,48 @@ def send_new_password(request):
     return redirect(reverse('index'))
 
 
+def cart_service(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        cart_service = CartServices(request)
+        if data['action'] == 'add':
+            cart_service.add(data['productId'], data['optionsId'], data['quantity'])
+        elif data['action'] == 'change':
+            cart_service.change_quantity(data['productId'], data['quantity'])
+        elif data['action'] == 'remove':
+            cart_service.remove(data['productId'])
+        return JsonResponse(cart_service.get_cart())
+
+
 def create_order(request):
     if request.method == 'POST':
-        sing = '€' if request.POST['currency'] == 'eu' else '$'
-        order = Order()
-        order.user_id = request.user.pk if request.user.is_authenticated else None
-        order.character_server = request.POST['characterServer']
-        order.battle_tag = request.POST['battleTag']
-        order.faction = request.POST['faction']
-        order.connection = request.POST['connection']
-        order.email = request.POST['email']
-        order.comment = request.POST['comment']
-        order.status = 1
-        order.total = sing + ' ' + request.POST['total']
-        coupon = request.POST.get('coupon', '')
-        old_price = request.POST.get('oldPrice', '')
-        if coupon:
-            order.coupon = coupon
-            coupon = Coupon.objects.get(name=coupon)
-            coupon.count = coupon.count + 1
-            coupon.save()
-        if old_price:
-            order.price = sing + ' ' + old_price
-        else:
-            order.price = order.total
-        order.save()
-        cart = json.loads(request.POST['cart'])
-        for item in cart:
-            product = Cart()
-            product.product = item['name']
-            product.quantity = item['quantity']
-            product.price = item['currency'] + ' ' + item['price']
-            product.total = item['currency'] + ' ' + item['total']
-            product.order = order
-            product.save()
-            for item_option in item['options']:
-                option = CartOptions()
-                option.name = item_option['name']
-                option.price = item['currency'] + ' ' + item_option['price']
-                option.order = order
-                option.product = product
-                option.save()
-        from main.utils.generateSignature import generate_signature
-        amount = float(request.POST['total']) * 100
-        currency = 'EUR' if request.POST['currency'] == 'eu' else 'USD'
-        order_desc = 'payment for order ' + order.get_order_number()
-        order_id = order.get_order_number()
-        return JsonResponse({
-            'status': 'created',
-            'amount': str(int(amount)),
-            'currency': currency,
-            'order_desc': order_desc,
-            'order_id': order_id,
-            'signature': generate_signature(str(int(amount)), currency, order_desc, order_id),
-        })
+        currency = 'EUR' if request.POST.get('currency', 'us') == 'eu' else 'USD'
+        # creating order
+        order = OrderService(request).create_order()
+        # creating json response with payment data for frontend
+        response = FondyService(order, currency).json_response()
+        return response
     return redirect(reverse('index'))
 
 
 def check_coupon(request):
     if request.method == 'POST':
-        try:
-            coupon = Coupon.objects.get(name=request.POST['coupon'])
-            return JsonResponse({
-                'status': 'True',
-                'discount': coupon.discount,
-                'name': coupon.name
-            })
-        except ObjectDoesNotExist:
-            return JsonResponse({
-                'status': 'False'
-            })
+        coupon_service = CouponDbService(name=request.POST['coupon'])
+        coupon = coupon_service.coupon
+        if coupon is None:
+            raise CommonApiError('Coupon have not been found')
+        # update coupon in the cart and get it
+        cart_service = CartServices(request)
+        cart_service.set_new_coupon(coupon)
+        cart = cart_service.get_cart()
+        response = JsonResponse({
+            'status': True,
+            'discount': coupon.discount,
+            'name': coupon.name,
+            'cart': cart
+        })
+        response.set_cookie('coupon', coupon.name)
+        return response
     return redirect(reverse('index'))
 
 
@@ -363,10 +355,10 @@ def fondy_callback(request):
         transaction.date = datetime.strptime(request.POST['order_time'], date_format) + timedelta(hours=1)
         transaction.save()
         if request.POST['order_status'] == 'approved':
-            order.status = 2
             Email().send_order(order, 'email/emails.html')
+            order.status = '2'
         if request.POST['order_status'] == 'declined' or request.POST['order_status'] == 'expired':
-            order.status = 3
+            order.status = '3'
             Email().send_order(order, 'email/error.html')
         order.save()
         return HttpResponse(status=200)
@@ -379,15 +371,16 @@ def success_order(request):
         order_id = int(request.POST['order_id']) - 1000
         try:
             order = Order.objects.get(pk=order_id)
+            order.status = '2'
+            order.save()
             context = {
                 'order': order,
             }
-            return render(request, 'success_order.html', context)
+            response = render(request, 'success_order.html', context)
+            cart_service = CartServices(request)
+            cart_service.clear()
+            response.delete_cookie('coupon')
+            return response
         except ObjectDoesNotExist:
             return redirect(reverse('404'))
     return redirect(reverse('index'))
-
-
-def page_404(request):
-    response = render(request, '404.html')
-    return response

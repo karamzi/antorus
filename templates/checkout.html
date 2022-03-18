@@ -1,12 +1,6 @@
 {% extends 'basic/basic.html' %}
 {% load static %}
 
-
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
-    <link rel="stylesheet" href="{% static 'css/checkbox.css' %}">
-{% endblock %}
-
 {% block title %}Checkout - ANTORUS{% endblock %}
 
 {% block content %}
@@ -16,84 +10,79 @@
             <div class="checkout_content">
                 <div class="checkout_left">
                     <h3>BILLING DETAILS</h3>
-                    <form action="">
-                        <div class="character">
-                            <div class="name">
-                                <label class="required">Character Name and Server Name</label>
-                                <input id="characterServer" type="text" value="">
-                            </div>
-                            <div class="tag">
-                                <label>Battle tag (optional)</label>
-                                <input id="battleTag" type="text">
-                            </div>
-                        </div>
-                        <div class="faction">
-                            <label class="required">Faction</label>
-                            <input id="faction" type="text">
-                        </div>
+                    <form>
                         <div class="connections">
-                            <label class="required">Skype or Discord</label>
+                            <label for="connection" class="required">Skype or Discord</label>
                             <input id="connection" type="text">
                         </div>
                         {% if user.is_authenticated %}
                             <div class="email">
-                                <label class="required">email</label>
+                                <label for="email" class="required">email</label>
                                 <input value="{{ user.email }}" id="email" type="email" required>
                             </div>
                         {% else %}
                             <div class="email">
-                                <label class="required">email</label>
+                                <label for="email" class="required">email</label>
                                 <input id="email" type="email" required>
                             </div>
                         {% endif %}
-{#                        <div class="account">#}
-{#                            <label class="account_label">Create an account?</label>#}
-{#                            <div class="checkbox">#}
-{#                                <input class="addition" type="checkbox" id="cd1">#}
-{#                                <label class="custom" for="cd1">#}
-{#                                    <div class="tick"></div>#}
-{#                                </label>#}
-{#                            </div>#}
-{#                        </div>#}
                         <div class="comment">
-                            <label>Comment to the order (optional)</label>
-                            <textarea id="comment" name="comment" id="" cols="30" rows="10"></textarea>
+                            <label for="comment">Comment to the order (optional)</label>
+                            <textarea id="comment" name="comment" cols="30" rows="10"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="checkout_right">
                     <h3>YOUR ORDER</h3>
-                    <div class="products"></div>
+                    <div class="products">
+                        {% for product in cart.products %}
+                            <div class="product">
+                                <div class="product_head">
+                                    <div class="product_name">{{ product.name }} x {{ product.quantity }}</div>
+                                    <div class="product_price">{{ cart.sign }} {{ product.total }}</div>
+                                </div>
+                                <div class="product_options">
+                                    {% for option in product.options %}
+                                        <div class="options">Select options: {{ option.name }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
                     <div class="subtotal">
                         <p>Subtotal</p>
-                        <p id="subtotal"></p>
+                        <p id="subtotal">{{ cart.sign }} {{ cart.subtotal }}</p>
                     </div>
-                    <div style="display: none" class="coupon">
-                        <p id="coupon_name">Coupon: </p>
-                        <p id="coupon_price" style="color: #45db428c"><span class="coupon_remove">Remove</span></p>
+                    <div {% if cart.coupon %}style="display: flex"{% else %}style="display: none"{% endif %}
+                         class="coupon">
+                        <p id="coupon_name">Coupon: {{ cart.coupon }}</p>
+                        <p id="coupon_price" style="color: #45db428c">{{ cart.sign }} -{{ cart.discount }}</p>
                     </div>
                     <div class="total">
-                        <p>total</p>
-                        <p id="cart_total"></p>
+                        <p>Total</p>
+                        <p id="cart_total">{{ cart.sign }} {{ cart.total }}</p>
                     </div>
                     <div class="agree">
                         <label id="cd2_label">I have read and agree to the website terms and conditions</label>
                         <div class="checkbox">
                             <input class="addition" type="checkbox" id="cd2">
                             <label class="custom" for="cd2">
-                                <div class="tick"></div>
+                                <span class="tick"></span>
                             </label>
                         </div>
                     </div>
-                    <form id="fondy" action="https://pay.fondy.eu/api/checkout/redirect/" method="post">
+                    <form onsubmit="ym(67968427,'reachGoal','order')" id="fondy"
+                          action="https://pay.fondy.eu/api/checkout/redirect/" method="post">
                         <input id="amount" type="hidden" name="amount" value="">
                         <input id="currency" type="hidden" name="currency" value="">
                         <input type="hidden" name="lifetime" value="1200">
                         <input type="hidden" name="merchant_id" value="1470496">
                         <input id="order_desc" type="hidden" name="order_desc" value="">
                         <input id="order_id" type="hidden" name="order_id" value="">
-                        <input type="hidden" name="response_url" value="https://antorus.com{% url 'success_order' %}">
-                        <input type="hidden" name="server_callback_url" value="http://151.248.114.152{% url 'fondy' %}">
+                        <input type="hidden" name="response_url"
+                               value="https://antorus.com{% url 'success_order' %}">
+                        <input type="hidden" name="server_callback_url"
+                               value="https://antorus.com{% url 'fondy' %}">
                         <input id="signature" type="hidden" name="signature" value="">
                     </form>
                     <div class="button">
@@ -107,5 +96,5 @@
 
 
 {% block scripts %}
-    <script src="{% static 'js/checkout1.js' %}"></script>
+    <script src="{% static 'js/checkout_9.js' %}"></script>
 {% endblock %}

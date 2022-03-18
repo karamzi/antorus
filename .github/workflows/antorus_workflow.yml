@@ -1,0 +1,22 @@
+name: Deploment Workflow
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  job_one:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: antorus-connection
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.ANTORUS_SICRET }}
+          port: 22
+          script: |
+            cd /var/www/antorus
+            git pull
+            docker stop antorus_web_1
+            docker-compose up --build -d web

@@ -26,44 +26,19 @@ const instance = axios.create({
     //baseURL: 'https://antorus.com/',
 })
 
-function countCart() {
-    let cart
-    let currencyTotal
-    if (currency === 'us') {
-        cart = getCookie('cartUs')
-        currencyTotal = '$'
-    } else {
-        cart = getCookie('cartEu')
-        currencyTotal = '€'
-    }
-    let subtotal = cart.reduce((sum, item) => sum + +item.total, 0)
-    let total
-    let coupon = getCookie('coupon')
-    if (coupon && cart.length > 0) {
-        let discount
-        document.getElementById('coupon_name').innerText = 'Coupon: ' + coupon.name
+function countCart(cart) {
+    if (cart.coupon !== '' && cart.products.length > 0) {
+        document.getElementById('coupon_name').innerText = 'Coupon: ' + cart.coupon
         document.querySelector('.coupon').style.display = 'flex'
-        discount = +coupon.discount / 100 * subtotal
-        document.getElementById('coupon_price').innerHTML = '- ' + discount.toFixed(2)
-        total = subtotal - discount
-    } else {
-        total = subtotal
+        document.getElementById('coupon_price').innerHTML = cart.sign + ' - ' + cart.discount
     }
-    total = total.toFixed(2)
-    subtotal = subtotal.toFixed(2)
-    document.getElementById('subtotal').innerText = currencyTotal + ' ' + subtotal
-    document.getElementById('cart_total').innerText = currencyTotal + ' ' + total
+    document.getElementById('subtotal').innerText = cart.sign +  cart.subtotal
+    document.getElementById('cart_total').innerText = cart.sign +  cart.total
 }
 
-function product_quantity() {
-    if (currency === 'us') {
-        document.getElementById('cart_count').innerText = getCookie('cartUs').length
-    } else {
-        document.getElementById('cart_count').innerText = getCookie('cartEu').length
-    }
+function product_quantity(quantity) {
+    document.getElementById('cart_count').innerText = quantity
 }
-
-product_quantity()
 
 if (navLink) {
     navLink.forEach(item => {
@@ -73,10 +48,35 @@ if (navLink) {
                 nextSibling.style.display = 'flex'
                 this.classList.add('active')
                 this.classList.add('open')
+                // Анимация открытия подкатеглоий
+                const countLength = nextSibling.querySelectorAll('a').length
+                const height = countLength * 54 + 2
+                let currentHeight = 0
+                let counter = 0
+                let open = setInterval(() => {
+                    counter += 1
+                    currentHeight += height / 20
+                    nextSibling.style.height = currentHeight + 'px'
+                    if (counter === 20) {
+                        return clearInterval(open)
+                    }
+                }, 10)
             } else if (nextSibling.classList.contains('accordion') && nextSibling.style.display === 'flex') {
-                nextSibling.style.display = 'none'
-                this.classList.remove('active')
-                this.classList.remove('open')
+                const height = nextSibling.querySelectorAll('a').length * 54 + 2
+                let currentHeight = height
+                let counter = 0
+                // Анимация закрытия подкатеглоий
+                let close = setInterval(() => {
+                    counter += 1
+                    currentHeight -= height / 20
+                    nextSibling.style.height = currentHeight + 'px'
+                    if (counter === 20) {
+                        nextSibling.style.display = 'none'
+                        this.classList.remove('active')
+                        this.classList.remove('open')
+                        return clearInterval(close)
+                    }
+                }, 10)
             }
         })
     })
@@ -87,12 +87,12 @@ function getCookie(name) {
     if (name === 'csrftoken') {
         return results[2]
     }
-    if (name === 'coupon' && !results) {
+    if ((name === 'coupon' || name === 'cookie_accepted') && !results) {
         return undefined
     }
-    if (results)
-        return JSON.parse(unescape(results[2]))
-    else
+    if (results) {
+        return JSON.parse(results[2])
+    } else
         return []
 }
 
@@ -164,11 +164,13 @@ document.body.addEventListener('click', function (e) {
     }
 })
 
-const chatButton = document.getElementById('chatButton')
+const chatButtons = document.querySelectorAll('.chatButton')
 
-if (chatButton) {
-    chatButton.addEventListener('click', () => {
-        tidioChatApi.open()
+if (chatButtons) {
+    chatButtons.forEach(item => {
+        item.addEventListener('click', () => {
+            tidioChatApi.open()
+        })
     })
 }
 
@@ -186,3 +188,36 @@ document.body.addEventListener('click', function (e) {
         document.body.classList.remove('body_modal')
     }
 })
+
+const cookie = document.getElementById('cookie')
+const isCookieAccepted = getCookie('cookie_accepted')
+const acceptCookie = document.getElementById('accept_cookie')
+
+acceptCookie.addEventListener('click', function () {
+    setCookie('true', 'cookie_accepted')
+    cookie.style.display = 'none'
+})
+
+if (isCookieAccepted) {
+    cookie.style.display = 'none'
+} else {
+    cookie.style.display = 'block'
+}
+
+const burgerButton = document.querySelector('.burger_button')
+const closeButton = document.querySelector('.mobile_menu_header')
+const mobileMenu = document.querySelector('.mobile_menu')
+
+burgerButton.addEventListener('click', () => {
+    mobileMenu.classList.add('in')
+})
+
+closeButton.addEventListener('click', () => {
+    mobileMenu.classList.remove('in')
+})
+
+const customOrderButton = document.getElementById('custom_order_button')
+
+if (customOrderButton) {
+    document.getElementById('chatButton').click()
+}

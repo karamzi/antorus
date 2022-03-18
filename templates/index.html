@@ -1,28 +1,93 @@
 {% extends 'basic/basic.html' %}
 {% load static %}
 
+{% block meta %}
+    {{ seo.meta|safe }}
+{% endblock %}
 
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/index1.css' %}">
+{% if seo.title %}
+    {% block title %}{{ seo.title }}{% endblock %}
+{% endif %}
+
+{% block styles %}
+    <style>
+        body {
+            background-image: none;
+            display: block;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
-    <section class="intro_section">
-        <div class="container">
-            <div class="intro_content">
-                <p>WELCOME TO ANTORUS</p>
-                <h2>CASTLE NATHRIA</h2>
-                <div class="intro_buttons">
-                    <a href="{% url 'result' search='all' %}">BROWSE PRODUCTS</a>
-                    <p id="chatButton">CHAT WITH US</p>
+    <div class="slider">
+        <div class="sliders">
+            <div data-id="0" class="intro_section slide_two">
+                <div class="container">
+                    <div class="intro_content content_one">
+                        <p>Antorus</p>
+                        <h1>World of Warcraft Boosting Services</h1>
+                        <p>Professional service that connects World of Warcraft players and boosters. our task is to
+                            make cooperation convenient and safe</p>
+                        <div class="intro_links">
+                            <a href="{% url 'category' slug='raids' %}">Raid</a>
+                            <a href="{% url 'category' slug='powerleveling' %}">Leveling</a>
+                            <a href="{% url 'category' slug='dungeons' %}">Dungeons</a>
+                            <a href="{% url 'category' slug='wow-the-burning-crusade' %}">WoW TBC</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-id="1" class="intro_section slide_one">
+                <div class="container">
+                    <div class="intro_content content_one">
+                        <p>New Raid</p>
+                        <h2>Sepulcher of The First Ones Boost</h2>
+                        <p>Sepulcher of The First Ones Boost can help you fall on the latest challenge facing the
+                            Jailer and his army.</p>
+                        <div class="intro_buttons">
+                            <a href="/category/eternitys-end/">BROWSE PRODUCTS</a>
+                            <p class="chatButton">CHAT WITH US</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-    <section class="products_sections">
+        <div class="switch_buttons">
+            <button data-id="0" class="switch_buttons_item switch_buttons_item_active"></button>
+            <button data-id="1" class="switch_buttons_item"></button>
+        </div>
+    </div>
+    <div class="products_sections">
         <div class="container">
+            {% if special_offers %}
+                <h2 class="special_offers_title">SPECIAL OFFERS</h2>
+                <div class="special_offers">
+                    <div class="slider_arrow left">
+                        <div class="arrow-top-slider"></div>
+                        <div class="arrow-bottom-slider"></div>
+                    </div>
+                    <div class="special_offers_slider">
+                        <div class="special_offers_items">
+                            {% for item in special_offers %}
+                                <div class="special_offers_item">
+                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.alt }}">
+                                    <h4>{{ item.title }}</h4>
+                                    <p>{{ item.description|safe }}</p>
+                                    <a href="{{ item.product.get_absolute_url }}">VIEW MORE</a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="slider_arrow right">
+                        <div class="arrow-top-slider"></div>
+                        <div class="arrow-bottom-slider"></div>
+                    </div>
+                </div>
+            {% endif %}
+
             <div class="products_content">
-                <div class="nav_bar">
+                <div id="nav_bar" class="nav_bar">
+                    <p>CATEGORIES</p>
                     <nav>
                         {% for category in categories %}
                             <div class="nav_link">
@@ -34,56 +99,50 @@
                             {% if category.categories_subcategories.all %}
                                 <div style="display: none" class="accordion">
                                     {% for subcategory in category.categories_subcategories.all %}
-                                        <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                                        {% if not subcategory.archive %}
+                                            <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             {% endif %}
                         {% endfor %}
+                        <div class="nav_link">
+                            <a href="/result/all/">All products</a>
+                        </div>
                     </nav>
                 </div>
                 <div class="products_block">
-                    <h2>BEST OFFERS TODAY</h2>
+                    <h2>OUR BEST OFFERS TODAY</h2>
                     <div class="products">
                         {% for product in products %}
-                            <a class="product" href="{{ product.product.get_absolute_url }}">
-                                <img src="{{ product.product.image.url }}" alt="">
-                                <h4 class="name">{{ product.product.name }}</h4>
-                                {% if currency == 'us' %}
-                                    {% if product.product.new_price_dollar %}
-                                        <div class="price">
-                                            <p style="text-decoration: line-through;">
-                                                $ {{ product.product.get_price_dollar }}</p>
-                                            <p style="color: rgb(40, 168, 5);">
-                                                $ {{ product.product.get_price_new_dollar }}</p>
-                                        </div>
-                                    {% else %}
-                                        <p>{{ product.product.get_price_us }}</p>
-                                    {% endif %}
-                                {% else %}
-                                    {% if product.product.new_price_euro %}
-                                        <div class="price">
-                                            <p style="text-decoration: line-through;">
-                                                € {{ product.product.get_price_euro }}</p>
-                                            <p style="color: rgb(40, 168, 5);">
-                                                € {{ product.product.get_price_new_euro }}</p>
-                                        </div>
-                                    {% else %}
-                                        <p>{{ product.product.get_price_eu }}</p>
-                                    {% endif %}
-                                {% endif %}
-                            </a>
+                            {% with product=product.product %}
+                                {% include 'basic/product_item.html' %}
+                            {% endwith %}
+                            {% if forloop.counter == 6 %}
+                                <div class="custom_order_banner">
+                                    <h5>Need Help?<br> Build your custom order</h5>
+                                    <p class="custom_order_banner_content">Message us and get help from a PRO
+                                        player.<br>
+                                        We will find the best offer for you or build<br>
+                                        a personal order at a lower price. </p>
+                                    <p class="create_custom_order_button chatButton">CREATE CUSTOM ORDER</p>
+                                </div>
+                            {% endif %}
                         {% endfor %}
+                    </div>
+                    <div class="show_all">
+                        <a href="{% url 'result' search='all' %}">Show All</a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <section class="copywriting_section">
+    </div>
+    <div class="copywriting_section">
         <div class="container">
             <div class="text_block">
                 <div class="text">
-                    <p><img style="padding: 10px 10px 10px 0;" src="{% static 'img/boost-wow-1.jpg' %}" alt="boost-wow"
-                            align="left">For over
+                    <p><img style="padding: 10px 10px 10px 0; float: left" src="{% static 'img/boost-wow-1.jpg' %}"
+                            alt="boost-wow">For over
                         sixteen
                         years, players have been giving their free time to the world of WoW. Each of
                         them
@@ -109,8 +168,8 @@
             <div class="text_block">
                 <div class="text">
                     <h4>WHY SHOULD YOU CONTACT US?</h4>
-                    <p><img style="padding: 10px 0 10px 10px;" src="{% static 'img/boost-wow-2.jpg' %}" alt="boost-wow"
-                            align="right">We are a professional
+                    <p><img style="padding: 10px 0 10px 10px; float: right" src="{% static 'img/boost-wow-2.jpg' %}"
+                            alt="boost-wow">We are a professional
                         service that connects World of Warcraft players and boosters. Our task is to make cooperation
                         convenient and safe. Services are provided at a very reasonable cost. Wow boosting service will
                         help you to determine the number of items in your bag. While ordering services from us a client
@@ -137,8 +196,9 @@
             <div class="text_block">
                 <div class="text">
                     <h4>WHO IS THE SERVICE FOR?</h4>
-                    <p><img style="padding: 10px 10px 10px 0;" src="{% static 'img/boost-wow-3.jpg' %}" alt="boost-wow"
-                            align="left">We offer assistance not only for beginners but also for players who have been
+                    <p><img style="padding: 10px 10px 10px 0; float: left" src="{% static 'img/boost-wow-3.jpg' %}"
+                            alt="boost-wow">We offer assistance not only for beginners but also for players who have
+                        been
                         in WoW for a while. There are many subtleties in the gameplay that cannot be immediately
                         discovered. A boosting of your hero will take a long time.</p>
                     <p>If you don’t want to waste time on boring quests, order our character level up service from
@@ -161,9 +221,9 @@
                         Cooperation will be pleasant and cost-effective. You will know that the professionals support
                         you and they can meet the challenge.</p>
                     <p style="font-weight: 900;">
-                        <img style="padding: 10px 0 10px 10px;"
-                             src="{% static 'img/boost-wow-4.jpg' %}" alt="boost-wow"
-                             align="right">The PvP upgrade service includes arena training, ratings, victories, and
+                        <img style="padding: 10px 0 10px 10px; float: right"
+                             src="{% static 'img/boost-wow-4.jpg' %}" alt="boost-wow">The PvP upgrade service includes
+                        arena training, ratings, victories, and
                         mounts.</p>
                     <p>If you need to boost the dungeon, purchase this offer for co-players. You will be able to get a
                         lot of equipment, mounts and dungeon passing. So you will take the Key Master achievement or
@@ -181,8 +241,8 @@
             <div class="text_block">
                 <div class="text">
                     <h4>BENEFITS</h4>
-                    <p><img style="padding: 10px 10px 10px 0;" src="{% static 'img/boost-wow-5.jpg' %}" alt="boost-wow"
-                            align="left">To play for fun, you need to get weapons, skills, items. How can a beginner
+                    <p><img style="padding: 10px 10px 10px 0; float: left" src="{% static 'img/boost-wow-5.jpg' %}"
+                            alt="boost-wow">To play for fun, you need to get weapons, skills, items. How can a beginner
                         take it all? No way! Only by spending a lot of time, gaining experience from their trials and
                         mistakes, rewards are awarded. We understand that not everyone wants to play like this. It is a
                         good wish that we support.</p>
@@ -196,8 +256,8 @@
                 </div>
             </div>
         </div>
-    </section>
-    <section class="about_section">
+    </div>
+    <div class="about_section">
         <div class="container">
             <h2>THE BEST BOOSTING IN AZEROTH!</h2>
             <div class="about_content">
@@ -219,8 +279,8 @@
                 </div>
             </div>
         </div>
-    </section>
-    <section class="reviews_section">
+    </div>
+    <div class="reviews_section">
         <div class="container">
             <h2>READ OUR REVIEWS</h2>
             <div class="review_content">
@@ -234,33 +294,39 @@
                 <!-- End TrustBox widget -->
             </div>
         </div>
-    </section>
-    <sections class="forums_section">
+    </div>
+    <div class="forums_section">
         <div class="container">
             <div class="forums_content">
                 <div class="forums_item">
                     <img src="{% static 'img/OWNEDCORE.png' %}" alt="">
                     <h3>OWNEDCORE</h3>
-                    <a href="https://www.ownedcore.com/forums/mmo-trading-market/world-of-warcraft-buy-sell-trade/924904-eu-us-50-60-leveling-torghast-castle-nathria-gearing-arena-cheap.html"
+                    <a rel="nofollow"
+                       href="https://www.ownedcore.com/forums/mmo-trading-market/world-of-warcraft-buy-sell-trade/924904-eu-us-50-60-leveling-torghast-castle-nathria-gearing-arena-cheap.html"
                        target="_blank">Show
                         all reviews</a>
                 </div>
                 <div class="forums_item">
                     <img src="{% static 'img/EPICNPC.png' %}" alt="">
                     <h3>EPICNPC</h3>
-                    <a href="https://www.epicnpc.com/threads/eu-us-50-60-leveling-torghast-castle-nathria-gearing-arena-%F0%9F%94%A5cheap%F0%9F%94%A5.1749008/"
+                    <a rel="nofollow"
+                       href="https://www.epicnpc.com/threads/eu-us-50-60-leveling-torghast-castle-nathria-gearing-arena-%F0%9F%94%A5cheap%F0%9F%94%A5.1749008/"
                        target="_blank">Show
                         all reviews</a>
                 </div>
                 <div class="forums_item">
                     <img src="{% static 'img/ELITEPVPERS.png' %}" alt="">
                     <h3>ELITEPVPERS</h3>
-                    <a href="https://www.elitepvpers.com/forum/world-warcraft-trading/4825784-eu-us-allseer-tidestorm-pre-order-shadowlands-50-60-cheap.html"
+                    <a rel="nofollow"
+                       href="https://www.elitepvpers.com/forum/world-warcraft-trading/4825784-eu-us-allseer-tidestorm-pre-order-shadowlands-50-60-cheap.html"
                        target="_blank">Show
                         all reviews</a>
                 </div>
             </div>
         </div>
-    </sections>
+    </div>
 {% endblock %}
-
+{% block scripts %}
+    <script src="{% static 'js/main_slider.js' %}"></script>
+    <script src="{% static 'js/special_offers_slider_1.js' %}"></script>
+{% endblock %}

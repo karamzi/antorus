@@ -7,12 +7,6 @@
 	--tick-color: rgb(46, 157, 16);
 }
 
-h1 {
-	color: var(--checkbox-color);
-	font-size: 3rem;
-	margin: 50px 0;
-}
-
 .custom {
 	display: inline-block;
 	width: var(--checkbox-size);
@@ -32,6 +26,7 @@ input[type="checkbox"] {
 }
 
 .tick {
+	display: block;
 	position: relative;
 	right: calc(var(--checkbox-size) * -0.5);
 	top: calc(var(--checkbox-size) * -0.25);

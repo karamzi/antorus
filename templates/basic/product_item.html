@@ -1,0 +1,35 @@
+<div class="product_item">
+    <a href="{{ product.get_absolute_url }}">
+        <img src="{{ product.image.url }}" alt="{{ product.alt }}">
+    </a>
+    <a href="{{ product.get_absolute_url }}" class="name">{{ product.name }}</a>
+    <h5>{{ product.short_description|safe }}</h5>
+    <div class="item_footer">
+        {% if currency == 'us' %}
+            <div class="item_price">
+                <p>from</p>
+                {% if product.new_price_dollar %}
+                    <div class="discount_price">
+                        <p>$ {{ product.price_dollar }}</p>
+                        <p>$ {{ product.new_price_dollar }}</p>
+                    </div>
+                {% else %}
+                    <p>{{ product.get_min_price_us }}</p>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="item_price">
+                <p>from</p>
+                {% if product.new_price_euro %}
+                    <div class="discount_price">
+                        <p>€ {{ product.price_euro }}</p>
+                        <p>€ {{ product.new_price_euro }}</p>
+                    </div>
+                {% else %}
+                    <p>{{ product.get_min_price_eu }}</p>
+                {% endif %}
+            </div>
+        {% endif %}
+        <a href="{{ product.get_absolute_url }}" class="buy_button">BUY NOW</a>
+    </div>
+</div>

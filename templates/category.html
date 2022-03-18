@@ -1,69 +1,42 @@
 {% extends 'basic/basic.html' %}
 {% load static %}
 
-
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/category.css' %}">
-{% endblock %}
-
 {% block title %}{% if sub_category %}{{ sub_category.name }}{% else %}{{ category }}{% endif %}{% endblock %}
 
 {% block content %}
-    <section class="products_sections">
+    <div class="products_sections">
         <div class="container">
             <div class="products_content">
-                <div class="nav_bar">
-                    <h3>CATEGORIES</h3>
+                <div id="nav_bar" class="nav_bar">
+                    <p>CATEGORIES</p>
                     <nav>
                         {% for item in categories %}
-                            <div {% if category.name == item.name %}class="nav_link active open"{% else %}class="nav_link"{% endif %}>
-                                <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>
-                                {% if item.categories_subcategories.all %}
-                                    <span></span>
-                                {% endif %}
-                            </div>
-                            {% if item.categories_subcategories.all %}
-                                <div {% if category.name == item.name %}style="display: flex"{% else %}style="display: none"{% endif %} class="accordion">
-                                    {% for subcategory in item.categories_subcategories.all %}
-                                        <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
+                            {% include 'basic/category_item.html' %}
                         {% endfor %}
+                        <div class="nav_link">
+                            <a href="/result/all/">All products</a>
+                        </div>
                     </nav>
                 </div>
                 <div class="products_block">
-                    <h2>{% if sub_category %}{{ sub_category.name }}{% else %}{{ category }}{% endif %}</h2>
+                    {% if seo.h1 %}
+                        <h1>{{ seo.h1 }}</h1>
+                    {% else %}
+                        <h1>{% if sub_category %}{{ sub_category.name }}{% else %}{{ category }}{% endif %}</h1>
+                    {% endif %}
+                    <div class="category_description">
+                        {% if sub_category %}{{ sub_category.text_above_products|safe }}{% else %}
+                            {{ category.text_above_products|safe }}{% endif %}</div>
                     <div class="products">
                         {% for product in products %}
-                            <a class="product" href="{{ product.get_absolute_url }}">
-                                <img src="{{ product.image.url }}" alt="">
-                                <h4 class="name">{{ product.name }}</h4>
-                                {% if currency == 'us' %}
-                                    {% if product.new_price_dollar %}
-                                        <div class="price">
-                                            <p style="text-decoration: line-through;">
-                                                $ {{ product.get_price_dollar }}</p>
-                                            <p style="color: rgb(40, 168, 5);">$ {{ product.get_price_new_dollar }}</p>
-                                        </div>
-                                    {% else %}
-                                        <p>{{ product.get_price_us }}</p>
-                                    {% endif %}
-                                {% else %}
-                                    {% if product.new_price_euro %}
-                                        <div class="price">
-                                            <p style="text-decoration: line-through;">€ {{ product.get_price_euro }}</p>
-                                            <p style="color: rgb(40, 168, 5);">€ {{ product.get_price_new_euro }}</p>
-                                        </div>
-                                    {% else %}
-                                        <p>{{ product.get_price_eu }}</p>
-                                    {% endif %}
-                                {% endif %}
-                            </a>
+                            {% include 'basic/product_item.html' %}
                         {% endfor %}
                     </div>
+                    <div class="category_description">
+                        {% if sub_category %}{{ sub_category.text_below_products|safe }}{% else %}
+                            {{ category.text_below_products|safe }}{% endif %}</div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 {% endblock %}

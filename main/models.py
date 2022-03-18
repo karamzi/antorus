@@ -1,10 +1,14 @@
 from django.db import models
 from datetime import datetime
 from os.path import splitext
+
 from django.shortcuts import reverse
 from easy_thumbnails.fields import ThumbnailerImageField
 from django.contrib.auth.models import User
 import re
+
+from main.services.commonServices import CommonServices
+from main.services.modelServices.productModelService import ProductModelService
 
 
 def get_img_path(instance, filename):
@@ -26,6 +30,10 @@ def to_fixed(numObj, digits=0):
 class Categories(models.Model):
     name = models.CharField(max_length=255, verbose_name='Название категории', unique=True)
     slug = models.SlugField(verbose_name='Слаг', blank=True)
+    text_above_products = models.TextField(verbose_name='Текст над продуктами', blank=True, null=True)
+    text_below_products = models.TextField(verbose_name='Текст под продуктами', blank=True, null=True)
+    number = models.SmallIntegerField(verbose_name='Номер', blank=True, null=True)
+    archive = models.BooleanField(default=False, verbose_name='Архив')
 
     def __str__(self):
         return self.name
@@ -35,13 +43,11 @@ class Categories(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            slug = self.name.strip()
-            slug = slug.lower()
-            slug = slug.replace(' ', '-')
-            self.slug = slug
+            self.slug = CommonServices.create_slag(self)
         super().save(*args, **kwargs)
 
     class Meta:
+        ordering = ['number']
         verbose_name = 'Категория'
         verbose_name_plural = '6. Категории'
 
@@ -51,22 +57,24 @@ class SubCategories(models.Model):
                                  on_delete=models.PROTECT)
     name = models.CharField(max_length=255, verbose_name='Название подкатегории', unique=True)
     slug = models.SlugField(verbose_name='Слаг', blank=True)
+    text_above_products = models.TextField(verbose_name='Текст над продуктами', blank=True, null=True)
+    text_below_products = models.TextField(verbose_name='Текст под продуктами', blank=True, null=True)
+    number = models.SmallIntegerField(verbose_name='Номер', blank=True, null=True)
+    archive = models.BooleanField(default=False, verbose_name='Архив')
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            slug = self.name.strip()
-            slug = slug.lower()
-            slug = slug.replace(' ', '-')
-            self.slug = slug
+            self.slug = CommonServices.create_slag(self)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('subcategory', kwargs={'category': self.category.slug, 'subcategory': self.slug})
 
     class Meta:
+        ordering = ['number']
         verbose_name = 'Подкатегория'
         verbose_name_plural = '7. Подкатегории'
 
@@ -77,105 +85,61 @@ class Products(models.Model):
     subcategory = models.ForeignKey(SubCategories, related_name='products_subcategory', blank=True, null=True,
                                     verbose_name='Подкатегория', on_delete=models.PROTECT)
     name = models.CharField(max_length=255, verbose_name='Название товара', unique=True)
+    short_description = models.TextField(verbose_name='Короткое описание', blank=True)
     description = models.TextField(verbose_name='Описание')
     product_order = models.SmallIntegerField(verbose_name='Порядок лота', default=0)
     image = models.ImageField(verbose_name='Изображение', upload_to=get_img_path)
     thumb = ThumbnailerImageField(upload_to=get_thumbs_path, verbose_name='Миниатюра',
                                   resize_source={'size': (120, 120), 'crop': True})
-    slug = models.SlugField(verbose_name='Ссылка', blank=True, null=True)
+    slug = models.SlugField(verbose_name='Ссылка', blank=True, null=True, unique=True)
     length = models.CharField(max_length=255, verbose_name='Длительность')
     char_req = models.CharField(max_length=255, verbose_name='Требования')
-    price_dollar = models.DecimalField(verbose_name='Цена в долларах', decimal_places=3, max_digits=8, default=0)
-    price_euro = models.DecimalField(verbose_name='Цена в евро', decimal_places=3, max_digits=8, default=0)
-    new_price_dollar = models.DecimalField(verbose_name='Цена со скдкой(доллар)', decimal_places=3, max_digits=8,
+    price_dollar = models.DecimalField(verbose_name='Цена в долларах', decimal_places=2, max_digits=8, default=0)
+    price_euro = models.DecimalField(verbose_name='Цена в евро', decimal_places=2, max_digits=8, default=0)
+    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой', decimal_places=2, max_digits=8,
                                            blank=True, null=True)
-    new_price_euro = models.DecimalField(verbose_name='Цена со скдкой(евро)', decimal_places=3, max_digits=8,
+    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой', decimal_places=2, max_digits=8,
                                          blank=True, null=True)
-    quantity_required_options = models.IntegerField(verbose_name='max количество обязательных опций', blank=True,
-                                                    null=True)
-    quantity_required_child_options = models.IntegerField(verbose_name='max количество дочерних опций', blank=True,
-                                                          null=True)
-    quantity_addition_options = models.IntegerField(verbose_name='max количество доп опций', blank=True,
-                                                    null=True)
+    max_number_required_options = models.IntegerField(verbose_name='max количество обязательных опций',
+                                                      blank=True, null=True)
+    max_number_required_child_options = models.IntegerField(verbose_name='max количество дочерних опций',
+                                                            blank=True, null=True)
+    max_number_addition_options = models.IntegerField(verbose_name='max количество доп опций', blank=True,
+                                                      null=True)
     child_required = models.BooleanField(verbose_name='Дочернии обязательны', default=False)
     draft = models.BooleanField(default=False, verbose_name='Черновик')
+    alt = models.CharField(max_length=255, blank=True, null=True)
+    archive = models.BooleanField(default=False, verbose_name='Архив')
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
+        # add slug
         if not self.slug:
-            slug = self.name.strip()
-            slug = slug.lower()
-            slug = slug.replace(' ', '-')
-            self.slug = slug
+            self.slug = CommonServices.create_slag(self)
+        # add HTML tag in description for SEO
+        self.description = ProductModelService.add_seo_html_tag(self)
         super().save(*args, **kwargs)
-
-    def get_price_dollar(self):
-        return to_fixed(self.price_dollar, 2)
-
-    def get_price_new_dollar(self):
-        return to_fixed(self.new_price_dollar, 2)
-
-    def get_price_euro(self):
-        return to_fixed(self.price_euro, 2)
-
-    def get_price_new_euro(self):
-        return to_fixed(self.new_price_euro, 2)
 
     def get_absolute_url(self):
         return reverse('product', kwargs={'slug': self.slug})
 
-    def get_quantity_required_options(self):
-        if self.quantity_required_options:
-            return self.quantity_required_options
-        return ''
+    def get_price_dollar(self):
+        if self.new_price_dollar:
+            return float(self.new_price_dollar)
+        return float(self.price_dollar)
 
-    def get_quantity_required_child_options(self):
-        if self.quantity_required_child_options:
-            return self.quantity_required_child_options
-        return ''
+    def get_price_euro(self):
+        if self.new_price_euro:
+            return float(self.new_price_euro)
+        return float(self.price_euro)
 
-    def get_quantity_addition_options(self):
-        if self.quantity_addition_options:
-            return self.quantity_addition_options
-        return ''
+    def get_min_price_us(self):
+        return '$ ' + str(ProductModelService.get_min_price(self, 'us'))
 
-    def get_price_us(self):
-        if self.price_dollar:
-            return '$ ' + str(to_fixed(self.price_dollar, 2))
-        else:
-            req_options = self.product_required_option.all()
-            min_price = 100000
-            for item in req_options:
-                if item.new_price_dollar and item.new_price_dollar < min_price:
-                    min_price = item.new_price_dollar
-                elif item.price_dollar < min_price and item.price_dollar != 0:
-                    min_price = item.price_dollar
-            for item in self.product_required_option_child.all():
-                if item.new_price_dollar and item.new_price_dollar < min_price:
-                    min_price = item.new_price_dollar
-                elif min_price > item.price_dollar > 1:
-                    min_price = item.price_dollar
-            return 'from $ ' + str(to_fixed(min_price, 2))
-
-    def get_price_eu(self):
-        if self.price_euro:
-            return '€ ' + str(to_fixed(self.price_dollar, 2))
-        else:
-            req_options = self.product_required_option.all()
-            min_price = 100000
-            for item in req_options:
-                if item.new_price_euro and item.new_price_euro < min_price:
-                    min_price = item.new_price_euro
-                elif item.price_euro < min_price and item.price_euro != 0:
-                    min_price = item.price_euro
-            for item in self.product_required_option_child.all():
-                if item.new_price_euro and item.new_price_euro < min_price:
-                    min_price = item.new_price_euro
-                elif min_price > item.price_euro > 1:
-                    min_price = item.price_euro
-            return 'from € ' + str(to_fixed(min_price, 2))
+    def get_min_price_eu(self):
+        return '€ ' + str(ProductModelService.get_min_price(self, 'eu'))
 
     class Meta:
         verbose_name = 'Товар'
@@ -188,27 +152,39 @@ class RequiredOption(models.Model):
                                 verbose_name='Товар')
     name = models.CharField(max_length=255, verbose_name='Название опции')
     description = models.CharField(verbose_name='Описание', blank=True, max_length=255)
-    price_dollar = models.DecimalField(default=0, verbose_name='Цена в долларах', decimal_places=3, max_digits=8)
-    price_euro = models.DecimalField(default=0, verbose_name='Цена в евро', decimal_places=3, max_digits=8)
-    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=3, max_digits=8,
+    price_dollar = models.DecimalField(default=0, verbose_name='Цена в долларах', decimal_places=2, max_digits=8)
+    price_euro = models.DecimalField(default=0, verbose_name='Цена в евро', decimal_places=2, max_digits=8)
+    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой', decimal_places=2, max_digits=8,
                                            blank=True, null=True)
-    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=3, max_digits=8,
+    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой', decimal_places=2, max_digits=8,
                                          blank=True, null=True)
+    us = models.BooleanField(verbose_name='us', default=True)
+    eu = models.BooleanField(verbose_name='eu', default=True)
 
     def __str__(self):
         return self.name
 
-    def get_option_price_euro(self):
+    def get_price_dollar(self):
+        if self.new_price_dollar:
+            return float(self.new_price_dollar)
+        return float(self.price_dollar)
+
+    def get_price_euro(self):
         if self.new_price_euro:
-            return to_fixed(self.new_price_euro, 2)
-        else:
-            return to_fixed(self.price_euro, 2)
+            return float(self.new_price_euro)
+        return float(self.price_euro)
+
+    def get_option_new_price_euro(self):
+        return to_fixed(self.new_price_euro, 2)
+
+    def get_option_price_euro(self):
+        return to_fixed(self.price_euro, 2)
+
+    def get_option_new_price_dollar(self):
+        return to_fixed(self.new_price_dollar, 2)
 
     def get_option_price_dollar(self):
-        if self.new_price_dollar:
-            return to_fixed(self.new_price_dollar, 2)
-        else:
-            return to_fixed(self.price_dollar, 2)
+        return to_fixed(self.price_dollar, 2)
 
     class Meta:
         verbose_name = 'Обязательная опция'
@@ -222,30 +198,53 @@ class RequiredOptionChild(models.Model):
                                         verbose_name='Родительская')
     name = models.CharField(max_length=255, verbose_name='Название опции')
     description = models.CharField(verbose_name='Описание', blank=True, max_length=255)
-    price_dollar = models.DecimalField(default=0, verbose_name='Цена в долларах', decimal_places=3, max_digits=8)
-    price_euro = models.DecimalField(default=0, verbose_name='Цена в евро', decimal_places=3, max_digits=8)
-    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=3, max_digits=8,
+    price_dollar = models.DecimalField(default=0, verbose_name='Цена в долларах', decimal_places=2, max_digits=8)
+    price_euro = models.DecimalField(default=0, verbose_name='Цена в евро', decimal_places=2, max_digits=8)
+    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=2, max_digits=8,
                                            blank=True, null=True)
-    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=3, max_digits=8,
+    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=2, max_digits=8,
                                          blank=True, null=True)
+    us = models.BooleanField(verbose_name='us', default=True)
+    eu = models.BooleanField(verbose_name='eu', default=True)
 
     def __str__(self):
         return self.name
 
-    def get_option_price_euro(self):
+    def get_price_dollar(self):
+        if self.new_price_dollar:
+            return float(self.new_price_dollar)
+        return float(self.price_dollar)
+
+    def get_price_euro(self):
         if self.new_price_euro:
-            return to_fixed(self.new_price_euro, 2)
-        else:
-            return to_fixed(self.price_euro, 2)
+            return float(self.new_price_euro)
+        return float(self.price_euro)
+
+    def get_option_new_price_euro(self):
+        return to_fixed(self.new_price_euro, 2)
+
+    def get_option_price_euro(self):
+        if self.price_euro < 1:
+            if self.required_option.new_price_euro:
+                price = self.required_option.new_price_euro * self.price_euro
+                return to_fixed(price, 2)
+            else:
+                price = self.required_option.price_euro * self.price_euro
+                return to_fixed(price, 2)
+        return to_fixed(self.price_euro, 2)
+
+    def get_option_new_price_dollar(self):
+        return to_fixed(self.new_price_dollar, 2)
 
     def get_option_price_dollar(self):
         if self.price_dollar < 1:
-            price = self.required_option.price_dollar * self.price_dollar
-            return to_fixed(price, 2)
-        if self.new_price_dollar:
-            return to_fixed(self.new_price_dollar, 2)
-        else:
-            return to_fixed(self.price_dollar, 2)
+            if self.required_option.new_price_dollar:
+                price = self.required_option.new_price_dollar * self.price_dollar
+                return to_fixed(price, 2)
+            else:
+                price = self.required_option.price_dollar * self.price_dollar
+                return to_fixed(price, 2)
+        return to_fixed(self.price_dollar, 2)
 
     class Meta:
         verbose_name = 'Обязательная опция(дочерняя)'
@@ -259,15 +258,27 @@ class AdditionOptions(models.Model):
     name = models.CharField(max_length=255, verbose_name='Название опции')
     description = models.CharField(verbose_name='Описание', blank=True, max_length=255)
     default = models.BooleanField(verbose_name='По умолчанию', default=False)
-    price_dollar = models.DecimalField(default=0, decimal_places=3, max_digits=8, verbose_name='Цена в долларах')
-    price_euro = models.DecimalField(default=0, decimal_places=3, max_digits=8, verbose_name='Цена в евро')
-    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=3, max_digits=8,
+    price_dollar = models.DecimalField(default=0, decimal_places=2, max_digits=8, verbose_name='Цена в долларах')
+    price_euro = models.DecimalField(default=0, decimal_places=2, max_digits=8, verbose_name='Цена в евро')
+    new_price_dollar = models.DecimalField(verbose_name='Цена со скидкой(долар)', decimal_places=2, max_digits=8,
                                            blank=True, null=True)
-    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=3, max_digits=8,
+    new_price_euro = models.DecimalField(verbose_name='Цена со скидкой(евро)', decimal_places=2, max_digits=8,
                                          blank=True, null=True)
+    us = models.BooleanField(verbose_name='us', default=True)
+    eu = models.BooleanField(verbose_name='eu', default=True)
 
     def __str__(self):
         return self.name
+
+    def get_price_dollar(self):
+        if self.new_price_dollar:
+            return float(self.new_price_dollar)
+        return float(self.price_dollar)
+
+    def get_price_euro(self):
+        if self.new_price_euro:
+            return float(self.new_price_euro)
+        return float(self.price_euro)
 
     def get_option_price_euro(self):
         if self.price_euro < 1:
@@ -326,9 +337,6 @@ class Order(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Пользователь', null=True,
                              related_name='user_order')
-    character_server = models.CharField(max_length=255, verbose_name='Персонаж и Сервер')
-    battle_tag = models.CharField(max_length=50, verbose_name='Battle tag', blank=True)
-    faction = models.CharField(max_length=50, verbose_name='Фракция')
     connection = models.CharField(max_length=255, verbose_name='Skype или Discord')
     email = models.EmailField(verbose_name='Почта')
     comment = models.TextField(verbose_name='Комментарий', blank=True)
@@ -339,7 +347,7 @@ class Order(models.Model):
         ('4', 'REFUND'),
         ('5', 'COMPLETED'),
     )
-    status = models.CharField(verbose_name='Статус заказа', choices=STATUS, max_length=100)
+    status = models.CharField(verbose_name='Статус заказа', choices=STATUS, max_length=100, default='1')
     price = models.CharField(verbose_name='Без купона', max_length=50)
     coupon = models.CharField(verbose_name='Купон', max_length=50, blank=True)
     total = models.CharField(verbose_name='Итого', max_length=50)
@@ -354,10 +362,15 @@ class Order(models.Model):
         price = re.findall(reg, self.price)[0]
         total = re.findall(reg, self.total)[0]
         sing = re.findall(reg2, self.price)[0]
-        coupon = float(price) - float(total)
-        return '{} {:.2f}'.format(sing, coupon)
+        coupon_discount = float(price) - float(total)
+        return '{} {:.2f}'.format(sing, coupon_discount)
 
-    def get_order_number(self):
+    def get_total(self) -> float:
+        reg = r'[0-9.]+'
+        total = re.findall(reg, self.total)[0]
+        return float(total)
+
+    def get_order_number(self) -> str:
         return str(self.id + 1000)
 
     class Meta:
@@ -434,3 +447,27 @@ class Transactions(models.Model):
         verbose_name = 'Транзакция'
         verbose_name_plural = '2. Транзакции'
         ordering = ['-date']
+
+
+class SEO(models.Model):
+    title = models.CharField(max_length=500)
+    meta = models.TextField(blank=True, null=True)
+    url = models.CharField(max_length=250, verbose_name='адрес страницы', unique=True)
+    h1 = models.CharField(max_length=250, verbose_name='Заголовок H1', blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'SEO'
+        verbose_name_plural = '8. SEO'
+
+
+class SpecialOffers(models.Model):
+    title = models.CharField(max_length=100, verbose_name='Название для главной страницы')
+    description = models.TextField(max_length=100, verbose_name='Описание для главной страницы')
+    product = models.OneToOneField(Products, on_delete=models.CASCADE, verbose_name='Продукт')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Специальное предложение'
+        verbose_name_plural = '9. Специальные предложения'

@@ -1,11 +1,6 @@
 {% extends 'basic/basic.html' %}
 {% load static %}
 
-
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/account_details.css' %}">
-{% endblock %}
-
 {% block title %}My Account - ANTORUS{% endblock %}
 
 {% block content %}
@@ -22,7 +17,7 @@
             {% endif %}
             <div class="account_details_content">
                 <div class="account_details_left">
-                    <div class="nav_bar">
+                    <div class="account_nav_bar">
                         <a class="nav_bar_link" href="{% url 'orders' %}">ORDERS</a>
                         <a class="nav_bar_link active" href="{% url 'account_details' %}">ACCOUNT DETAILS</a>
                         <a class="nav_bar_link" href="{% url 'logout' %}">LOGOUT</a>

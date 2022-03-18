@@ -1,32 +1,27 @@
 {% extends 'basic/basic.html' %}
 {% load static %}
 
-
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/order.css' %}">
-{% endblock %}
-
 {% block title %}My Account - ANTORUS{% endblock %}
 
 {% block content %}
-    <section class="order_section">
+    <section class="orders_section">
         <div class="container">
             <h2>ORDER #{{ order.pk }}</h2>
-            <div class="order_content">
+            <div class="orders_content">
                 <div class="order_left">
-                    <div class="nav_bar">
+                    <div class="account_nav_bar">
                         <a class="nav_bar_link active" href="{% url 'orders' %}">ORDERS</a>
                         <a class="nav_bar_link" href="{% url 'account_details' %}">ACCOUNT DETAILS</a>
                         <a class="nav_bar_link" href="{% url 'logout' %}">LOGOUT</a>
                     </div>
                 </div>
-                <div class="order_right">
+                <div class="account_order_right">
                     <div class="row table_head">
                         <p>PRODUCT</p>
                         <p>TOTAL</p>
                     </div>
                     <div class="table_body">
-                        <div class="order">
+                        <div>
                             {% for product in order.order_product.all %}
                                 <div class="row product">
                                     <div class="name">

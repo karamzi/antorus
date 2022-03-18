@@ -1,18 +1,13 @@
 {% extends 'basic/basic.html' %}
 {% load static %}
 
-
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
-{% endblock %}
-
 {% block title %}Cart - ANTORUS{% endblock %}
 
 {% block content %}
     <section class="cart_section">
         <div class="container">
             <h2>SHOPPING CART</h2>
-            <div class="cart_content">
+            <div {% if cart.products %}style="display: flex"{% else %}style="display: none"{% endif %} class="cart_content">
                 <div class="cart_left">
                     <div class="cart_head">
                         <div class="head_title">PRODUCT</div>
@@ -20,7 +15,45 @@
                         <div class="head_quantity">QUANTITY</div>
                         <div class="head_total">TOTAL</div>
                     </div>
-                    <div class="products">
+                    <div class="cart_products">
+                        {% for product in cart.products %}
+                            <div class="product" data-id="{{ product.id }}">
+                                <div class="product_description">
+                                    <img src="{{ product.image }}" alt="">
+                                    <div class="description">
+                                        <div class="product_name"><a href="{{ product.url }}">{{ product.name }}</a>
+                                        </div>
+                                        <div class="product_options">
+                                            <h4>Options</h4>
+                                            {% for option in product.options %}
+                                                <p>Select options: {{ option.name }}</p>
+                                            {% endfor %}
+                                            <span class="removeFromCart">Remove</span>
+                                            <div class="mobile_cart">
+                                                <div class="price mobile">{{ product.price }}</div>
+                                                <div class="product_quantity mobile">
+                                                    <div class="quantity mobile">
+                                                        <div class="minus"></div>
+                                                        <div class="count">{{ product.quantity }}</div>
+                                                        <div class="plus">+</div>
+                                                    </div>
+                                                </div>
+                                                <div class="total mobile">{{ product.total }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="price">{{ cart.sign }} {{ product.price }}</div>
+                                <div class="product_quantity">
+                                    <div class="quantity">
+                                        <div class="minus"></div>
+                                        <div class="count">{{ product.quantity }}</div>
+                                        <div class="plus">+</div>
+                                    </div>
+                                </div>
+                                <div class="total">{{ cart.sign }} {{ product.total }}</div>
+                            </div>
+                        {% endfor %}
                     </div>
                     <div class="promo_code">
                         <p>Enter your promotional code</p>
@@ -36,22 +69,23 @@
                     <h4>CART TOTALS</h4>
                     <div class="subtotal">
                         <p>Subtotal</p>
-                        <p id="subtotal"></p>
+                        <p id="subtotal">{{ cart.sign }} {{ cart.subtotal }}</p>
                     </div>
-                    <div style="display: none" class="coupon">
-                        <p id="coupon_name">Coupon: </p>
-                        <p id="coupon_price" style="color: #45db428c"></p>
+                    <div {% if cart.coupon %}style="display: flex"{% else %}style="display: none"{% endif %} class="coupon">
+                        <p id="coupon_name">Coupon: {{ cart.coupon }}</p>
+                        <p id="coupon_price" style="color: #45db428c">{{ cart.sign }} -{{ cart.discount }}</p>
                     </div>
                     <div class="cart_total">
                         <p>Total</p>
-                        <p id="cart_total"></p>
+                        <p id="cart_total">{{ cart.sign }} {{ cart.total }}</p>
                     </div>
                     <a href="{% url 'checkout' %}" class="cart_button">Proceed to checkout</a>
                 </div>
             </div>
-            <div class="cart_empty">
+            <div {% if cart.products %}style="display: none"{% else %}style="display: flex"{% endif %} class="cart_empty">
                 <h2>YOUR SHOPPING CART IS EMPTY</h2>
-                <p>We invite you to get acquainted with an assortment of our shop.Surely you can find something for
+                <p>We invite you to get acquainted with an assortment of our shop.Surely you can find
+                    something for
                     yourself!</p>
                 <a href="{% url 'index' %}">RETURN TO SHOP</a>
             </div>
@@ -61,5 +95,5 @@
 
 
 {% block scripts %}
-    <script src="{% static 'js/cart.js' %}"></script>
+    <script src="{% static 'js/cart_4.js' %}"></script>
 {% endblock %}

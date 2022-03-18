@@ -1,0 +1,309 @@
+{% extends 'basic/basic.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="product_section">
+        <div class="container">
+            <div class="product_nav">
+                <a href="/">HOME</a>
+                <div class="arrow arrow-top"></div>
+                <a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a>
+                {% if product.subcategory %}
+                    <div class="arrow arrow-top"></div>
+                    <a href="{{ product.subcategory.get_absolute_url }}">{{ product.subcategory.name }}</a>
+                {% endif %}
+            </div>
+            <div class="product_content">
+                <div id="nav_bar" class="nav_bar">
+                    <nav>
+                        {% for item in categories %}
+                            {% include 'basic/category_item.html' %}
+                        {% endfor %}
+                        <div class="nav_link">
+                            <a href="/result/all/">All products</a>
+                        </div>
+                    </nav>
+                </div>
+                <div class="product_centre">
+                    {% if seo.h1 %}
+                        <h1 class="product_name">{{ seo.h1 }}</h1>
+                    {% else %}
+                        <h1 class="product_name">{{ product.name }}</h1>
+                    {% endif %}
+                    <div class="service">
+                        <div style="background: #00ad4e;" class="service_item">
+                            <img src="{% static 'img/safeboost.png' %}" alt="">
+                            <p>Safe Service</p>
+                            <span class="service_info">While working on accounts, we comply with all security measures. We do not use bots and scripts. We do not use in-game chat.</span>
+                        </div>
+                        <div style="background: #84ccdf;" class="service_item">
+                            <img src="{% static 'img/support_(1).png' %}" alt="">
+                            <p>24/7 Support</p>
+                            <span class="service_info">Our team works 24 hours per day.</span>
+                        </div>
+                        <div style="background: #6c47c6;" class="service_item">
+                            <img src="{% static 'img/ssl.png' %}" alt="">
+                            <p>SSL Secure</p>
+                            <span class="service_info">The site uses SSL protocol, it fully protects input data and information. We also use the HTTPS protocol to encrypt data.</span>
+                        </div>
+                        <div style="background: #006fff;" class="service_item">
+                            <img src="{% static 'img/vpn.png' %}" alt="">
+                            <p>VPN</p>
+                            <span class="service_info">We can use the VPN of your country.</span>
+                        </div>
+                        <div style="background: #ff9100;" class="service_item">
+                            <img src="{% static 'img/money-refund.png' %}" alt="">
+                            <p>Money refunds</p>
+                            <span class="service_info">We provide a full or partial refund if you change your mind or if there is an accident. You can learn more about this from the operator.</span>
+                        </div>
+                    </div>
+                    <h3>DESCRIPTION</h3>
+                    <div class="length">⏱️ Length: <span>{{ product.length }}</span></div>
+                    <div class="requirements">⚠️ Character Requirements: <span>{{ product.char_req }}</span></div>
+                    <div class="description">{{ product.description|safe }}</div>
+                    <h3>FEEL FREE TO CONTACT OUR OPERATORS ANY TIME FOR ANY FURTHER INFORMATION. WE ARE ALWAYS FOR YOUR
+                        SERVICE!</h3>
+                </div>
+
+                <div class="product_right">
+                    <div class="product_img">
+                        <img src="{{ product.image.url }}" alt="{{ product.alt }}">
+                    </div>
+
+                    {% if product.product_required_option.all %}
+                        <div class="required_options">
+                            <p>Select options:</p>
+                            {% for option in product.product_required_option.all %}
+                                {% if option.eu %}
+                                    <div class="option"
+                                            {% if option.new_price_euro %}
+                                         data-price-eu="{{ option.get_option_new_price_euro }}"
+                                            {% else %}
+                                         data-price-eu="{{ option.get_option_price_euro }}"
+                                            {% endif %}
+                                         data-option-id="{{ option.pk }}"
+                                         data-name="{{ option.name }}"
+                                         data-id="{{ option.pk }}">
+                                        <div class="checkbox">
+                                            <input class="required parent" type="checkbox"
+                                                   id="cd{{ option.pk }}P">
+                                            <label class="custom" for="cd{{ option.pk }}P">
+                                                <span class="tick"></span>
+                                            </label>
+                                        </div>
+                                        <div class="option_name">{{ option.name }}</div>
+
+                                        {% if option.price_euro != 0 %}
+                                            <div class="option_price {% if option.new_price_euro %}old{% endif %}">
+                                                € {{ option.get_option_price_euro }}</div>
+                                        {% endif %}
+                                        {% if option.new_price_euro %}
+                                            <div class="option_new_price">€ {{ option.get_option_new_price_euro }}</div>
+                                        {% endif %}
+
+
+                                        {% if option.description %}
+                                            <div class="hint_img">
+                                                <img class="question" width="15"
+                                                     src="{% static 'img/question.png' %}" alt="">
+                                            </div>
+                                            <div class="option_hint">
+                                                <div class="hint_text">{{ option.description }}</div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% if product.product_required_option.all %}
+                        {% for option in product.product_required_option.all %}
+                            {% if option.required_option_child.all %}
+                                <div style="display: none"
+                                     class="{% if product.child_required %}required_options{% else %}addition_options{% endif %} child_option">
+                                    <p>Select options for {{ option.name }}</p>
+                                    {% for child_option in option.required_option_child.all %}
+                                        {% if child_option.eu %}
+                                            <div class="option"
+                                                    {% if child_option.new_price_euro %}
+                                                 data-price-eu="{{ child_option.get_option_new_price_euro }}"
+                                                    {% else %}
+                                                 data-price-eu="{{ child_option.get_option_price_euro }}"
+                                                    {% endif %}
+                                                 data-option-id="{{ child_option.pk }}"
+                                                 data-name="{{ child_option.name }}"
+                                                 data-parent-id="{{ option.pk }}">
+                                                <div class="checkbox">
+                                                    <input class="required child" type="checkbox"
+                                                           id="cd{{ child_option.pk }}CO">
+                                                    <label class="custom"
+                                                           for="cd{{ child_option.pk }}CO">
+                                                        <span class="tick"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="option_name">{{ child_option.name }}</div>
+
+                                                <div class="option_price {% if child_option.new_price_euro %}old{% endif %}">
+                                                    € {{ child_option.get_option_price_euro }}</div>
+                                                {% if child_option.new_price_euro %}
+                                                    <div class="option_new_price">
+                                                        € {{ child_option.get_option_new_price_euro }}</div>
+                                                {% endif %}
+
+                                                {% if child_option.description %}
+                                                    <div class="hint_img">
+                                                        <img class="question" width="15"
+                                                             src="{% static 'img/question.png' %}" alt="">
+                                                    </div>
+                                                    <div class="option_hint">
+                                                        <div class="hint_text">{{ child_option.description }}</div>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+
+                    {% if product.product_addition_option.all %}
+                        <div class="addition_options">
+                            <p>Select options:</p>
+                            {% for option in product.product_addition_option.all %}
+                                {% if option.eu %}
+                                    <div class="option"
+                                         data-price-eu="{{ option.get_option_price_euro }}"
+                                            {% if option.price_euro < 1 and option.price_euro > 0 %}
+                                         data-percent-eu="{{ option.price_euro }}"
+                                            {% endif %}
+                                         data-option-id="{{ option.pk }}"
+                                         data-name="{{ option.name }}">
+                                        <div class="checkbox">
+                                            <input {% if option.default %}checked="checked"{% endif %} class="addition"
+                                                   type="checkbox" id="cd{{ option.pk }}A">
+                                            <label class="custom" for="cd{{ option.pk }}A">
+                                                <span class="tick"></span>
+                                            </label>
+                                        </div>
+                                        <div class="option_name">{{ option.name }}</div>
+
+                                        {% if option.price_euro >= 1 %}
+                                            {% if option.price_euro != 0 %}
+                                                <div class="option_price {% if option.new_price_euro %}old{% endif %}">
+                                                    € {{ option.get_option_price_euro }}</div>
+                                            {% endif %}
+                                            {% if option.new_price_euro %}
+                                                <div class="option_new_price">€ {{ option.get_option_price_euro }}</div>
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="option_price"></div>
+                                        {% endif %}
+
+                                        {% if option.description %}
+                                            <div class="hint_img">
+                                                <img class="question" width="15"
+                                                     src="{% static 'img/question.png' %}" alt="">
+                                            </div>
+                                            <div class="option_hint">
+                                                <div class="hint_text">{{ option.description }}</div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="product_price">
+                        {% if product.price_euro > 0 %}
+                            {% if product.new_price_euro %}
+                                <p style="text-decoration: line-through;">€ {{ product.price_euro }}</p>
+                                <p id="price" style="color: rgb(40, 168, 5);">€ {{ product.new_price_euro }}</p>
+                            {% else %}
+                                <p id="price">€ {{ product.price_euro }}</p>
+                            {% endif %}
+                        {% elif product.price_euro == 0 %}
+                            <p id="price">Choose options to continue</p>
+                        {% endif %}
+                    </div>
+                    <div class="product_buttons">
+                        <div class="quantity">
+                            <div class="minus"></div>
+                            <div class="count">1</div>
+                            <div class="plus">+</div>
+                        </div>
+                        {% if not product.archive %}
+                            <div class="add_to_cart">
+                                <p>add to cart</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="display: none" class="success">
+            <p>{{ product.name }} has been added to your cart</p>
+        </div>
+        <div style="display: none" class="error">
+            <p>Please choose requirement option</p>
+        </div>
+    </div>
+    <div class="suggestions_section">
+        <div class="container">
+            <p class="suggestions_title">You may also like</p>
+            <div class="suggestions_products">
+                {% for product in products %}
+                    <a class="suggestions_product_item" href="{{ product.get_absolute_url }}">
+                        <img src="{{ product.image.url }}" alt="{{ product.alt }}">
+                        <h4 class="suggestions_product_name">{{ product.name }}</h4>
+                        {% if product.new_price_euro %}
+                            <div class="price">
+                                <p class="suggestions_product_price" style="text-decoration: line-through;">
+                                    € {{ product.price_euro }}</p>
+                                <p class="suggestions_product_price" style="color: rgb(40, 168, 5);">
+                                    € {{ product.new_price_euro }}</p>
+                            </div>
+                        {% else %}
+                            <p class="suggestions_product_price">{{ product.get_min_price_eu }}</p>
+                        {% endif %}
+                    </a>
+                {% endfor %}
+            </div>
+            <div class="suggestions_switch_buttons"></div>
+        </div>
+    </div>
+    <div class="reviews_section">
+        <div class="container">
+            <!-- TrustBox widget - Carousel -->
+            <div class="trustpilot-widget" data-locale="en-US" data-template-id="53aa8912dec7e10d38f59f36"
+                 data-businessunit-id="5c04f06812c7bf0001af86e0" data-style-height="200px" data-style-width="100%"
+                 data-theme="dark" data-stars="1,2,3,4,5" data-review-languages="en">
+                <a href="https://www.trustpilot.com/review/antorus.com" target="_blank"
+                   rel="noopener">Trustpilot</a>
+            </div>
+            <!-- End TrustBox widget -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        const quantityRequiredOptions = '{% if product.max_number_required_options %}{{ product.max_number_required_options }}{% endif %}'
+        const quantityRequiredChildOptions = '{% if product.max_number_required_child_options %}{{ product.max_number_required_child_options }}{% endif %}'
+        const quantityAdditionOptions = '{% if product.max_number_addition_options %}{{ product.max_number_addition_options }}{% endif %}'
+        const childIsRequired = '{{ product.child_required }}'
+        const productId = '{{ product.pk }}'
+        {% if product.new_price_euro %}
+            const productPriceEu = '{{ product.new_price_euro }}'
+        {% else %}
+            const productPriceEu = '{{ product.price_euro }}'
+        {% endif %}
+    </script>
+    <script src="{% static 'js/product_7.js' %}"></script>
+    <script>const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true}</script>
+    <script src="https://wow.zamimg.com/widgets/power.js"></script>
+    <script src="{% static 'js/slider.js' %}"></script>
+{% endblock %}

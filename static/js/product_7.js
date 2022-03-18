@@ -12,15 +12,16 @@ let additionChecked = []
 let priceUs = 0
 let priceEu = 0
 
-minus.addEventListener('click', setPrice)
-plus.addEventListener('click', setPrice)
-addToCartButton.addEventListener('click', addToCart)
+minus && minus.addEventListener('click', setPrice)
+plus && plus.addEventListener('click', setPrice)
+addToCartButton && addToCartButton.addEventListener('click', addToCart)
 
 if (requiredInputs) {
     checkInputs(requiredInputs, quantityRequiredOptions, requiredChecked)
 }
 
 if (additionInputs) {
+    // search for default checked inputs
     additionInputs.forEach(item => {
         if (item.checked) {
             additionChecked.push(item)
@@ -120,10 +121,15 @@ function hideChildOptions(option) {
             if (parentId === option_id) {
                 item.closest('.child_option').style.display = 'none'
                 item.checked = false
-                Array.prototype.slice.call(array).splice(index, 1)
             }
         })
-        requiredChildChecked.splice(0, requiredChildChecked.length)
+
+        for (let i = requiredChildChecked.length - 1; i >= 0; i--) {
+            const parentId = requiredChildChecked[i].closest('.option').getAttribute('data-parent-id')
+            if (parentId === option_id) {
+                requiredChildChecked.splice(i, 1)
+            }
+        }
     }
 }
 
@@ -131,20 +137,33 @@ function setPrice() {
     const priceHtml = document.getElementById('price')
     priceUs = 0
     priceEu = 0
-    priceUs += +productPriceUs.replace(',', '.')
-    priceEu += +productPriceEu.replace(',', '.')
-    requiredChecked.forEach(item => {
-        priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
-        priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
-    })
-    requiredChildChecked.forEach(item => {
-        priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
-        priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
-    })
-    additionChecked.forEach(item => {
-        priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
-        priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
-    })
+    if (currency === 'us') {
+        priceUs += +productPriceUs.replace(',', '.')
+        requiredChecked.forEach(item => {
+            priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
+        })
+        requiredChildChecked.forEach(item => {
+            priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
+        })
+        additionChecked.forEach(item => {
+            priceUs += +item.closest('.option').getAttribute('data-price-us').replace(',', '.')
+        })
+    }
+
+    if (currency === 'eu') {
+        priceEu += +productPriceEu.replace(',', '.')
+        requiredChecked.forEach(item => {
+            priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
+        })
+        requiredChildChecked.forEach(item => {
+            priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
+        })
+        additionChecked.forEach(item => {
+            priceEu += +item.closest('.option').getAttribute('data-price-eu').replace(',', '.')
+        })
+    }
+
+
     if (this === plus) {
         count.innerText = +count.innerHTML + 1
     }
@@ -152,51 +171,23 @@ function setPrice() {
         count.innerText = +count.innerHTML - 1
     }
     let quantity = +count.innerText
-    priceUs = priceUs * quantity
-    priceEu = priceEu * quantity
-    if (currency === 'us' && priceUs > 0) {
-        priceHtml.innerText = '$ ' + ' ' + priceUs.toFixed(2)
-    } else if (currency === 'us' && priceUs === 0) {
-        priceHtml.innerHTML = '<p>Choose options to continue</p>'
-    } else if (currency === 'eu' && priceEu > 0) {
-        priceHtml.innerText = '€ ' + ' ' + priceEu.toFixed(2)
-    } else if (currency === 'eu' && priceEu === 0) {
-        priceHtml.innerHTML = '<p>Choose options to continue</p>'
-    }
-}
 
-function generateProductObject(price, region) {
-    let product = {}
-    product['name'] = name
-    product['url'] = url
-    product['total'] = price.toFixed(2)
-    product['quantity'] = count.innerText
-    product['price'] = product.total / product.quantity
-    product.price = product.price.toFixed(2)
-    product['image'] = imgURL
-    product['id'] = productId
-    product['options'] = []
-    requiredChecked.forEach(input => {
-        product.options.push(generateOptionObject(input, region))
-    })
-    additionChecked.forEach(input => {
-        product.options.push(generateOptionObject(input, region))
-    })
-    requiredChildChecked.forEach(input => {
-        product.options.push(generateOptionObject(input, region))
-    })
-    return product
-}
-
-function generateOptionObject(input, region) {
-    let item = {}
-    item['name'] = input.closest('.option').getAttribute('data-name')
-    if (region === 'us') {
-        item['price'] = input.closest('.option').getAttribute('data-price-us')
-    } else {
-        item['price'] = input.closest('.option').getAttribute('data-price-eu')
+    if (currency === 'us') {
+        priceUs = priceUs * quantity
+        if (priceUs > 0) {
+            priceHtml.innerText = '$ ' + ' ' + priceUs.toFixed(2)
+        } else if (priceUs === 0) {
+            priceHtml.innerHTML = '<p>Choose options to continue</p>'
+        }
     }
-    return item
+    if (currency === 'eu') {
+        priceEu = priceEu * quantity
+        if (priceEu > 0) {
+            priceHtml.innerText = '€ ' + ' ' + priceEu.toFixed(2)
+        } else if (priceEu === 0) {
+            priceHtml.innerHTML = '<p>Choose options to continue</p>'
+        }
+    }
 }
 
 function addToCart() {
@@ -216,29 +207,45 @@ function addToCart() {
         }, 2500)
         return
     }
-    let productUs = generateProductObject(priceUs, 'us')
-    let productEu = generateProductObject(priceEu, 'eu')
-    productUs['currency'] = '$'
-    productEu['currency'] = '€'
-    let cartUs = getCookie('cartUs')
-    let cartEu = getCookie('cartEu')
-    cartUs.forEach((item, index, array) => {
-        if (item.id === productUs.id) {
-            array.splice(index, 1)
+
+    let data = {
+        'action': 'add',
+        'productId': productId,
+        'optionsId': [],
+        'quantity': count.innerText,
+    }
+    requiredChecked.forEach(input => {
+        let option = {
+            'optionId': input.closest('.option').getAttribute('data-option-id'),
+            'name': input.closest('.option').getAttribute('data-name'),
+            'price': input.closest('.option').getAttribute('data-price-'+ currency),
         }
+        data['optionsId'].push(option)
     })
-    cartEu.forEach((item, index, array) => {
-        if (item.id === productEu.id) {
-            array.splice(index, 1)
+    requiredChildChecked.forEach(input => {
+        let option = {
+            'optionId': input.closest('.option').getAttribute('data-option-id'),
+            'name': input.closest('.option').getAttribute('data-name'),
+            'price': input.closest('.option').getAttribute('data-price-'+ currency),
         }
+        data['optionsId'].push(option)
     })
-    cartUs.push(productUs)
-    cartEu.push(productEu)
-    cartUs = JSON.stringify(cartUs)
-    cartEu = JSON.stringify(cartEu)
-    setCookie(cartUs, 'cartUs')
-    setCookie(cartEu, 'cartEu')
-    product_quantity()
+    additionChecked.forEach(input => {
+        let option = {
+            'optionId': input.closest('.option').getAttribute('data-option-id'),
+            'name': input.closest('.option').getAttribute('data-name'),
+            'price': input.closest('.option').getAttribute('data-price-'+ currency),
+        }
+        data['optionsId'].push(option)
+    })
+    instance.post('cartService/', data, {
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    }).then(response => {
+        product_quantity(response.data.products.length)
+    })
+
     notificationSuccess.style.display = 'block'
     setTimeout(function () {
         notificationSuccess.style.display = 'none'
