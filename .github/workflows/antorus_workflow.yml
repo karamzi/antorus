@@ -18,5 +18,4 @@ jobs:
           script: |
             cd /var/www/antorus
             git pull
-            docker stop antorus_web_1
             docker-compose up --build -d web
