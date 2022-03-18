@@ -10,6 +10,8 @@ services:
       POSTGRES_PASSWORD: "root"
     ports:
       - "5432:5432"
+    volumes:
+    - /home/:/home/
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8080
