@@ -189,6 +189,7 @@ class RequiredOption(models.Model):
     class Meta:
         verbose_name = 'Обязательная опция'
         verbose_name_plural = 'Обязательные опции'
+        ordering = ['id']
 
 
 class RequiredOptionChild(models.Model):
@@ -249,7 +250,7 @@ class RequiredOptionChild(models.Model):
     class Meta:
         verbose_name = 'Обязательная опция(дочерняя)'
         verbose_name_plural = 'Обязательные опции(дочерняя)'
-        ordering = ['required_option']
+        ordering = ['required_option', 'id']
 
 
 class AdditionOptions(models.Model):
@@ -299,6 +300,7 @@ class AdditionOptions(models.Model):
     class Meta:
         verbose_name = 'Дополнительная опция'
         verbose_name_plural = 'Дополнительные опции'
+        ordering = ['id']
 
 
 class Cart(models.Model):
@@ -330,7 +332,7 @@ class CartOptions(models.Model):
     class Meta:
         verbose_name = 'Опция'
         verbose_name_plural = 'Опции'
-        ordering = ['product']
+        ordering = ['product', 'id']
 
 
 class Order(models.Model):
