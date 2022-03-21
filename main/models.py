@@ -49,7 +49,7 @@ class Categories(models.Model):
     class Meta:
         ordering = ['number']
         verbose_name = 'Категория'
-        verbose_name_plural = '6. Категории'
+        verbose_name_plural = '06. Категории'
 
 
 class SubCategories(models.Model):
@@ -76,7 +76,7 @@ class SubCategories(models.Model):
     class Meta:
         ordering = ['number']
         verbose_name = 'Подкатегория'
-        verbose_name_plural = '7. Подкатегории'
+        verbose_name_plural = '07. Подкатегории'
 
 
 class Products(models.Model):
@@ -143,7 +143,7 @@ class Products(models.Model):
 
     class Meta:
         verbose_name = 'Товар'
-        verbose_name_plural = '3. Товары'
+        verbose_name_plural = '03. Товары'
         ordering = ['product_order']
 
 
@@ -377,7 +377,7 @@ class Order(models.Model):
 
     class Meta:
         verbose_name = 'Заказ'
-        verbose_name_plural = '1. Заказы'
+        verbose_name_plural = '01. Заказы'
 
 
 class OrderImages(models.Model):
@@ -401,7 +401,7 @@ class Coupon(models.Model):
 
     class Meta:
         verbose_name = 'Купон'
-        verbose_name_plural = '5. Купоны'
+        verbose_name_plural = '05. Купоны'
 
 
 class BestOffersToday(models.Model):
@@ -413,7 +413,7 @@ class BestOffersToday(models.Model):
 
     class Meta:
         verbose_name = 'Лучшее предложение'
-        verbose_name_plural = '4. Лучшие предложения'
+        verbose_name_plural = '04. Лучшие предложения'
         ordering = ['product_order']
 
 
@@ -447,7 +447,7 @@ class Transactions(models.Model):
 
     class Meta:
         verbose_name = 'Транзакция'
-        verbose_name_plural = '2. Транзакции'
+        verbose_name_plural = '02. Транзакции'
         ordering = ['-date']
 
 
@@ -459,7 +459,7 @@ class SEO(models.Model):
 
     class Meta:
         verbose_name = 'SEO'
-        verbose_name_plural = '8. SEO'
+        verbose_name_plural = '08. SEO'
 
 
 class SpecialOffers(models.Model):
@@ -472,4 +472,22 @@ class SpecialOffers(models.Model):
 
     class Meta:
         verbose_name = 'Специальное предложение'
-        verbose_name_plural = '9. Специальные предложения'
+        verbose_name_plural = '09. Специальные предложения'
+
+
+class RedirectModels(models.Model):
+    redirect_from = models.CharField(max_length=100, verbose_name='Откуда')
+    redirect_to = models.CharField(max_length=100, verbose_name='Куда')
+
+    class Meta:
+        verbose_name = 'Редирект'
+        verbose_name_plural = '10. Редиректы'
+
+
+class CurrencyModel(models.Model):
+    us_currency = models.DecimalField(verbose_name='Курс доллара', max_digits=5, decimal_places=2)
+    eu_currency = models.DecimalField(verbose_name='Курс евро', max_digits=5, decimal_places=2)
+
+    class Meta:
+        verbose_name = 'Курс валюты'
+        verbose_name_plural = '11. Курсы валют'
