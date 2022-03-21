@@ -12,14 +12,10 @@ services:
       - "5432:5432"
     volumes:
     - /home/:/home/
+    restart: always
   web:
     build: .
-    command: >
-      bash -c "
-      python manage.py makemigrations
-      & python manage.py migrate
-      & python manage.py runserver 0.0.0.0:8080
-      "
+    command: python manage.py runserver 0.0.0.0:8080
     volumes:
       - .:/code/
       - /var/www/antorus/media/:/code/media/
