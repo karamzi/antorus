@@ -369,11 +369,27 @@ def fondy_callback(request):
 
 @csrf_exempt
 def tinkof_calback(request):
-    print(request)
-    print(request.body)
-    print(request.GET)
-    print(request.POST)
-    return HttpResponse(status=200)
+    if request.method == 'POST':
+        response_obj = json.loads(request.body, ensure_ascii=False)
+        order_id = int(response_obj['OrderId']) - 1000
+        order = Order.objects.get(pk=order_id)
+        transaction, _ = Transactions.objects.get_or_create(order_id=order_id)
+        transaction.order = order
+        transaction.service = '2'
+        transaction.status = response_obj['Status']
+        transaction.amount = int(response_obj['Amount']) / 100
+        date_format = '%d.%m.%Y %H:%M:%S'
+        transaction.date = datetime.strptime(request.POST['order_time'], date_format) + timedelta(hours=1)
+        transaction.save()
+        if response_obj['Status'] == 'CONFIRMED':
+            Email().send_order(order, 'email/emails.html')
+            order.status = '2'
+        else:
+            order.status = '3'
+            Email().send_order(order, 'email/error.html')
+        order.save()
+        return HttpResponse(status=200)
+    return redirect(reverse('index'))
 
 
 @csrf_exempt
