@@ -370,7 +370,7 @@ def fondy_callback(request):
 @csrf_exempt
 def tinkof_calback(request):
     if request.method == 'POST':
-        response_obj = json.loads(request.body, ensure_ascii=False)
+        response_obj = json.loads(request.body)
         order_id = int(response_obj['OrderId']) - 1000
         order = Order.objects.get(pk=order_id)
         transaction, _ = Transactions.objects.get_or_create(order_id=order_id)
