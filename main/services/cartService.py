@@ -113,5 +113,7 @@ class CartServices:
         self._save()
 
     def clear(self):
-        del self.session['cart_us']
-        del self.session['cart_eu']
+        if self.session.get('cart_us', False):
+            del self.session['cart_us']
+        if self.session.get('cart_eu', False):
+            del self.session['cart_eu']

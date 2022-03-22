@@ -153,6 +153,8 @@ EMAIL_USE_TLS = True
 
 SITE_HOST = ''
 
+terminal_key = ''
+
 CKEDITOR_CONFIGS = {
     'default': {
         # 'skin': 'moono',

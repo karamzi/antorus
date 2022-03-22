@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 
 from .errors.apiErrors import CommonApiError
+from main.services.tinkofService import TinkofService
 from .models import Order, BestOffersToday, AuthToken, Transactions, SpecialOffers
 from .forms import RegisterUserForm
 from django.db.models import Q, Prefetch
@@ -308,12 +309,13 @@ def cart_service(request):
 
 def create_order(request):
     if request.method == 'POST':
-        currency = 'EUR' if request.POST.get('currency', 'us') == 'eu' else 'USD'
         # creating order
         order = OrderService(request).create_order()
-        # creating json response with payment data for frontend
-        response = FondyService(order, currency).json_response()
-        return response
+        success_url = TinkofService(order).execute()
+        return JsonResponse({
+            'success': True,
+            'url': success_url
+        })
     return redirect(reverse('index'))
 
 
@@ -365,22 +367,32 @@ def fondy_callback(request):
     return redirect(reverse('index'))
 
 
+def tinkof_calback(request):
+    print(request)
+    print(request.body)
+    print(request.GET)
+    print(request.POST)
+    return HttpResponse(status=200)
+
+
 @csrf_exempt
 def success_order(request):
+    if request.method == 'GET':
+        order_id = int(request.GET['OrderId']) - 1000
     if request.method == 'POST':
         order_id = int(request.POST['order_id']) - 1000
-        try:
-            order = Order.objects.get(pk=order_id)
-            order.status = '2'
-            order.save()
-            context = {
-                'order': order,
-            }
-            response = render(request, 'success_order.html', context)
-            cart_service = CartServices(request)
-            cart_service.clear()
-            response.delete_cookie('coupon')
-            return response
-        except ObjectDoesNotExist:
-            return redirect(reverse('404'))
-    return redirect(reverse('index'))
+    try:
+        order = Order.objects.get(pk=order_id)
+        order.status = '2'
+        order.order_transactions.first().status = 'approved'
+        order.save()
+        context = {
+            'order': order,
+        }
+        response = render(request, 'success_order.html', context)
+        cart_service = CartServices(request)
+        cart_service.clear()
+        response.delete_cookie('coupon')
+        return response
+    except ObjectDoesNotExist:
+        return redirect(reverse('404'))

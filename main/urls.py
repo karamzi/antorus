@@ -29,6 +29,7 @@ urlpatterns = [
     path('searchProduct/', views.search_products),
     path('result/<str:search>/', views.search_result, name='result'),
     path('fondyCallback/', views.fondy_callback, name='fondy'),
+    path('tinkofCallback/', views.tinkof_calback, name='tinkof'),
     path('successOrder/', views.success_order, name='success_order'),
     path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
     path("sitemap.xml", TemplateView.as_view(template_name="sitemap.xml", content_type="text/xml")),

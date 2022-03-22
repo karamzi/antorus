@@ -1,4 +1,4 @@
-const button = document.querySelector('.button')
+const button = document.querySelector('#submit_button')
 button.addEventListener('click', createOrder)
 
 function createOrder() {
@@ -13,7 +13,7 @@ function createOrder() {
     data.append('connection', connection.value)
     data.append('email', email.value)
     data.append('comment', comment)
-    button.querySelector('button').setAttribute('disabled', 'disabled')
+    button.setAttribute('disabled', 'disabled')
     instance.post('createOrder/', data, {
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -22,15 +22,16 @@ function createOrder() {
     }).then(response => {
         if (response.status === 200) {
             data = response.data
-            document.getElementById('amount').value = data['amount']
-            document.getElementById('currency').value = data['currency']
-            document.getElementById('order_desc').value = data['order_desc']
-            document.getElementById('order_id').value = data['order_id']
-            document.getElementById('signature').value = data['signature']
-            document.getElementById('fondy').submit()
+            // document.getElementById('amount').value = data['amount']
+            // document.getElementById('currency').value = data['currency']
+            // document.getElementById('order_desc').value = data['order_desc']
+            // document.getElementById('order_id').value = data['order_id']
+            // document.getElementById('signature').value = data['signature']
+            // document.getElementById('fondy').submit()
             ym(67968427,'reachGoal','order')
+            window.location.replace(data.url)
         }
-        button.querySelector('button').removeAttribute('disabled')
+        button.removeAttribute('disabled')
     })
 }
 
