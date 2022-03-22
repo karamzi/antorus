@@ -43,6 +43,7 @@ class TinkofService:
         headers = {'Content-type': 'application/json'}
         response = requests.post('https://securepay.tinkoff.ru/v2/Init', data=request_data, headers=headers)
         response = json.loads(response.text)
+        print(response)
         return response
 
     def _prepare_request(self):
