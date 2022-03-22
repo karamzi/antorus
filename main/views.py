@@ -378,8 +378,7 @@ def tinkof_calback(request):
         transaction.service = '2'
         transaction.status = response_obj['Status']
         transaction.amount = int(response_obj['Amount']) / 100
-        date_format = '%d.%m.%Y %H:%M:%S'
-        transaction.date = datetime.strptime(request.POST['order_time'], date_format) + timedelta(hours=1)
+        transaction.date = datetime.now() + timedelta(hours=1)
         transaction.save()
         if response_obj['Status'] == 'CONFIRMED':
             Email().send_order(order, 'email/emails.html')
