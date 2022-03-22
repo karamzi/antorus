@@ -367,6 +367,7 @@ def fondy_callback(request):
     return redirect(reverse('index'))
 
 
+@csrf_exempt
 def tinkof_calback(request):
     print(request)
     print(request.body)
