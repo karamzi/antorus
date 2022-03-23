@@ -372,22 +372,22 @@ def tinkof_calback(request):
     if request.method == 'POST':
         response_obj = json.loads(request.body)
         order_id = int(response_obj['OrderId']) - 1000
-        order = Order.objects.get(pk=order_id)
+        # TODO убрать через сутки
+        print(request.body)
+        try:
+            order = Order.objects.get(pk=order_id)
+        except ObjectDoesNotExist:
+            return HttpResponse(status=200, content='OK')
         transaction, _ = Transactions.objects.get_or_create(order_id=order_id)
         transaction.order = order
         transaction.service = '2'
         transaction.status = response_obj['Status']
         transaction.amount = int(response_obj['Amount']) / 100
         transaction.date = datetime.now() + timedelta(hours=1)
+        transaction.response = request.body
+        transaction.currency = 'RUB'
         transaction.save()
-        if response_obj['Status'] == 'CONFIRMED':
-            Email().send_order(order, 'email/emails.html')
-            order.status = '2'
-        else:
-            order.status = '3'
-            Email().send_order(order, 'email/error.html')
-        order.save()
-        return HttpResponse(status=200)
+        return HttpResponse(status=200, content='OK')
     return redirect(reverse('index'))
 
 
@@ -399,6 +399,7 @@ def success_order(request):
         order_id = int(request.POST['order_id']) - 1000
     try:
         order = Order.objects.get(pk=order_id)
+        Email().send_order(order, 'email/emails.html')
         order.status = '2'
         order.order_transactions.first().status = 'approved'
         order.save()

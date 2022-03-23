@@ -20,18 +20,7 @@ class TinkofService:
         self.amount = self._count_amount(data=data)
         request_data = self._prepare_request()
         response = self._send_request(request_data=request_data)
-        self._save_response(response)
         return response['PaymentURL']
-
-    def _save_response(self, response: dict):
-        Transactions.objects.create(
-            order=self.order,
-            service='2',
-            status=response['Status'],
-            currency='RUB',
-            amount=response['Amount'] / 100,
-            response=json.dumps(response, ensure_ascii=False)
-        )
 
     def _count_amount(self, data: pd.DataFrame) -> int:
         data = data.loc[:, :'total'].drop_duplicates()
