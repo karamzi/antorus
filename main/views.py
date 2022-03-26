@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 
 from .errors.apiErrors import CommonApiError
-from main.services.tinkofService import TinkofService
+from main.services.plisioService import PlisioService
 from .models import Order, BestOffersToday, AuthToken, Transactions, SpecialOffers
 from .forms import RegisterUserForm
 from django.db.models import Q, Prefetch
@@ -309,9 +309,10 @@ def cart_service(request):
 
 def create_order(request):
     if request.method == 'POST':
+        currency = 'EUR' if request.POST.get('currency', 'us') == 'eu' else 'USD'
         # creating order
         order = OrderService(request).create_order()
-        success_url = TinkofService(order).execute()
+        success_url = PlisioService(order=order, currency=currency).execute()
         return JsonResponse({
             'success': True,
             'url': success_url
@@ -368,48 +369,49 @@ def fondy_callback(request):
 
 
 @csrf_exempt
-def tinkof_calback(request):
+def plisio_calback(request):
     if request.method == 'POST':
-        response_obj = json.loads(request.body)
-        order_id = int(response_obj['OrderId']) - 1000
-        # TODO убрать через сутки
-        print(request.body)
-        try:
-            order = Order.objects.get(pk=order_id)
-        except ObjectDoesNotExist:
-            return HttpResponse(status=200, content='OK')
-        transaction, _ = Transactions.objects.get_or_create(order_id=order_id)
+        response = json.dumps(request.POST, ensure_ascii=False)
+        print(response)
+        order_id = int(request.POST['order_number']) - 1000
+        order = Order.objects.get(pk=order_id)
+        transaction, status = Transactions.objects.get_or_create(order_id=order_id)
         transaction.order = order
-        transaction.service = '2'
-        transaction.status = response_obj['Status']
-        transaction.amount = int(response_obj['Amount']) / 100
+        transaction.service = 2
+        transaction.status = request.POST['status']
+        transaction.currency = request.POST['source_currency']
+        transaction.amount = request.POST['source_amount']
+        transaction.response = response
         transaction.date = datetime.now() + timedelta(hours=1)
-        transaction.response = request.body
-        transaction.currency = 'RUB'
         transaction.save()
-        return HttpResponse(status=200, content='OK')
+        if request.POST['status'] == 'completed':
+            Email().send_order(order, 'email/emails.html')
+            order.status = '2'
+        if request.POST['status'] in ['error', 'expired']:
+            order.status = '3'
+            Email().send_order(order, 'email/error.html')
+        order.save()
+        return HttpResponse(status=200)
     return redirect(reverse('index'))
 
 
 @csrf_exempt
 def success_order(request):
-    if request.method == 'GET':
-        order_id = int(request.GET['OrderId']) - 1000
+    print(request.body)
     if request.method == 'POST':
         order_id = int(request.POST['order_id']) - 1000
-    try:
-        order = Order.objects.get(pk=order_id)
-        Email().send_order(order, 'email/emails.html')
-        order.status = '2'
-        order.order_transactions.first().status = 'approved'
-        order.save()
-        context = {
-            'order': order,
-        }
-        response = render(request, 'success_order.html', context)
-        cart_service = CartServices(request)
-        cart_service.clear()
-        response.delete_cookie('coupon')
-        return response
-    except ObjectDoesNotExist:
-        return redirect(reverse('404'))
+        try:
+            order = Order.objects.get(pk=order_id)
+            order.status = '2'
+            order.save()
+            context = {
+                'order': order,
+            }
+            response = render(request, 'success_order.html', context)
+            cart_service = CartServices(request)
+            cart_service.clear()
+            response.delete_cookie('coupon')
+            return response
+        except ObjectDoesNotExist:
+            return redirect(reverse('404'))
+    return HttpResponse(status=200)

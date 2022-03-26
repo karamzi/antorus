@@ -434,7 +434,7 @@ class Transactions(models.Model):
                               on_delete=models.CASCADE)
     SERVICE = (
         ('1', 'Fondy'),
-        ('2', 'Tinkof')
+        ('2', 'Plisio')
     )
     service = models.CharField(max_length=50, verbose_name='Сервис оплаты', choices=SERVICE)
     status = models.CharField(max_length=20, verbose_name='Статус оплаты')
@@ -483,12 +483,3 @@ class RedirectModels(models.Model):
     class Meta:
         verbose_name = 'Редирект'
         verbose_name_plural = '10. Редиректы'
-
-
-class CurrencyModel(models.Model):
-    us_currency = models.DecimalField(verbose_name='Курс доллара', max_digits=5, decimal_places=2)
-    eu_currency = models.DecimalField(verbose_name='Курс евро', max_digits=5, decimal_places=2)
-
-    class Meta:
-        verbose_name = 'Курс валюты'
-        verbose_name_plural = '11. Курсы валют'
