@@ -396,9 +396,8 @@ def plisio_calback(request):
 
 @csrf_exempt
 def success_order(request):
-    print(request.body)
     if request.method == 'POST':
-        order_id = int(request.POST['order_id']) - 1000
+        order_id = int(request.POST['order_number']) - 1000
         try:
             order = Order.objects.get(pk=order_id)
             order.status = '2'
