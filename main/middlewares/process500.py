@@ -16,4 +16,5 @@ class Process500:
                 'success': False,
                 'message': str(exception)
             })
+        # TODO сделать ошибку 500
         return redirect(reverse('404'))
