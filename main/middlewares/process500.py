@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.shortcuts import redirect, reverse
 from main.errors.apiErrors import OrderApiError, CommonApiError
 
 
@@ -15,4 +16,4 @@ class Process500:
                 'success': False,
                 'message': str(exception)
             })
-        return None
+        return redirect(reverse('404'))

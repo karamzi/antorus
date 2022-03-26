@@ -23,7 +23,6 @@ from .services.dbServices.categoriesDbService import CategoriesDbService
 from .services.dbServices.couponDbService import CouponDbService
 from .services.dbServices.prodcutDbService import ProductDbService
 from .services.dbServices.seoDbService import SeoDbService
-from .services.fondyService import FondyService
 from .services.orderService import OrderService
 from .utils.email import Email
 
