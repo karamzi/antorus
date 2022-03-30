@@ -11,9 +11,6 @@
     <!-- End Fonts -->
     <link rel="stylesheet" href="{% static 'style/bundle1645337555149.css' %}"/>
     <link rel="icon" href="{% static 'img/logo.png' %}"/>
-    <!-- TrustBox script -->
-    <script src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
-    <!-- End TrustBox script -->
     <title>{{ seo.title }}</title>
     {{ seo.meta|safe }}
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -207,8 +204,20 @@
     const currency = '{{ currency }}'
 </script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="//code.tidio.co/qtfccqsgrgx4usthk3x1dxkxtllrlcx1.js" async></script>
-<script src="{% static 'js/main_8.js' %}"></script>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/624430ec0bfe3f4a8770728b/1fvd5u7o4';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->
+<script src="{% static 'js/main_9.js' %}"></script>
 {% block scripts %}
 {% endblock %}
 </body>

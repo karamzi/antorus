@@ -27,6 +27,7 @@ class PlisioService:
             'callback_url': f'{SITE_HOST}/pisioCallback/',
             'email': self.order.email,
             'api_key': PLISIO_KEY,
+            'allowed_psys_cids': 'ETH,BTC,LTC,BCH,USDT'
         }
         return request_obj
 

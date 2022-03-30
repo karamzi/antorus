@@ -371,7 +371,6 @@ def fondy_callback(request):
 def plisio_calback(request):
     if request.method == 'POST':
         response = json.dumps(request.POST, ensure_ascii=False)
-        print(response)
         order_id = int(request.POST['order_number']) - 1000
         order = Order.objects.get(pk=order_id)
         transaction, status = Transactions.objects.get_or_create(order_id=order_id)

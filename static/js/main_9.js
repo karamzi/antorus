@@ -169,7 +169,7 @@ const chatButtons = document.querySelectorAll('.chatButton')
 if (chatButtons) {
     chatButtons.forEach(item => {
         item.addEventListener('click', () => {
-            tidioChatApi.open()
+            window.Tawk_API.maximize();
         })
     })
 }
