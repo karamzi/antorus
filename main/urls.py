@@ -31,6 +31,7 @@ urlpatterns = [
     path('fondyCallback/', views.fondy_callback, name='fondy'),
     path('pisioCallback/', views.plisio_calback, name='plisio'),
     path('successOrder/', views.success_order, name='success_order'),
-    path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
-    path("sitemap.xml", TemplateView.as_view(template_name="sitemap.xml", content_type="text/xml")),
+    path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
+    path('sitemap.xml', TemplateView.as_view(template_name="sitemap.xml", content_type="text/xml")),
+    path('404/', TemplateView.as_view(template_name="404.html"), name='404'),
 ]

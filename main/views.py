@@ -19,6 +19,7 @@ import json
 from datetime import datetime, timedelta
 
 from .services.cartService import CartServices
+from .services.logRequest import LogRequest
 from .services.dbServices.categoriesDbService import CategoriesDbService
 from .services.dbServices.couponDbService import CouponDbService
 from .services.dbServices.prodcutDbService import ProductDbService
@@ -79,7 +80,7 @@ def search_result(request, search):
 def product(request, slug):
     currency = request.COOKIES.get('currency', 'us')
     product = ProductDbService.get_product(slug)
-    if product and product.draft and not request.user.is_superuser:
+    if product.draft and not request.user.is_superuser:
         return redirect(reverse('index'))
     else:
         products = ProductDbService.get_products_by_category(product.category)[:4]
@@ -95,30 +96,24 @@ def product(request, slug):
 
 def category(request, slug):
     category = CategoriesDbService.get_category(slug)
-    if category:
-        products = ProductDbService.get_products_by_category(category)
-        context = {
-            'category': category,
-            'products': products
-        }
-        return render(request, 'category.html', context)
-    else:
-        return redirect(reverse('index'))
+    products = ProductDbService.get_products_by_category(category)
+    context = {
+        'category': category,
+        'products': products
+    }
+    return render(request, 'category.html', context)
 
 
 def subcategory(request, category, subcategory):
     category = CategoriesDbService.get_category(category)
     sub_category = CategoriesDbService.get_subcategory(subcategory)
-    if category and sub_category:
-        products = ProductDbService.get_products_by_subcategory(sub_category)
-        context = {
-            'category': category,
-            'sub_category': sub_category,
-            'products': products
-        }
-        return render(request, 'category.html', context)
-    else:
-        return redirect(reverse('index'))
+    products = ProductDbService.get_products_by_subcategory(sub_category)
+    context = {
+        'category': category,
+        'sub_category': sub_category,
+        'products': products
+    }
+    return render(request, 'category.html', context)
 
 
 def cart(request):
@@ -308,6 +303,7 @@ def cart_service(request):
 
 def create_order(request):
     if request.method == 'POST':
+        LogRequest.log(request)
         currency = 'EUR' if request.POST.get('currency', 'us') == 'eu' else 'USD'
         # creating order
         order = OrderService(request).create_order()
@@ -370,6 +366,7 @@ def fondy_callback(request):
 @csrf_exempt
 def plisio_calback(request):
     if request.method == 'POST':
+        LogRequest.log(request)
         response = json.dumps(request.POST, ensure_ascii=False)
         order_id = int(request.POST['order_number']) - 1000
         order = Order.objects.get(pk=order_id)
@@ -396,6 +393,7 @@ def plisio_calback(request):
 @csrf_exempt
 def success_order(request):
     if request.method == 'POST':
+        LogRequest.log(request)
         order_id = int(request.POST['order_number']) - 1000
         try:
             order = Order.objects.get(pk=order_id)

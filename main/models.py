@@ -483,3 +483,15 @@ class RedirectModels(models.Model):
     class Meta:
         verbose_name = 'Редирект'
         verbose_name_plural = '10. Редиректы'
+
+
+class RequestLogsModel(models.Model):
+    url = models.URLField(verbose_name='Адрес')
+    request_get_data = models.TextField('GET data', null=True)
+    request_post_data = models.TextField('POST data', null=True)
+    message = models.TextField(verbose_name='комментарий', null=True)
+    time = models.DateTimeField(auto_now_add=True, verbose_name='Время')
+
+    class Meta:
+        verbose_name = 'Лог'
+        verbose_name_plural = '11. Логи'

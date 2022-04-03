@@ -9,16 +9,10 @@ class CategoriesDbService:
 
     @staticmethod
     def get_category(slug):
-        try:
-            return Categories.objects.get(slug=slug)
-        except ObjectDoesNotExist:
-            return None
+        return Categories.objects.get(slug=slug)
 
     @staticmethod
     def get_subcategory(slug):
-        try:
-            return SubCategories.objects.get(slug=slug)
-        except ObjectDoesNotExist:
-            return None
+        return SubCategories.objects.get(slug=slug)
 
 

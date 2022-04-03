@@ -193,6 +193,11 @@ class RedirectAdmin(admin.ModelAdmin):
     list_display_links = ('redirect_from', 'redirect_to')
 
 
+class RequestLogAdmin(admin.ModelAdmin):
+    list_display = ('url', 'time')
+    list_display_links = ('url', 'time')
+
+
 admin.site.register(models.Products, ProductsAdmin)
 admin.site.register(models.Categories)
 admin.site.register(models.SubCategories)
@@ -203,3 +208,4 @@ admin.site.register(models.Transactions, TransactionsAdmin)
 admin.site.register(models.SEO, SEOAdmin)
 admin.site.register(models.SpecialOffers)
 admin.site.register(models.RedirectModels, RedirectAdmin)
+admin.site.register(models.RequestLogsModel, RequestLogAdmin)

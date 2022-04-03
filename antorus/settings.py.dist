@@ -155,6 +155,37 @@ SITE_HOST = ''
 
 PLISIO_KEY = ''
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        }
+    },
+    'handlers': {
+        'errorRequest': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'errorRequest.log'),
+            'formatter': 'verbose'
+        },
+        'info': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'info.log'),
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['errorRequest', 'info'],
+            'propagate': True,
+        },
+    },
+}
+
 CKEDITOR_CONFIGS = {
     'default': {
         # 'skin': 'moono',

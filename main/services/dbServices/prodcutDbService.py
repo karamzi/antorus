@@ -45,7 +45,4 @@ class ProductDbService:
     def get_product(slug):
         prefetch_options = ['category', 'subcategory', 'product_required_option', 'product_addition_option',
                             'product_required_option__required_option_child__product']
-        try:
-            return Products.objects.prefetch_related(*prefetch_options).get(slug=slug)
-        except ObjectDoesNotExist:
-            return None
+        return Products.objects.prefetch_related(*prefetch_options).get(slug=slug)
