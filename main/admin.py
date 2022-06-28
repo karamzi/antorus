@@ -199,8 +199,8 @@ class RequestLogAdmin(admin.ModelAdmin):
 
 
 class MonitoringAdmin(admin.ModelAdmin):
-    list_display = ('cpu', 'orm', 'ram')
-    list_display_links = ('cpu', 'orm', 'ram')
+    list_display = ('cpu', 'disc', 'ram')
+    list_display_links = ('cpu', 'disc', 'ram')
 
 
 admin.site.register(models.Products, ProductsAdmin)

@@ -499,5 +499,9 @@ class RequestLogsModel(models.Model):
 
 class MonitoringModel(models.Model):
     cpu = models.CharField(max_length=50)
-    orm = models.CharField(max_length=50)
+    disc = models.CharField(max_length=50)
     ram = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name = 'Монитроинг'
+        verbose_name_plural = '12. Монитроинг'
