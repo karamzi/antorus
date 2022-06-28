@@ -198,6 +198,11 @@ class RequestLogAdmin(admin.ModelAdmin):
     list_display_links = ('url', 'time')
 
 
+class MonitoringAdmin(admin.ModelAdmin):
+    list_display = ('cpu', 'orm', 'ram')
+    list_display_links = ('cpu', 'orm', 'ram')
+
+
 admin.site.register(models.Products, ProductsAdmin)
 admin.site.register(models.Categories)
 admin.site.register(models.SubCategories)
@@ -209,3 +214,4 @@ admin.site.register(models.SEO, SEOAdmin)
 admin.site.register(models.SpecialOffers)
 admin.site.register(models.RedirectModels, RedirectAdmin)
 admin.site.register(models.RequestLogsModel, RequestLogAdmin)
+admin.site.register(models.MonitoringModel, MonitoringAdmin)

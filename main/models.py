@@ -495,3 +495,9 @@ class RequestLogsModel(models.Model):
     class Meta:
         verbose_name = 'Лог'
         verbose_name_plural = '11. Логи'
+
+
+class MonitoringModel(models.Model):
+    cpu = models.CharField(max_length=50)
+    orm = models.CharField(max_length=50)
+    ram = models.CharField(max_length=50)
