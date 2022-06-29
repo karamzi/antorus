@@ -498,9 +498,10 @@ class RequestLogsModel(models.Model):
 
 
 class MonitoringModel(models.Model):
-    cpu = models.CharField(max_length=50)
-    disc = models.CharField(max_length=50)
-    ram = models.CharField(max_length=50)
+    cpu = models.CharField(max_length=50, verbose_name='Загруженность процессора')
+    disc = models.CharField(max_length=50, verbose_name='Свободная память')
+    ram = models.CharField(max_length=50, verbose_name='Свободная оперативная память')
+    date = models.DateTimeField(verbose_name='Время', auto_now_add=True)
 
     class Meta:
         verbose_name = 'Монитроинг'
