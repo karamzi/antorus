@@ -1,5 +1,4 @@
 from main.models import Categories, SubCategories
-from django.core.exceptions import ObjectDoesNotExist
 
 
 class CategoriesDbService:

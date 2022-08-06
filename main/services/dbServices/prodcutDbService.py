@@ -1,5 +1,4 @@
 from main.models import Products
-from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Min
 
 
