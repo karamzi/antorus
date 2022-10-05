@@ -59,6 +59,12 @@ form input {
     padding: 0 10px;
 }
 
+/* paddings
+========================= */
+.pb-15 {
+    padding-bottom: 15px;
+}
+
 /* nav bar
 ========================= */
 
