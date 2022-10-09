@@ -7,15 +7,12 @@ from django.utils.html import strip_tags
 class Email:
     from_email = 'ANTORUS.COM – Your boosting store <shop@antorus.com>'
 
-    def send_order(self, order, template, trustpilot=False):
+    def send_order(self, order, template):
         subject = 'Order №' + order.get_order_number()
         html_message = render_to_string(template, {'order': order})
         plain_message = strip_tags(html_message)
         to = order.email.lower()
         msg = EmailMultiAlternatives(subject, html_message, 'shop@antorus.com', [to])
-        if trustpilot:
-            msg = EmailMultiAlternatives(subject, html_message, 'shop@antorus.com', [to],
-                                         bcc=['antorus.com+2860455185@invite.trustpilot.com'])
         msg.content_subtype = "html"
         msg.send()
         if order.status == '1':

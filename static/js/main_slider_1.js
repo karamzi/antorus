@@ -1,7 +1,7 @@
 const switch_buttons = document.querySelectorAll('.switch_buttons_item')
 const sliders = document.querySelector('.sliders')
 const sections = document.querySelectorAll('.intro_section')
-const numberOfSlides_1 = 2
+const numberOfSlides_1 = 3
 let id = 0
 
 

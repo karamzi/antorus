@@ -37,7 +37,7 @@ body {
     background-color: #00ad4e;
 }
 
-.slide_one, .slide_two > .container {
+.slide_one, .slide_two, .slide_three > .container {
     display: flex;
     justify-content: center;
 }
@@ -55,6 +55,10 @@ body {
 }
 
 .intro_section.slide_two {
+    background-image: url('../img/Home_Banner_2.jpg');
+}
+
+.intro_section.slide_three {
     background-image: url('../img/home_banner_2_1.jpg');
 }
 

@@ -25,13 +25,14 @@
                 <div class="container">
                     <div class="intro_content content_one">
                         <p>Antorus</p>
-                        <h1>WoTLK Classic Boost Service</h1>
-                        <p>Buy WoTLK Boosting Services and enjoy professional carry in all categories with Antorus</p>
+                        <h1>World of Warcraft Boosting Services</h1>
+                        <p>Professional service that connects World of Warcraft players and boosters. our task is to
+                            make cooperation convenient and safe</p>
                         <div class="intro_links">
                             <a href="{% url 'category' slug='raids' %}">Raid</a>
                             <a href="{% url 'category' slug='powerleveling' %}">Leveling</a>
                             <a href="{% url 'category' slug='dungeons' %}">Dungeons</a>
-                            <a href="{% url 'category' slug='wow-the-burning-crusade' %}">WoW TBC</a>
+                            <a href="{% url 'category' slug='wow-wrath-of-the-lich-king' %}">WoW WotLK</a>
                         </div>
                     </div>
                 </div>
@@ -49,10 +50,24 @@
                     </div>
                 </div>
             </div>
+            <div data-id="2" class="intro_section slide_three">
+                <div class="container">
+                    <div class="intro_content content_one">
+                        <p>Antorus</p>
+                        <h1>WoTLK Classic Boost Service</h1>
+                        <p>Buy WoTLK Boosting Services and enjoy professional carry in all categories with Antorus</p>
+                        <div class="intro_buttons">
+                            <a href="/category/wow-wrath-of-the-lich-king/">BROWSE PRODUCTS</a>
+                            <p class="chatButton">CHAT WITH US</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="switch_buttons">
             <button data-id="0" class="switch_buttons_item switch_buttons_item_active"></button>
             <button data-id="1" class="switch_buttons_item"></button>
+            <button data-id="2" class="switch_buttons_item"></button>
         </div>
     </div>
     <div class="products_sections">
@@ -310,6 +325,6 @@
     </div>
 {% endblock %}
 {% block scripts %}
-    <script src="{% static 'js/main_slider.js' %}"></script>
+    <script src="{% static 'js/main_slider_1.js' %}"></script>
     <script src="{% static 'js/special_offers_slider_1.js' %}"></script>
 {% endblock %}
