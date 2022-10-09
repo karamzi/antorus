@@ -23,7 +23,7 @@ class ProductDbService:
             del default_filter['archive']
         return Products.objects.annotate(**ProductDbService.annotate_dict) \
             .only(*only_options) \
-            .filter(**default_filter)
+            .filter(**default_filter).order_by('product_order')
 
     @staticmethod
     def get_products_by_category(category):
