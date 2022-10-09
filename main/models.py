@@ -506,3 +506,12 @@ class MonitoringModel(models.Model):
     class Meta:
         verbose_name = 'Монитроинг'
         verbose_name_plural = '12. Монитроинг'
+
+
+class EditablePages(models.Model):
+    slag = models.SlugField(verbose_name='Адрес страницы')
+    description = models.TextField(verbose_name='Описание')
+
+    class Meta:
+        verbose_name = 'Кастмоная страница'
+        verbose_name_plural = '13. Кастомные страницы'

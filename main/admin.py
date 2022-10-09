@@ -18,6 +18,14 @@ class ProductAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
+class EditablePagesAdminForm(forms.ModelForm):
+    description = forms.CharField(label='Описание', widget=CKEditorWidget())
+
+    class Meta:
+        model = models.EditablePages
+        fields = '__all__'
+
+
 class RequiredOptionChildAdmin(admin.TabularInline):
     model = models.RequiredOptionChild
     extra = 0
@@ -203,6 +211,12 @@ class MonitoringAdmin(admin.ModelAdmin):
     list_display_links = ('cpu', 'disc', 'ram', 'date')
 
 
+class EditablePagesAdmin(admin.ModelAdmin):
+    form = EditablePagesAdminForm
+    list_display = ('slag',)
+    list_display_links = ('slag',)
+
+
 admin.site.register(models.Products, ProductsAdmin)
 admin.site.register(models.Categories)
 admin.site.register(models.SubCategories)
@@ -215,3 +229,4 @@ admin.site.register(models.SpecialOffers)
 admin.site.register(models.RedirectModels, RedirectAdmin)
 admin.site.register(models.RequestLogsModel, RequestLogAdmin)
 admin.site.register(models.MonitoringModel, MonitoringAdmin)
+admin.site.register(models.EditablePages, EditablePagesAdmin)

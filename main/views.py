@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 
 from .errors.apiErrors import CommonApiError
 from main.services.plisioService import PlisioService
-from .models import Order, BestOffersToday, AuthToken, Transactions, SpecialOffers
+from .models import Order, BestOffersToday, AuthToken, Transactions, SpecialOffers, EditablePages
 from .forms import RegisterUserForm
 from django.db.models import Q, Prefetch
 from django.views.decorators.csrf import csrf_exempt
@@ -121,7 +121,11 @@ def cart(request):
 
 
 def faq(request):
-    return render(request, 'faq.html')
+    description = EditablePages.objects.get(slag='faq').description
+    context = {
+        'description': description
+    }
+    return render(request, 'faq.html', context)
 
 
 def checkout(request):
@@ -136,11 +140,19 @@ def my_account(request):
 
 
 def privacy_policy(request):
-    return render(request, 'privacy_policy.html')
+    description = EditablePages.objects.get(slag='privacyPolicy').description
+    context = {
+        'description': description
+    }
+    return render(request, 'privacy_policy.html', context)
 
 
 def terms_of_service(request):
-    return render(request, 'terms_of_service.html')
+    description = EditablePages.objects.get(slag='termsOfService').description
+    context = {
+        'description': description
+    }
+    return render(request, 'terms_of_service.html', context)
 
 
 def my_login(request):
