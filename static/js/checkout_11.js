@@ -22,12 +22,6 @@ function createOrder() {
     }).then(response => {
         if (response.status === 200) {
             data = response.data
-            // document.getElementById('amount').value = data['amount']
-            // document.getElementById('currency').value = data['currency']
-            // document.getElementById('order_desc').value = data['order_desc']
-            // document.getElementById('order_id').value = data['order_id']
-            // document.getElementById('signature').value = data['signature']
-            // document.getElementById('fondy').submit()
             ym(67968427,'reachGoal','order')
             window.location.replace(data.url)
         }
@@ -39,7 +33,7 @@ function checkForm(connection, email) {
     connection.classList.remove('input_error')
     email.classList.remove('input_error')
     if (!checkInput(connection)) return false
-    if (!checkInput(email)) return false
+    if (!checkEmail(email)) return false
     const agreeInput = document.getElementById('cd2')
     const label = document.getElementById('cd2_label')
     label.style.color = 'rgb(136, 136, 136)'
@@ -56,4 +50,13 @@ function checkInput(input) {
         return false
     }
     return true
+}
+
+function checkEmail(email) {
+    const pattern = /^[a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1}([a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1})*[a-zA-Z0-9]@[a-zA-Z0-9][-\.]{0,1}([a-zA-Z][-\.]{0,1})*[a-zA-Z0-9]\.[a-zA-Z0-9]{1,}([\.\-]{0,1}[a-zA-Z]){0,}[a-zA-Z0-9]{0,}$/i
+    if (pattern.test(email.value)){
+       return true
+    }
+    email.classList.add('input_error')
+    return false
 }
