@@ -55,7 +55,7 @@ class ProductsAdmin(admin.ModelAdmin):
     list_filter = (ProductArchiveFilter,)
     fieldsets = (
         (None, {
-            'fields': (('name', 'slug',),)
+            'fields': (('name', 'slug', 'footer_products'),)
         }),
         ('Категория', {
             'fields': (('category', 'subcategory',),),

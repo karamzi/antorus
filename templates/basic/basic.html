@@ -9,8 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com"/>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet"/>
     <!-- End Fonts -->
-    <link rel="stylesheet" href="{% static 'style/bundle1665381782934.css' %}"/>
-{#    <link rel="stylesheet" href="{% static 'css/footer.css' %}">#}
+    <link rel="stylesheet" href="{% static 'style/bundle1665822686635.css' %}"/>
     <link rel="icon" href="{% static 'img/logo.png' %}"/>
     <title>{{ seo.title }}</title>
     {{ seo.meta|safe }}
@@ -143,11 +142,13 @@
             <div class="footer_right">
                 <div class="footer_most_popular">
                     <p class="footer_section_title">MOST POPULAR</p>
-                    <a href="#">TBS character leveling</a>
-                    <a href="#">Fated sanctum<br>of domination heroic run</a>
-                    <a href="#">Mythic +15 boost run</a>
-                    <a href="#">Power leveling 50-60</a>
-                    <a href="#">Gear boost (pvp/pve)</a>
+                    {% for product in footer_products %}
+                        <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+                    {% endfor %}
+{#                    <a href="#">Fated sanctum<br>of domination heroic run</a>#}
+{#                    <a href="#">Mythic +15 boost run</a>#}
+{#                    <a href="#">Power leveling 50-60</a>#}
+{#                    <a href="#">Gear boost (pvp/pve)</a>#}
                 </div>
                 <div class="footer_information">
                     <p class="footer_section_title">INFORMATION</p>
@@ -167,20 +168,20 @@
                         </div>
                         <div class="footer_icon">
                             <a href="#">
-                                <img src="{% static 'img/footer-discord.png' %}" alt="">
-                                <div>discord</div>
+                                <img src="{% static 'img/footer-skype.png' %}" alt="">
+                                <div>skype</div>
                             </a>
                         </div>
                         <div class="footer_icon">
                             <a href="#">
-                                <img src="{% static 'img/footer-discord.png' %}" alt="">
-                                <div>discord</div>
+                                <img src="{% static 'img/email.png' %}" alt="">
+                                <div>email</div>
                             </a>
                         </div>
                         <div class="footer_icon">
                             <a href="#">
-                                <img src="{% static 'img/footer-discord.png' %}" alt="">
-                                <div>discord</div>
+                                <img src="{% static 'img/footer-telegram.png' %}" alt="">
+                                <div>telegram</div>
                             </a>
                         </div>
                     </div>
@@ -191,27 +192,27 @@
                             <img src="{% static 'img/visa.png' %}" alt="">
                         </div>
                         <div class="footer_payment_row_item">
-                            <img src="{% static 'img/visa.png' %}" alt="">
+                            <img src="{% static 'img/mastercard.png' %}" alt="">
                         </div>
                         <div class="footer_payment_row_item">
-                            <img src="{% static 'img/visa.png' %}" alt="">
+                            <img src="{% static 'img/paypal.png' %}" alt="">
                         </div>
                         <div class="footer_payment_row_item">
-                            <img src="{% static 'img/visa.png' %}" alt="">
+                            <img src="{% static 'img/american.png' %}" alt="">
                         </div>
                     </div>
                     <div class="footer_payment_row">
                         <div class="footer_payment_row_item">
-                            <img src="{% static 'img/visa.png' %}" alt="">
+                            <img src="{% static 'img/cript_1.png' %}" alt="">
                         </div>
                         <div class="footer_payment_row_item">
-                            <img src="{% static 'img/visa.png' %}" alt="">
+                            <img src="{% static 'img/cript_2.png' %}" alt="" style="background: #f7931a;">
                         </div>
                         <div class="footer_payment_row_item">
-                            <img src="{% static 'img/visa.png' %}" alt="">
+                            <img src="{% static 'img/cript_3.png' %}" alt="">
                         </div>
-                        <div class="footer_payment_row_item">
-                            <img src="{% static 'img/visa.png' %}" alt="">
+                        <div class="footer_payment_row_item cript_4">
+                            <img src="{% static 'img/cript_4.png' %}" alt="">
                         </div>
                     </div>
                 </div>

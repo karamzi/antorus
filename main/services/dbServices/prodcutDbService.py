@@ -45,3 +45,7 @@ class ProductDbService:
         prefetch_options = ['category', 'subcategory', 'product_required_option', 'product_addition_option',
                             'product_required_option__required_option_child__product']
         return Products.objects.prefetch_related(*prefetch_options).get(slug=slug)
+
+    @staticmethod
+    def get_footer_products():
+        return Products.objects.filter(footer_products=True).only('name', 'slug')

@@ -31,7 +31,7 @@ footer {
     font-weight: lighter;
     font-size: 15px;
     line-height: 19px;
-    padding-left: 9px;
+    color: white;
 }
 
 .footer_right {
@@ -69,10 +69,20 @@ footer {
 .footer_icon a {
     display: flex;
     align-items: center;
+    color: white;
+}
+
+.footer_icon div {
+    border-bottom: 2px solid transparent;
+}
+
+.footer_icon div:hover {
+    border-bottom: 2px solid #6BD829;
 }
 
 .footer_icon img {
     margin-right: 5px;
+    width: 20px;
 }
 
 .footer_most_popular, .footer_information {
@@ -101,6 +111,21 @@ footer {
     width: 22%;
 }
 
+.footer_payment_row_item img {
+    width: 100%;
+}
+
+.cript_4 {
+    display: flex;
+    justify-content: center;
+    background: white;
+    height: 32px;
+}
+
+.cript_4 img {
+    width: unset;
+}
+
 .footer_right a:hover {
     color: rgb(189, 189, 189);
     transition: color 0.3s ease;
@@ -127,20 +152,12 @@ footer {
 }
 
 @media (max-width: 650px) {
-    .footer_content {
-        justify-content: center;
-    }
-
     .footer_left {
         margin-bottom: 20px;
     }
 
     .footer_left, .footer_right {
         width: fit-content;
-    }
-
-    .footer_right {
-        justify-content: center;
     }
 
     .footer_most_popular, .footer_information, .footer_contacts, .footer_payments {
