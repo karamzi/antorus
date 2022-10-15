@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com"/>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet"/>
     <!-- End Fonts -->
-    <link rel="stylesheet" href="{% static 'style/bundle1665822686635.css' %}"/>
+    <link rel="stylesheet" href="{% static 'style/bundle1665831577459.css' %}"/>
     <link rel="icon" href="{% static 'img/logo.png' %}"/>
     <title>{{ seo.title }}</title>
     {{ seo.meta|safe }}
@@ -145,41 +145,37 @@
                     {% for product in footer_products %}
                         <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
                     {% endfor %}
-{#                    <a href="#">Fated sanctum<br>of domination heroic run</a>#}
-{#                    <a href="#">Mythic +15 boost run</a>#}
-{#                    <a href="#">Power leveling 50-60</a>#}
-{#                    <a href="#">Gear boost (pvp/pve)</a>#}
                 </div>
                 <div class="footer_information">
                     <p class="footer_section_title">INFORMATION</p>
-                    <a href="#">FAQ</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Privacy policy</a>
+                    <a href="{% url 'faq' %}">FAQ</a>
+                    <a href="{% url 'termsOfService' %}">Terms of Service</a>
+                    <a href="{% url 'privacyPolicy' %}">Privacy policy</a>
                 </div>
                 <div class="footer_contacts">
                     <p class="footer_section_title">CONTACTS</p>
                     <a href="#">Click to chat with us</a>
                     <div class="footer_icons">
                         <div class="footer_icon">
-                            <a href="#">
+                            <a href="https://discord.gg/7vCa6Wr"">
                                 <img src="{% static 'img/footer-discord.png' %}" alt="">
                                 <div>discord</div>
                             </a>
                         </div>
                         <div class="footer_icon">
-                            <a href="#">
+                            <a href="skype:live:AntorusShop?chat">
                                 <img src="{% static 'img/footer-skype.png' %}" alt="">
                                 <div>skype</div>
                             </a>
                         </div>
                         <div class="footer_icon">
-                            <a href="#">
+                            <a href="mailto:shop@antorus.com">
                                 <img src="{% static 'img/email.png' %}" alt="">
                                 <div>email</div>
                             </a>
                         </div>
                         <div class="footer_icon">
-                            <a href="#">
+                            <a href="https://t.me/AntorusShop">
                                 <img src="{% static 'img/footer-telegram.png' %}" alt="">
                                 <div>telegram</div>
                             </a>
