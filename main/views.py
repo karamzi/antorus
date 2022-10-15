@@ -33,11 +33,13 @@ def global_var(request):
     cart_service = CartServices(request)
     categories = CategoriesDbService.get_categories_with_subcategories()
     seo = SeoDbService.find(request)
+    footer_products = ProductDbService.get_footer_products()
     return {
         'currency': currency,
         'seo': seo,
         'categories': categories,
         'cart': cart_service.get_cart(),
+        'footer_products': footer_products,
     }
 
 

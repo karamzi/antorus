@@ -110,6 +110,7 @@ class Products(models.Model):
     draft = models.BooleanField(default=False, verbose_name='Черновик')
     alt = models.CharField(max_length=255, blank=True, null=True)
     archive = models.BooleanField(default=False, verbose_name='Архив')
+    footer_products = models.BooleanField(default=False, verbose_name='Товар в футоре')
 
     def __str__(self):
         return self.name
