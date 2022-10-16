@@ -34,11 +34,39 @@
                     <div class="payment_section">
                         <p>Choose payment option:</p>
                         <div class="payment_options">
-                            <div data-payment-type="paypal" class="payment_option"></div>
-                            <div data-payment-type="plisio" class="payment_option"></div>
-                            <div data-payment-type="plisio" class="payment_option"></div>
-                            <div data-payment-type="plisio" class="payment_option"></div>
-                            <div data-payment-type="plisio" class="payment_option"></div>
+                            <div data-index="0" data-payment-type="paypal" class="payment_option"></div>
+                            <div data-index="1" data-payment-type="plisio" class="payment_option"></div>
+                            <div data-index="2" data-payment-type="plisio" class="payment_option"></div>
+                            <div data-index="3" data-payment-type="plisio" class="payment_option"></div>
+                            <div data-index="4" data-payment-type="plisio" class="payment_option"></div>
+                        </div>
+                        <div class="payment_information">
+                            <p style="display: none" class="success">
+                                PayPal<br>
+                                After click "PLACE ORDER" - contact our operator for direct payment to one of our PayPal
+                                accounts at no additional commission.
+                            </p>
+                            <p style="display: none" class="success">
+                                Tether TRC-20<br>
+                                Minimum payment via this method - 150$/€.
+                                Or contact our operator for direct payment to our USDT-TRC20 crypto wallet.
+                                Possibly payment any cryptocurrency to our wallet - check with operator.
+                            </p>
+                            <p style="display: none" class="success">
+                                Bitcoin<br>
+                                Minimum payment via this method - 2$/€.
+                                Possibly payment any cryptocurrency to our wallet - check with operator.
+                            </p>
+                            <p style="display: none" class="success">
+                                Litecoin<br>
+                                Minimum payment via this method - 2$/€
+                                Possibly payment any cryptocurrency to our wallet - check with operator.
+                            </p>
+                            <p style="display: none" class="success">
+                                Ethereum<br>
+                                Minimum payment via this method 0.04 ETH.
+                                Or contact our operator for direct payment to our ETH crypto wallet.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -106,5 +134,5 @@
 
 
 {% block scripts %}
-    <script src="{% static 'js/checkout_12.js' %}"></script>
+    <script src="{% static 'js/checkout_13.js' %}"></script>
 {% endblock %}

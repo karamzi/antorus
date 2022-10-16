@@ -107,6 +107,7 @@ form input.input_error {
 .payment_options {
     display: flex;
     height: 40px;
+    margin-bottom: 10px;
 }
 
 .payment_options .payment_option {
@@ -144,6 +145,10 @@ form input.input_error {
 
 .payment_option_active {
     border: 3px solid #00FF00;
+}
+
+.payment_information {
+
 }
 
 .account label {

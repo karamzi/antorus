@@ -1,5 +1,6 @@
 const button = document.querySelector('#submit_button')
 const paymentOptions = document.querySelectorAll('.payment_option')
+const paymentMessages = document.querySelector('.payment_information').querySelectorAll('.success')
 let chosenPaymentType = null
 
 button.addEventListener('click', createOrder)
@@ -90,11 +91,20 @@ function checkPaymentType() {
 }
 
 function choosePaymentType() {
+    const index = this.getAttribute('data-index')
+
     paymentOptions.forEach(item => {
         item.classList.remove('payment_option_active')
     })
+
+    paymentMessages.forEach(item => {
+        item.style.display = 'none'
+    })
+
     this.classList.add('payment_option_active')
     chosenPaymentType = this.getAttribute('data-payment-type')
+
+    paymentMessages[index].style.display = 'block'
 }
 
 function payPal(orderNumber) {
