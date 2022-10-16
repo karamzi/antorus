@@ -1,5 +1,12 @@
 const button = document.querySelector('#submit_button')
+const paymentOptions = document.querySelectorAll('.payment_option')
+let chosenPaymentType = null
+
 button.addEventListener('click', createOrder)
+
+paymentOptions.forEach(item => {
+    item.addEventListener('click', choosePaymentType)
+})
 
 function createOrder() {
     const connection = document.getElementById('connection')
@@ -13,6 +20,7 @@ function createOrder() {
     data.append('connection', connection.value)
     data.append('email', email.value)
     data.append('comment', comment)
+    data.append('payment_type', chosenPaymentType)
     button.setAttribute('disabled', 'disabled')
     instance.post('createOrder/', data, {
         headers: {
@@ -23,7 +31,16 @@ function createOrder() {
         if (response.status === 200) {
             data = response.data
             ym(67968427,'reachGoal','order')
-            window.location.replace(data.url)
+            switch (chosenPaymentType) {
+                case 'paypal':
+                    payPal(data.order_number)
+                    break
+                case 'plisio':
+                    window.location.replace(data.url)
+                    break
+                default:
+                    console.log('error')
+            }
         }
         button.removeAttribute('disabled')
     })
@@ -34,6 +51,7 @@ function checkForm(connection, email) {
     email.classList.remove('input_error')
     if (!checkInput(connection)) return false
     if (!checkEmail(email)) return false
+    if (!checkPaymentType()) return false
     const agreeInput = document.getElementById('cd2')
     const label = document.getElementById('cd2_label')
     label.style.color = 'rgb(136, 136, 136)'
@@ -59,4 +77,43 @@ function checkEmail(email) {
     }
     email.classList.add('input_error')
     return false
+}
+
+function checkPaymentType() {
+    if (chosenPaymentType === null) {
+        const p = document.querySelector('.payment_section').querySelector('p')
+        console.log(p)
+        p.style.color = 'darkred'
+        return false
+    }
+    return true
+}
+
+function choosePaymentType() {
+    paymentOptions.forEach(item => {
+        item.classList.remove('payment_option_active')
+    })
+    this.classList.add('payment_option_active')
+    chosenPaymentType = this.getAttribute('data-payment-type')
+}
+
+function payPal(orderNumber) {
+    const form = document.createElement('form')
+    const orderNumberInput = document.createElement('input')
+    const paymentTypeInput = document.createElement('input')
+
+    form.style.display = 'none'
+    form.method = 'POST'
+    form.action = '/successOrder/'
+
+    orderNumberInput.name  = 'order_number'
+    orderNumberInput.value = orderNumber
+
+    paymentTypeInput.name = 'payment_type'
+    paymentTypeInput.value = 'paypal'
+
+    form.appendChild(orderNumberInput)
+    form.appendChild(paymentTypeInput)
+    document.body.appendChild(form)
+    form.submit()
 }

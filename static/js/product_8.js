@@ -191,7 +191,7 @@ function setPrice() {
 }
 
 function addToCart() {
-    const notificationSuccess = document.querySelector('.success')
+    const notificationSuccess = document.querySelector('.success_fixed')
     const notificationError = document.querySelector('.error')
     if (requiredInputs.length > 0 && requiredChecked.length === 0) {
         notificationError.style.display = 'block'

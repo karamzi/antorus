@@ -6,6 +6,14 @@
 {% block content %}
     <section class="order_section">
         <div class="container">
+            {% if payment_type == 'paypal' %}
+                <ul class="messages">
+                    <li class="success">
+                        To complete payment contact us via chat
+                        <p style="margin-top: 10px" class="chatButton">CHAT WITH US</p>
+                    </li>
+                </ul>
+            {% endif %}
             <h2>THANK YOU. YOUR ORDER HAS BEEN RECEIVED</h2>
             <div class="order_main_info">
                 <p>Order number: <span>{{ order.pk }}</span></p>

@@ -31,6 +31,16 @@
                             <textarea id="comment" name="comment" cols="30" rows="10"></textarea>
                         </div>
                     </form>
+                    <div class="payment_section">
+                        <p>Choose payment option:</p>
+                        <div class="payment_options">
+                            <div data-payment-type="paypal" class="payment_option"></div>
+                            <div data-payment-type="plisio" class="payment_option"></div>
+                            <div data-payment-type="plisio" class="payment_option"></div>
+                            <div data-payment-type="plisio" class="payment_option"></div>
+                            <div data-payment-type="plisio" class="payment_option"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="checkout_right">
                     <h3>YOUR ORDER</h3>
@@ -96,5 +106,5 @@
 
 
 {% block scripts %}
-    <script src="{% static 'js/checkout_11.js' %}"></script>
+    <script src="{% static 'js/checkout_12.js' %}"></script>
 {% endblock %}

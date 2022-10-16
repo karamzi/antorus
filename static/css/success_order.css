@@ -105,6 +105,29 @@
     margin-bottom: 40px;
 }
 
+.success .chatButton {
+    cursor: pointer;
+    display: block;
+    color: white;
+    letter-spacing: 2px;
+    padding: 20px 25px;
+    border: 2px solid rgba(255,255,255,0.4);
+    margin-left: 20px;
+}
+
+.success .chatButton:hover {
+    color: #0d0f0d;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.order_section .success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+}
+
 @media (max-width: 1000px) {
     .order_content {
         flex-direction: column;

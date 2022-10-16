@@ -321,11 +321,17 @@ def create_order(request):
         currency = 'EUR' if request.POST.get('currency', 'us') == 'eu' else 'USD'
         # creating order
         order = OrderService(request).create_order()
-        success_url = PlisioService(order=order, currency=currency).execute()
-        return JsonResponse({
-            'success': True,
-            'url': success_url
-        })
+        if request.POST['payment_type'] == 'paypal':
+            return JsonResponse({
+                'success': True,
+                'order_number': order.pk + 1000
+            })
+        else:
+            success_url = PlisioService(order=order, currency=currency).execute()
+            return JsonResponse({
+                'success': True,
+                'url': success_url
+            })
     return redirect(reverse('index'))
 
 
@@ -409,12 +415,14 @@ def success_order(request):
     if request.method == 'POST':
         LogRequest.log(request)
         order_id = int(request.POST['order_number']) - 1000
+        payment_type = request.POST.get('payment_type', None)
         try:
             order = Order.objects.get(pk=order_id)
             order.status = '2'
             order.save()
             context = {
                 'order': order,
+                'payment_type': payment_type
             }
             response = render(request, 'success_order.html', context)
             cart_service = CartServices(request)

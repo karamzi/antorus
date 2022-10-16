@@ -330,7 +330,7 @@
     color: white;
 }
 
-.success {
+.success_fixed {
     top: 20px;
     right: 0;
     position: fixed;
@@ -339,7 +339,7 @@
 }
 
 
-.success p, .error p {
+.success_fixed p, .error p {
     color: white;
     padding: 20px 20px;
 }
