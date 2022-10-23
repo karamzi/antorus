@@ -412,6 +412,7 @@ def success_order(request):
     if request.method == 'GET':
         LogRequest.log(request)
         order_id = int(request.GET.get('order_number')) - 1000
+        Email().send_order(order, 'email/emails.html')
         return prepare_order(request, order_id)
 
     if request.method == 'POST':
