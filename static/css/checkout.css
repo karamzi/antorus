@@ -118,8 +118,8 @@ form input.input_error {
 }
 
 .payment_options > .payment_option:nth-child(1) {
-    background-image: url('../img/credit-card.png');
-    background-color: #f4f4f4;
+    background-image: url('../img/stripe.png');
+    background-color: #ffffff;
 }
 
 .payment_options .payment_option:nth-child(2) {

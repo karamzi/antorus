@@ -36,8 +36,8 @@ function createOrder() {
                 case 'plisio':
                     window.location.replace(data.url)
                     break
-                case 'bepaid':
-                    window.location.replace(data.url)
+                case 'stripe':
+                    paymentForm(data.order_number, '/stripe/', 'stripe')
                     break
                 default:
                     console.log('error')
