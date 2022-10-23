@@ -142,6 +142,10 @@ form input.input_error {
     background-color: #ffffff;
 }
 
+.payment_options .payment_option:nth-child(6) {
+    background-image: url('../img/stripe.png');
+    background-color: #ffffff;
+}
 
 .payment_option_active {
     border: 3px solid #00FF00;

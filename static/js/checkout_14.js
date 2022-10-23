@@ -34,10 +34,13 @@ function createOrder() {
             ym(67968427,'reachGoal','order')
             switch (chosenPaymentType) {
                 case 'paypal':
-                    payPal(data.order_number)
+                    paymentForm(data.order_number, '/successOrder/', 'paypal')
                     break
                 case 'plisio':
                     window.location.replace(data.url)
+                    break
+                case 'stripe':
+                    paymentForm(data.order_number, '/stripe/', 'stripe')
                     break
                 default:
                     console.log('error')
@@ -107,21 +110,26 @@ function choosePaymentType() {
     paymentMessages[index].style.display = 'block'
 }
 
-function payPal(orderNumber) {
+function paymentForm(orderNumber, location, paymentType) {
     const form = document.createElement('form')
     const orderNumberInput = document.createElement('input')
     const paymentTypeInput = document.createElement('input')
+    const csrfMiddleWareTokenInput = document.createElement('input')
 
     form.style.display = 'none'
     form.method = 'POST'
-    form.action = '/successOrder/'
+    form.action = location
+
+    csrfMiddleWareTokenInput.name = 'csrfmiddlewaretoken'
+    csrfMiddleWareTokenInput.value = getCookie('csrftoken')
 
     orderNumberInput.name  = 'order_number'
     orderNumberInput.value = orderNumber
 
     paymentTypeInput.name = 'payment_type'
-    paymentTypeInput.value = 'paypal'
+    paymentTypeInput.value = paymentType
 
+    form.appendChild(csrfMiddleWareTokenInput)
     form.appendChild(orderNumberInput)
     form.appendChild(paymentTypeInput)
     document.body.appendChild(form)

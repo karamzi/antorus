@@ -25,6 +25,7 @@ from .services.dbServices.couponDbService import CouponDbService
 from .services.dbServices.prodcutDbService import ProductDbService
 from .services.dbServices.seoDbService import SeoDbService
 from .services.orderService import OrderService
+from .services.stripeService import StripeService
 from .utils.email import Email
 
 
@@ -324,7 +325,12 @@ def create_order(request):
         if request.POST['payment_type'] == 'paypal':
             return JsonResponse({
                 'success': True,
-                'order_number': order.pk + 1000
+                'order_number': order.get_order_number()
+            })
+        elif request.POST['payment_type'] == 'stripe':
+            return JsonResponse({
+                'success': True,
+                'order_number': order.get_order_number()
             })
         else:
             success_url = PlisioService(order=order, currency=currency).execute()
@@ -357,33 +363,6 @@ def check_coupon(request):
 
 
 @csrf_exempt
-def fondy_callback(request):
-    if request.method == 'POST':
-        response = json.dumps(request.POST, ensure_ascii=False)
-        order_id = int(request.POST['order_id']) - 1000
-        order = Order.objects.get(pk=order_id)
-        transaction, status = Transactions.objects.get_or_create(order_id=order_id)
-        transaction.order = order
-        transaction.service = 1
-        transaction.status = request.POST['order_status']
-        transaction.currency = request.POST['currency']
-        transaction.amount = int(request.POST['amount']) / 100
-        transaction.response = response
-        date_format = '%d.%m.%Y %H:%M:%S'
-        transaction.date = datetime.strptime(request.POST['order_time'], date_format) + timedelta(hours=1)
-        transaction.save()
-        if request.POST['order_status'] == 'approved':
-            Email().send_order(order, 'email/emails.html')
-            order.status = '2'
-        if request.POST['order_status'] == 'declined' or request.POST['order_status'] == 'expired':
-            order.status = '3'
-            Email().send_order(order, 'email/error.html')
-        order.save()
-        return HttpResponse(status=200)
-    return redirect(reverse('index'))
-
-
-@csrf_exempt
 def plisio_calback(request):
     if request.method == 'POST':
         LogRequest.log(request)
@@ -412,9 +391,7 @@ def plisio_calback(request):
 
 @csrf_exempt
 def success_order(request):
-    if request.method == 'POST':
-        LogRequest.log(request)
-        order_id = int(request.POST['order_number']) - 1000
+    def prepare_order(request, order_id):
         payment_type = request.POST.get('payment_type', None)
         try:
             order = Order.objects.get(pk=order_id)
@@ -431,4 +408,40 @@ def success_order(request):
             return response
         except ObjectDoesNotExist:
             return redirect(reverse('404'))
+
+    if request.method == 'GET':
+        LogRequest.log(request)
+        order_id = int(request.GET.get('order_number')) - 1000
+        return prepare_order(request, order_id)
+
+    if request.method == 'POST':
+        LogRequest.log(request)
+        order_id = int(request.POST['order_number']) - 1000
+        return prepare_order(request, order_id)
+
     return HttpResponse(status=200)
+
+
+def stripe(request):
+    if request.method == 'POST':
+        context = {
+            'order_number': request.POST['order_number']
+        }
+        return render(request, 'stripe.html', context)
+    return redirect(reverse('index'))
+
+
+def stripe_create_payment(request):
+    if request.method == 'POST':
+        # Create a PaymentIntent with the order amount and currency
+        currency = request.COOKIES.get('currency', 'us')
+        currency = 'usd' if currency == 'us' else 'eur'
+        data = json.loads(request.body)
+        order_number = int(data['order_number']) - 1000
+        order = Order.objects.get(pk=order_number)
+        intent = StripeService(order, currency).execute()
+        return JsonResponse({
+            'success': True,
+            'clientSecret': intent['client_secret']
+        })
+    return redirect(reverse('index'))
