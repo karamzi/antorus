@@ -106,7 +106,6 @@ form input.input_error {
 
 .payment_options {
     display: flex;
-    height: 40px;
     margin-bottom: 10px;
 }
 
@@ -114,10 +113,11 @@ form input.input_error {
     background-repeat: no-repeat;
     background-position: center;
     width: 80px;
+    height: 40px;
     margin-right: 10px;
 }
 
-.payment_options .payment_option:nth-child(1) {
+.payment_options:nth-child(2) > .payment_option:nth-child(1) {
     background-image: url('../img/paypal.png');
     background-color: #f4f4f4;
 }
@@ -142,9 +142,12 @@ form input.input_error {
     background-color: #ffffff;
 }
 
-.payment_options .payment_option:nth-child(6) {
-    background-image: url('../img/stripe.png');
-    background-color: #ffffff;
+.payment_options:nth-child(1) > .payment_option:nth-child(1) {
+    width: 160px;
+    height: 80px;
+    background-image: url('../img/stripe.webp');
+    background-size: contain;
+    background-color: #535353;
 }
 
 .payment_option_active {

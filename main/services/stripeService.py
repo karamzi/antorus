@@ -19,6 +19,9 @@ class StripeService:
             automatic_payment_methods={
                 'enabled': True,
             },
-            metadata={'order_number': self.order.get_order_number()}
+            metadata={
+                'order_number': self.order.get_order_number(),
+                'payment_type': 'stripe'
+            }
         )
         return intent

@@ -32,14 +32,15 @@
                         </div>
                     </form>
                     <div class="payment_section">
-                        <p>Choose payment option:</p>
+                        <div class="payment_options">
+                            <div data-index="5" data-payment-type="stripe" class="payment_option"></div>
+                        </div>
                         <div class="payment_options">
                             <div data-index="0" data-payment-type="paypal" class="payment_option"></div>
                             <div data-index="1" data-payment-type="plisio" class="payment_option"></div>
                             <div data-index="2" data-payment-type="plisio" class="payment_option"></div>
                             <div data-index="3" data-payment-type="plisio" class="payment_option"></div>
                             <div data-index="4" data-payment-type="plisio" class="payment_option"></div>
-                            <div data-index="5" data-payment-type="stripe" class="payment_option"></div>
                         </div>
                         <div class="payment_information">
                             <p style="display: none" class="success">
@@ -67,6 +68,10 @@
                                 Ethereum<br>
                                 Minimum payment via this method 0.04 ETH.
                                 Or contact our operator for direct payment to our ETH crypto wallet.
+                            </p>
+                            <p style="display: none" class="success">
+                                Stripe<br>
+                                Simple and convenient payment via bank/credit card of any country. We pay a fee.
                             </p>
                         </div>
                     </div>

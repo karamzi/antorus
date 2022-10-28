@@ -13,6 +13,5 @@ static/admin/
 static/ckeditor/
 node_modules/
 package-lock.json
-package.json
-gulpfile.js
 logs/*
+database/*

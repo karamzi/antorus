@@ -379,7 +379,6 @@ def plisio_calback(request):
         transaction.date = datetime.now() + timedelta(hours=1)
         transaction.save()
         if request.POST['status'] == 'completed':
-            Email().send_order(order, 'email/emails.html')
             order.status = '2'
         if request.POST['status'] in ['error', 'expired']:
             order.status = '3'
@@ -392,10 +391,15 @@ def plisio_calback(request):
 @csrf_exempt
 def success_order(request):
     def prepare_order(request, order_id):
-        payment_type = request.POST.get('payment_type', None)
+        order_status = '2'
+        payment_type = None
+        if request.POST.get('payment_type') == 'paypal':
+            order_status = '1'
+            payment_type = 'paypal'
         try:
             order = Order.objects.get(pk=order_id)
-            order.status = '2'
+            Email().send_order(order, 'email/emails.html')
+            order.status = order_status
             order.save()
             context = {
                 'order': order,
@@ -412,8 +416,6 @@ def success_order(request):
     if request.method == 'GET':
         LogRequest.log(request)
         order_id = int(request.GET.get('order_number')) - 1000
-        order = Order.objects.get(pk=order_id)
-        Email().send_order(order, 'email/emails.html')
         return prepare_order(request, order_id)
 
     if request.method == 'POST':
