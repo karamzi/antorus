@@ -39,9 +39,6 @@ function createOrder() {
                 case 'plisio':
                     window.location.replace(data.url)
                     break
-                case 'stripe':
-                    paymentForm(data.order_number, '/stripe/', 'stripe')
-                    break
                 default:
                     console.log('error')
             }

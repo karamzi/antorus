@@ -25,7 +25,6 @@ from .services.dbServices.couponDbService import CouponDbService
 from .services.dbServices.prodcutDbService import ProductDbService
 from .services.dbServices.seoDbService import SeoDbService
 from .services.orderService import OrderService
-from .services.stripeService import StripeService
 from .utils.email import Email
 
 
@@ -327,11 +326,6 @@ def create_order(request):
                 'success': True,
                 'order_number': order.get_order_number()
             })
-        elif request.POST['payment_type'] == 'stripe':
-            return JsonResponse({
-                'success': True,
-                'order_number': order.get_order_number()
-            })
         else:
             success_url = PlisioService(order=order, currency=currency).execute()
             return JsonResponse({
@@ -424,28 +418,3 @@ def success_order(request):
         return prepare_order(request, order_id)
 
     return HttpResponse(status=200)
-
-
-def stripe(request):
-    if request.method == 'POST':
-        context = {
-            'order_number': request.POST['order_number']
-        }
-        return render(request, 'stripe.html', context)
-    return redirect(reverse('index'))
-
-
-def stripe_create_payment(request):
-    if request.method == 'POST':
-        # Create a PaymentIntent with the order amount and currency
-        currency = request.COOKIES.get('currency', 'us')
-        currency = 'usd' if currency == 'us' else 'eur'
-        data = json.loads(request.body)
-        order_number = int(data['order_number']) - 1000
-        order = Order.objects.get(pk=order_number)
-        intent = StripeService(order, currency).execute()
-        return JsonResponse({
-            'success': True,
-            'clientSecret': intent['client_secret']
-        })
-    return redirect(reverse('index'))
