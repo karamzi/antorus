@@ -30,8 +30,6 @@ urlpatterns = [
     path('result/<str:search>/', views.search_result, name='result'),
     path('pisioCallback/', views.plisio_calback, name='plisio'),
     path('successOrder/', views.success_order, name='success_order'),
-    path('stripe/', views.stripe, name='stripe'),
-    path('stripe_create_payment/', views.stripe_create_payment, name='stripe_payment'),
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
     path('sitemap.xml', TemplateView.as_view(template_name="sitemap.xml", content_type="text/xml")),
     path('404/', TemplateView.as_view(template_name="404.html"), name='404'),
