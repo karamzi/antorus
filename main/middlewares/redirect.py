@@ -10,7 +10,7 @@ class RedirectMiddleware:
         path = request.path
         exists = RedirectModels.objects.filter(redirect_from=path).exists()
         if exists:
-            redirect_url = RedirectModels.objects.filter(redirect_from=path)
+            redirect_url = RedirectModels.objects.get(redirect_from=path)
             return redirect(redirect_url.redirect_to, permanent=True)
         else:
             response = self.get_response(request)
