@@ -4,6 +4,7 @@ from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('rus/', views.index_rus, name='index_rus'),
     path('product/<slug:slug>/', views.product, name='product'),
     path('category/<slug:category>/<slug:subcategory>/', views.subcategory, name='subcategory'),
     path('category/<slug:slug>/', views.category, name='category'),

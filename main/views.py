@@ -418,3 +418,7 @@ def success_order(request):
         return prepare_order(request, order_id)
 
     return HttpResponse(status=200)
+
+
+def index_rus(request):
+    return render(request, 'index_rus.html')

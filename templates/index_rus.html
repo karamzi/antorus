@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'style/bundle1669618102260.css' %}"/>
+    <style>
+        body {
+            background-image: none;
+            display: block;
+        }
+    </style>
+    <title>АНТОРУС</title>
+</head>
+<body>
+<div class="top_bar">
+    <div class="container">
+        <div class="head">
+            {% if user.is_superuser or user.is_staff %}
+                <a class="admin" href="/azarkes/">admin</a>
+            {% endif %}
+            <div class="contact_support">
+                <p id="contact_support">Поддержка</p>
+            </div>
+            {% if user.is_authenticated %}
+                <div class="account">
+                    <p>{{ user.username }}</p>
+                    <div class="account_accordion">
+                        <a href="{% url 'orders' %}">Orders</a>
+                        <a href="{% url 'account_details' %}">Account details</a>
+                        <a href="{% url 'logout' %}">Logout</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="login">
+                    <p>Войти или создать аккаунт</p>
+                    <div class="login_accordion">
+                        <form action="{% url 'login' %}" method="post">
+                            {% csrf_token %}
+                            <div>
+                                <label class="required">Username or email address</label>
+                                <input name="username" type="text">
+                            </div>
+                            <div>
+                                <label class="required">Password</label>
+                                <input name="password" type="password">
+                            </div>
+                            <div class="lost_password_link">
+                                <a href="{% url 'reset_password' %}">Lost your password?</a>
+                            </div>
+                            <button type="submit">LOG IN</button>
+                        </form>
+                        <div class="new_client">
+                            <p>New client <a href="{% url 'my_account' %}">Register?</a></p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<header>
+    <div class="container">
+        <div class="header">
+            <div class="burger_button">
+                <span></span>
+            </div>
+            <div class="search_bar">
+                <input autocomplete="off" value="" id="search" placeholder="Введите запрос"
+                       type="text">
+            </div>
+            <div class="logo">
+                <a href="{% url 'index' %}"><img src="{% static 'img/logo-2.png' %}"
+                                                 alt="World of Warcraft Boosting Services"></a>
+            </div>
+            <div class="cart">
+                <a href="{% url 'cart' %}"><img src="{% static 'img/cart.png' %}" alt="cart"></a>
+                <div class="cart_count"><p id="cart_count">{{ cart.products|length }}</p></div>
+            </div>
+            <div class="search_accordion"></div>
+        </div>
+    </div>
+</header>
+
+<div class="products_sections">
+    <div class="container">
+        <div class="products_content">
+            <div id="nav_bar" class="nav_bar">
+                <p>КАТЕГОРИИ</p>
+                <nav>
+                    <div class="nav_link">
+                        <a href="#">РЕЙДЫ</a>
+                    </div>
+                    <div class="nav_link">
+                        <a href="#">ПОДЗЕМЕЛЬЯ МИФИК БУСТ</a>
+                    </div>
+                    <div class="nav_link">
+                        <a href="#">ПВП БУСТ</a>
+                    </div>
+                    <div class="nav_link">
+                        <a href="#">ПРОКАЧКА ПЕРСОНАЖА</a>
+                    </div>
+                    <div class="nav_link">
+                        <a href="#">РЕПУТАЦИЯ</a>
+                    </div>
+                    <div class="nav_link">
+                        <a href="#">ДОСТИЖЕНИЯ</a>
+                    </div>
+                    <div class="nav_link">
+                        <a href="#">ВОВ КЛАСИК</a>
+                    </div>
+                    <div class="nav_link">
+                        <a href="#">ВОВ ВОТЛК</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="products_block">
+                <h2>НАШИ ЛУЧШИЕ ПРЕДЛОЖЕНИЯ</h2>
+                <div class="products">
+                    <div class="product_item">
+                        <a href="#">
+                            <img src="https://antorus.com/media/images/dragonflight-power-leveling-60-70_1668966965.653203.png"
+                                 alt="">
+                        </a>
+                        <a href="#" class="name">60-70 ПРОКАЧКА</a>
+                        <h5>ВЫ ПОЛУЧИТЕ 70 УРОВЕНЬ</h5>
+                        <div class="item_footer">
+                            <div class="item_price">
+                                <p>от</p>
+                                <p>1200 ₽</p>
+                            </div>
+                            <a href="#" class="buy_button">КУПИТЬ СЕЙЧАС</a>
+                        </div>
+                    </div>
+                    <div class="product_item">
+                        <a href="#">
+                            <img src="https://antorus.com/media/images/vault-of-the-incarnates-normal-run_1668440095.371844.png"
+                                 alt="">
+                        </a>
+                        <a href="#" class="name">НОРМАЛ РЕЙД БУСТ</a>
+                        <h5>8/8 БОССОВ УБИТО</h5>
+                        <div class="item_footer">
+                            <div class="item_price">
+                                <p>от</p>
+                                <p>3000 ₽</p>
+                            </div>
+                            <a href="#" class="buy_button">КУПИТЬ СЕЙЧАС</a>
+                        </div>
+                    </div>
+                    <div class="product_item">
+                        <a href="#">
+                            <img src="https://antorus.com/media/images/vault-of-the-incarnates-heroic-run_1668440036.014711.png"
+                                 alt="">
+                        </a>
+                        <a href="#" class="name">ГЕРОИК РЕЙД БУСТ</a>
+                        <h5>8/8 БОССОВ УБИТО</h5>
+                        <div class="item_footer">
+                            <div class="item_price">
+                                <p>от</p>
+                                <p>7000 ₽</p>
+                            </div>
+                            <a href="#" class="buy_button">КУПИТЬ СЕЙЧАС</a>
+                        </div>
+                    </div>
+                    <div class="product_item">
+                        <a href="#">
+                            <img src="https://antorus.com/media/images/raszageth-kill_1668966858.507871.png" alt="">
+                        </a>
+                        <a href="#" class="name">МИФИК РЕЙД БУСТ</a>
+                        <h5>8/8 БОССОВ УБИТО</h5>
+                        <div class="item_footer">
+                            <div class="item_price">
+                                <p>от</p>
+                                <p>3000 ₽</p>
+                            </div>
+                            <a href="#" class="buy_button">КУПИТЬ СЕЙЧАС</a>
+                        </div>
+                    </div>
+                    <div class="product_item">
+                        <a href="#">
+                            <img src="https://antorus.com/media/images/character-leveling-1-60_1668966901.721888.png"
+                                 alt="">
+                        </a>
+                        <a href="#" class="name">УЛУЧШЕНИЕ УРОВНЯ ПРЕДМЕТОВ</a>
+                        <h5>ВЫ ПОЛУЧИТЕ САМЫЕ АКТУАЛЬНЫЕ ПРЕДМЕТЫ ДЛЯ ВАШЕГО ПЕРСОНАЖА</h5>
+                        <div class="item_footer">
+                            <div class="item_price">
+                                <p>от</p>
+                                <p>1000 ₽</p>
+                            </div>
+                            <a href="#" class="buy_button">КУПИТЬ СЕЙЧАС</a>
+                        </div>
+                    </div>
+                    <div class="product_item">
+                        <a href="#">
+                            <img src="https://antorus.com/media/images/gear-boost_1669458223.946564.png" alt="">
+                        </a>
+                        <a href="#" class="name">1-70 УРОВЕНЬ БУСТ</a>
+                        <h5>БЫСТРАЯ ПРОКАЧКА С 1 ПО 70 УРОВЕНЬ</h5>
+                        <div class="item_footer">
+                            <div class="item_price">
+                                <p>от</p>
+                                <p>2000 ₽</p>
+                            </div>
+                            <a href="#" class="buy_button">КУПИТЬ СЕЙЧАС</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="show_all">
+                    <a href="">ПОКАЗАТЬ ВСЕ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="copywriting_section">
+    <div class="container">
+        <div class="text_block">
+            <div class="text">
+                <p><img style="padding: 10px 10px 10px 0; float: left" src="{% static 'img/boost-wow-1.jpg' %}"
+                        alt="boost-wow">Уже более шестнадцати лет игроки посвящают свое свободное время миру WoW. Каждый
+                    из них стремится стать героем этой игры, чтобы войти в историю как победитель. Для начала вам нужно
+                    выбрать фракцию, играть в рядах Орды или Альянса. Вне зависимости от статуса игрок должен
+                    ознакомиться с прокачкой, экипировкой, репутацией. Есть также такие понятия, как фарм золота, честь
+                    и репутация. Самостоятельно прокачивать персонажа придется долго. Неудачи будут преследовать вас, и
+                    вы можете сдаться. Но чтобы получить удовольствие от игры, лучше воспользоваться помощью нашего
+                    сервиса.</p>
+                <p>Отметим, что прокачка — самая востребованная услуга среди игроков. Многие хотят играть разными
+                    классами, но для этого требуется много свободного времени. Этот факт может их расстроить и отбить
+                    охоту играть. Фермерскую технику часто заказывают через boost wow. Это потому, что лучшие предметы
+                    добываются в режимах эпохальных и рейдовых подземелий. Если в вашей команде нет опытных игроков,
+                    получить их будет очень сложно. Многие участники просто хотят получать удовольствие от сражений, без
+                    проблем получить снаряжение в коллекцию. Вот для чего придуман варкрафт буст.</p>
+            </div>
+        </div>
+        <div class="text_block">
+            <div class="text">
+                <h4>ПОЧЕМУ ВЫ ДОЛЖНЫ ВЫБРАТЬ НАС</h4>
+                <p><img style="padding: 10px 0 10px 10px; float: right" src="{% static 'img/boost-wow-2.jpg' %}"
+                        alt="boost-wow">
+                    Мы профессионалы
+                    сервис, соединяющий игроков и бустеров World of Warcraft. Наша задача сделать сотрудничество
+                    удобно и безопасно. Услуги предоставляются по очень разумной цене. Сервис Wow Boosting будет
+                    поможет вам определить количество предметов в вашей сумке. При заказе услуг у нас клиент
+                    может выбрать для себя индивидуальный бустерный пакет. Кстати, мы разработали
+                    понятный интерфейс, облегчающий поиск необходимого буста World of Warcraft.
+                </p>
+                <p>Итак, если у вас все еще есть вопрос, стоит ли прокачивать персонажа или нет, смотрите
+                    на преимуществах. Изначально вам предстоит много времени уделять фарму. Лишь немногие люди
+                    способны выполнять рутинную работу, приносящую удовольствие. Лучше браться за более сложные задачи
+                    так скоро, как возможно. Вместо этого игроки делают то же самое, чтобы получить каких-то маунтов,
+                    питомцев, достижения.</p>
+                <p>Просто подумайте о том, сколько часов вы потратили на сельское хозяйство. Наверное, вам это ужасно не
+                    понравилось. Что
+                    Вот почему мы создали команду, в которой профессионалы могут избавить вас от рутины.</p>
+                <p>Учитывая лучшую часть игры, будут рейды. К сожалению, вам придется встретиться
+                    строгие требования, чтобы играть там. Рейдер должен иметь сложное снаряжение и играть на
+                    строгий график. Большой проблемой для игроков является необходимость выполнять задания под
+                    давлением,
+                    тратить огромное количество времени. Получается, что для хорошей игры нужно ставить все.
+                    Что надо сделать? Вам действительно нужно выбирать между виртуальным и реальным миром?</p>
+                <p>Наша компания создана для помощи геймерам. С нами они будут чувствовать себя неотъемлемой частью
+                    мощное сообщество.</p>
+            </div>
+        </div>
+        <div class="text_block">
+            <div class="text">
+                <h4>ДЛЯ КОГО ПРЕДНАЗНАЧЕНА УСЛУГА?</h4>
+                <p><img style="padding: 10px 10px 10px 0; float: left" src="{% static 'img/boost-wow-3.jpg' %}"
+                        alt="boost-wow">Мы предлагаем помощь не только новичкам, но и игрокам,
+                    был
+                    в WoW какое-то время. В геймплее много тонкостей, которые сразу не угадаешь.
+                    обнаруженный. Прокачка вашего героя займет много времени.</p>
+                <p>Если вы не хотите тратить время на скучные квесты, закажите услугу прокачки персонажа в
+                    нас.</p>
+                <p>Если вы новый игрок, вам также понадобится наша помощь. Потребуется много сил и времени, чтобы
+                    снова совершайте героические рейды. В чем смысл принимать ЛФР, если можно пройти через
+                    совершить рейд в сложнейшем режиме и получить лучшее снаряжение? Если вы решили сражаться с
+                    последним
+                    босса в эпохальном режиме, мы поможем вам получить престижное достижение «На кромке лезвия».</p>
+                <p>Команда профессиональных игроков готова помочь вам в любом рейде. Стоимость услуг зависит
+                    на выбранный вами вариант.</p>
+            </div>
+        </div>
+        <div class="text_block">
+            <div class="text">
+                <h4>ЧТО ВЫ МОЖЕТЕ ПОЛУЧИТЬ?</h4>
+                <p>Также у нас вы можете заказать прокачку в рейдах. Для тех, кто хочет повысить свой рейтинг в
+                    арене и выиграть много игр, сотрудничество с нашей компанией будет полезным. Ясно однако,
+                    что найти опытных и надежных игроков довольно сложно. Лучше
+                    закажите услугу у нас, чтобы избежать любого риска и получить максимум хороших возможностей игры.
+                    Сотрудничество будет приятным и выгодным. Вы будете знать, что профессионалы поддерживают
+                    вы и они можете принять вызов.</p>
+                <p style="font-weight: 900;">
+                    <img style="padding: 10px 0 10px 10px; float: right"
+                         src="{% static 'img/boost-wow-4.jpg' %}" alt="boost-wow">Услуга обновления PvP включает в себя
+                    тренировки на арене, рейтинги, победы и
+                    монтирует.</p>
+                <p>Если вам нужно прокачать подземелье, приобретите это предложение для соигроков. Вы сможете получить
+                    много снаряжения, маунтов и прохождения подземелий. Так вы возьмете достижение Key Master или
+                    Слава Героя.</p>
+                <p style="font-weight: 900;">Мы также поможем вам достичь, повысить и получить:</p>
+                <ul>
+                    <li>устаревшие рейдовые бусты;</li>
+                    <li>прокачка;</li>
+                </ul>
+                <p>В последнем случае вы можете рассчитывать на повышение мощности до максимального уровня, экипируя
+                    своего персонажа.
+                    и т. д. буст вау</p>
+            </div>
+        </div>
+        <div class="text_block">
+            <div class="text">
+                <h4>ПРЕЕМУЩЕСТВА</h4>
+                <p><img style="padding: 10px 10px 10px 0; float: left" src="{% static 'img/boost-wow-5.jpg' %}"
+                        alt="boost-wow">Чтобы играть в свое удовольствие, нужно добывать оружие, навыки, предметы. Как
+                    может новичок
+                    возьми все? Ни за что! Только потратив много времени, набравшись опыта на своих испытаниях и
+                    ошибки, награды присуждаются. Мы понимаем, что не все хотят так играть. Это
+                    хорошее пожелание, которое мы поддерживаем.</p>
+                <p>Предлагаем воспользоваться услугами компании, в которой работают профессионалы. Какая бы задача ни
+                    стояла перед клиентом
+                    наборы, все сделано на высшем уровне. Ознакомьтесь со списком наших предложений. Ты увидишь
+                    что вы можете заказать сразу пакет услуг или несколько выборочных предложений. Цена
+                    зависит от сложности и количества заданий. Мы установили адекватную стоимость нашей работы.
+                    Такое взаимодействие с игроками выгодно обеим сторонам.</p>
+                <p>Убедиться в нашей честности несложно. Ознакомьтесь с отзывами бывших клиентов на сайте.
+                    А некоторые клиенты пользуются нашей помощью систематически.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="about_section">
+    <div class="container">
+        <h2>ЛУЧШИЙ БУСТ В АЗЕРОТЕ</h2>
+        <div class="about_content">
+            <div class="about_item">
+                <img src="{% static 'img/support.png' %}" alt="">
+                <h3>ПОДДЕРЖКА</h3>
+                <p>Мы онлайн 24/7</p>
+            </div>
+            <div class="about_item">
+                <img src="{% static 'img/discount.png' %}" alt="">
+                <h3>СКИДКИ</h3>
+                <p>Мы всегда стараемся предоставить самую выгодную цену для наших клиентов</p>
+            </div>
+            <div class="about_item">
+                <img src="{% static 'img/secure.png' %}" alt="">
+                <h3>БЕЗОПАСНОСТЬ</h3>
+                <p>Мы гарантируем безопасность ваших данных и вашего аккаунта</p>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="container">
+        <div class="footer_content">
+            <div class="footer_left">
+                <a href="#">
+                    <img src="{% static 'img/logo-2.png' %}" alt="World of Warcraft Boosting Services">
+                </a>
+                <p>
+                    Все упомянутые здесь торговые марки являются зарегистрированными и являются собственностью<br>соответствующие
+                    компании.
+                    ©2022
+                </p>
+            </div>
+            <div class="footer_right">
+                <div class="footer_most_popular">
+                    <p class="footer_section_title">САМЫЕ ПОПУЛЯРНЫЕ</p>
+                    <a href="#">60-70 ПРОКАЧКА</a>
+                    <a href="#">НОРМАЛ РЕЙД БУСТ</a>
+                    <a href="#">ГЕРОИК РЕЙД БУСТ</a>
+                    <a href="#">МИФИК РЕЙД БУСТ</a>
+                    <a href="#">1-70 УРОВЕНЬ БУСТ</a>
+                </div>
+                <div class="footer_information">
+                    <p class="footer_section_title">Информация</p>
+                    <a href="#">Частые вопросы</a>
+                    <a href="#">Условия обслуживания</a>
+                    <a href="#">Политика конфиденциальности</a>
+                </div>
+                <div class="footer_contacts">
+                    <p class="footer_section_title">КОНТАКТЫ</p>
+                    <a href="#">Нажмите что бы связаться с нами</a>
+                    <div class="footer_icons">
+                        <div class="footer_icon">
+                            <a href="https://discord.gg/7vCa6Wr">
+                                <img src="{% static 'img/footer-discord.png' %}" alt="">
+                                <div>discord</div>
+                            </a>
+                        </div>
+                        <div class="footer_icon">
+                            <a href="skype:live:AntorusShop?chat">
+                                <img src="{% static 'img/footer-skype.png' %}" alt="">
+                                <div>skype</div>
+                            </a>
+                        </div>
+                        <div class="footer_icon">
+                            <a href="mailto:shop@antorus.com">
+                                <img src="{% static 'img/email.png' %}" alt="">
+                                <div>email</div>
+                            </a>
+                        </div>
+                        <div class="footer_icon">
+                            <a href="https://t.me/AntorusShop">
+                                <img src="{% static 'img/footer-telegram.png' %}" alt="">
+                                <div>telegram</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer_payments">
+                    <div class="footer_payment_row">
+                        <div class="footer_payment_row_item">
+                            <img src="{% static 'img/visa.png' %}" alt="">
+                        </div>
+                        <div class="footer_payment_row_item">
+                            <img src="{% static 'img/mastercard.png' %}" alt="">
+                        </div>
+                        <div class="footer_payment_row_item">
+                            <img src="{% static 'img/paypal.png' %}" alt="">
+                        </div>
+                        <div class="footer_payment_row_item">
+                            <img src="{% static 'img/american.png' %}" alt="">
+                        </div>
+                    </div>
+                    <div class="footer_payment_row">
+                        <div class="footer_payment_row_item">
+                            <img src="{% static 'img/cript_1.png' %}" alt="">
+                        </div>
+                        <div class="footer_payment_row_item">
+                            <img src="{% static 'img/cript_2.png' %}" alt="" style="background: #f7931a;">
+                        </div>
+                        <div class="footer_payment_row_item">
+                            <img src="{% static 'img/cript_3.png' %}" alt="">
+                        </div>
+                        <div class="footer_payment_row_item cript_4">
+                            <img src="{% static 'img/cript_4.png' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="{% static 'js/main_10.js' %}"></script>
+</body>
+</html>
