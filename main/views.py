@@ -396,6 +396,7 @@ def plisio_callback(request):
 def bepaid_callback(request):
     if request.method == 'POST':
         LogRequest.log_request(request)
+        print(request.body)
         response = json.dumps(request.POST, ensure_ascii=False)
         if request.POST.get('transaction', False):
             order_id = int(request.POST['transaction']['tracking_id']) - 1000
