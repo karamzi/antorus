@@ -395,6 +395,9 @@ def plisio_callback(request):
 @csrf_exempt
 def bepaid_callback(request):
     if request.method == 'POST':
+        print('----------------------------REQUSET-------------------------')
+        print(request.body)
+        print('----------------------------REQUSET-------------------------')
         LogRequest.log_request(request)
         response = json.dumps(request.POST, ensure_ascii=False)
         if request.POST.get('transaction', False):
