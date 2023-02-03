@@ -384,6 +384,8 @@ def plisio_callback(request):
         transaction.save()
         if request.POST['status'] == 'completed':
             order.status = '2'
+            Email().send_order(order, 'email/emails.html')
+            order.is_email_sent = True
         if request.POST['status'] in ['error', 'expired']:
             order.status = '3'
             Email().send_order(order, 'email/error.html')
@@ -405,12 +407,14 @@ def bepaid_callback(request):
             transaction.service = 3
             transaction.status = response['transaction']['status']
             transaction.currency = response['transaction']['currency']
-            transaction.amount = response['transaction']['amount']
+            transaction.amount = int(response['transaction']['amount']) / 100
             transaction.response = json.dumps(response, ensure_ascii=False)
             transaction.date = datetime.now() + timedelta(hours=1)
             transaction.save()
             if response['transaction']['status'] == 'successful':
                 order.status = '2'
+                Email().send_order(order, 'email/emails.html')
+                order.is_email_sent = True
         else:
             order_id = int(response['order']['tracking_id']) - 1000
             order = Order.objects.get(pk=order_id)
@@ -419,13 +423,14 @@ def bepaid_callback(request):
             transaction.service = 3
             transaction.status = response['status']
             transaction.currency = response['order']['currency']
-            transaction.amount = response['order']['amount']
+            transaction.amount = int(response['order']['amount']) / 100
             transaction.response = json.dumps(response, ensure_ascii=False)
             transaction.date = datetime.now() + timedelta(hours=1)
             transaction.save()
             if response['status'] == 'error':
                 order.status = '3'
                 Email().send_order(order, 'email/error.html')
+                order.is_email_sent = True
         order.save()
         return HttpResponse(status=200)
     return redirect(reverse('index'))
