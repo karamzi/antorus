@@ -415,6 +415,10 @@ def bepaid_callback(request):
                 order.status = '2'
                 Email().send_order(order, 'email/emails.html')
                 order.is_email_sent = True
+            elif response['transaction']['status'] == 'failed':
+                order.status = '3'
+                Email().send_order(order, 'email/error.html')
+                order.is_email_sent = True
         else:
             order_id = int(response['order']['tracking_id']) - 1000
             order = Order.objects.get(pk=order_id)
