@@ -395,35 +395,35 @@ def plisio_callback(request):
 @csrf_exempt
 def bepaid_callback(request):
     if request.method == 'POST':
-        response = json.dumps(request.body, ensure_ascii=False)
-        LogRequest.log_request(request, message=response)
-        if request.body.get('transaction', False):
-            order_id = int(request.body['transaction']['tracking_id']) - 1000
+        response = json.loads(request.body.decode("utf-8"))
+        LogRequest.log_request(request, body=response)
+        if response.get('transaction', False):
+            order_id = int(response['transaction']['tracking_id']) - 1000
             order = Order.objects.get(pk=order_id)
             transaction, _ = Transactions.objects.get_or_create(order_id=order_id)
             transaction.order = order
             transaction.service = 3
-            transaction.status = request.body['transaction']['status']
-            transaction.currency = request.body['transaction']['currency']
-            transaction.amount = request.body['transaction']['amount']
-            transaction.response = response
+            transaction.status = response['transaction']['status']
+            transaction.currency = response['transaction']['currency']
+            transaction.amount = response['transaction']['amount']
+            transaction.response = json.dumps(response, ensure_ascii=False)
             transaction.date = datetime.now() + timedelta(hours=1)
             transaction.save()
-            if request.body['transaction']['status'] == 'successful':
+            if response['transaction']['status'] == 'successful':
                 order.status = '2'
         else:
-            order_id = int(request.body['order']['tracking_id']) - 1000
+            order_id = int(response['order']['tracking_id']) - 1000
             order = Order.objects.get(pk=order_id)
             transaction, _ = Transactions.objects.get_or_create(order_id=order_id)
             transaction.order = order
             transaction.service = 3
-            transaction.status = request.body['status']
-            transaction.currency = request.body['order']['currency']
-            transaction.amount = request.body['order']['amount']
-            transaction.response = response
+            transaction.status = response['status']
+            transaction.currency = response['order']['currency']
+            transaction.amount = response['order']['amount']
+            transaction.response = json.dumps(response, ensure_ascii=False)
             transaction.date = datetime.now() + timedelta(hours=1)
             transaction.save()
-            if request.body['status'] == 'error':
+            if response['status'] == 'error':
                 order.status = '3'
                 Email().send_order(order, 'email/error.html')
         order.save()

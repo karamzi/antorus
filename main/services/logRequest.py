@@ -5,12 +5,12 @@ import json
 class LogRequest:
 
     @staticmethod
-    def log_request(request, message=None):
+    def log_request(request, body=None):
         RequestLogsModel.objects.create(
             url=request.path,
-            request_get_data=json.dumps(request.GET),
-            request_post_data=json.dumps(request.POST),
-            message=message
+            request_get_data=json.dumps(request.GET, ensure_ascii=False),
+            request_post_data=json.dumps(request.POST, ensure_ascii=False),
+            message=json.dumps(body, ensure_ascii=False)
         )
 
     @staticmethod
