@@ -10,7 +10,7 @@ class LogRequest:
             url=request.path,
             request_get_data=json.dumps(request.GET),
             request_post_data=json.dumps(request.POST),
-            message=message
+            message=json.dumps(request.body)
         )
 
     @staticmethod
