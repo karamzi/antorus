@@ -39,9 +39,14 @@ function createOrder() {
                 case 'plisio':
                     window.location.replace(data.url)
                     break
+                case 'bepaid':
+                    window.location.replace(data.url)
+                    break
                 default:
                     console.log('error')
             }
+        } else if (response.status === 500) {
+            console.log('Error 500')
         }
         button.removeAttribute('disabled')
     })

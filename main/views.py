@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 
 from .errors.apiErrors import CommonApiError
 from main.services.plisioService import PlisioService
+from main.services.bepaidService import BepaidService
 from .models import Order, BestOffersToday, AuthToken, Transactions, SpecialOffers, EditablePages
 from .forms import RegisterUserForm
 from django.db.models import Q, Prefetch
@@ -317,7 +318,7 @@ def cart_service(request):
 
 def create_order(request):
     if request.method == 'POST':
-        LogRequest.log(request)
+        LogRequest.log_request(request)
         currency = 'EUR' if request.POST.get('currency', 'us') == 'eu' else 'USD'
         # creating order
         order = OrderService(request).create_order()
@@ -326,12 +327,21 @@ def create_order(request):
                 'success': True,
                 'order_number': order.get_order_number()
             })
-        else:
+        elif request.POST['payment_type'] == 'plisio':
             success_url = PlisioService(order=order, currency=currency).execute()
             return JsonResponse({
                 'success': True,
                 'url': success_url
             })
+        elif request.POST['payment_type'] == 'bepaid':
+            success_url, success_status = BepaidService(order=order, currency=currency).execute()
+            if success_status:
+                return JsonResponse({
+                    'success': success_status,
+                    'url': success_url
+                })
+            else:
+                return HttpResponse(status=500)
     return redirect(reverse('index'))
 
 
@@ -357,13 +367,13 @@ def check_coupon(request):
 
 
 @csrf_exempt
-def plisio_calback(request):
+def plisio_callback(request):
     if request.method == 'POST':
-        LogRequest.log(request)
+        LogRequest.log_request(request)
         response = json.dumps(request.POST, ensure_ascii=False)
         order_id = int(request.POST['order_number']) - 1000
         order = Order.objects.get(pk=order_id)
-        transaction, status = Transactions.objects.get_or_create(order_id=order_id)
+        transaction, _ = Transactions.objects.get_or_create(order_id=order_id)
         transaction.order = order
         transaction.service = 2
         transaction.status = request.POST['status']
@@ -383,37 +393,78 @@ def plisio_calback(request):
 
 
 @csrf_exempt
+def bepaid_callback(request):
+    if request.method == 'POST':
+        LogRequest.log_request(request)
+        response = json.dumps(request.POST, ensure_ascii=False)
+        if request.POST.get('transaction', False):
+            order_id = int(request.POST['transaction']['tracking_id']) - 1000
+            order = Order.objects.get(pk=order_id)
+            transaction, _ = Transactions.objects.get_or_create(order_id=order_id)
+            transaction.order = order
+            transaction.service = 3
+            transaction.status = request.POST['transaction']['status']
+            transaction.currency = request.POST['transaction']['currency']
+            transaction.amount = request.POST['transaction']['amount']
+            transaction.response = response
+            transaction.date = datetime.now() + timedelta(hours=1)
+            transaction.save()
+            if request.POST['transaction']['status'] == 'successful':
+                order.status = '2'
+        else:
+            order_id = int(request.POST['order']['tracking_id']) - 1000
+            order = Order.objects.get(pk=order_id)
+            transaction, _ = Transactions.objects.get_or_create(order_id=order_id)
+            transaction.order = order
+            transaction.service = 3
+            transaction.status = request.POST['status']
+            transaction.currency = request.POST['order']['currency']
+            transaction.amount = request.POST['order']['amount']
+            transaction.response = response
+            transaction.date = datetime.now() + timedelta(hours=1)
+            transaction.save()
+            if request.POST['status'] == 'error':
+                order.status = '3'
+                Email().send_order(order, 'email/error.html')
+        order.save()
+        return HttpResponse(status=200)
+    return redirect(reverse('index'))
+
+
+@csrf_exempt
 def success_order(request):
     def prepare_order(request, order_id):
-        order_status = '2'
-        payment_type = None
-        if request.POST.get('payment_type') == 'paypal':
-            order_status = '1'
-            payment_type = 'paypal'
         try:
             order = Order.objects.get(pk=order_id)
-            Email().send_order(order, 'email/emails.html')
-            order.status = order_status
-            order.save()
-            context = {
-                'order': order,
-                'payment_type': payment_type
-            }
-            response = render(request, 'success_order.html', context)
-            cart_service = CartServices(request)
-            cart_service.clear()
-            response.delete_cookie('coupon')
-            return response
         except ObjectDoesNotExist:
             return redirect(reverse('404'))
 
+        payment_type = None
+        if request.POST.get('payment_type') == 'paypal':
+            order.status = '1'
+            payment_type = 'paypal'
+
+        if not order.is_email_sent:
+            Email().send_order(order, 'email/emails.html')
+            order.is_email_sent = True
+        order.save()
+        context = {
+            'order': order,
+            'payment_type': payment_type
+        }
+        response = render(request, 'success_order.html', context)
+        cart_service = CartServices(request)
+        cart_service.clear()
+        response.delete_cookie('coupon')
+        return response
+
     if request.method == 'GET':
-        LogRequest.log(request)
+        LogRequest.log_request(request)
         order_id = int(request.GET.get('order_number')) - 1000
         return prepare_order(request, order_id)
 
     if request.method == 'POST':
-        LogRequest.log(request)
+        LogRequest.log_request(request)
         order_id = int(request.POST['order_number']) - 1000
         return prepare_order(request, order_id)
 

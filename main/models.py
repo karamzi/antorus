@@ -355,6 +355,7 @@ class Order(models.Model):
     coupon = models.CharField(verbose_name='Купон', max_length=50, blank=True)
     total = models.CharField(verbose_name='Итого', max_length=50)
     date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания', null=True)
+    is_email_sent = models.BooleanField(default=False, verbose_name='Email отправлен')
 
     def __str__(self):
         return 'Заказ № ' + str(self.id + 1000)
@@ -435,7 +436,8 @@ class Transactions(models.Model):
                               on_delete=models.CASCADE)
     SERVICE = (
         ('1', 'Fondy'),
-        ('2', 'Plisio')
+        ('2', 'Plisio'),
+        ('3', 'Bepaid')
     )
     service = models.CharField(max_length=50, verbose_name='Сервис оплаты', choices=SERVICE)
     status = models.CharField(max_length=20, verbose_name='Статус оплаты')
