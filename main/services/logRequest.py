@@ -6,11 +6,14 @@ class LogRequest:
 
     @staticmethod
     def log_request(request, message=None):
+        print('----------------------------REQUSET-------------------------')
+        print(request.body)
+        print('----------------------------REQUSET-------------------------')
         RequestLogsModel.objects.create(
             url=request.path,
             request_get_data=json.dumps(request.GET),
             request_post_data=json.dumps(request.POST),
-            message=json.dumps(request)
+            message=message
         )
 
     @staticmethod
