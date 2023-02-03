@@ -117,32 +117,27 @@ form input.input_error {
     margin-right: 10px;
 }
 
-.payment_options > .payment_option:nth-child(1) {
-    background-image: url('../img/credit-card.png');
-    background-color: #f4f4f4;
-}
+/*.payment_options > .payment_option:nth-child(1) {*/
+/*    background-image: url('../img/credit-card.png');*/
+/*    background-color: #f4f4f4;*/
+/*}*/
 
-.payment_options > .payment_option:nth-child(2) {
-    background-image: url('../img/paypal.png');
-    background-color: #f4f4f4;
-}
-
-.payment_options .payment_option:nth-child(3) {
+.payment_options .payment_option:nth-child(1) {
     background-image: url('../img/cript_1.png');
     background-color: #02a77c;
 }
 
-.payment_options .payment_option:nth-child(4) {
+.payment_options .payment_option:nth-child(2) {
     background-image: url('../img/cript_2.png');
     background-color: #f7931a;
 }
 
-.payment_options .payment_option:nth-child(5) {
+.payment_options .payment_option:nth-child(3) {
     background-image: url('../img/cript_3.png');
     background-color: #bebebe;
 }
 
-.payment_options .payment_option:nth-child(6) {
+.payment_options .payment_option:nth-child(4) {
     background-image: url('../img/cript_4.png');
     background-color: #ffffff;
 }
