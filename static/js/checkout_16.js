@@ -33,9 +33,6 @@ function createOrder() {
             data = response.data
             ym(67968427,'reachGoal','order')
             switch (chosenPaymentType) {
-                case 'paypal':
-                    paymentForm(data.order_number, '/successOrder/', 'paypal')
-                    break
                 case 'plisio':
                     window.location.replace(data.url)
                     break

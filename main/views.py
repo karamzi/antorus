@@ -322,12 +322,7 @@ def create_order(request):
         currency = 'EUR' if request.POST.get('currency', 'us') == 'eu' else 'USD'
         # creating order
         order = OrderService(request).create_order()
-        if request.POST['payment_type'] == 'paypal':
-            return JsonResponse({
-                'success': True,
-                'order_number': order.get_order_number()
-            })
-        elif request.POST['payment_type'] == 'plisio':
+        if request.POST['payment_type'] == 'plisio':
             success_url = PlisioService(order=order, currency=currency).execute()
             return JsonResponse({
                 'success': True,
@@ -448,18 +443,12 @@ def success_order(request):
         except ObjectDoesNotExist:
             return redirect(reverse('404'))
 
-        payment_type = None
-        if request.POST.get('payment_type') == 'paypal':
-            order.status = '1'
-            payment_type = 'paypal'
-
         if not order.is_email_sent:
             Email().send_order(order, 'email/emails.html')
             order.is_email_sent = True
         order.save()
         context = {
-            'order': order,
-            'payment_type': payment_type
+            'order': order
         }
         response = render(request, 'success_order.html', context)
         cart_service = CartServices(request)
