@@ -33,7 +33,7 @@
                     </form>
                     <div class="payment_section">
                         <div class="payment_options">
-{#                            <div data-index="4" data-payment-type="bepaid" class="payment_option"></div>#}
+                            <div data-index="4" data-payment-type="bepaid" class="payment_option"></div>
                             <div data-index="0" data-payment-type="plisio" class="payment_option"></div>
                             <div data-index="1" data-payment-type="plisio" class="payment_option"></div>
                             <div data-index="2" data-payment-type="plisio" class="payment_option"></div>
@@ -112,10 +112,13 @@
                 </div>
             </div>
         </div>
+        <div style="display: none" class="error">
+            <p>Please choose payment type</p>
+        </div>
     </section>
 {% endblock %}
 
 
 {% block scripts %}
-    <script src="{% static 'js/checkout_16.js' %}"></script>
+    <script src="{% static 'js/checkout_17.js' %}"></script>
 {% endblock %}

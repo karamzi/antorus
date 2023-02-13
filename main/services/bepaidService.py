@@ -25,7 +25,7 @@ class BepaidService:
     def _prepare_request(self) -> dict:
         request_obj = {
             'checkout': {
-                'test': True,
+                'test': False,
                 'transaction_type': 'payment',
                 'attempts': 3,
                 'settings': {

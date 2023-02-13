@@ -84,9 +84,11 @@ function checkEmail(email) {
 
 function checkPaymentType() {
     if (chosenPaymentType === null) {
-        const p = document.querySelector('.payment_section').querySelector('p')
-        console.log(p)
-        p.style.color = 'darkred'
+        const errorDiv = document.querySelector('.error')
+        errorDiv.style.display = 'block'
+        setTimeout(() => {
+            errorDiv.style.display = 'none'
+        }, 2000)
         return false
     }
     return true
