@@ -407,12 +407,12 @@ def bepaid_callback(request):
             transaction.date = datetime.now() + timedelta(hours=1)
             transaction.save()
             if response['transaction']['status'] == 'successful':
-                order.status = '2'
                 Email().send_order(order, 'email/emails.html')
+                order.status = '2'
                 order.is_email_sent = True
             elif response['transaction']['status'] == 'failed':
-                order.status = '3'
                 Email().send_order(order, 'email/error.html')
+                order.status = '3'
                 order.is_email_sent = True
         else:
             order_id = int(response['order']['tracking_id']) - 1000
