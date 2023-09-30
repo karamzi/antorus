@@ -441,9 +441,16 @@ def success_order(request):
         except ObjectDoesNotExist:
             return redirect(reverse('404'))
 
+        if request.GET.get('payment_type') and request.GET.get('payment_type') == 'stripe' and order.status == '1':
+            order.status = '2'
+            transaction = Transactions.objects.get(order=order)
+            transaction.status = 'paid'
+            transaction.save()
+
         if not order.is_email_sent:
             Email().send_order(order, 'email/emails.html')
             order.is_email_sent = True
+
         order.save()
         context = {
             'order': order
@@ -485,6 +492,14 @@ def stripe_create_payment(request):
         order_number = int(data['order_number']) - 1000
         order = Order.objects.get(pk=order_number)
         intent = StripeService(order, currency).execute()
+        Transactions.objects.create(
+            order=order,
+            service='4',
+            status='created',
+            currency=currency,
+            amount=order.get_total() * 100,
+            response=''
+        )
         return JsonResponse({
             'success': True,
             'clientSecret': intent['client_secret']

@@ -437,7 +437,8 @@ class Transactions(models.Model):
     SERVICE = (
         ('1', 'Fondy'),
         ('2', 'Plisio'),
-        ('3', 'Bepaid')
+        ('3', 'Bepaid'),
+        ('4', 'Stripe')
     )
     service = models.CharField(max_length=50, verbose_name='Сервис оплаты', choices=SERVICE)
     status = models.CharField(max_length=20, verbose_name='Статус оплаты')
