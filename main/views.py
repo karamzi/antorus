@@ -497,7 +497,7 @@ def stripe_create_payment(request):
             service='4',
             status='created',
             currency=currency,
-            amount=order.get_total() * 100,
+            amount=order.get_total(),
             response=''
         )
         return JsonResponse({
