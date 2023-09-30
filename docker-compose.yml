@@ -15,7 +15,7 @@ services:
     restart: always
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8080
+    command: gunicorn antorus.wsgi:application --bind 0.0.0.0:8080
     volumes:
       - .:/code/
       - /var/www/antorus/media/:/code/media/
