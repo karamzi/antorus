@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 
 from .errors.apiErrors import CommonApiError
 from main.services.plisioService import PlisioService
+from main.services.bepaidService import BepaidService
 from .models import Order, BestOffersToday, AuthToken, Transactions, SpecialOffers, EditablePages
 from .forms import RegisterUserForm
 from django.db.models import Q, Prefetch
@@ -317,21 +318,25 @@ def cart_service(request):
 
 def create_order(request):
     if request.method == 'POST':
-        LogRequest.log(request)
+        LogRequest.log_request(request)
         currency = 'EUR' if request.POST.get('currency', 'us') == 'eu' else 'USD'
         # creating order
         order = OrderService(request).create_order()
-        if request.POST['payment_type'] == 'paypal':
-            return JsonResponse({
-                'success': True,
-                'order_number': order.get_order_number()
-            })
-        else:
+        if request.POST['payment_type'] == 'plisio':
             success_url = PlisioService(order=order, currency=currency).execute()
             return JsonResponse({
                 'success': True,
                 'url': success_url
             })
+        elif request.POST['payment_type'] == 'bepaid':
+            success_url, success_status = BepaidService(order=order, currency=currency).execute()
+            if success_status:
+                return JsonResponse({
+                    'success': success_status,
+                    'url': success_url
+                })
+            else:
+                return HttpResponse(status=500)
     return redirect(reverse('index'))
 
 
@@ -357,13 +362,13 @@ def check_coupon(request):
 
 
 @csrf_exempt
-def plisio_calback(request):
+def plisio_callback(request):
     if request.method == 'POST':
-        LogRequest.log(request)
+        LogRequest.log_request(request)
         response = json.dumps(request.POST, ensure_ascii=False)
         order_id = int(request.POST['order_number']) - 1000
         order = Order.objects.get(pk=order_id)
-        transaction, status = Transactions.objects.get_or_create(order_id=order_id)
+        transaction, _ = Transactions.objects.get_or_create(order_id=order_id)
         transaction.order = order
         transaction.service = 2
         transaction.status = request.POST['status']
@@ -374,6 +379,8 @@ def plisio_calback(request):
         transaction.save()
         if request.POST['status'] == 'completed':
             order.status = '2'
+            Email().send_order(order, 'email/emails.html')
+            order.is_email_sent = True
         if request.POST['status'] in ['error', 'expired']:
             order.status = '3'
             Email().send_order(order, 'email/error.html')
@@ -383,37 +390,79 @@ def plisio_calback(request):
 
 
 @csrf_exempt
+def bepaid_callback(request):
+    if request.method == 'POST':
+        response = json.loads(request.body.decode("utf-8"))
+        LogRequest.log_request(request, body=response)
+        if response.get('transaction', False):
+            order_id = int(response['transaction']['tracking_id']) - 1000
+            order = Order.objects.get(pk=order_id)
+            transaction, _ = Transactions.objects.get_or_create(order_id=order_id)
+            transaction.order = order
+            transaction.service = 3
+            transaction.status = response['transaction']['status']
+            transaction.currency = response['transaction']['currency']
+            transaction.amount = int(response['transaction']['amount']) / 100
+            transaction.response = json.dumps(response, ensure_ascii=False)
+            transaction.date = datetime.now() + timedelta(hours=1)
+            transaction.save()
+            if response['transaction']['status'] == 'successful':
+                Email().send_order(order, 'email/emails.html')
+                order.status = '2'
+                order.is_email_sent = True
+            elif response['transaction']['status'] == 'failed':
+                Email().send_order(order, 'email/error.html')
+                order.status = '3'
+                order.is_email_sent = True
+        else:
+            order_id = int(response['order']['tracking_id']) - 1000
+            order = Order.objects.get(pk=order_id)
+            transaction, _ = Transactions.objects.get_or_create(order_id=order_id)
+            transaction.order = order
+            transaction.service = 3
+            transaction.status = response['status']
+            transaction.currency = response['order']['currency']
+            transaction.amount = int(response['order']['amount']) / 100
+            transaction.response = json.dumps(response, ensure_ascii=False)
+            transaction.date = datetime.now() + timedelta(hours=1)
+            transaction.save()
+            if response['status'] == 'error':
+                order.status = '3'
+                Email().send_order(order, 'email/error.html')
+                order.is_email_sent = True
+        order.save()
+        return HttpResponse(status=200)
+    return redirect(reverse('index'))
+
+
+@csrf_exempt
 def success_order(request):
     def prepare_order(request, order_id):
-        order_status = '2'
-        payment_type = None
-        if request.POST.get('payment_type') == 'paypal':
-            order_status = '1'
-            payment_type = 'paypal'
         try:
             order = Order.objects.get(pk=order_id)
-            Email().send_order(order, 'email/emails.html')
-            order.status = order_status
-            order.save()
-            context = {
-                'order': order,
-                'payment_type': payment_type
-            }
-            response = render(request, 'success_order.html', context)
-            cart_service = CartServices(request)
-            cart_service.clear()
-            response.delete_cookie('coupon')
-            return response
         except ObjectDoesNotExist:
             return redirect(reverse('404'))
 
+        if not order.is_email_sent:
+            Email().send_order(order, 'email/emails.html')
+            order.is_email_sent = True
+        order.save()
+        context = {
+            'order': order
+        }
+        response = render(request, 'success_order.html', context)
+        cart_service = CartServices(request)
+        cart_service.clear()
+        response.delete_cookie('coupon')
+        return response
+
     if request.method == 'GET':
-        LogRequest.log(request)
+        LogRequest.log_request(request)
         order_id = int(request.GET.get('order_number')) - 1000
         return prepare_order(request, order_id)
 
     if request.method == 'POST':
-        LogRequest.log(request)
+        LogRequest.log_request(request)
         order_id = int(request.POST['order_number']) - 1000
         return prepare_order(request, order_id)
 

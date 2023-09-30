@@ -33,15 +33,17 @@ function createOrder() {
             data = response.data
             ym(67968427,'reachGoal','order')
             switch (chosenPaymentType) {
-                case 'paypal':
-                    paymentForm(data.order_number, '/successOrder/', 'paypal')
-                    break
                 case 'plisio':
+                    window.location.replace(data.url)
+                    break
+                case 'bepaid':
                     window.location.replace(data.url)
                     break
                 default:
                     console.log('error')
             }
+        } else if (response.status === 500) {
+            console.log('Error 500')
         }
         button.removeAttribute('disabled')
     })
@@ -82,9 +84,11 @@ function checkEmail(email) {
 
 function checkPaymentType() {
     if (chosenPaymentType === null) {
-        const p = document.querySelector('.payment_section').querySelector('p')
-        console.log(p)
-        p.style.color = 'darkred'
+        const errorDiv = document.querySelector('.error')
+        errorDiv.style.display = 'block'
+        setTimeout(() => {
+            errorDiv.style.display = 'none'
+        }, 2000)
         return false
     }
     return true

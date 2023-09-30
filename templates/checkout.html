@@ -33,18 +33,13 @@
                     </form>
                     <div class="payment_section">
                         <div class="payment_options">
-                            <div data-index="0" data-payment-type="paypal" class="payment_option"></div>
+                            <div data-index="4" data-payment-type="bepaid" class="payment_option"></div>
+                            <div data-index="0" data-payment-type="plisio" class="payment_option"></div>
                             <div data-index="1" data-payment-type="plisio" class="payment_option"></div>
                             <div data-index="2" data-payment-type="plisio" class="payment_option"></div>
                             <div data-index="3" data-payment-type="plisio" class="payment_option"></div>
-                            <div data-index="4" data-payment-type="plisio" class="payment_option"></div>
                         </div>
                         <div class="payment_information">
-                            <p style="display: none" class="success">
-                                PayPal<br>
-                                After click "PLACE ORDER" - contact our operator for direct payment to one of our PayPal
-                                accounts at no additional commission.
-                            </p>
                             <p style="display: none" class="success">
                                 Tether TRC-20<br>
                                 Minimum payment via this method - 150$/€.
@@ -65,6 +60,9 @@
                                 Ethereum<br>
                                 Minimum payment via this method 0.04 ETH.
                                 Or contact our operator for direct payment to our ETH crypto wallet.
+                            </p>
+                            <p style="display: none" class="success">
+                                Temporary we accept only MasterCard. Allowed only cards with 3ds secure system!
                             </p>
                         </div>
                     </div>
@@ -114,10 +112,13 @@
                 </div>
             </div>
         </div>
+        <div style="display: none" class="error">
+            <p>Please choose payment type</p>
+        </div>
     </section>
 {% endblock %}
 
 
 {% block scripts %}
-    <script src="{% static 'js/checkout_14.js' %}"></script>
+    <script src="{% static 'js/checkout_17.js' %}"></script>
 {% endblock %}

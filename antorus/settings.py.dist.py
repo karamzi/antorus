@@ -155,6 +155,8 @@ SITE_HOST = ''
 
 PLISIO_KEY = ''
 
+BEPAID_KEY = ''
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
