@@ -196,12 +196,12 @@
             headers: {"Content-Type": "application/json", 'X-CSRFToken': getCookie('csrftoken')},
             body: JSON.stringify({order_number: '{{ order_number }}'}),
         });
-        const {clientSecret} = await response.json();
+        const { amount, currency, clientSecret } = await response.json();
 
         const appearance = {
             theme: 'stripe',
         };
-        elements = stripe.elements({appearance, clientSecret});
+        elements = stripe.elements({mode: 'payment', amount, currency, appearance, clientSecret});
 
         const paymentElement = elements.create("payment");
         paymentElement.mount("#payment-element");

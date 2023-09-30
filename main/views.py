@@ -502,6 +502,8 @@ def stripe_create_payment(request):
         )
         return JsonResponse({
             'success': True,
-            'clientSecret': intent['client_secret']
+            'clientSecret': intent['client_secret'],
+            'amount': order.get_total() * 100,
+            'currency': currency
         })
     return redirect(reverse('index'))
