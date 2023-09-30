@@ -201,7 +201,7 @@
         const appearance = {
             theme: 'stripe',
         };
-        elements = stripe.elements({mode: 'payment', amount, currency, appearance, clientSecret});
+        elements = stripe.elements({amount, currency, appearance, clientSecret});
 
         const paymentElement = elements.create("payment");
         paymentElement.mount("#payment-element");
