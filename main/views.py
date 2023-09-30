@@ -441,15 +441,16 @@ def success_order(request):
         except ObjectDoesNotExist:
             return redirect(reverse('404'))
 
+
+        if not order.is_email_sent:
+            Email().send_order(order, 'email/emails.html')
+            order.is_email_sent = True
+
         if request.GET.get('payment_type') and request.GET.get('payment_type') == 'stripe' and order.status == '1':
             order.status = '2'
             transaction = Transactions.objects.get(order=order)
             transaction.status = 'paid'
             transaction.save()
-
-        if not order.is_email_sent:
-            Email().send_order(order, 'email/emails.html')
-            order.is_email_sent = True
 
         order.save()
         context = {
