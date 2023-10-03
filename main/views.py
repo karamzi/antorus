@@ -26,6 +26,7 @@ from .services.dbServices.prodcutDbService import ProductDbService
 from .services.dbServices.seoDbService import SeoDbService
 from .services.orderService import OrderService
 from .services.stripeService import StripeService
+from .services.paypalService import PaypalService
 from .utils.email import Email
 
 
@@ -328,7 +329,7 @@ def create_order(request):
                 'success': True,
                 'url': success_url
             })
-        elif request.POST['payment_type'] == 'stripe':
+        elif request.POST['payment_type'] in ['stripe', 'paypal']:
             return JsonResponse({
                 'success': True,
                 'order_number': order.get_order_number()
@@ -446,7 +447,7 @@ def success_order(request):
             Email().send_order(order, 'email/emails.html')
             order.is_email_sent = True
 
-        if request.GET.get('payment_type') and request.GET.get('payment_type') == 'stripe' and order.status == '1':
+        if request.GET.get('payment_type') and request.GET.get('payment_type') in ['stripe', 'paypal'] and order.status == '1':
             order.status = '2'
             transaction = Transactions.objects.get(order=order)
             transaction.status = 'paid'
@@ -484,6 +485,15 @@ def stripe(request):
     return redirect(reverse('index'))
 
 
+def paypal(request):
+    if request.method == 'POST':
+        context = {
+            'order_number': request.POST['order_number']
+        }
+        return render(request, 'paypal.html', context)
+    return redirect(reverse('index'))
+
+
 def stripe_create_payment(request):
     if request.method == 'POST':
         # Create a PaymentIntent with the order amount and currency
@@ -505,4 +515,44 @@ def stripe_create_payment(request):
             'success': True,
             'clientSecret': intent['client_secret']
         })
+    return redirect(reverse('index'))
+
+
+def paypal_create_order(request):
+    if request.method == 'POST':
+        currency = request.COOKIES.get('currency', 'us')
+        currency = 'USD' if currency == 'us' else 'EUR'
+
+        data = json.loads(request.body)
+
+        order_number = int(data['orderNumber']) - 1000
+        order = Order.objects.get(pk=order_number)
+
+        paypal_service = PaypalService()
+        response_dict = paypal_service.create_order(order, currency)
+
+        Transactions.objects.create(
+            order=order,
+            service='5',
+            status='created',
+            currency=currency,
+            amount=order.get_total(),
+            response=''
+        )
+
+        return JsonResponse(response_dict)
+    return redirect(reverse('index'))
+
+
+def paypal_capture_order(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        order_id = data['orderID']
+
+        paypal_service = PaypalService()
+
+        response_dict = paypal_service.capture_payment(order_id)
+
+        return JsonResponse(response_dict)
+
     return redirect(reverse('index'))

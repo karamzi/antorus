@@ -39,6 +39,9 @@ function createOrder() {
                 case 'stripe':
                     paymentForm(data.order_number, '/stripe/', 'stripe')
                     break
+                case 'paypal':
+                    paymentForm(data.order_number, '/paypal/', 'paypal')
+                    break
                 default:
                     console.log('error')
             }

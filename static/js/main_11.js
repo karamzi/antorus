@@ -2,6 +2,11 @@ const usButton = document.getElementById('us')
 const euButton = document.getElementById('eu')
 const navLink = document.querySelectorAll('.nav_link')
 
+const instance = axios.create({
+    // baseURL: 'http://127.0.0.1:8000/',
+    baseURL: 'https://antorus.com/',
+})
+
 usButton.addEventListener('click', function () {
     setCookie('us', 'currency')
     window.location.reload()
@@ -19,11 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
         usButton.classList.remove('active_currency')
         euButton.classList.add('active_currency')
     }
-})
-
-const instance = axios.create({
-    //baseURL: 'http://127.0.0.1:8000/',
-    baseURL: 'https://antorus.com/',
 })
 
 function countCart(cart) {

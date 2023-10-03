@@ -157,6 +157,12 @@ PLISIO_KEY = ''
 
 STRIPE_KEY = ''
 
+PAYPAL_CLIENT_ID = ''
+
+PAYPAL_APP_SECRET = ''
+
+PAYPAL_URL = 'https://api-m.sandbox.paypal.com' if DEBUG else 'https://api-m.paypal.com'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
