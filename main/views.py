@@ -442,12 +442,12 @@ def success_order(request):
         except ObjectDoesNotExist:
             return redirect(reverse('404'))
 
-
         if not order.is_email_sent:
             Email().send_order(order, 'email/emails.html')
             order.is_email_sent = True
 
-        if request.GET.get('payment_type') and request.GET.get('payment_type') in ['stripe', 'paypal'] and order.status == '1':
+        if request.GET.get('payment_type') and request.GET.get('payment_type') in ['stripe',
+                                                                                   'paypal'] and order.status == '1':
             order.status = '2'
             transaction = Transactions.objects.get(order=order)
             transaction.status = 'paid'
@@ -503,13 +503,15 @@ def stripe_create_payment(request):
         order_number = int(data['order_number']) - 1000
         order = Order.objects.get(pk=order_number)
         intent = StripeService(order, currency).execute()
-        Transactions.objects.create(
+        Transactions.objects.update_or_create(
             order=order,
-            service='4',
-            status='created',
-            currency=currency,
-            amount=order.get_total(),
-            response=''
+            defaults={
+                'service': '4',
+                'status': 'created',
+                'currency': currency,
+                'amount': order.get_total(),
+                'response': ''
+            }
         )
         return JsonResponse({
             'success': True,
@@ -531,13 +533,15 @@ def paypal_create_order(request):
         paypal_service = PaypalService()
         response_dict = paypal_service.create_order(order, currency)
 
-        Transactions.objects.create(
+        Transactions.objects.update_or_create(
             order=order,
-            service='5',
-            status='created',
-            currency=currency,
-            amount=order.get_total(),
-            response=''
+            defaults={
+                'service': '5',
+                'status': 'created',
+                'currency': currency,
+                'amount': order.get_total(),
+                'response': ''
+            }
         )
 
         return JsonResponse(response_dict)
