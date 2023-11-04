@@ -1,8 +1,6 @@
 # Укажите необходимую версию python
 FROM python:3.8
 
-RUN apt install apt-transport-https ca-certificates gnupg
-RUN apt update
 RUN apt install netcat-traditional
 
 # Выберите папку, в которой будут размещаться файлы проекта внутри контейнера
