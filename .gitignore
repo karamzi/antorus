@@ -7,7 +7,6 @@ media/*
 .DS_Store
 */.DS_Store
 venv/*
-antorus/settings.py
 .idea
 static/admin/
 static/ckeditor/
@@ -15,3 +14,5 @@ node_modules/
 package-lock.json
 logs/*
 database/*
+antorus/.env
+cerbot/

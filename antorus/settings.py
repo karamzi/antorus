@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'n0sd5+7=((+cq#n=puw78v%^awfac4h&e*q)1zg%_-(5fvvi=-'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', False) == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 # Application definition
 
@@ -94,11 +97,11 @@ WSGI_APPLICATION = 'antorus.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'antorus',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
-        'PORT': 5432,
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('DB_PORT', 5432),
     }
 }
 
@@ -137,31 +140,30 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-EMAIL_HOST = ''
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_PORT = ''
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_USE_TLS = True
 
-SITE_HOST = ''
+SITE_HOST = os.environ.get('SITE_HOST')
 
-PLISIO_KEY = ''
+PLISIO_KEY = os.environ.get('PLISIO_KEY')
 
-STRIPE_KEY = ''
+BEPAID_KEY = os.environ.get('BEPAID_KEY')
 
-PAYPAL_CLIENT_ID = ''
+STRIPE_KEY = os.environ.get('STRIPE_KEY')
 
-PAYPAL_APP_SECRET = ''
+PAYPAL_CLIENT_ID = os.environ.get('PAYPAL_CLIENT_ID')
 
-PAYPAL_URL = 'https://api-m.sandbox.paypal.com' if DEBUG else 'https://api-m.paypal.com'
+PAYPAL_APP_SECRET = os.environ.get('PAYPAL_APP_SECRET')
+
+PAYPAL_URL = os.environ.get('PAYPAL_URL', 'https://api-m.sandbox.paypal.com')
 
 LOGGING = {
     'version': 1,
