@@ -8,8 +8,8 @@ services:
     env_file:
       - antorus/.env
     volumes:
-      - antorus_static:/opt/antorus/static
-      - antorus_media:/opt/antorus/media
+      - antorus_static:/opt/antorus/static/
+      - antorus_media:/opt/antorus/media/
       - ./main/migrations/:/opt/antorus/main/migrations/:rw
       - ./logs:/opt/antorus/logs
     depends_on:
