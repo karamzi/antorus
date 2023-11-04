@@ -1,6 +1,8 @@
 # Укажите необходимую версию python
 FROM python:3.8
 
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 605C66F00D6C9793 \
+    0E98404D386FA1D9 648ACFD622F3D138
 RUN apt update
 RUN apt install netcat-traditional
 
