@@ -45,7 +45,7 @@ services:
       - antorus_network
 
   certbot:
-    image: certbot/cerbot:latest
+    image: certbot/cerbot
     volumes:
       - ./certbot/www/:/var/www/certbot/:rw
       - ./certbot/conf/:/etc/letsencrypt/:rw
