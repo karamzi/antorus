@@ -13,6 +13,6 @@ static/ckeditor/
 node_modules/
 package-lock.json
 logs/*
-database/*
+pg_data/*
 antorus/.env
 cerbot/

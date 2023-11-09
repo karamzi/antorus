@@ -40,6 +40,7 @@ services:
     image: postgres:16-alpine
     volumes:
       - /var/www/backups:/backups:rw
+      - ./pg_data:/var/lib/postgresql/data
     env_file:
       - antorus/.env
     expose:
