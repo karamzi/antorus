@@ -38,6 +38,8 @@ services:
 
   antorus_db:
     image: postgres:16-alpine
+    volumes:
+      - /var/www/backups:/backups:rw
     env_file:
       - antorus/.env
     expose:
