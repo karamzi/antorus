@@ -61,7 +61,8 @@ class BepaidService:
         success_url = response_data['checkout']['redirect_url']
         return success_url, True
 
-    def _prepare_auth_token(self) -> str:
+    @staticmethod
+    def _prepare_auth_token() -> str:
         shop_id = 1031
         token = f'{shop_id}:{BEPAID_KEY}'
         token = base64.b64encode(token.encode('utf-8')).decode('utf-8')
