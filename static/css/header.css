@@ -415,6 +415,7 @@ ______________________________________________ */
 
 .modal_links {
     display: flex;
+    justify-content: space-around;
 }
 
 .discord, .skype, .email_modal, .telegram_modal {
