@@ -17,21 +17,29 @@ class RegisterUserForm(forms.ModelForm):
     def clean(self):
         password1 = self.cleaned_data['password1']
         password2 = self.cleaned_data['password2']
+
         if password1 and password2 and password1 != password2:
             messages.error(self.request, 'passwords don\'t match')
             raise ValidationError('')
+
+        if not self.cleaned_data.get('email'):
+            messages.error(self.request, 'wrong email')
+            raise ValidationError('')
+
         try:
-            user = User.objects.get(email=self.cleaned_data['email'])
+            _ = User.objects.get(email=self.cleaned_data['email'])
             messages.error(self.request, 'the same email already exists')
             raise ValidationError('')
         except ObjectDoesNotExist:
             pass
+
         try:
-            user = User.objects.get(username=self.cleaned_data['username'])
+            _ = User.objects.get(username=self.cleaned_data['username'])
             messages.error(self.request, 'the same username already exists')
             raise ValidationError('')
         except ObjectDoesNotExist:
             pass
+
         super().clean()
 
     def save(self, commit=True):
