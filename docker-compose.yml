@@ -8,7 +8,7 @@ services:
     env_file:
       - antorus/.env
     volumes:
-      - antorus_static:/opt/antorus/static/
+      - ./static/:/opt/antorus/static/
       - antorus_media:/opt/antorus/media/
       - ./main/migrations/:/opt/antorus/main/migrations/:rw
       - ./logs:/opt/antorus/logs
@@ -22,7 +22,7 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/configs:/etc/nginx/conf.d:ro
-      - antorus_static:/data/static
+      - ./static/:/data/static
       - antorus_media:/data/media
       - ./certbot/www:/var/www/certbot/:ro
       - ./certbot/conf/:/etc/nginx/ssl/:ro
