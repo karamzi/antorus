@@ -19,7 +19,6 @@ import json
 from datetime import datetime, timedelta
 
 from .services.cartService import CartServices
-from .services.logRequest import LogRequest
 from .services.dbServices.categoriesDbService import CategoriesDbService
 from .services.dbServices.couponDbService import CouponDbService
 from .services.dbServices.prodcutDbService import ProductDbService
@@ -319,7 +318,6 @@ def cart_service(request):
 
 def create_order(request):
     if request.method == 'POST':
-        LogRequest.log_request(request)
         currency = 'EUR' if request.POST.get('currency', 'us') == 'eu' else 'USD'
         # creating order
         order = OrderService(request).create_order()
@@ -363,7 +361,6 @@ def check_coupon(request):
 @csrf_exempt
 def plisio_callback(request):
     if request.method == 'POST':
-        LogRequest.log_request(request)
         response = json.dumps(request.POST, ensure_ascii=False)
         order_id = int(request.POST['order_number']) - 1000
         order = Order.objects.get(pk=order_id)
@@ -392,7 +389,6 @@ def plisio_callback(request):
 def bepaid_callback(request):
     if request.method == 'POST':
         response = json.loads(request.body.decode("utf-8"))
-        LogRequest.log_request(request, body=response)
         if response.get('transaction', False):
             order_id = int(response['transaction']['tracking_id']) - 1000
             order = Order.objects.get(pk=order_id)
@@ -464,12 +460,10 @@ def success_order(request):
         return response
 
     if request.method == 'GET':
-        LogRequest.log_request(request)
         order_id = int(request.GET.get('order_number')) - 1000
         return prepare_order(request, order_id)
 
     if request.method == 'POST':
-        LogRequest.log_request(request)
         order_id = int(request.POST['order_number']) - 1000
         return prepare_order(request, order_id)
 

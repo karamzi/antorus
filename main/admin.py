@@ -201,9 +201,9 @@ class RedirectAdmin(admin.ModelAdmin):
     list_display_links = ('redirect_from', 'redirect_to')
 
 
-class RequestLogAdmin(admin.ModelAdmin):
-    list_display = ('url', 'time')
-    list_display_links = ('url', 'time')
+class LogAdmin(admin.ModelAdmin):
+    list_display = ('message', 'time')
+    list_display_links = ('message', 'time')
 
 
 class MonitoringAdmin(admin.ModelAdmin):
@@ -227,6 +227,6 @@ admin.site.register(models.Transactions, TransactionsAdmin)
 admin.site.register(models.SEO, SEOAdmin)
 admin.site.register(models.SpecialOffers)
 admin.site.register(models.RedirectModels, RedirectAdmin)
-admin.site.register(models.RequestLogsModel, RequestLogAdmin)
+admin.site.register(models.LogsModel, LogAdmin)
 admin.site.register(models.MonitoringModel, MonitoringAdmin)
 admin.site.register(models.EditablePages, EditablePagesAdmin)

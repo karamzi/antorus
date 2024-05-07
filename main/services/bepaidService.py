@@ -5,7 +5,6 @@ import requests
 import json
 import base64
 from antorus.settings import SITE_HOST, BEPAID_KEY
-from main.services.logRequest import LogRequest
 
 
 class BepaidService:
@@ -56,7 +55,6 @@ class BepaidService:
         response = requests.post('https://checkout.bepaid.tech/ctp/api/checkouts', json=request_obj, headers=headers)
         response_data = json.loads(response.text)
         if response_data.get('errors', False):
-            LogRequest.log_post(response_data, 'https://checkout.bepaid.tech/ctp/api/checkouts')
             return '', False
         success_url = response_data['checkout']['redirect_url']
         return success_url, True

@@ -193,10 +193,15 @@ LOGGING = {
             'filename': os.path.join(BASE_DIR, 'logs', 'info.log'),
             'formatter': 'verbose'
         },
+        'db': {
+            'level': 'ERROR',
+            'class': 'main.services.dbLogger.DbLogging',
+            'formatter': 'verbose'
+        }
     },
     'loggers': {
         'django': {
-            'handlers': ['errorRequest', 'info'],
+            'handlers': ['errorRequest', 'info', 'db'],
             'propagate': True,
         },
     },
