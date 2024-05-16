@@ -91,6 +91,9 @@ function changeButtons(pressedButton) {
             quantity = +product.querySelector('.count').innerText - 1
         }
     })
+
+    if (productId === undefined) return
+
     let data = {
         'action': 'change',
         'productId': productId,
