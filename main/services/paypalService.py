@@ -1,3 +1,5 @@
+import logging
+
 import requests
 
 import base64
@@ -10,6 +12,7 @@ from antorus.settings import PAYPAL_APP_SECRET, PAYPAL_CLIENT_ID, PAYPAL_URL
 class PaypalService:
     @staticmethod
     def generate_access_token() -> str:
+        import logging
         auth = f'{PAYPAL_CLIENT_ID}:{PAYPAL_APP_SECRET}'
         auth = base64.b64encode(auth.encode()).decode('utf-8')
 
@@ -18,6 +21,8 @@ class PaypalService:
         }
 
         response = requests.post(f'{PAYPAL_URL}/v1/oauth2/token', data='grant_type=client_credentials', headers=headers)
+
+        logging.getLogger('django').error(f'response: {response.status_code}, {response.text}')
 
         data = json.loads(response.text)
 
