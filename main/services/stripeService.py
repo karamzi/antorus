@@ -15,7 +15,7 @@ class StripeService:
     def execute(self):
         intent = stripe.PaymentIntent.create(
             amount=int(self.order.get_total() * 100),
-            currency='usd',
+            currency=self.currency,
             automatic_payment_methods={
                 'enabled': True,
             },
