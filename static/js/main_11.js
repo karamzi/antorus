@@ -164,16 +164,6 @@ document.body.addEventListener('click', function (e) {
     }
 })
 
-const chatButtons = document.querySelectorAll('.chatButton')
-
-if (chatButtons) {
-    chatButtons.forEach(item => {
-        item.addEventListener('click', () => {
-            window.Tawk_API.maximize();
-        })
-    })
-}
-
 const contactSupport = document.getElementById('contact_support')
 const modal = document.querySelector('.modal_container')
 
