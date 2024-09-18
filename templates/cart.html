@@ -79,7 +79,7 @@
                         <p>Total</p>
                         <p id="cart_total">{{ cart.sign }} {{ cart.total }}</p>
                     </div>
-                    <a href="{% url 'checkout' %}" class="cart_button">Proceed to checkout</a>
+{#                    <a href="{% url 'checkout' %}" class="cart_button">Proceed to checkout</a>#}
                 </div>
             </div>
             <div {% if cart.products %}style="display: none"{% else %}style="display: flex"{% endif %} class="cart_empty">
