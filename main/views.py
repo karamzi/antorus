@@ -83,18 +83,20 @@ def search_result(request, search):
 def product(request, slug):
     currency = request.COOKIES.get('currency', 'us')
     product = ProductDbService.get_product(slug)
+
     if product.draft and not request.user.is_superuser:
         return redirect(reverse('index'))
-    else:
-        products = ProductDbService.get_products_by_category(product.category)[:4]
-        context = {
-            'product': product,
-            'products': products,
-        }
-        if currency == 'us':
-            return render(request, 'product_us.html', context)
-        if currency == 'eu':
-            return render(request, 'product_eu.html', context)
+
+    products = ProductDbService.get_products_by_category(product.category)[:4]
+    context = {
+        'product': product,
+        'products': products,
+    }
+
+    if currency == 'eu':
+        return render(request, 'product_eu.html', context)
+
+    return render(request, 'product_us.html', context)
 
 
 def category(request, slug):
